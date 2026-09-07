@@ -24,11 +24,12 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phase0-validation
+          name: validation-evidence
           path: |
             logs/
             artifacts/quality.json
             artifacts/demo/
             artifacts/notebooks/
+            artifacts/kaggle/
           retention-days: 30
 

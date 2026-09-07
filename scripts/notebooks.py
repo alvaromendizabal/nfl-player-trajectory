@@ -8,6 +8,8 @@ Interactive use remains JupyterLab with the registered project kernel.
 
 from __future__ import annotations
 
+import argparse
+import subprocess
 import sys
 from pathlib import Path
 
@@ -20,8 +22,24 @@ from nfl_trajectory.runtime import Run, atomic_bytes
 
 def main() -> int:
     root = Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--notebook", help="Execute one notebook by its basename.")
+    args = parser.parse_args()
+    if args.notebook is None:
+        with Run(root, "notebooks") as run:
+            for source in sorted((root / "notebooks").glob("*.ipynb")):
+                run.event("notebook_started", notebook=source.name)
+                subprocess.run(
+                    [sys.executable, str(Path(__file__).resolve()), "--notebook", source.name],
+                    cwd=root,
+                    check=True,
+                )
+                run.event("notebook_completed", notebook=source.name)
+        return 0
+    if Path(args.notebook).name != args.notebook or not args.notebook.endswith(".ipynb"):
+        raise ValueError("Select a notebook basename from notebooks/.")
     with Run(root, "notebook") as run:
-        source = root / "notebooks" / "00_project_readiness.ipynb"
+        source = root / "notebooks" / args.notebook
         notebook = nbformat.read(source, as_version=4)
         nbformat.validate(notebook)
         shell = InteractiveShell.instance()

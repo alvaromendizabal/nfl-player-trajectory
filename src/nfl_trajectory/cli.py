@@ -9,6 +9,7 @@ import shutil
 import sys
 from pathlib import Path
 
+from nfl_trajectory.benchmark import benchmark
 from nfl_trajectory.data import audit, download
 from nfl_trajectory.report import demo
 from nfl_trajectory.runtime import Run, atomic_json
@@ -43,10 +44,41 @@ def preflight(root: Path, run: Run) -> None:
     run.event("preflight_passed", **payload)
 
 
+def status_summary(path: Path) -> object:
+    if not path.exists():
+        return "not_run"
+    value = json.loads(path.read_text())
+    if path.name == "audit_summary.json":
+        return {key: item for key, item in value.items() if key != "pairs"}
+    if path.name == "summary.json":
+        return {
+            key: value[key]
+            for key in [
+                "status",
+                "selected_model",
+                "validation_games",
+                "validation_rows_per_model",
+                "improvement_vs_velocity_percent",
+                "holdout_evaluation",
+            ]
+        }
+    return value
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "command", choices=["preflight", "download", "audit", "demo", "status", "backup", "restore"]
+        "command",
+        choices=[
+            "preflight",
+            "download",
+            "audit",
+            "demo",
+            "status",
+            "backup",
+            "restore",
+            "benchmark",
+        ],
     )
     parser.add_argument("--bucket")
     parser.add_argument("--region", default="us-west-2")
@@ -63,13 +95,20 @@ def main() -> int:
                 audit(root, run)
             elif args.command == "demo":
                 demo(root, run)
+            elif args.command == "benchmark":
+                benchmark(root, run)
             elif args.command == "status":
-                for name in ["preflight.json", "audit_summary.json", "last_backup.json"]:
+                for name in [
+                    "preflight.json",
+                    "audit_summary.json",
+                    "benchmark/summary.json",
+                    "last_backup.json",
+                ]:
                     path = root / "artifacts" / name
                     run.event(
                         "artifact_status",
                         file=name,
-                        result=json.loads(path.read_text()) if path.exists() else "not_run",
+                        result=status_summary(path),
                     )
             else:
                 bucket = args.bucket

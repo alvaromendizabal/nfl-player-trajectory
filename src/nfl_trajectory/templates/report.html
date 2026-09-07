@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NFL Trajectory Lab</title>
+<style>body{margin:0;
+background:#09121f;
+color:#eaf1fc;
+font:16px/1.6 system-ui,sans-serif}main{max-width:1150px;
+margin:auto;
+padding:48px 24px}.eyebrow{color:#4ee0bd;
+font-size:13px;
+letter-spacing:.16em;
+text-transform:uppercase}h1{font-size:46px;
+line-height:1.1;
+letter-spacing:-.04em;
+margin:12px 0}h2{font-size:26px}p{color:#bdcce0}.cards{display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin:32px 0}.card,section{background:#101b2b;
+border:1px solid #25364b;
+border-radius:16px;
+padding:22px;
+margin-bottom:22px}.card strong{font-size:30px;
+color:#4ee0bd;
+display:block}.card span{font-size:13px;
+color:#bdcce0}img{width:100%;
+height:auto}table{width:100%;
+border-collapse:collapse;
+font-size:14px}td,th{padding:12px;
+text-align:right;
+border-bottom:1px solid #25364b}td:first-child,th:first-child{text-align:left}a{color:#83b6ff}.tag{color:#4ee0bd}@media(max-width:750px){.cards{grid-template-columns:1fr 1fr}h1{font-size:34px}section{overflow-x:auto}}</style>
+<main>
+<div class="eyebrow">NFL player trajectory · Research notebook 01–02</div>
+<h1>From the throw<br>to the next position.</h1>
+<p>A reproducible benchmark for forecasting player movement while the ball is in the air.<br>2023 tracking data · Chronological validation · Holdout reserved</p>
+<div class="cards">
+<div class="card">
+<strong>$value0</strong>
+<span>Best coordinate RMSE · yards</span>
+</div>
+<div class="card">
+<strong>$value1%</strong>
+<span>Lower RMSE than constant velocity</span>
+</div>
+<div class="card">
+<strong>$value2</strong>
+<span>Validation games</span>
+</div>
+<div class="card">
+<strong>$value3</strong>
+<span>Scored player-frame positions</span>
+</div>
+</div>
+<section>
+<h2>What improved?</h2>
+<p>
+<span class="tag">$value4</span> has the lowest validation coordinate RMSE in this experiment. The learned model combines observed motion with the supplied landing point and forecast horizon. Its six vector weights are fitted separately by role using training games only.</p>
+<img alt="Validation ranking, forecast time errors, and role comparison" src="data:image/png;base64,$value5">
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>RMSE / yd</th>
+<th>ADE / yd</th>
+<th>FDE / yd</th>
+<th>p95 / yd</th>
+</tr>
+</thead>
+<tbody>$value6</tbody>
+</table>
+</section>
+<section>
+<h2>Understand the data before the model</h2>
+<p>$value7 training games · $value8 plays · $value9 scored trajectories. These distributions use the training partition only.</p>
+<img alt="Training role, horizon and speed distributions" src="data:image/png;base64,$value10">
+</section>
+<section>
+<h2>Watch a validation play</h2>
+<p>Solid lines show actual movement;
+ dashed lines show the selected model. The example is the first validation play by game and play ID, chosen independently of prediction quality.</p>$value11</section>
+<section>
+<h2>Inspect the learned motion weights</h2>
+<img alt="Role-specific fitted coefficients" src="data:image/png;base64,$value12">
+<p>These are joint regression coefficients on correlated physical basis vectors, not causal effects or standalone feature-importance scores.</p>
+</section>
+<section>
+<h2>Evaluation contract</h2>
+<p>Official coordinate RMSE = √[Σ(dx² + dy²)/(2N)]. Lower is better. ADE weights player-frame positions;
+ FDE weights complete player trajectories. Confidence intervals resample whole games 2,000 times. The fixed validation set supports model development;
+ its scores are not an unbiased final estimate after repeated selection. The 48-game holdout remains unscored.</p>
+<p>The supplied landing coordinates and horizon are permitted competition inputs. A live forecast without those inputs is a different problem. These are local temporal-validation results, not Kaggle leaderboard scores or medal claims.</p>
+<p>
+<a href="https://github.com/alvaromendizabal/nfl-player-trajectory">Source and reproducibility instructions</a>
+</p>
+</section>
+</main>
+</html>

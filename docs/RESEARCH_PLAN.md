@@ -3,7 +3,7 @@
 | Phase | Deliverable | Exit gate |
 | --- | --- | --- |
 | 0 | Tested environment, ingestion, schema audit, metrics, recovery, notebook | All offline checks plus real-data audit and backup |
-| 1 | Data EDA, animated plays, frozen validation protocol, stationary/velocity/acceleration baselines | Real validation scores, slice plots, and reproducible report |
+| 1 — complete | Training EDA, animated play, frozen temporal protocol, five physical baselines and role-conditioned ridge | 0.9896 validation RMSE; tested recovery; published notebooks and report |
 | 2 | Physics-informed features and strong tree/residual regressors | Validation improvement with ablations and latency measurements |
 | 3 | PyTorch temporal model with player interactions, then attention/graph alternatives | Full optimizer/scheduler/RNG checkpoint restore test, temporal CV, stable training |
 | 4 | Hyperparameter research, seed ensembles, uncertainty, robustness | Locked model selection, game-cluster intervals, held-out evaluation |
@@ -24,8 +24,8 @@ to start Phase 0. No managed endpoint or always-running service is required.
 - The prediction unit is `(game_id, play_id, nfl_id, output frame_id)`.
 - The input ends at the throw; output frame numbering restarts at 1.
 - All players, plays, and frames from a game stay in one partition.
-- Phase 0 proposes chronological train/validation/holdout boundaries at 70/85% of
-  distinct game dates. Phase 1 reviews season and week coverage before locking them.
+- The locked game-date boundaries end training on December 3, 2023, validation on
+  December 18, and reserve December 21–January 7 for holdout. See the protocol JSON.
 - Do not tune repeatedly on the holdout. Freeze a manifest before model selection.
 - Fit scalers, imputation, learned encodings, feature selection, and calibration only
   inside the training portion of each fold. Aggregate historical player features using

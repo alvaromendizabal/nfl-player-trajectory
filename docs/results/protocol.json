@@ -1,0 +1,31 @@
+{
+  "format": 1,
+  "competition": "nfl-big-data-bowl-2026-prediction",
+  "split_sha256": "383b3b76cd7dd0085ee5eac9e52ff49bb380fbb55e3e46e2603b570c8bf417e7",
+  "partitions": {
+    "holdout": {
+      "games": 48,
+      "first_date": "2023-12-21",
+      "last_date": "2024-01-07"
+    },
+    "train": {
+      "games": 192,
+      "first_date": "2023-09-07",
+      "last_date": "2023-12-03"
+    },
+    "validation": {
+      "games": 32,
+      "first_date": "2023-12-04",
+      "last_date": "2023-12-18"
+    }
+  },
+  "development_split": "validation",
+  "holdout_evaluation": "not_run",
+  "selection_metric": "coordinate_rmse_yards",
+  "ridge_alpha": 0.001,
+  "confidence_interval": {
+    "method": "game_cluster_percentile_bootstrap",
+    "resamples": 2000,
+    "seed": 2026
+  }
+}

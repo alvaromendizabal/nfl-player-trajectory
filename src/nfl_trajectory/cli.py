@@ -7,10 +7,13 @@ import importlib.metadata
 import json
 import shutil
 import sys
+from collections.abc import Callable
+from functools import partial
 from pathlib import Path
 
 from nfl_trajectory.benchmark import benchmark
 from nfl_trajectory.data import audit, download
+from nfl_trajectory.feature_experiment import feature_experiment
 from nfl_trajectory.report import demo
 from nfl_trajectory.runtime import Run, atomic_json
 from nfl_trajectory.storage import backup, client, restore
@@ -70,19 +73,15 @@ def main() -> int:
     parser.add_argument(
         "command",
         choices=[
-            "preflight",
-            "download",
-            "audit",
-            "demo",
-            "status",
-            "backup",
-            "restore",
-            "benchmark",
+            "preflight", "download", "audit", "demo", "status", "backup",
+            "restore", "benchmark", "features",
         ],
     )
     parser.add_argument("--bucket")
     parser.add_argument("--region", default="us-west-2")
     parser.add_argument("--manifest")
+    parser.add_argument("--checkpoint-s3", action="store_true",
+                        help="Back up after each prepared week, fitted model, and feature report.")
     args = parser.parse_args()
     try:
         root = find_root()
@@ -97,19 +96,25 @@ def main() -> int:
                 demo(root, run)
             elif args.command == "benchmark":
                 benchmark(root, run)
+            elif args.command == "features":
+                checkpoint: Callable[[], object] | None = None
+                if args.checkpoint_s3:
+                    config = root / "aws.local.json"
+                    feature_bucket = args.bucket or (
+                        json.loads(config.read_text())["bucket"] if config.exists() else None
+                    )
+                    if not feature_bucket:
+                        raise ValueError("S3 checkpointing requires --bucket or aws.local.json.")
+                    feature_client = client(args.region)
+                    checkpoint = partial(backup, root, feature_bucket, run, feature_client)
+                feature_experiment(root, run, checkpoint)
             elif args.command == "status":
                 for name in [
-                    "preflight.json",
-                    "audit_summary.json",
-                    "benchmark/summary.json",
-                    "last_backup.json",
+                    "preflight.json", "audit_summary.json", "benchmark/summary.json",
+                    "features/summary.json", "last_backup.json",
                 ]:
                     path = root / "artifacts" / name
-                    run.event(
-                        "artifact_status",
-                        file=name,
-                        result=status_summary(path),
-                    )
+                    run.event("artifact_status", file=name, result=status_summary(path))
             else:
                 bucket = args.bucket
                 local = root / "aws.local.json"

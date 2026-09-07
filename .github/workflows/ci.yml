@@ -23,7 +23,22 @@ jobs:
           prune-cache: true
           download-from-astral-mirror: false
       - run: uv sync --frozen --group dev
+      - name: Format explicitly requested development publication
+        if: >-
+          github.event_name == 'push' &&
+          startsWith(github.ref, 'refs/heads/feat/') &&
+          contains(github.event.head_commit.message, '[publish notebooks]')
+        run: uv run --frozen ruff format src scripts tests notebooks
+      - name: Capture tested source
+        run: |
+          mkdir -p artifacts
+          git ls-files -z | tar --null -czf artifacts/source.tar.gz -T -
       - run: uv run --frozen python scripts/quality.py
+      - name: Retain formatting diagnostics on failure
+        if: failure()
+        run: |
+          mkdir -p logs
+          uv run --frozen ruff format --diff . > logs/formatting.diff || true
       - name: Retain evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -31,9 +46,50 @@ jobs:
           name: validation-evidence
           path: |
             logs/
+            artifacts/source.tar.gz
             artifacts/quality.json
             artifacts/demo/
             artifacts/notebooks/
             artifacts/kaggle/
           retention-days: 30
           if-no-files-found: error
+
+  publish-notebooks:
+    needs: quality
+    if: >-
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/heads/feat/') &&
+      contains(github.event.head_commit.message, '[publish notebooks]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: true
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: '0.11.33'
+          enable-cache: true
+          download-from-astral-mirror: false
+      - run: uv sync --frozen --group dev
+      - run: uv run --frozen ruff format src scripts tests notebooks
+      - run: uv run --frozen python scripts/quality.py
+      - name: Commit executed canonical notebooks
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          for notebook in 00_project_readiness 01_data_analysis 02_motion_benchmarks; do
+            cp "artifacts/notebooks/$notebook.ipynb" "notebooks/$notebook.ipynb"
+          done
+          uv run --frozen ruff check notebooks/
+          uv run --frozen ruff format --check notebooks/
+          git add -- src/nfl_trajectory/features.py src/nfl_trajectory/feature_experiment.py src/nfl_trajectory/cli.py src/nfl_trajectory/storage.py scripts/notebooks.py tests/test_features.py tests/test_feature_experiment.py
+          git add -- notebooks/00_project_readiness.ipynb notebooks/01_data_analysis.ipynb notebooks/02_motion_benchmarks.ipynb
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: format research code and publish executed notebooks'
+            git push origin "HEAD:$BRANCH"
+          fi

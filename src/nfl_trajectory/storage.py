@@ -61,12 +61,8 @@ def backup(root: Path, bucket: str, run: Run, s3: Any) -> str:
                     str(path),
                     bucket,
                     key,
-                    ExtraArgs={
-                        "ServerSideEncryption": "AES256",
-                        "Metadata": {"sha256": digest},
-                    },
+                    ExtraArgs={"ServerSideEncryption": "AES256", "Metadata": {"sha256": digest}},
                 )
-                # Detect a changing local source before any snapshot manifest can be published.
                 if sha256(path) != digest:
                     raise ValueError(
                         "An artifact changed during backup; stop other writers and rerun."
@@ -79,7 +75,8 @@ def backup(root: Path, bucket: str, run: Run, s3: Any) -> str:
                     "size": path.stat().st_size,
                 }
             )
-            run.event("backup_progress", completed_files=i, total_files=len(candidates))
+            if i == 1 or i % 25 == 0 or i == len(candidates):
+                run.event("backup_progress", completed_files=i, total_files=len(candidates))
         payload = json.dumps({"format": 1, "files": entries}, sort_keys=True).encode()
         manifest = f"snapshots/{hashlib.sha256(payload).hexdigest()}.json"
         s3.put_object(Bucket=bucket, Key=manifest, Body=payload, ServerSideEncryption="AES256")

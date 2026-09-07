@@ -21,21 +21,45 @@ def project(tmp_path):
     folder.mkdir(parents=True)
     (tmp_path / "artifacts/benchmark").mkdir(parents=True)
     splits, pairs, statistics = [], [], []
-    for week, (game, split) in enumerate([(2023090700, "train"), (2023091400, "train"),
-                                        (2023120400, "validation"), (2023122100, "holdout")], 1):
+    for week, (game, split) in enumerate(
+        [
+            (2023090700, "train"),
+            (2023091400, "train"),
+            (2023120400, "validation"),
+            (2023122100, "holdout"),
+        ],
+        1,
+    ):
         observed, truth = [], []
         for player in (1, 2, 3):
             for frame in range(1, 9):
-                observed.append({"game_id": game, "play_id": 1, "nfl_id": player, "frame_id": frame,
-                                 "x": 30 + player + frame * (0.2 + 0.03 * week),
-                                 "y": 20 + player + frame * 0.1,
-                                 "player_role": "Targeted Receiver" if player == 1 else "Defensive Coverage",
-                                 "player_side": "Offense" if player == 1 else "Defense", "play_direction": "right",
-                                 "ball_land_x": 42.0, "ball_land_y": 24.0, "num_frames_output": 12})
+                observed.append(
+                    {
+                        "game_id": game,
+                        "play_id": 1,
+                        "nfl_id": player,
+                        "frame_id": frame,
+                        "x": 30 + player + frame * (0.2 + 0.03 * week),
+                        "y": 20 + player + frame * 0.1,
+                        "player_role": "Targeted Receiver" if player == 1 else "Defensive Coverage",
+                        "player_side": "Offense" if player == 1 else "Defense",
+                        "play_direction": "right",
+                        "ball_land_x": 42.0,
+                        "ball_land_y": 24.0,
+                        "num_frames_output": 12,
+                    }
+                )
             for frame in range(1, 13):
-                truth.append({"game_id": game, "play_id": 1, "nfl_id": player, "frame_id": frame,
-                              "x": 30 + player + (8 + frame) * (0.2 + 0.03 * week) - 0.005 * frame**2,
-                              "y": 20 + player + (8 + frame) * 0.1 + 0.01 * frame**2})
+                truth.append(
+                    {
+                        "game_id": game,
+                        "play_id": 1,
+                        "nfl_id": player,
+                        "frame_id": frame,
+                        "x": 30 + player + (8 + frame) * (0.2 + 0.03 * week) - 0.005 * frame**2,
+                        "y": 20 + player + (8 + frame) * 0.1 + 0.01 * frame**2,
+                    }
+                )
         x, y = pd.DataFrame(observed), pd.DataFrame(truth)
         name = f"input_2023_w{week:02d}.csv"
         x.to_csv(folder / name, index=False)
@@ -51,8 +75,10 @@ def project(tmp_path):
     fitted = fit_statistics(statistics)
     fitted.update({"training_games": [2023090700, 2023091400], "split_sha256": sha256(split_path)})
     atomic_json(tmp_path / "artifacts/benchmark/model.json", fitted)
-    atomic_json(tmp_path / "artifacts/audit_summary.json", {
-        "status": "passed", "competition": "nfl-big-data-bowl-2026-prediction", "pairs": pairs})
+    atomic_json(
+        tmp_path / "artifacts/audit_summary.json",
+        {"status": "passed", "competition": "nfl-big-data-bowl-2026-prediction", "pairs": pairs},
+    )
     return tmp_path
 
 
@@ -76,7 +102,11 @@ def test_complete_experiment_and_verified_resume(project):
     assert summary["holdout_evaluation"] == "not_run"
     assert len(summary["models"]) == 5
     assert sha256(project / "artifacts/benchmark/model.json") == baseline
-    before = {p: sha256(p) for p in (project / "artifacts/features").rglob("*") if p.is_file() and p.suffix != ".lock"}
+    before = {
+        p: sha256(p)
+        for p in (project / "artifacts/features").rglob("*")
+        if p.is_file() and p.suffix != ".lock"
+    }
     resumed = run_project(project)
     after = {p: sha256(p) for p in before}
     assert before == after
@@ -157,7 +187,10 @@ def test_tampered_week_recomputes_instead_of_reusing(project):
     resumed = run_project(project)
     assert load_week(path)[0].values.size > 0
     events = [json.loads(line) for line in resumed.log_path.read_text().splitlines()]
-    assert any(e["event"] == "stage_started" and e.get("stage") == "features-prepare-input_2023_w01" for e in events)
+    assert any(
+        e["event"] == "stage_started" and e.get("stage") == "features-prepare-input_2023_w01"
+        for e in events
+    )
 
 
 def notebook_tools():

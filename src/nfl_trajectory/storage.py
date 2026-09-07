@@ -58,22 +58,31 @@ def backup(root: Path, bucket: str, run: Run, s3: Any) -> str:
             key = f"objects/{digest}"
             if key not in known:
                 s3.upload_file(
-                    str(path), bucket, key,
+                    str(path),
+                    bucket,
+                    key,
                     ExtraArgs={"ServerSideEncryption": "AES256", "Metadata": {"sha256": digest}},
                 )
                 if sha256(path) != digest:
-                    raise ValueError("An artifact changed during backup; stop other writers and rerun.")
+                    raise ValueError(
+                        "An artifact changed during backup; stop other writers and rerun."
+                    )
                 known.add(key)
             entries.append(
-                {"path": path.relative_to(root).as_posix(), "sha256": digest,
-                 "size": path.stat().st_size}
+                {
+                    "path": path.relative_to(root).as_posix(),
+                    "sha256": digest,
+                    "size": path.stat().st_size,
+                }
             )
             if i == 1 or i % 25 == 0 or i == len(candidates):
                 run.event("backup_progress", completed_files=i, total_files=len(candidates))
         payload = json.dumps({"format": 1, "files": entries}, sort_keys=True).encode()
         manifest = f"snapshots/{hashlib.sha256(payload).hexdigest()}.json"
         s3.put_object(Bucket=bucket, Key=manifest, Body=payload, ServerSideEncryption="AES256")
-        atomic_json(root / "artifacts" / "last_backup.json", {"bucket": bucket, "manifest": manifest})
+        atomic_json(
+            root / "artifacts" / "last_backup.json", {"bucket": bucket, "manifest": manifest}
+        )
         run.event("backup_completed", bucket=bucket, manifest=manifest)
         return manifest
 
@@ -104,7 +113,9 @@ def restore(root: Path, bucket: str, manifest: str, run: Run, s3: Any) -> None:
             raise ValueError("Snapshot contains an invalid checksum.")
         destination = root / relative
         if destination.exists() and sha256(destination) != item["sha256"]:
-            raise ValueError("Local file differs from snapshot; restore into a fresh project directory.")
+            raise ValueError(
+                "Local file differs from snapshot; restore into a fresh project directory."
+            )
         destinations.append(destination)
     if len(destinations) != len(set(destinations)):
         raise ValueError("Snapshot has duplicate destinations.")

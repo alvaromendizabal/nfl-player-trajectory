@@ -14,17 +14,38 @@ def tracking():
     rows, targets = [], []
     for player in range(1, 5):
         for frame in (1, 2, 4, 6, 7):
-            rows.append({"game_id": 2023090700, "play_id": 1, "nfl_id": player,
-                         "frame_id": frame, "x": 30 + player + frame * 0.3,
-                         "y": 20 + player + frame * 0.1, "play_direction": "right",
-                         "player_side": "Offense" if player < 3 else "Defense",
-                         "player_role": "Targeted Receiver" if player == 1 else "Defensive Coverage",
-                         "ball_land_x": 44.0, "ball_land_y": -0.2, "num_frames_output": 10,
-                         "s": 3.2, "a": 0.0, "dir": 359.0, "o": 1.0,
-                         "absolute_yardline_number": 30.0})
+            rows.append(
+                {
+                    "game_id": 2023090700,
+                    "play_id": 1,
+                    "nfl_id": player,
+                    "frame_id": frame,
+                    "x": 30 + player + frame * 0.3,
+                    "y": 20 + player + frame * 0.1,
+                    "play_direction": "right",
+                    "player_side": "Offense" if player < 3 else "Defense",
+                    "player_role": "Targeted Receiver" if player == 1 else "Defensive Coverage",
+                    "ball_land_x": 44.0,
+                    "ball_land_y": -0.2,
+                    "num_frames_output": 10,
+                    "s": 3.2,
+                    "a": 0.0,
+                    "dir": 359.0,
+                    "o": 1.0,
+                    "absolute_yardline_number": 30.0,
+                }
+            )
         for frame in range(1, 11):
-            targets.append({"game_id": 2023090700, "play_id": 1, "nfl_id": player,
-                            "frame_id": frame, "x": 50.0, "y": 10.0})
+            targets.append(
+                {
+                    "game_id": 2023090700,
+                    "play_id": 1,
+                    "nfl_id": player,
+                    "frame_id": frame,
+                    "x": 50.0,
+                    "y": 10.0,
+                }
+            )
     return pd.DataFrame(rows), pd.DataFrame(targets)
 
 
@@ -76,8 +97,9 @@ def test_missing_neighbors_and_telemetry_are_masked(tracking):
     x, targets = tracking
     x = x[x.nfl_id == 1].drop(columns=["s", "a", "dir", "o"])
     targets = targets[targets.nfl_id == 1]
-    values = build_player_features(x).matrix(targets, ["opponent1__present", "opponent1__distance",
-                                                     "telemetry__s__present", "lag00__s"])
+    values = build_player_features(x).matrix(
+        targets, ["opponent1__present", "opponent1__distance", "telemetry__s__present", "lag00__s"]
+    )
     np.testing.assert_array_equal(values, 0.0)
 
 
@@ -85,7 +107,9 @@ def test_single_observation_is_finite(tracking):
     x, targets = tracking
     bank = build_player_features(x[x.frame_id == 7])
     assert np.isfinite(bank.matrix(targets)).all()
-    np.testing.assert_array_equal(bank.matrix(targets, ["lag00__vx", "lag00__ax", "lag00__jerk"]), 0.0)
+    np.testing.assert_array_equal(
+        bank.matrix(targets, ["lag00__vx", "lag00__ax", "lag00__jerk"]), 0.0
+    )
 
 
 def test_prethrow_nonpredicted_players_still_supply_context(tracking):
@@ -107,8 +131,9 @@ def test_left_right_canonicalization_and_angle_wrapping(tracking):
         rotated[column] = WIDTH - rotated[column]
     for column in ("dir", "o"):
         rotated[column] = (rotated[column] + 180) % 360
-    np.testing.assert_allclose(build_player_features(rotated).matrix(targets), reference,
-                               atol=2e-5, rtol=2e-5)
+    np.testing.assert_allclose(
+        build_player_features(rotated).matrix(targets), reference, atol=2e-5, rtol=2e-5
+    )
     angles = build_player_features(x).matrix(targets.iloc[:1], ["lag00__orientation_alignment"])
     assert angles[0, 0] > 0.99
 
@@ -119,10 +144,18 @@ def test_coordinates_outside_field_are_not_clipped(tracking):
     assert values[0, 0] == pytest.approx(-0.2 - 21.7)
 
 
-@pytest.mark.parametrize("column,value", [("x", np.nan), ("x", np.inf),
-                                        ("num_frames_output", 0), ("num_frames_output", 1.5),
-                                        ("play_direction", "north"), ("player_side", "unknown"),
-                                        ("dir", np.inf)])
+@pytest.mark.parametrize(
+    "column,value",
+    [
+        ("x", np.nan),
+        ("x", np.inf),
+        ("num_frames_output", 0),
+        ("num_frames_output", 1.5),
+        ("play_direction", "north"),
+        ("player_side", "unknown"),
+        ("dir", np.inf),
+    ],
+)
 def test_invalid_inputs_fail_explicitly(tracking, column, value):
     x, _ = tracking
     x[column] = value
@@ -166,7 +199,9 @@ def test_other_plays_and_games_cannot_contaminate_neighbors(tracking):
     other = x.copy()
     other["game_id"] += 100
     other["x"] += 1000
-    np.testing.assert_array_equal(build_player_features(pd.concat([x, other])).matrix(targets), reference)
+    np.testing.assert_array_equal(
+        build_player_features(pd.concat([x, other])).matrix(targets), reference
+    )
 
 
 def test_no_identity_or_outcome_columns_enter_schema(tracking):

@@ -73,15 +73,25 @@ def main() -> int:
     parser.add_argument(
         "command",
         choices=[
-            "preflight", "download", "audit", "demo", "status", "backup",
-            "restore", "benchmark", "features",
+            "preflight",
+            "download",
+            "audit",
+            "demo",
+            "status",
+            "backup",
+            "restore",
+            "benchmark",
+            "features",
         ],
     )
     parser.add_argument("--bucket")
     parser.add_argument("--region", default="us-west-2")
     parser.add_argument("--manifest")
-    parser.add_argument("--checkpoint-s3", action="store_true",
-                        help="Back up after each prepared week, fitted model, and feature report.")
+    parser.add_argument(
+        "--checkpoint-s3",
+        action="store_true",
+        help="Back up after each prepared week, fitted model, and feature report.",
+    )
     args = parser.parse_args()
     try:
         root = find_root()
@@ -110,8 +120,11 @@ def main() -> int:
                 feature_experiment(root, run, checkpoint)
             elif args.command == "status":
                 for name in [
-                    "preflight.json", "audit_summary.json", "benchmark/summary.json",
-                    "features/summary.json", "last_backup.json",
+                    "preflight.json",
+                    "audit_summary.json",
+                    "benchmark/summary.json",
+                    "features/summary.json",
+                    "last_backup.json",
                 ]:
                     path = root / "artifacts" / name
                     run.event("artifact_status", file=name, result=status_summary(path))

@@ -1,184 +1,99 @@
-# Start here — NFL trajectory research
+# Run and review the NFL trajectory project
 
+## Continue in the existing SageMaker terminal
 
-## Continue an existing project after Phase 0
-
-The first data download, audit, GitHub push, and private snapshot are complete.
-Keep the existing directory. In its SageMaker terminal, run this single sequence:
+Keep `$HOME/nfl-player-trajectory`, its `.venv`, `data/`, `.state/`, and `artifacts/`.
+Do not extract another bundle, reinitialize Git, or redownload successful work.
+Bootstrap checks the environment and notebooks; it does **not** train the real-data
+benchmark. Complete the sequence below after reviewing `git status --short` and
+committing any intentional local source changes.
 
 ```bash
 cd "$HOME/nfl-player-trajectory" &&
 git pull --ff-only origin main &&
 python3 scripts/bootstrap.py &&
 .venv/bin/nfl benchmark &&
+.venv/bin/python scripts/notebooks.py --publish &&
 .venv/bin/python kaggle/export.py --model role_ridge &&
 .venv/bin/nfl backup &&
 .venv/bin/nfl status
 ```
 
-The benchmark prepares training/validation weeks, fits the role model on training
-games, compares six models, and renders the report. It verifies and reuses completed
-stages on repeat. The holdout is excluded. Open `notebooks/01_data_analysis.ipynb`,
-`notebooks/02_motion_benchmarks.ipynb`, and `artifacts/benchmark/report.html`.
-Notebook 00 remains an orientation notebook; running it is not a prerequisite for
-01/02. The two research notebooks read the computed results rather than retraining.
+This uses the existing CPU environment. It does not create a cloud instance or
+launch a training job. Your running SageMaker app and storage retain their normal
+AWS charges. Stop the app when finished; do not delete the space.
 
-The steps below describe a first installation on a new machine.
+## What the commands produce
 
-The work in this phase establishes trustworthy inputs, scoring, recovery, and
-development practices. It does not launch neural-network training.
+`nfl benchmark` verifies the frozen game split, prepares development weeks, fits
+only training games, evaluates validation games, and renders the report. Its
+verified numerical stages are reused on repeat; holdout evaluation stays locked.
 
-## 1. Open the AWS space
+`scripts/notebooks.py --publish` requires completed local benchmark evidence and
+matching split hashes. It executes each canonical notebook in a separate Python
+process, or reuses an output with the same source/input signature and verified
+hash. Warnings and stderr fail the execution rather than being hidden. Failed
+execution leaves the last successful notebook output in place.
 
-In SageMaker Studio, use **US West (Oregon), us-west-2**, the existing domain that
-contains your other projects, and the private space **nfl-trajectory-dev**
-(display name **NFL Trajectory Research**).
+All notebook candidates are validated before publication. The command refreshes
+the **same** files in `notebooks/` and the eight aggregate result files in
+`docs/results/`. Each replacement is atomic; the multi-file publication is not a
+single filesystem transaction. A receipt at `artifacts/notebooks/publication.json`
+records completion and output hashes. An interrupted publication can be retried
+with the same command; do not treat a missing or failed receipt as a complete release.
 
-The space has been created with **ml.t3.large**, **50 GB** storage, and a
-**60-minute idle timeout**. Start the space, then open JupyterLab. Starting it
-incurs compute charges; storage and S3 are billed separately. Stop the app when
-finished. Do not delete the space. A GPU is unnecessary for this phase.
+Notebook execution without `--publish` remains suitable for CI and can use the
+explicitly labeled published snapshot. It does not claim to fit a new model.
+The supported execution method is isolated-process IPython, not a live Jupyter
+kernel; the notebooks use plain Python cells and standard rich display outputs.
 
-## 2. Upload and extract
+The exporter creates `artifacts/kaggle/submission.ipynb` with embedded ridge weights.
+Export is **not** an official gateway test or a leaderboard submission.
+`nfl backup` records a private S3 snapshot; `artifacts/last_backup.json` stores its
+manifest identifier. Keep logs, data, and recovery state outside Git.
 
-Upload `nfl-player-trajectory.zip` using the JupyterLab file browser. In a terminal:
+## Read the results
 
-```bash
-cd "$HOME"
-python3 -m zipfile -e nfl-player-trajectory.zip "$HOME"
-cd "$HOME/nfl-player-trajectory"
-```
+Start with [README](README.md), then open
+[01 · Data analysis](notebooks/01_data_analysis.ipynb) and
+[02 · Motion benchmarks](notebooks/02_motion_benchmarks.ipynb).
+The canonical notebooks contain rendered outputs, so an employer does not need AWS,
+a notebook kernel, or Kaggle credentials to read them. Notebook 00 is optional
+orientation, not the lead portfolio demonstration.
 
-This is the initial installation. Do not re-extract over later edits; use Git to
-update the normal files in subsequent phases.
+For interactive play analysis, open `artifacts/benchmark/report.html` locally.
+Use the **Python (NFL Trajectory)** kernel for interactive work in SageMaker.
 
-## 3. Build and verify the environment
+## Progress and recovery
 
-```bash
-cd "$HOME/nfl-player-trajectory"
-python3 scripts/bootstrap.py
-```
+Terminal events include UTC timestamps, elapsed command time, stage or cell timings,
+and a 15-second heartbeat. `stage_reused` means matching output hashes were checked;
+it is not a new training run. `notebooks_published` and a passed publication receipt
+mark successful local notebook publication.
 
-Wait for `bootstrap_completed`. This creates an isolated Python environment,
-registers the notebook kernel, runs checks and tests, executes the orientation
-notebook, and runs the synthetic pipeline twice to exercise reuse. The command
-prints timestamps, elapsed time, and heartbeats. It does not exit your shell.
+If a command fails, rerun that command after addressing its reported cause. Do not
+remove verified checkpoints or suppress warnings to make a run appear successful.
+See [recovery instructions](docs/RECOVERY.md) for restoring a private S3 snapshot.
 
-## 4. Authenticate Kaggle
+## Publish the refreshed outputs to GitHub
 
-```bash
-cd "$HOME/nfl-player-trajectory"
-.venv/bin/python scripts/authenticate.py
-```
+Local publication does not push or merge Git changes. Review `git diff --stat`,
+then commit **only** `notebooks/` and `docs/results/` on a feature branch with a
+message such as `docs: publish verified NFL benchmark notebooks`. Open a pull
+request against `main`; inspect the rendered outputs and require Quality to pass
+before merging. Do not stage `data/`, `artifacts/`, logs, credentials, or private
+cloud configuration. Commit or otherwise preserve intentional local changes before
+the next `git pull`; never discard them merely to make an update succeed.
 
-Open the Kaggle link printed in the terminal, sign in to the account that accepted
-the competition rules, and approve access. Kaggle then displays a one-time
-verification code. Paste that code into the waiting terminal and press Enter.
-This remote-terminal flow uses browser approval; you do not create an API token.
+## Remaining modeling and submission work
 
-The official Kaggle SDK saves the sign-in in `~/.kaggle/credentials.json` outside
-the project. Later runs verify and reuse it, refreshing access when needed.
-Approval links and codes are not written to project logs. The script prints UTC
-timestamps, elapsed time, and a heartbeat while waiting. Keep the terminal open
-until approval completes. If interrupted before sign-in is saved, rerun the same
-command for a new link; completed project work remains reusable.
+The learned ridge model is an interpretable baseline, not a state-of-the-art claim.
+Next research is role/interaction feature ablation and stronger residual models,
+then a temporal interaction model under the same game-separated development split.
+Select on validation coordinate RMSE, retain ADE/FDE and role/horizon diagnostics,
+and evaluate the holdout only after locking model selection.
 
-To deliberately sign in again, use `scripts/authenticate.py --force` with the same
-Python executable. The equivalent official CLI command for initial sign-in is:
-
-```bash
-.venv/bin/kaggle auth login --no-launch-browser
-```
-
-See [Kaggle's official authentication documentation](https://www.kaggle.com/docs/api).
-
-## 5. Download and audit the official data
-
-```bash
-cd "$HOME/nfl-player-trajectory"
-.venv/bin/nfl download
-```
-
-Wait for `completed`. Then:
-
-```bash
-.venv/bin/nfl audit
-```
-
-The published inventory is 49 files, approximately 865 MB. The code queries the live
-inventory instead of hardcoding a file count. Expect a few minutes depending on
-network and disk performance. Each file and weekly audit produces progress events.
-If either command stops, retain the directory and rerun that same command.
-
-If authentication fails, check that you signed in to the account that accepted
-the **Prediction** competition rules. Do not repeatedly create new environments.
-
-## 6. Save a recovery snapshot
-
-```bash
-.venv/bin/nfl backup
-.venv/bin/nfl status
-```
-
-The supplied ignored `aws.local.json` selects your new private bucket. The final
-backup event prints a `snapshots/<hash>.json` identifier. Save it; it identifies the
-complete snapshot. `artifacts/last_backup.json` also records it. A failed upload never
-publishes a completed snapshot. Only completed outputs are reused during retry.
-
-## 7. Review the notebook
-
-Open `notebooks/00_project_readiness.ipynb`, select **Python (NFL Trajectory)**, and
-Run All. Read the metric explanation and the synthetic trajectory diagram, then
-review the actual audit summary and split counts after Step 5. The synthetic demo
-illustrates behavior; it is not an NFL evaluation score.
-
-The executed notebook from the quality gate is also in `artifacts/notebooks/`.
-Open `artifacts/demo/trajectory.html` in a browser for the interactive offline figure.
-
-## 8. Create the public GitHub repository
-
-The linked GitHub connection cannot create repositories. In [GitHub New Repository](https://github.com/new):
-
-- Owner: `alvaromendizabal`
-- Name: `nfl-player-trajectory`
-- Visibility: **Public**
-- Description: `NFL player trajectory prediction with temporal validation, motion baselines, interpretable visualizations, and reproducible AWS experiments.`
-- Leave **Add README**, **.gitignore**, and **license** unchecked; this project already includes them.
-
-Then run:
-
-```bash
-cd "$HOME/nfl-player-trajectory"
-.venv/bin/python scripts/initialize_git.py
-git remote add origin https://github.com/alvaromendizabal/nfl-player-trajectory.git
-GH_BROWSER=true gh auth login --hostname github.com --git-protocol https --web --scopes workflow
-gh auth setup-git --hostname github.com
-git push -u origin main
-```
-
-The initializer refuses an existing Git repository and commits an explicit allowlist
-of source, notebooks, tests, documentation, and CI. It excludes private configuration
-and generated data. Authentication for `git push` is separate from the ChatGPT GitHub
-connection. Install the [official GitHub CLI](https://cli.github.com/) if `gh` is unavailable.
-The login command prints a device code. Open https://github.com/login/device in your
-signed-in browser, enter that code on GitHub, and authorize the CLI. Saved credentials
-support subsequent pushes. Never enter an account password at a Git password prompt
-or put a token in a remote URL. For an existing repository, skip initialization and
-remote creation; use its existing commit history.
-Creating the empty repository and sharing its link also allows the next phase to use
-the linked GitHub connection for repository changes.
-
-## 9. Confirm the handoff
-
-The Phase 0 gate is complete when:
-
-- `bootstrap_completed` appears and GitHub Actions passes after push.
-- `artifacts/audit_summary.json` reports `passed` on actual NFL data.
-- `artifacts/game_splits.csv` exists and has train, validation, and holdout games.
-- `nfl backup` finishes and prints a snapshot manifest.
-- Notebook 00 displays the actual audit results without errors.
-
-Send the final `nfl status` output and repository link. Do not send data or tokens.
-Next is **Phase 1: real-data EDA, field animations, split review, and scored physical
-baselines**. Subsequent changes use feature branches, tested PRs, and documented merges.
-
+The official Kaggle gateway and authenticated late-submission eligibility still
+need verification. This historical competition cannot yield a new medal. Record a
+leaderboard score only after Kaggle actually returns one. No Hugging Face release
+is required to read the portfolio.

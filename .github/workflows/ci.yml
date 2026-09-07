@@ -22,6 +22,10 @@ jobs:
           enable-cache: true
           prune-cache: true
           download-from-astral-mirror: false
+      - name: Capture tested source
+        run: |
+          mkdir -p artifacts
+          git archive --format=tar.gz --output=artifacts/source.tar.gz HEAD
       - run: uv sync --frozen --group dev
       - run: uv run --frozen python scripts/quality.py
       - name: Retain evidence
@@ -31,6 +35,7 @@ jobs:
           name: validation-evidence
           path: |
             logs/
+            artifacts/source.tar.gz
             artifacts/quality.json
             artifacts/demo/
             artifacts/notebooks/

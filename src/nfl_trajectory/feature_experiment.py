@@ -99,7 +99,7 @@ def screen_week(cache: Path, output: Path) -> None:
     bank, targets, arrays = load_week(cache)
     mask = arrays["labels"] == "train"
     targets = targets.loc[mask].reset_index(drop=True)
-    y = (arrays["truth"][mask] - arrays["ridge"][mask])
+    y = arrays["truth"][mask] - arrays["ridge"][mask]
     if len(targets):
         y *= target_state(bank, targets).sign.to_numpy()[:, None]
     n = len(feature_catalog())
@@ -120,7 +120,7 @@ def screening(paths: list[Path]) -> tuple[pd.DataFrame, dict[str, list[str]]]:
     count = sum(r["count"] for r in rows)
     if count <= 1:
         raise ValueError("At least two training target rows are required for feature screening.")
-    sums = {key: sum(np.asarray(r[key], dtype=float) for r in rows)
+    sums = {key: np.sum([np.asarray(r[key], dtype=float) for r in rows], axis=0)
             for key in ("sx", "sxx", "sxy", "sy", "syy")}
     vx = np.maximum(sums["sxx"] - sums["sx"]**2 / count, 0.0)
     vy = np.maximum(sums["syy"] - sums["sy"]**2 / count, 0.0)
@@ -165,7 +165,8 @@ def fit_regression(paths: list[Path], names: list[str]) -> dict[str, Any]:
     count = sum(r["count"] for r in records)
     if count <= 1:
         raise ValueError("Training-only regression statistics are empty.")
-    total = {key: sum(np.asarray(r[key], float) for r in records) for key in ("gram", "rhs", "sx", "sy")}
+    total = {key: np.sum([np.asarray(r[key], float) for r in records], axis=0)
+             for key in ("gram", "rhs", "sx", "sy")}
     mean, intercept = total["sx"] / count, total["sy"] / count
     covariance = total["gram"] / count - np.outer(mean, mean)
     scales = np.sqrt(np.maximum(np.diag(covariance), 1e-12))
@@ -186,6 +187,10 @@ def fit_regression(paths: list[Path], names: list[str]) -> dict[str, Any]:
     return {"features": [names[i] for i in kept], "mean": mean[kept].tolist(),
             "scale": scales[kept].tolist(), "coefficients": coefficients.tolist(),
             "intercept": intercept.tolist(), "alpha": RIDGE_ALPHA, "training_rows": count}
+
+
+def save_regression(paths: list[Path], names: list[str], output: Path) -> None:
+    atomic_json(output, fit_regression(paths, names))
 
 
 def predict_residual(bank: PlayerFeatures, targets: pd.DataFrame, model: dict[str, Any]) -> np.ndarray:
@@ -299,7 +304,7 @@ def feature_experiment(root: Path, run: Run, checkpoint: Callable[[], object] | 
                           completed_weeks=i, total_weeks=len(caches))
             model_path = destination / "models" / f"{name}.json"
             stage(root, f"features-fit-{name}", signature(root, statistics, {"alpha": RIDGE_ALPHA, "features": columns}),
-                  [model_path], lambda p=model_path, s=statistics, c=columns: atomic_json(p, fit_regression(s, c)), run)
+                  [model_path], partial(save_regression, statistics, columns, model_path), run)
             models[name] = json.loads(model_path.read_text())
             if checkpoint is not None:
                 checkpoint()

@@ -1,6 +1,6 @@
 # Recovery
 
-Run the same download, audit, or demo command after a failure. Atomic completion
+Run the same download, audit, demo, or benchmark command after a failure. Atomic completion
 records ensure incomplete work is rerun and completed, verified work is reused.
 Local logs record both total elapsed time and stage/file progress.
 
@@ -29,7 +29,13 @@ and every file hash. It refuses divergent existing files so it cannot overwrite 
 work. Restoring into a fresh directory is the safest recovery path. If the source or
 dependency lock changed, audit checkpoints are invalidated and recomputed.
 
-No neural trainer exists in Phase 0. Phase 3 will require epoch/batch progress, model,
+The benchmark checkpoints weekly feature extraction, training statistics, model fitting,
+validation errors and latency. It hashes input files, the frozen split, numerical
+source and the dependency lock; each completed output is checksum verified before
+reuse. An interrupted or corrupted stage is recomputed. Unchanged verified stages
+are retained. Reports are regenerated cheaply from these numerical artifacts.
+
+No neural trainer exists in Phase 1. Phase 3 will require epoch/batch progress, model,
 optimizer, scheduler, scaler, random-generator states, data split identity, configuration,
 and code identity in a training checkpoint, with an interrupted-versus-uninterrupted
 equivalence test before expensive runs.

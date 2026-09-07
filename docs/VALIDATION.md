@@ -1,93 +1,70 @@
-# Phase 0 validation
+# Validation evidence
 
 Validated September 7, 2026, on Linux x86_64 / Python 3.11.15.
 
 | Check | Result |
 | --- | --- |
-| Dependency resolution and locked install | Passed |
-| Python compilation | Passed |
-| Ruff lint and formatting | Passed |
-| mypy, 13 source files | Passed |
-| Automated tests | 41 passed; warnings treated as test errors |
-| Synthetic pipeline and checkpoint reuse | Passed |
-| Notebook 00 cells | 4 executed successfully with real captured outputs |
-| Baseline Kaggle notebook export | Passed; schema-valid notebook |
-| Bootstrap command rerun | Passed; both existing environment and original archive + update tested |
-| Final quality gate | 12 checks passed |
-| Static trajectory preview | Rendered and visually inspected |
+| Frozen dependency install, compilation, Ruff lint and formatting | Passed |
+| mypy | Passed; 16 source files |
+| Automated tests | 70 passed; warnings treated as errors |
+| Complete offline quality gate | 13 checks passed in 30.084 seconds |
+| Project notebooks | All three executed with captured outputs |
+| Constant-velocity and fitted-model Kaggle exports | Passed schema, lint, formatting and numerical parity tests |
+| Real NFL benchmark | Six models; 32 validation games; 67,857 target positions |
+| Full benchmark / repeat | 33.924 seconds / 5.166 seconds |
+| Repeat computation | All 33 numerical stages reused; no new numerical stage started |
+| Published static figures | Rendered and visually inspected |
+| Offline field animation | Frame/trace alignment, slider and embedded resources tested |
 
-Final quality run: `20260907T003834Z-e505ce57` (7.17 seconds).
+Quality run: `20260907T013100Z-1b8b6e14`.
+Real benchmark run: `20260907T012026Z-03b641f0`.
+Resume run: `20260907T012254Z-4c89d51e`.
+No warnings were emitted by the completed quality run. GitHub Actions repeats the
+quality gate on pushes and pull requests and retains its evidence for 30 days.
 
-The notebook test executes code in a dedicated Python process using IPython, with
-real output capture. This session cannot open kernel sockets, so a standard Jupyter
-kernel execution was unavailable. Interactive SageMaker Jupyter execution remains a
-user-side acceptance step. No warnings were emitted by the final quality/bootstrap run.
+## Scientific evidence
 
-## Tested failure cases
+The user's completed authenticated download and audit covered 18 weekly pairs:
+4,880,579 observed rows and 562,936 target rows. The existing chronological split
+is unchanged: 192 training, 32 validation, and 48 holdout games. This benchmark
+restored only weeks needed for training and validation; holdout-only weeks were
+not downloaded or evaluated in this analysis workspace.
 
-The suite checks the exact 2N metric denominator, row-order invariance, missing,
-extra, duplicate and nonfinite predictions, incorrect player alignment, output-clock
-reset, irregular input-frame spacing, single-frame fallback, temporal grouping,
-short-history rejection, interrupted stages, stale source fingerprints, corrupted
-outputs, process locks, heartbeat logging, unsafe archive paths, ZIP extraction,
-paginated file download, download reuse, audit reuse, inconsistent horizons, backup
-reuse, checksum-corrupt recovery, and preservation of divergent local files.
+Role-conditioned ridge achieved coordinate RMSE **0.9895688 yards**, compared with
+**1.7225165** for constant velocity: **42.55% lower validation RMSE**. The whole-game
+bootstrap 95% interval is **[0.9218024, 1.0518861]**. This is a local validation score,
+not a Kaggle leaderboard result. All six predictors use exactly the same target rows.
 
-## Cloud state
+The split SHA256 is
+`383b3b76cd7dd0085ee5eac9e52ff49bb380fbb55e3e46e2603b570c8bf417e7`.
+The numerical cache signature is
+`affbaca23a9aadfd2beda75b203200566804dd6f7a51a47a9ac7fe8ab3825166`.
+Public aggregate metrics, coefficients, protocol and figures are in `docs/results/`.
 
-The new private SageMaker space is InService with a default ml.t3.large instance,
-50 GB EBS, and a 60-minute idle timeout. No application or training job was started.
-The dedicated S3 bucket has versioning, AES256 encryption, and all public-access
-blocks enabled. IAM policy simulation allows the existing Studio execution role to
-list/read/write this bucket. Simulation is not a live transfer from a Studio process.
+## Failure and correctness coverage
 
-## Explicitly not yet verified
+Tests cover the exact 2N metric denominator, unequal trajectory lengths, whole-game
+bootstrap pooling, row-order preservation, missing/extra/duplicate/nonfinite
+predictions, player alignment, output-clock reset, irregular input spacing,
+single-frame fallback, horizon validation, grouped temporal splits and sealed holdout,
+translation and rotation equivariance, additive training statistics, unseen-role
+fallback, target-coordinate leakage, export equivalence, interrupted stages, changed
+fingerprints, corrupt caches, process locks, timestamped heartbeats, unsafe archive
+paths, download reuse, backup reuse, corrupt restoration and divergent local files.
 
-- Authenticated Kaggle inventory/download using the user's account in this new space.
-- Actual NFL CSV audit or data-dependent validation results.
-- Interactive notebook execution inside SageMaker.
-- Official Kaggle local gateway or leaderboard submission.
-- Late-submission eligibility for the authenticated account.
-- GitHub repository creation, remote push, hosted CI, or a merged PR.
-- GPU training, trained models, or Hugging Face publication.
+Notebook execution uses dedicated IPython processes with actual rich output capture.
+The ordinary SageMaker Jupyter kernel and interactive browser playback still need
+user-side acceptance. Static visual inspection and animation structure tests passed;
+a browser rendering check could not be completed in this environment.
 
-These are visible gates for the next steps, not successful results. Synthetic scores
-must not be presented as NFL model performance.
+## Cloud and submission status
 
-## Export regression resolved
+The user's latest log confirms GitHub push, authenticated Kaggle download, real-data
+audit and a successful private S3 snapshot. The existing SageMaker development space
+is in use. No GPU training job, paid model deployment or Hugging Face publication was
+started for this phase.
 
-The first delivered archive failed Ruff in the user's SageMaker space because
-its generated submission notebook placed imports after setup code. The original
-local check had not reliably linted ignored generated artifacts.
-
-The canonical exporter now places future and module imports in the first code
-cell, loads the evaluation module after path setup using importlib, and formats
-the exported notebook. The quality gate regenerates the artifact first, then
-explicitly checks its lint and formatting independent of Git ignore behavior.
-No lint rule was disabled.
-
-Two new regression tests validate the generated notebook outside Git and execute
-its exported predictor against the package reference, including shuffled target
-row order. The exact original archive was extracted into a fresh /tmp directory,
-the three code/test updates were applied, and bootstrap completed with 35 tests
-passing. The existing-environment bootstrap also passed. The official Kaggle
-gateway remains untested because this environment lacks the competition data.
-
-## Browser sign-in
-
-The canonical authentication script now uses the official Kaggle SDK OAuth flow.
-Remote SageMaker terminals print a Kaggle approval link and accept the one-time
-verification code returned by the browser. Existing OAuth credentials are refreshed
-and validated on reuse; `--force` deliberately starts a new approval. The SDK owns
-credential storage outside the repository. Project logs retain only progress and
-error types, with UTC timestamps, elapsed time, and heartbeats.
-
-Six offline tests exercise first sign-in, credential reuse, explicit reauthorization,
-cancellation, end-of-input, and secret-safe failure reporting. The complete 12-check
-quality gate passed with 41 tests. The installed CLI also confirms support for
-`kaggle auth login --no-launch-browser`. No live OAuth session was started in this
-workspace; browser approval must occur for the user's persistent SageMaker space.
-
-The user's supplied SageMaker log records `bootstrap_completed` at
-2026-09-07T00:33:39.769681+00:00 with a total time of 10.04 seconds.
-The environment does not need to be rebuilt to use browser sign-in.
+The standalone trained-model notebook embeds its coefficients and canonical predictor
+code. Its prediction parity is tested, but the official Kaggle local gateway and any
+leaderboard submission remain pending. Late-submission eligibility is unverified.
+This phase establishes an interpretable benchmark; it is not a state-of-the-art claim.

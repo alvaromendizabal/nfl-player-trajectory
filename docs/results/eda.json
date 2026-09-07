@@ -1,0 +1,827 @@
+{
+  "split": "train",
+  "weeks": [
+    {
+      "file": "input_2023_w01.csv",
+      "input_rows": 285714,
+      "target_rows": 32088,
+      "games": 16,
+      "trajectories": 2679,
+      "plays": 819,
+      "roles": {
+        "Defensive Coverage": 1860,
+        "Targeted Receiver": 819
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        1111,
+        1034,
+        285,
+        217,
+        24,
+        8
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        313,
+        862,
+        875,
+        532,
+        97,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w02.csv",
+      "input_rows": 288586,
+      "target_rows": 32180,
+      "games": 16,
+      "trajectories": 2758,
+      "plays": 850,
+      "roles": {
+        "Defensive Coverage": 1908,
+        "Targeted Receiver": 850
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        1174,
+        1079,
+        251,
+        211,
+        43,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        348,
+        905,
+        904,
+        511,
+        90,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w03.csv",
+      "input_rows": 297757,
+      "target_rows": 36080,
+      "games": 16,
+      "trajectories": 2959,
+      "plays": 904,
+      "roles": {
+        "Defensive Coverage": 2055,
+        "Targeted Receiver": 904
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        1186,
+        1026,
+        389,
+        348,
+        10,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        355,
+        934,
+        974,
+        598,
+        98,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w04.csv",
+      "input_rows": 272475,
+      "target_rows": 30147,
+      "games": 16,
+      "trajectories": 2517,
+      "plays": 779,
+      "roles": {
+        "Defensive Coverage": 1738,
+        "Targeted Receiver": 779
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        972,
+        951,
+        366,
+        213,
+        15,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        292,
+        786,
+        851,
+        494,
+        93,
+        1,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w05.csv",
+      "input_rows": 254779,
+      "target_rows": 29319,
+      "games": 14,
+      "trajectories": 2449,
+      "plays": 742,
+      "roles": {
+        "Defensive Coverage": 1707,
+        "Targeted Receiver": 742
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        946,
+        940,
+        323,
+        237,
+        3,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        332,
+        744,
+        810,
+        478,
+        85,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w06.csv",
+      "input_rows": 270676,
+      "target_rows": 31162,
+      "games": 15,
+      "trajectories": 2608,
+      "plays": 793,
+      "roles": {
+        "Defensive Coverage": 1815,
+        "Targeted Receiver": 793
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        1059,
+        960,
+        309,
+        256,
+        24,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        311,
+        834,
+        862,
+        501,
+        100,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w07.csv",
+      "input_rows": 233597,
+      "target_rows": 27443,
+      "games": 13,
+      "trajectories": 2292,
+      "plays": 693,
+      "roles": {
+        "Defensive Coverage": 1599,
+        "Targeted Receiver": 693
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        863,
+        886,
+        328,
+        202,
+        13,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        274,
+        724,
+        772,
+        450,
+        72,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w08.csv",
+      "input_rows": 281011,
+      "target_rows": 33017,
+      "games": 16,
+      "trajectories": 2705,
+      "plays": 827,
+      "roles": {
+        "Defensive Coverage": 1878,
+        "Targeted Receiver": 827
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        988,
+        1062,
+        342,
+        281,
+        32,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        309,
+        856,
+        914,
+        520,
+        106,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w09.csv",
+      "input_rows": 252796,
+      "target_rows": 28291,
+      "games": 14,
+      "trajectories": 2281,
+      "plays": 711,
+      "roles": {
+        "Defensive Coverage": 1570,
+        "Targeted Receiver": 711
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        868,
+        806,
+        353,
+        222,
+        32,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        242,
+        727,
+        796,
+        417,
+        99,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w10.csv",
+      "input_rows": 260372,
+      "target_rows": 29008,
+      "games": 14,
+      "trajectories": 2365,
+      "plays": 721,
+      "roles": {
+        "Defensive Coverage": 1644,
+        "Targeted Receiver": 721
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        913,
+        840,
+        342,
+        253,
+        17,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        279,
+        762,
+        748,
+        479,
+        97,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w11.csv",
+      "input_rows": 243413,
+      "target_rows": 27623,
+      "games": 14,
+      "trajectories": 2298,
+      "plays": 707,
+      "roles": {
+        "Defensive Coverage": 1591,
+        "Targeted Receiver": 707
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        993,
+        815,
+        200,
+        272,
+        18,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        291,
+        736,
+        763,
+        419,
+        88,
+        1,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w12.csv",
+      "input_rows": 294940,
+      "target_rows": 32156,
+      "games": 16,
+      "trajectories": 2705,
+      "plays": 854,
+      "roles": {
+        "Defensive Coverage": 1851,
+        "Targeted Receiver": 854
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        1131,
+        970,
+        337,
+        262,
+        5,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        328,
+        786,
+        906,
+        581,
+        103,
+        1,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w13.csv",
+      "input_rows": 214452,
+      "target_rows": 27299,
+      "games": 12,
+      "trajectories": 2065,
+      "plays": 607,
+      "roles": {
+        "Defensive Coverage": 1458,
+        "Targeted Receiver": 607
+      },
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        684,
+        750,
+        276,
+        328,
+        27,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        201,
+        648,
+        698,
+        441,
+        77,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w14.csv",
+      "input_rows": 0,
+      "target_rows": 0,
+      "games": 0,
+      "trajectories": 0,
+      "plays": 0,
+      "roles": {},
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    },
+    {
+      "file": "input_2023_w15.csv",
+      "input_rows": 0,
+      "target_rows": 0,
+      "games": 0,
+      "trajectories": 0,
+      "plays": 0,
+      "roles": {},
+      "horizon_bins_seconds": [
+        0,
+        0.5,
+        1,
+        1.5,
+        2,
+        3,
+        5,
+        20
+      ],
+      "horizon_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "speed_bins_yards_per_second": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        15,
+        100
+      ],
+      "speed_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_observed_cells": 0,
+      "split": "train"
+    }
+  ],
+  "roles": {
+    "Defensive Coverage": 22674,
+    "Targeted Receiver": 10007
+  },
+  "horizon_bins_seconds": [
+    0,
+    0.5,
+    1,
+    1.5,
+    2,
+    3,
+    5,
+    20
+  ],
+  "horizon_counts": [
+    0,
+    12888,
+    12119,
+    4101,
+    3302,
+    263,
+    8
+  ],
+  "speed_bins_yards_per_second": [
+    0,
+    2,
+    4,
+    6,
+    8,
+    10,
+    15,
+    100
+  ],
+  "speed_counts": [
+    3875,
+    10304,
+    10873,
+    6421,
+    1205,
+    3,
+    0
+  ],
+  "games": 192,
+  "plays": 10007,
+  "trajectories": 32681,
+  "input_rows": 3450568,
+  "target_rows": 395813,
+  "missing_observed_cells": 0
+}

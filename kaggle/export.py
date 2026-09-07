@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+import argparse
+import ast
+import json
+import pprint
 import subprocess
 import sys
 from pathlib import Path
@@ -13,14 +17,63 @@ from nfl_trajectory.runtime import Run, atomic_bytes
 
 def main() -> int:
     root = Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--model", choices=["constant_velocity", "role_ridge"], default="constant_velocity"
+    )
+    parser.add_argument("--weights", type=Path, default=root / "artifacts/benchmark/model.json")
+    args = parser.parse_args()
     with Run(root, "export_kaggle") as run:
-        source = (root / "src/nfl_trajectory/motion.py").read_text()
-        source = source.replace(
-            "import numpy as np",
-            "import importlib\nimport os\nimport sys\nfrom pathlib import Path\n\n"
-            "import numpy as np",
-            1,
+        paths = [root / "src/nfl_trajectory/motion.py"]
+        if args.model == "role_ridge":
+            paths.append(root / "src/nfl_trajectory/models.py")
+        definitions: list[ast.stmt] = []
+        for path in paths:
+            parsed = ast.parse(path.read_text())
+            definitions.extend(
+                node
+                for node in parsed.body
+                if not isinstance(node, (ast.Import, ast.ImportFrom))
+                and not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant))
+            )
+        imports = (
+            "from __future__ import annotations\nimport importlib\nimport os\n"
+            "import sys\nfrom pathlib import Path\n"
         )
+        if args.model == "role_ridge":
+            imports += "from typing import Any\n"
+        imports += "import numpy as np\nimport pandas as pd\n"
+        source = imports + ast.unparse(ast.Module(body=definitions, type_ignores=[])) + "\n"
+        if args.model == "role_ridge":
+            from nfl_trajectory.models import BASIS
+
+            fitted = json.loads(args.weights.read_text())
+            if fitted.get("basis") != BASIS or fitted.get("format") != 1:
+                raise ValueError("Use weights produced by nfl benchmark.")
+            source += (
+                "trajectory_predict = predict\nFITTED_MODEL = "
+                + pprint.pformat(fitted, width=85, sort_dicts=True)
+                + "\n"
+            )
+        ordered = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "ruff",
+                "check",
+                "--select",
+                "I,UP",
+                "--fix",
+                "--stdin-filename",
+                "model.py",
+                "-",
+            ],
+            input=source,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        source = ordered.stdout
         setup = """COMPETITION_PATH = Path('/kaggle/input/nfl-big-data-bowl-2026-prediction')
 if not COMPETITION_PATH.exists():
     candidates = list(Path('/kaggle/input').glob('competitions/nfl-big-data-bowl-2026-prediction'))
@@ -43,14 +96,23 @@ if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
 else:
     server.run_local_gateway((str(COMPETITION_PATH),))
 """
+        if args.model == "role_ridge":
+            interface = interface.replace(
+                "constant_velocity(observed, target[KEYS])",
+                "trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)",
+            )
+        description = (
+            "Role-conditioned ridge model fitted on the frozen training games. "
+            "The learned weights are embedded; inference requires no external model download. "
+            if args.model == "role_ridge"
+            else "Constant velocity reference using only observed pre-throw coordinates. "
+        )
         notebook = nbformat.v4.new_notebook(
             cells=[
                 nbformat.v4.new_markdown_cell(
                     "# NFL trajectory reference submission\n\n"
-                    "Constant velocity baseline, using only observed pre-throw coordinates. "
-                    "This Phase 0 artifact demonstrates the inference contract. "
-                    "It is not a trained competitive model. "
-                    "Enable the official competition input, use CPU, and disable internet. "
+                    + description
+                    + "Enable the official competition input, use CPU, and disable internet. "
                     "Run the local gateway before attempting a late submission. "
                     "No Kaggle score has been obtained.\n\n"
                     "Interface: [official organizer example]"
@@ -78,6 +140,7 @@ else:
         run.event(
             "notebook_exported",
             path=str(destination.relative_to(root)),
+            model=args.model,
             official_gateway_status="not_run",
         )
     return 0

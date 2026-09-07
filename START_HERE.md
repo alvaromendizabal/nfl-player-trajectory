@@ -1,4 +1,29 @@
-# Start here — Phase 0
+# Start here — NFL trajectory research
+
+
+## Continue an existing project after Phase 0
+
+The first data download, audit, GitHub push, and private snapshot are complete.
+Keep the existing directory. In its SageMaker terminal, run this single sequence:
+
+```bash
+cd "$HOME/nfl-player-trajectory" &&
+git pull --ff-only origin main &&
+python3 scripts/bootstrap.py &&
+.venv/bin/nfl benchmark &&
+.venv/bin/python kaggle/export.py --model role_ridge &&
+.venv/bin/nfl backup &&
+.venv/bin/nfl status
+```
+
+The benchmark prepares training/validation weeks, fits the role model on training
+games, compares six models, and renders the report. It verifies and reuses completed
+stages on repeat. The holdout is excluded. Open `notebooks/01_data_analysis.ipynb`,
+`notebooks/02_motion_benchmarks.ipynb`, and `artifacts/benchmark/report.html`.
+Notebook 00 remains an orientation notebook; running it is not a prerequisite for
+01/02. The two research notebooks read the computed results rather than retraining.
+
+The steps below describe a first installation on a new machine.
 
 The work in this phase establishes trustworthy inputs, scoring, recovery, and
 development practices. It does not launch neural-network training.
@@ -126,14 +151,20 @@ Then run:
 cd "$HOME/nfl-player-trajectory"
 .venv/bin/python scripts/initialize_git.py
 git remote add origin https://github.com/alvaromendizabal/nfl-player-trajectory.git
+GH_BROWSER=true gh auth login --hostname github.com --git-protocol https --web --scopes workflow
+gh auth setup-git --hostname github.com
 git push -u origin main
 ```
 
 The initializer refuses an existing Git repository and commits an explicit allowlist
 of source, notebooks, tests, documentation, and CI. It excludes private configuration
 and generated data. Authentication for `git push` is separate from the ChatGPT GitHub
-connection. If your Studio environment has no GitHub credential, use its supported
-GitHub sign-in or an authenticated local Git client; never put a token in a remote URL.
+connection. Install the [official GitHub CLI](https://cli.github.com/) if `gh` is unavailable.
+The login command prints a device code. Open https://github.com/login/device in your
+signed-in browser, enter that code on GitHub, and authorize the CLI. Saved credentials
+support subsequent pushes. Never enter an account password at a Git password prompt
+or put a token in a remote URL. For an existing repository, skip initialization and
+remote creation; use its existing commit history.
 Creating the empty repository and sharing its link also allows the next phase to use
 the linked GitHub connection for repository changes.
 

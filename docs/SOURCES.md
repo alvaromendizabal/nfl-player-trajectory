@@ -13,6 +13,7 @@ The official training-file description names `input_2023_w[01-18].csv` and match
 The code discovers the actual inventory so it can handle additional published seasons.
 
 The public page shows a disabled Late Submission button while signed out. This does
-not establish whether the user's authenticated account can submit late. No authenticated
-download or official gateway run has occurred in the delivered Phase 0 environment.
+not establish whether the user's authenticated account can submit late. Authenticated download and all 18 weekly audits succeeded in the user's SageMaker
+space. Phase 1 restores the private snapshot for development evaluation. The official
+gateway and leaderboard submission remain pending.
 

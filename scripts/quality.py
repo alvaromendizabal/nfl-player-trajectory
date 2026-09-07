@@ -25,6 +25,14 @@ def main() -> int:
                 [sys.executable, "scripts/notebooks.py"],
                 [
                     sys.executable,
+                    "kaggle/export.py",
+                    "--model",
+                    "role_ridge",
+                    "--weights",
+                    "docs/results/model.json",
+                ],
+                [
+                    sys.executable,
                     "-m",
                     "ruff",
                     "check",

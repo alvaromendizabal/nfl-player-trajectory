@@ -116,8 +116,11 @@ def stage(
             p.is_file() and previous.get("outputs", {}).get(str(p.relative_to(root))) == sha256(p)
             for p in outputs
         ):
-            run.event("stage_reused", stage=name)
+            run.event(
+                "stage_reused", stage=name, original_elapsed_seconds=previous.get("elapsed_seconds")
+            )
             return False
+        stage_started = time.monotonic()
         run.event("stage_started", stage=name)
         atomic_json(state, {"status": "running", "signature": signature})
         try:
@@ -126,8 +129,20 @@ def stage(
         except BaseException:
             atomic_json(state, {"status": "failed", "signature": signature})
             raise
-        atomic_json(state, {"status": "completed", "signature": signature, "outputs": hashes})
-        run.event("stage_completed", stage=name)
+        atomic_json(
+            state,
+            {
+                "status": "completed",
+                "signature": signature,
+                "outputs": hashes,
+                "elapsed_seconds": round(time.monotonic() - stage_started, 3),
+            },
+        )
+        run.event(
+            "stage_completed",
+            stage=name,
+            elapsed_stage_seconds=round(time.monotonic() - stage_started, 3),
+        )
         return True
 
 

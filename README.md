@@ -1,98 +1,120 @@
 # NFL Player Trajectory
 
-Player motion prediction after a pass, built around reproducible experiments,
-temporal validation, interpretable trajectories, and durable AWS artifacts.
+Forecast player movement after the throw using observed motion, the supplied ball
+landing point, and player roles. This project combines a reproducible temporal
+benchmark, interpretable vector models, animated field reports, and durable AWS
+checkpoints.
 
-**Status: Phase 0 foundation. No trained model, NFL validation score, or Kaggle medal is claimed.**
+[![Quality](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml)
 
-This project uses [NFL Big Data Bowl 2026 — Prediction](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).
-The competition's final submission deadline was December 3, 2025; results were
-published January 6, 2026. Late-submission availability must be checked while signed
-in. Historical benchmark work cannot earn a new competition medal.
+**Phase 1 result:** a training-only role-conditioned ridge model achieved **0.9896
+coordinate RMSE (yards)** on **32 later games**, compared with **1.7225** for constant
+velocity: **42.6% lower RMSE**. The 48-game holdout remains unscored. These are local
+validation results, not Kaggle leaderboard scores.
 
-## Start
+![Temporal validation benchmark](docs/results/benchmark.png)
 
-See [START_HERE.md](START_HERE.md) for AWS, environment, Kaggle, and GitHub steps.
-The first notebook is `notebooks/00_project_readiness.ipynb`. It contains an executed
-synthetic example and an explicit real-data readiness check.
+| Model | Coordinate RMSE / yd | ADE / yd | FDE / yd |
+| --- | ---: | ---: | ---: |
+| Role-conditioned ridge | **0.9896** | **0.8847** | **1.5057** |
+| Constant velocity | 1.7225 | 1.5142 | 2.8696 |
+| Constant acceleration | 1.9965 | 1.3073 | 2.6664 |
+| Smoothed velocity | 2.0051 | 1.8581 | 3.3798 |
+| Ball arrival | 4.0842 | 3.8607 | 5.6192 |
+| Last position | 4.4806 | 4.4882 | 6.5526 |
+
+All models score the same 67,857 player-frame positions. The ridge model's 95%
+game-cluster bootstrap interval is **0.9218–1.0519 yards**. See the
+[model card](docs/MODEL_CARD.md), [machine-readable results](docs/results/summary.json),
+and [validation evidence](docs/VALIDATION.md).
+
+## Explore the notebooks
+
+- [00 · Project readiness](notebooks/00_project_readiness.ipynb): environment, metric, and synthetic orientation.
+- [01 · Data analysis](notebooks/01_data_analysis.ipynb): actual data coverage, frozen dates, and training distributions.
+- [02 · Motion benchmarks](notebooks/02_motion_benchmarks.ipynb): scores, uncertainty, failure slices, and learned weights.
+
+The notebooks include rendered outputs for GitHub readers. They read local benchmark
+artifacts when available and otherwise the explicitly labeled published experiment
+snapshot. Open `artifacts/benchmark/report.html` after running the benchmark for the
+offline report and animated validation play.
+
+## Reproduce
+
+For an existing installation with a completed audit:
 
 ```bash
+git pull --ff-only origin main
 python3 scripts/bootstrap.py
-.venv/bin/python scripts/authenticate.py
-.venv/bin/nfl download
-.venv/bin/nfl audit
+.venv/bin/nfl benchmark
+.venv/bin/python kaggle/export.py --model role_ridge
 .venv/bin/nfl backup
 .venv/bin/nfl status
 ```
 
-Use the `Python (NFL Trajectory)` kernel in SageMaker. Windows users can substitute
-`.venv\Scripts\python.exe` and `.venv\Scripts\nfl.exe` for the Linux paths.
+For initial environment, data access, and browser sign-in, see [START_HERE.md](START_HERE.md).
+Use the **Python (NFL Trajectory)** kernel in SageMaker. This phase runs on CPU.
+Matplotlib was added to the pinned environment for rendered research figures;
+`uv.lock` records all transitive versions. Existing data and checkpoints are preserved.
 
-## What Phase 0 delivers
+## Model and validation design
 
-- Python 3.11, exact dependency pins, and a complete `uv.lock`.
-- Unit and integration tests, Ruff, mypy, executed notebook checks, and GitHub Actions.
-- UTC JSONL events, elapsed time, and a 15-second heartbeat during long commands.
-- Atomic state, process locks, content hashes, and source/environment fingerprints.
-- Official Kaggle browser approval, saved-session reuse, and paginated per-file downloads, with safe ZIP handling.
-- Weekly data audits, unique row keys, scored-player and forecast-horizon checks.
-- A reproducible game-date split manifest with whole-game isolation.
-- Constant-velocity reference implementation and numerical metric tests.
-- Offline interactive trajectory report with clearly labeled synthetic data.
-- Private content-addressed S3 snapshots and checksum-verified restore.
+The learned model combines six equivariant vector features: terminal velocity,
+five-frame least-squares velocity, terminal acceleration, and three polynomial-time
+terms pointing toward the supplied landing point. Ridge weights are fitted by role;
+an unseen role uses a global training fit. Training-RMS scaling and fixed regularization
+use only training games. Coordinates share coefficients, preserving rotation and
+translation equivariance.
 
-## Evaluation
+| Partition | Dates | Games | Use |
+| --- | --- | ---: | --- |
+| Train | 2023-09-07–2023-12-03 | 192 | Features, scaling and coefficient fitting |
+| Validation | 2023-12-04–2023-12-18 | 32 | Development comparisons and error analysis |
+| Holdout | 2023-12-21–2024-01-07 | 48 | Reserved for locked model selection |
 
-The official coordinate RMSE is
+The official metric is
 
-\[
-\mathrm{RMSE} = \sqrt{\frac{1}{2N}\sum_{i=1}^{N}[(x_i-\hat x_i)^2+(y_i-\hat y_i)^2]}.
-\]
+$$\mathrm{RMSE}=\sqrt{\frac{\sum_i[(\hat{x}_i-x_i)^2+(\hat{y}_i-y_i)^2]}{2N}}.$$
 
-We also report frame-weighted and trajectory-weighted average displacement error,
-trajectory-weighted final displacement error, 95th-percentile displacement, and
-coordinate MAE, all in yards. Classification metrics such as F1 or ROC AUC do not
-measure this continuous trajectory prediction task.
+Additional metrics are frame- and trajectory-weighted ADE, trajectory-weighted FDE,
+p95 displacement and coordinate MAE. Intervals resample whole games 2,000 times;
+paired differences use the same sampled games. Errors are broken down by player
+role and forecast time. Development scores can become optimistic under repeated
+selection; the reserved holdout is the eventual final evaluation.
 
-Later experiments will report errors by forecast horizon, role, direction, and
-season, plus game-cluster bootstrap confidence intervals, inference latency,
-runtime, and compute cost. Pool squared errors and row counts across partitions
-before taking the square root; do not average fold RMSEs as the global metric.
+## Reliability and recovery
 
-## Structure
+- Explicit numerical, leakage, geometry, export, notebook, and recovery tests.
+- Ruff, mypy, warnings-as-errors tests, and GitHub Actions on branches and PRs.
+- UTC JSONL logs, elapsed command/stage times, and a 15-second heartbeat.
+- Weekly feature and sufficient-statistic checkpoints, atomic writes and process locks.
+- Hash verification before reuse; changed inputs, numerical code or dependencies invalidate work.
+- Corrupt or interrupted stages recompute while valid stages remain reusable.
+- Private content-addressed S3 snapshots for data, models, reports and run logs.
 
-| Path | Purpose |
-| --- | --- |
-| `src/nfl_trajectory/` | Reusable implementation |
-| `tests/` | Numerical, data, restart, and recovery contracts |
-| `notebooks/00_project_readiness.ipynb` | Executed introduction and readiness review |
-| `kaggle/` | Exporter for a self-contained baseline inference notebook |
-| `scripts/` | Environment, quality, notebook, and authentication entry points |
-| `docs/` | Methodology, phase plan, and evidence |
-| `data/`, `artifacts/`, `logs/`, `.state/` | Generated local work; excluded from Git |
+The measured development run took **33.924 seconds** in the validation environment.
+A repeat reused **all 33 numerical stages** and took **5.166 seconds**, including
+report rendering. These timings depend on hardware and caching. Single-play inference
+includes feature construction and prediction; see [latency measurements](docs/results/latency.json).
+The unit/integration suite also forces interruptions and corrupts artifacts to verify recovery.
 
-## Resuming
+Read [recovery instructions](docs/RECOVERY.md) and the [research plan](docs/RESEARCH_PLAN.md).
+Next are interaction features and stronger residual models, followed by temporal
+neural models with full optimizer, scheduler and RNG checkpoint recovery.
 
-Rerun the same command after resolving a failure. Downloads reuse files only when
-metadata and local hashes match. Interrupted downloads retain the official client's
-partial file and identity marker; byte-range resume depends on server support.
-Audits resume per weekly pair. Changed inputs, source, or `uv.lock` invalidate an
-audit checkpoint. A heartbeat indicates that the process is alive; completed-file
-and completed-pair events indicate actual progress.
-
-Space storage survives stopping the app, but deleting a space is not a backup
-strategy. Run `nfl backup` after each completed phase; keep the returned manifest
-identifier. See [docs/RECOVERY.md](docs/RECOVERY.md). Neural epoch/batch checkpointing
-will be implemented and tested with the training phase; no trainer exists yet.
-
-## Attribution and scope
+## Kaggle and attribution
 
 Source: Michael Lopez, Tom Bliss, Ally Blake, Yao Yan, Martyna Plomecka, and Addison
-Howard. NFL Big Data Bowl 2026 — Prediction. Kaggle, 2025.
+Howard. [NFL Big Data Bowl 2026 — Prediction](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction). Kaggle, 2025.
 
-The data page lists CC BY-NC 4.0; competition rules also apply. This repository
-contains original project code and synthetic examples. Raw NFL data, credentials,
-cloud identifiers, and private checkpoints are excluded from version control.
-Do not redistribute competition data or publish it to Hugging Face by default.
-Code is MIT licensed; that license does not relicense the NFL data or third-party code.
+The exporter creates a standalone inference notebook with embedded learned weights
+and the organizer's evaluation interface. Its exported predictor is tested against
+the package implementation. The official gateway and a leaderboard submission are
+still pending. The competition ended; late-submission eligibility must be checked
+in the authenticated account, and this historical project cannot earn a new medal.
 
+Raw NFL data, credentials, cloud identifiers and private checkpoints are excluded
+from Git. Published results contain aggregate measurements, figures and fitted
+coefficients. The data page lists CC BY-NC 4.0 and competition rules also apply.
+The MIT license covers original project code; it does not relicense NFL data or
+third-party code. Hugging Face publication is reserved for a later documented release.

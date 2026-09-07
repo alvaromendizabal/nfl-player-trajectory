@@ -1,0 +1,62 @@
+# Research plan
+
+| Phase | Deliverable | Exit gate |
+| --- | --- | --- |
+| 0 | Tested environment, ingestion, schema audit, metrics, recovery, notebook | All offline checks plus real-data audit and backup |
+| 1 | Data EDA, animated plays, frozen validation protocol, stationary/velocity/acceleration baselines | Real validation scores, slice plots, and reproducible report |
+| 2 | Physics-informed features and strong tree/residual regressors | Validation improvement with ablations and latency measurements |
+| 3 | PyTorch temporal model with player interactions, then attention/graph alternatives | Full optimizer/scheduler/RNG checkpoint restore test, temporal CV, stable training |
+| 4 | Hyperparameter research, seed ensembles, uncertainty, robustness | Locked model selection, game-cluster intervals, held-out evaluation |
+| 5 | Self-contained Kaggle inference notebook and employer-facing results | Official local gateway pass, resource limits, reproducible model card and report |
+
+This is a research path, not a promise of gold-medal performance. Winning approaches
+will be studied and credited. Every new model must beat the reference under the same
+data and validation contract. Public leaderboard comparisons require equivalent data
+and evaluation settings. Do not compare a local holdout number directly with a public
+leaderboard score as proof of rank.
+
+Hugging Face is deferred until a trained, documented model exists and the terms for
+sharing weights are reviewed. No Hub repository, GPU job, or public dataset is needed
+to start Phase 0. No managed endpoint or always-running service is required.
+
+## Validation and leakage boundaries
+
+- The prediction unit is `(game_id, play_id, nfl_id, output frame_id)`.
+- The input ends at the throw; output frame numbering restarts at 1.
+- All players, plays, and frames from a game stay in one partition.
+- Phase 0 proposes chronological train/validation/holdout boundaries at 70/85% of
+  distinct game dates. Phase 1 reviews season and week coverage before locking them.
+- Do not tune repeatedly on the holdout. Freeze a manifest before model selection.
+- Fit scalers, imputation, learned encodings, feature selection, and calibration only
+  inside the training portion of each fold. Aggregate historical player features using
+  strictly earlier games, with cold-start handling.
+- Random frame splits leak neighboring positions and overstate performance.
+- The organizer explicitly supplies target receiver, ball landing location, and forecast
+  horizon. They are allowed competition inputs. A real-time system that does not know
+  the landing location is a different prediction problem and needs separate experiments.
+- Supplementary play metadata is audit-only until each candidate feature's timing is
+  documented. Post-play outcomes, future positions, and derived labels cannot become inputs.
+- Horizontal reflection/rotation must transform positions, vectors, angles, and landing
+  coordinates consistently, then restore coordinates before scoring. Test invariance
+  before introducing augmentation.
+- A player appearing in multiple games is expected. Add a player-disjoint robustness
+  analysis if claiming generalization to unseen players; temporal validation alone does
+  not establish that claim.
+
+## Metric and figure standards
+
+Report coordinate RMSE (official), ADE/FDE, p95 error, errors by horizon and role,
+game-cluster uncertainty, per-play inference latency, total training time, memory,
+and AWS billable resources. Classification accuracy, F1, and AUC are not applicable.
+Use animated field trajectories, error-versus-time plots, role comparisons, and clear
+model ablations. Every figure identifies its split and units. Interpretability must
+distinguish model attribution from causal claims.
+
+## Git standards
+
+Use conventional commit titles (`feat:`, `test:`, `docs:`, `refactor:`). Change the
+canonical file in place. Do not create alternate `fixed`, `repair`, or numbered patch
+files. Keep `main` deployable; use a feature branch per phase. PRs explain why, behavior,
+tests, results, limitations, and resume behavior. Merge after CI succeeds, then pull
+`main` into Studio. Branch protection is an account-side step after the repository exists.
+

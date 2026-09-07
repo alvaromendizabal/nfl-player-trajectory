@@ -1,0 +1,34 @@
+name: Quality
+on:
+  push:
+    branches: [main, 'feat/**']
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.11.33'
+          enable-cache: true
+      - run: uv sync --frozen --group dev
+      - run: uv run --frozen python scripts/quality.py
+      - name: Retain evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase0-validation
+          path: |
+            logs/
+            artifacts/quality.json
+            artifacts/demo/
+            artifacts/notebooks/
+          retention-days: 30
+

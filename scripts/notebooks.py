@@ -348,7 +348,12 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
             {
                 "status": "passed",
                 "files": {str(path.relative_to(root)): sha256(path) for path in payloads},
-                "official_gateway_status": "not_run",
+                "official_gateway_status": (
+                    json.loads((root / "artifacts/research/gateway/summary.json").read_text())[
+                        "official_gateway_status"
+                    ]
+                    if "extended/feature_gateway.json" in expected else "not_run"
+                ),
                 "holdout_evaluation": "not_run",
             },
         )

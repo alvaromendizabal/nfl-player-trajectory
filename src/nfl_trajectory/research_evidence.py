@@ -23,6 +23,7 @@ EXTRA_REPORTS = {
     "feature_attribution.json": "feature_attribution/summary.json",
     "feature_attribution.png": "feature_attribution/figure.png",
     "feature_gateway.json": "research/gateway/summary.json",
+    "feature_tree.json": "research/tree/summary.json",
 }
 
 
@@ -242,6 +243,7 @@ def extended_evidence(root: Path) -> dict[str, str]:
     for relative, stage_name in (
         ("feature_attribution/summary.json", "feature-attribution-report"),
         ("research/gateway/summary.json", "official-gateway"),
+        ("research/tree/summary.json", "research-tree-bundle"),
     ):
         output = root / "artifacts" / relative
         if not output.exists():

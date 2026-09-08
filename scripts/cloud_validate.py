@@ -69,6 +69,7 @@ def main() -> None:
         "scripts/feature_attribution.py",
         "scripts/validate_gateway.py",
         "scripts/prepare_tree.py",
+        "scripts/notebooks.py",
         "src/nfl_trajectory/tree_inference.py",
         "src/nfl_trajectory/research_inference.py",
         "tests/test_tree_inference.py",

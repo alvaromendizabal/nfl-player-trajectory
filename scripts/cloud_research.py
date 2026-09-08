@@ -97,6 +97,9 @@ def repository_archive(commit: str, output: Path) -> None:
 def main() -> None:
     bucket, job = os.environ["NFL_BUCKET"], os.environ["NFL_JOB_NAME"]
     commit, snapshot_key = os.environ["NFL_REPO_REF"], os.environ["NFL_SNAPSHOT"]
+    mode = os.environ.get("NFL_MODE", "research")
+    if mode not in {"research", "finalize"}:
+        raise ValueError("Unknown cloud research mode.")
     root = Path("/opt/ml/processing/project")
     root.mkdir(parents=True, exist_ok=True)
     s3 = boto3.client(
@@ -213,11 +216,12 @@ def main() -> None:
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
             list(pool.map(restore, selected))
-        seed = root.parent / "seed.tar.gz"
-        s3.download_file(bucket, os.environ["NFL_SEED_KEY"], str(seed))
-        if digest(seed) != os.environ["NFL_SEED_SHA"]:
-            raise ValueError("Research seed checkpoint checksum failed.")
-        unpack(seed, root)
+        if mode == "research":
+            seed = root.parent / "seed.tar.gz"
+            s3.download_file(bucket, os.environ["NFL_SEED_KEY"], str(seed))
+            if digest(seed) != os.environ["NFL_SEED_SHA"]:
+                raise ValueError("Research seed checkpoint checksum failed.")
+            unpack(seed, root)
         event("restored", files=len(selected), holdout_tracking="excluded")
         command(
             [
@@ -245,31 +249,45 @@ def main() -> None:
             "normalize-report-source",
         )
         command([python, "-m", "pytest", "-q"], "tests", threads=2)
-        folds = ["inner_1", "inner_2", "inner_3", "development"]
-        for stage_name in (
-            "feature-research",
-            "context-research",
-            "representation-research",
-            "research-report",
-        ):
-            command([nfl, stage_name], stage_name, threads=4)
-        backup("feature-banks")
-        command([uv, "run", "--locked", "scripts/nonlinear_probe.py"], "nonlinear-probe", threads=6)
-        backup("fixed-nonlinear")
-        batch("scripts/ablate_features.py", folds, workers=4, threads=2)
-        batch("scripts/joint_feature_fit.py", folds, workers=4, threads=1)
-        backup("ablations-and-joint-fits")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-            wide = pool.submit(batch, "scripts/feature_budget.py", folds, 2, 6)
-            inference = pool.submit(
-                command, [python, "scripts/validate_research.py"], "raw-inference", 1
+        if mode == "research":
+            folds = ["inner_1", "inner_2", "inner_3", "development"]
+            for stage_name in (
+                "feature-research",
+                "context-research",
+                "representation-research",
+                "research-report",
+            ):
+                command([nfl, stage_name], stage_name, threads=4)
+            backup("feature-banks")
+            command([uv, "run", "--locked", "scripts/nonlinear_probe.py"], "nonlinear-probe", threads=6)
+            backup("fixed-nonlinear")
+            batch("scripts/ablate_features.py", folds, workers=4, threads=2)
+            batch("scripts/joint_feature_fit.py", folds, workers=4, threads=1)
+            backup("ablations-and-joint-fits")
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                wide = pool.submit(batch, "scripts/feature_budget.py", folds, 2, 6)
+                inference = pool.submit(
+                    command, [python, "scripts/validate_research.py"], "raw-inference", 1
+                )
+                wide.result()
+                inference.result()
+            backup("completed-feature-experiments")
+        else:
+            command(
+                [uv, "run", "--locked", "scripts/prepare_tree.py", "--self-test"],
+                "portable-tree-self-test", threads=2,
             )
-            wide.result()
-            inference.result()
-        backup("completed-feature-experiments")
+            command(
+                [uv, "run", "--locked", "scripts/prepare_tree.py"],
+                "portable-tree-conversion", threads=4,
+            )
+            command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
+            backup("validated-portable-tree")
         # Only presentation files may come from a later, explicitly pinned review commit.
-        report_commit = None
+        report_commit = commit if mode == "finalize" else None
         for attempt in range(80):
+            if report_commit is not None:
+                break
             try:
                 response = s3.get_object(Bucket=bucket, Key=prefix + "/report_ref.json")
             except s3.exceptions.NoSuchKey:
@@ -335,6 +353,11 @@ def main() -> None:
             *root.glob("docs/results/*"),
             root / "artifacts/quality.json",
             root / "artifacts/notebooks/publication.json",
+            root / "scripts/notebooks.py",
+            root / "src/nfl_trajectory/research_inference.py",
+            root / "src/nfl_trajectory/tree_inference.py",
+            root / "scripts/prepare_tree.py",
+            root / "tests/test_tree_inference.py",
         ]
         files.extend(
             [root / "scripts/cloud_research.py", root / "src/nfl_trajectory/research_evidence.py"]

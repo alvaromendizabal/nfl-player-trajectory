@@ -38,3 +38,13 @@ Earlier project notes linked a competition third-place writeup. Its implementati
 and rank were not independently reproduced, so neither supports this project's
 performance claims. External ratings/coaching data are deferred until an as-of
 join, prediction-time availability, and legitimate use can be verified.
+
+## Domain feature inspiration
+
+[Yuanzhiyi’s public NFL trajectory repository](https://github.com/YZY0108/nfl-player-trajectory-prediction)
+provided concrete hypotheses for receiver-mirroring destination geometry,
+distance-weighted player pools, arrival-motion gaps, and observed route descriptors.
+Those ideas are independently implemented and tested under this project’s chronological
+protocol. We do not reproduce that author’s Transformer, random grouped-fold evaluation,
+medal claim, or leaderboard score. Our coordinate-RMSE definition follows the organizer
+contract rather than the Euclidean-error wording in that repository’s README.

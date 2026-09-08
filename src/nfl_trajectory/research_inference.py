@@ -31,6 +31,7 @@ INFERENCE_MODULES = (
     "context_features",
     "representation_features",
     "feature_contracts",
+    "tree_inference",
     "research_inference",
 )
 
@@ -107,7 +108,7 @@ def robust_fallback(root: Path, sources: dict[str, str]) -> dict[str, Any] | Non
     }
 
 
-def research_bundle(root: Path) -> dict[str, Any]:
+def research_bundle(root: Path, include_tree: bool = True) -> dict[str, Any]:
     """Resolve current verified experiment lineage; never substitute an older model."""
     import json
 
@@ -169,7 +170,7 @@ def research_bundle(root: Path) -> dict[str, Any]:
         selected_metrics = next(r for r in joint["models"] if r["model"] == chosen_name)
         evaluation_games = joint["fold"]["evaluation_games"]
         joint_sources = joint["joint_sources"]
-    return {
+    payload = {
         "format": 1,
         "kind": "feature_research",
         "selected_stage": chosen_stage,
@@ -197,6 +198,12 @@ def research_bundle(root: Path) -> dict[str, Any]:
         "holdout_evaluation": "not_run",
         "final_model": False,
     }
+
+    if include_tree:
+        from nfl_trajectory.tree_inference import load_tree_bundle
+
+        return load_tree_bundle(root, payload)
+    return payload
 
 
 def input_variant(observed: pd.DataFrame, bundle: dict[str, Any]) -> str:
@@ -265,6 +272,10 @@ def predict_research(
         or (targets.game_id.to_numpy(np.int64) // 100 <= training_dates.max()).any()
     ):
         raise ValueError("Research inference must strictly follow its frozen training dates.")
+    if "tree" in bundle:
+        from nfl_trajectory.tree_inference import predict_tree
+
+        return predict_tree(observed, targets, bundle)
     bank = build_player_features(observed, targets[ENTITY])
     state = targets[ENTITY].merge(
         bank.state, on=ENTITY, how="left", sort=False, validate="many_to_one"

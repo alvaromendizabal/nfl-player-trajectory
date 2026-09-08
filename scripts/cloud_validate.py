@@ -70,7 +70,6 @@ def main() -> None:
     ]
     formatted = [name for name in formatted if (root / name).is_file()]
     subprocess.run([python, "-m", "ruff", "format", *formatted], check=True, env=env)
-    subprocess.run([python, "-m", "ruff", "check", "--fix", *formatted], check=True, env=env)
     if (root / "scripts/validate_gateway.py").exists():
         subprocess.run([uv, "lock", "--script", "scripts/validate_gateway.py"], check=True, env=env)
         formatted.append("scripts/validate_gateway.py.lock")
@@ -83,6 +82,11 @@ def main() -> None:
             Body=path.read_bytes(),
             ServerSideEncryption="AES256",
         )
+    subprocess.run(
+        [python, "-m", "ruff", "check", "--fix", *[
+            name for name in formatted if not name.endswith(".lock")
+        ]], check=True, env=env,
+    )
     for command in [
         [python, "-m", "ruff", "check", "."],
         [python, "-m", "ruff", "format", "--check", "."],

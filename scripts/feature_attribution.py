@@ -233,7 +233,7 @@ def main(root: Path) -> None:
                 "selected_model": selected, "inner_scores": inner_scores,
                 "development": results[-1], "inner_folds": results[:3],
                 "selected_in_all_inner_folds": sorted(n for n, count in counts.items() if count == 3),
-                "stability_caveat": "PCA axes share names but can rotate between training folds.",
+                "stability_caveat": "PCA axes can rotate between folds.",
                 "permutation_interpretation": (
                     "Whole trajectories shuffled within role and forecast horizon; exact frame "
                     "alignment; physical baseline held fixed. Conditional reliance, not causal "
@@ -241,7 +241,7 @@ def main(root: Path) -> None:
                 ),
                 "omission_interpretation": (
                     "Refit with identical estimator settings and no replacement features; "
-                    "paired game-bootstrap intervals measure finite-development-game uncertainty."
+                    "paired game bootstraps quantify development-game uncertainty."
                 ),
                 "holdout_evaluation": "not_run", "feature_gate": "open",
             })

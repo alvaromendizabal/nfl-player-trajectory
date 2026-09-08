@@ -238,4 +238,5 @@ def extended_evidence(root: Path) -> dict[str, str]:
         )
     return {
         published: sha256(root / "artifacts" / local) for published, local in EXTRA_REPORTS.items()
+        if (root / "artifacts" / local).is_file()
     }

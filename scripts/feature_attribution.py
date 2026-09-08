@@ -46,9 +46,12 @@ def main(root: Path) -> None:
     probe = probe_module(root)
     summaries, plans = [], []
     paths = [
-        Path(__file__), Path(__file__).with_suffix(".py.lock"),
-        root / "scripts/nonlinear_probe.py", root / "scripts/nonlinear_probe.py.lock",
-        root / "scripts/ablate_features.py", root / "scripts/feature_budget.py",
+        Path(__file__),
+        Path(__file__).with_suffix(".py.lock"),
+        root / "scripts/nonlinear_probe.py",
+        root / "scripts/nonlinear_probe.py.lock",
+        root / "scripts/ablate_features.py",
+        root / "scripts/feature_budget.py",
         root / "scripts/feature_budget.py.lock",
         root / "src/nfl_trajectory/research.py",
         root / "src/nfl_trajectory/feature_contracts.py",
@@ -67,8 +70,9 @@ def main(root: Path) -> None:
             name = row["model"]
             for phase, extension in (("fit", ".pkl"), ("evaluate", ".csv")):
                 output = folder / (name + extension)
-                verified_checkpoint(root, f"budget-{fold}-{name}-{phase}",
-                                    plan["source_signature"], output)
+                verified_checkpoint(
+                    root, f"budget-{fold}-{name}-{phase}", plan["source_signature"], output
+                )
                 paths.append(output)
             verify_error_metric(folder / (name + ".csv"), row)
         paths.extend([folder / "plan.json", folder / "summary.json"])
@@ -76,8 +80,9 @@ def main(root: Path) -> None:
         plans.append(plan)
     inner_scores = pooled_scores(summaries[:3], "rows")
     selected = min(inner_scores, key=lambda name: (inner_scores[name], name))
-    catalog = pd.concat([research_catalog(), context_catalog(), representation_catalog()],
-                        ignore_index=True)
+    catalog = pd.concat(
+        [research_catalog(), context_catalog(), representation_catalog()], ignore_index=True
+    )
     families = dict(zip(catalog.feature, catalog.family, strict=True))
     provenance = {
         "inputs": {str(path.relative_to(root)): sha256(path) for path in sorted(set(paths))},
@@ -97,11 +102,16 @@ def main(root: Path) -> None:
             output = destination / fold / "summary.json"
             fold_outputs = [output]
             for variant in ("without_metadata", "without_optional_inputs"):
-                fold_outputs.extend([output.parent / (variant + ".pkl"),
-                                     output.parent / (variant + ".csv")])
+                fold_outputs.extend(
+                    [output.parent / (variant + ".pkl"), output.parent / (variant + ".csv")]
+                )
 
-            def action(fold: str = fold, summary: dict[str, Any] = summary,
-                       plan: dict[str, Any] = plan, output: Path = output) -> None:
+            def action(
+                fold: str = fold,
+                summary: dict[str, Any] = summary,
+                plan: dict[str, Any] = plan,
+                output: Path = output,
+            ) -> None:
                 row = next(r for r in summary["models"] if r["model"] == selected)
                 if selected == "all_engineered":
                     bundles = [
@@ -112,26 +122,37 @@ def main(root: Path) -> None:
                     model_folder = root / "artifacts/nonlinear_probe" / fold
                     parent_plan = verified_plan(root, model_folder.parent, "nonlinear_probe.py")
                     for phase, extension in (("fit", ".pkl"), ("evaluate", ".csv")):
-                        verified_checkpoint(root, f"nonlinear-{fold}-{selected}-{phase}",
-                                            parent_plan["source_signature"],
-                                            model_folder / (selected + extension))
+                        verified_checkpoint(
+                            root,
+                            f"nonlinear-{fold}-{selected}-{phase}",
+                            parent_plan["source_signature"],
+                            model_folder / (selected + extension),
+                        )
                 else:
                     names = row["features"]
                     model_folder = root / "artifacts/feature_budget" / fold
                 fitted = pickle.loads((model_folder / (selected + ".pkl")).read_bytes())
                 evaluation = probe.materialize(root, caches, plan["fold"], names, False)
-                reference = error_rows(evaluation, np.column_stack(
-                    [m.predict(evaluation[0]) for m in fitted]), selected)
+                reference = error_rows(
+                    evaluation,
+                    np.column_stack([m.predict(evaluation[0]) for m in fitted]),
+                    selected,
+                )
                 score = error_metrics(reference)["coordinate_rmse_yards"]
                 if not np.isclose(score, row["coordinate_rmse_yards"], rtol=1e-10, atol=1e-10):
-                    raise ValueError("Fresh feature materialization failed parent prediction parity.")
+                    raise ValueError(
+                        "Fresh feature materialization failed parent prediction parity."
+                    )
                 parent_errors = pd.read_csv(model_folder / (selected + ".csv"))
                 keys = ["game_id", "play_id", "nfl_id", "frame_id"]
-                pd.testing.assert_frame_equal(reference[keys].reset_index(drop=True),
-                                              parent_errors[keys].reset_index(drop=True),
-                                              check_dtype=False)
-                np.testing.assert_allclose(reference[["dx", "dy"]], parent_errors[["dx", "dy"]],
-                                           rtol=1e-9, atol=1e-9)
+                pd.testing.assert_frame_equal(
+                    reference[keys].reset_index(drop=True),
+                    parent_errors[keys].reset_index(drop=True),
+                    check_dtype=False,
+                )
+                np.testing.assert_allclose(
+                    reference[["dx", "dy"]], parent_errors[["dx", "dy"]], rtol=1e-9, atol=1e-9
+                )
                 reference_bootstrap = bootstrap_scores(reference)
                 permutation_rows = []
                 assignments = {seed: trajectory_permutation(evaluation[5], seed) for seed in SEEDS}
@@ -144,15 +165,22 @@ def main(root: Path) -> None:
                         correction = np.column_stack([m.predict(permuted) for m in fitted])
                         errors = error_rows(evaluation, correction, family)
                         changes.append(error_metrics(errors)["coordinate_rmse_yards"] - score)
-                    permutation_rows.append({
-                        "family": family, "feature_count": len(indices),
-                        "rmse_increase_mean": float(np.mean(changes)),
-                        "rmse_increase_min": float(np.min(changes)),
-                        "rmse_increase_max": float(np.max(changes)),
-                        "seed_changes": changes,
-                    })
-                    run.event("family_permuted", fold=fold, family=family,
-                              rmse_increase=float(np.mean(changes)))
+                    permutation_rows.append(
+                        {
+                            "family": family,
+                            "feature_count": len(indices),
+                            "rmse_increase_mean": float(np.mean(changes)),
+                            "rmse_increase_min": float(np.min(changes)),
+                            "rmse_increase_max": float(np.max(changes)),
+                            "seed_changes": changes,
+                        }
+                    )
+                    run.event(
+                        "family_permuted",
+                        fold=fold,
+                        family=family,
+                        rmse_increase=float(np.mean(changes)),
+                    )
                 training = probe.materialize(root, caches, plan["fold"], names, True)
                 omissions = []
                 masks = {
@@ -160,30 +188,44 @@ def main(root: Path) -> None:
                         i for i, name in enumerate(names) if not metadata_dependent(name)
                     ],
                     "without_optional_inputs": [
-                        i for i, name in enumerate(names)
+                        i
+                        for i, name in enumerate(names)
                         if not metadata_dependent(name) and not telemetry_dependent(name)
                     ],
                 }
                 for variant, indices in masks.items():
-                    fitted_path, errors_path = (output.parent / (variant + extension)
-                                                for extension in (".pkl", ".csv"))
+                    fitted_path, errors_path = (
+                        output.parent / (variant + extension) for extension in (".pkl", ".csv")
+                    )
 
                     def fit(indices: list[int] = indices, fitted_path: Path = fitted_path) -> None:
                         pair = probe.train_pair(training[0][:, indices], training[1])
                         atomic_bytes(fitted_path, pickle.dumps(pair, protocol=5))
 
-                    stage(root, f"wide-attribution-{fold}-{variant}-fit", signature,
-                          [fitted_path], fit, run)
+                    stage(
+                        root,
+                        f"wide-attribution-{fold}-{variant}-fit",
+                        signature,
+                        [fitted_path],
+                        fit,
+                        run,
+                    )
                     pair = pickle.loads(fitted_path.read_bytes())
-                    correction = np.column_stack([m.predict(evaluation[0][:, indices]) for m in pair])
+                    correction = np.column_stack(
+                        [m.predict(evaluation[0][:, indices]) for m in pair]
+                    )
                     errors = error_rows(evaluation, correction, variant)
                     atomic_bytes(errors_path, errors.to_csv(index=False).encode())
-                    omissions.append({
-                        "model": variant, "feature_count": len(indices), **error_metrics(errors),
-                        "delta_vs_full_ci95": np.quantile(
-                            bootstrap_scores(errors) - reference_bootstrap, [0.025, 0.975]
-                        ).tolist(),
-                    })
+                    omissions.append(
+                        {
+                            "model": variant,
+                            "feature_count": len(indices),
+                            **error_metrics(errors),
+                            "delta_vs_full_ci95": np.quantile(
+                                bootstrap_scores(errors) - reference_bootstrap, [0.025, 0.975]
+                            ).tolist(),
+                        }
+                    )
                 # Paired incremental width comparisons use matching games and frame keys.
                 width_changes = []
                 rows = [r for r in summary["models"] if r["model"] != "all_engineered"]
@@ -192,22 +234,34 @@ def main(root: Path) -> None:
                     earlier = pd.read_csv(base / (previous["model"] + ".csv"))
                     later = pd.read_csv(base / (current["model"] + ".csv"))
                     pd.testing.assert_frame_equal(earlier[keys], later[keys])
-                    width_changes.append({
-                        "from": previous["model"], "to": current["model"],
-                        "rmse_change": current["coordinate_rmse_yards"]
-                                       - previous["coordinate_rmse_yards"],
-                        "paired_game_ci95": np.quantile(
-                            bootstrap_scores(later) - bootstrap_scores(earlier), [0.025, 0.975]
-                        ).tolist(),
-                    })
-                atomic_json(output, {
-                    "fold": fold, "status": "passed", "source_signature": signature,
-                    "rows": len(reference), "selected_model": selected,
-                    "feature_count": len(names), "features": names,
-                    "coordinate_rmse_yards": score, "permutation": permutation_rows,
-                    "omissions": omissions, "incremental_width": width_changes,
-                    "holdout_evaluation": "not_run",
-                })
+                    width_changes.append(
+                        {
+                            "from": previous["model"],
+                            "to": current["model"],
+                            "rmse_change": current["coordinate_rmse_yards"]
+                            - previous["coordinate_rmse_yards"],
+                            "paired_game_ci95": np.quantile(
+                                bootstrap_scores(later) - bootstrap_scores(earlier), [0.025, 0.975]
+                            ).tolist(),
+                        }
+                    )
+                atomic_json(
+                    output,
+                    {
+                        "fold": fold,
+                        "status": "passed",
+                        "source_signature": signature,
+                        "rows": len(reference),
+                        "selected_model": selected,
+                        "feature_count": len(names),
+                        "features": names,
+                        "coordinate_rmse_yards": score,
+                        "permutation": permutation_rows,
+                        "omissions": omissions,
+                        "incremental_width": width_changes,
+                        "holdout_evaluation": "not_run",
+                    },
+                )
 
             stage(root, "wide-attribution-" + fold, signature, fold_outputs, action, run)
             results.append(json.loads(output.read_text()))
@@ -215,7 +269,7 @@ def main(root: Path) -> None:
         def report() -> None:
             import matplotlib.pyplot as plt
 
-            counts = {}
+            counts: dict[str, int] = {}
             for result in results[:3]:
                 for name in result["features"]:
                     counts[name] = counts.get(name, 0) + 1
@@ -227,27 +281,43 @@ def main(root: Path) -> None:
             ax.set_title(f"Where the {results[-1]['feature_count']}-feature signal comes from")
             fig.savefig(destination / "figure.png", dpi=160)
             plt.close(fig)
-            atomic_json(destination / "summary.json", {
-                "status": "passed", "source_signature": signature,
-                "source_signatures": snapshot["source_signatures"], "provenance": provenance,
-                "selected_model": selected, "inner_scores": inner_scores,
-                "development": results[-1], "inner_folds": results[:3],
-                "selected_in_all_inner_folds": sorted(n for n, count in counts.items() if count == 3),
-                "stability_caveat": "PCA axes can rotate between folds.",
-                "permutation_interpretation": (
-                    "Whole trajectories shuffled within role and forecast horizon; exact frame "
-                    "alignment; physical baseline held fixed. Conditional reliance, not causal "
-                    "importance. Seed range is not a confidence interval."
-                ),
-                "omission_interpretation": (
-                    "Refit with identical estimator settings and no replacement features; "
-                    "paired game bootstraps quantify development-game uncertainty."
-                ),
-                "holdout_evaluation": "not_run", "feature_gate": "open",
-            })
+            atomic_json(
+                destination / "summary.json",
+                {
+                    "status": "passed",
+                    "source_signature": signature,
+                    "source_signatures": snapshot["source_signatures"],
+                    "provenance": provenance,
+                    "selected_model": selected,
+                    "inner_scores": inner_scores,
+                    "development": results[-1],
+                    "inner_folds": results[:3],
+                    "selected_in_all_inner_folds": sorted(
+                        n for n, count in counts.items() if count == 3
+                    ),
+                    "stability_caveat": "PCA axes can rotate between folds.",
+                    "permutation_interpretation": (
+                        "Whole trajectories shuffled within role and forecast horizon; exact frame "
+                        "alignment; physical baseline held fixed. Conditional reliance, not causal "
+                        "importance. Seed range is not a confidence interval."
+                    ),
+                    "omission_interpretation": (
+                        "Refit with identical estimator settings and no replacement features; "
+                        "paired game bootstraps quantify development-game uncertainty."
+                    ),
+                    "holdout_evaluation": "not_run",
+                    "feature_gate": "open",
+                },
+            )
 
-        stage(root, "feature-attribution-report", signature,
-              [destination / "summary.json", destination / "figure.png"], report, run)
+        stage(
+            root,
+            "feature-attribution-report",
+            signature,
+            [destination / "summary.json", destination / "figure.png"],
+            report,
+            run,
+        )
 
 
 if __name__ == "__main__":

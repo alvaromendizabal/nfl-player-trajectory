@@ -1,6 +1,6 @@
 # NFL Big Data Bowl 2026 - Prediction
 
-This is the Prediction project. The canonical notebooks are 00, 01, and 02;
+This is the [Prediction project](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction). The canonical notebooks are 00, 01, and 02;
 the repository name describes the player's trajectory prediction target.
 
 ## Review the evidence

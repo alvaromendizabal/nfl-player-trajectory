@@ -63,9 +63,15 @@ def main() -> None:
     subprocess.run([uv, "sync", "--frozen", "--group", "dev"], check=True, env=env)
     python = str(root / ".venv/bin/python")
     formatted = [
-        "scripts/cloud_research.py", "scripts/cloud_validate.py",
+        "scripts/cloud_research.py",
+        "scripts/cloud_validate.py",
         "src/nfl_trajectory/research_evidence.py",
-        "scripts/feature_attribution.py", "scripts/validate_gateway.py",
+        "scripts/feature_attribution.py",
+        "scripts/validate_gateway.py",
+        "scripts/prepare_tree.py",
+        "src/nfl_trajectory/tree_inference.py",
+        "src/nfl_trajectory/research_inference.py",
+        "tests/test_tree_inference.py",
         *[str(p.relative_to(root)) for p in root.glob("notebooks/*.ipynb")],
     ]
     formatted = [name for name in formatted if (root / name).is_file()]
@@ -83,10 +89,22 @@ def main() -> None:
             ServerSideEncryption="AES256",
         )
     subprocess.run(
-        [python, "-m", "ruff", "check", "--fix", *[
-            name for name in formatted if not name.endswith(".lock")
-        ]], check=True, env=env,
+        [
+            python,
+            "-m",
+            "ruff",
+            "check",
+            "--fix",
+            *[name for name in formatted if not name.endswith(".lock")],
+        ],
+        check=True,
+        env=env,
     )
+    if (root / "scripts/prepare_tree.py").exists():
+        subprocess.run(
+            [uv, "run", "--locked", "scripts/prepare_tree.py", "--self-test"],
+            check=True, env=env,
+        )
     for command in [
         [python, "-m", "ruff", "check", "."],
         [python, "-m", "ruff", "format", "--check", "."],

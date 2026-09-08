@@ -45,7 +45,8 @@ def selected_input(name: str) -> bool:
     if re.search(r"2023_w(?:16|17|18)(?:[./_]|$)", name):
         return False
     if name.startswith("data/raw/kaggle_evaluation/") or name in {
-        "data/raw/test.csv", "data/raw/test_input.csv",
+        "data/raw/test.csv",
+        "data/raw/test_input.csv",
     }:
         return True
     if path.parts[0] in {"artifacts", ".state", "logs"}:
@@ -233,8 +234,15 @@ def main() -> None:
         uv = str(root.parent / "uv-tools/bin/uv")
         command([uv, "sync", "--frozen", "--group", "dev"], "locked-environment")
         command(
-            [python, "-m", "ruff", "format", "scripts/cloud_research.py",
-             "src/nfl_trajectory/research_evidence.py"], "normalize-report-source",
+            [
+                python,
+                "-m",
+                "ruff",
+                "format",
+                "scripts/cloud_research.py",
+                "src/nfl_trajectory/research_evidence.py",
+            ],
+            "normalize-report-source",
         )
         command([python, "-m", "pytest", "-q"], "tests", threads=2)
         folds = ["inner_1", "inner_2", "inner_3", "development"]
@@ -272,7 +280,9 @@ def main() -> None:
                     report_commit = json.loads(body.read())["commit"]
                 break
         if report_commit is None:
-            raise ValueError("No pinned presentation commit was delivered; results are checkpointed.")
+            raise ValueError(
+                "No pinned presentation commit was delivered; results are checkpointed."
+            )
         if report_commit != commit:
             with tempfile.TemporaryDirectory() as temporary:
                 stage = Path(temporary)
@@ -295,9 +305,9 @@ def main() -> None:
                     target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(path, target)
         report_scripts = [
-            str(p.relative_to(root)) for p in (
-                root / "scripts/feature_attribution.py", root / "scripts/validate_gateway.py"
-            ) if p.exists()
+            str(p.relative_to(root))
+            for p in (root / "scripts/feature_attribution.py", root / "scripts/validate_gateway.py")
+            if p.exists()
         ]
         if report_scripts:
             command([python, "-m", "ruff", "format", *report_scripts], "report-script-format")
@@ -312,7 +322,11 @@ def main() -> None:
         if (root / "scripts/validate_gateway.py").exists():
             if not (root / "scripts/validate_gateway.py.lock").exists():
                 command([uv, "lock", "--script", "scripts/validate_gateway.py"], "gateway-lock")
-            command([uv, "run", "--locked", "scripts/validate_gateway.py"], "organizer-gateway", threads=2)
+            command(
+                [uv, "run", "--locked", "scripts/validate_gateway.py"],
+                "organizer-gateway",
+                threads=2,
+            )
         command([python, "scripts/notebooks.py", "--publish"], "publish-notebooks", threads=2)
         command([python, "scripts/quality.py"], "quality", threads=2)
         backup("published-and-tested")
@@ -322,9 +336,12 @@ def main() -> None:
             root / "artifacts/quality.json",
             root / "artifacts/notebooks/publication.json",
         ]
-        files.extend([root / "scripts/cloud_research.py", root / "src/nfl_trajectory/research_evidence.py"])
         files.extend(
-            p for pattern in ("scripts/feature_attribution.py*", "scripts/validate_gateway.py*")
+            [root / "scripts/cloud_research.py", root / "src/nfl_trajectory/research_evidence.py"]
+        )
+        files.extend(
+            p
+            for pattern in ("scripts/feature_attribution.py*", "scripts/validate_gateway.py*")
             for p in root.glob(pattern)
         )
         publication = []

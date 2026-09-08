@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
 import subprocess
@@ -168,6 +169,25 @@ def validate_executed(source: Path, executed: Any) -> None:
         raise ValueError("An executed notebook must contain at least one code cell.")
 
 
+def validate_review_controls(notebook: Any) -> None:
+    """Refuse armed manual controls before automatic execution can run any cell."""
+    manual = {"RUN_FEATURE_EXPERIMENT", "GENERATE_EXPORT"}
+    for cell in notebook.cells:
+        if cell.cell_type != "code":
+            continue
+        for node in ast.walk(ast.parse(cell.source)):
+            if not isinstance(node, ast.Assign):
+                continue
+            names = {target.id for target in node.targets if isinstance(target, ast.Name)}
+            armed = names & manual
+            if armed and not (isinstance(node.value, ast.Constant) and node.value.value is False):
+                raise ValueError(
+                    "Turn off manual notebook controls before automatic publication: "
+                    + ", ".join(sorted(armed))
+                    + ". Run those cells interactively to train or create your own export."
+                )
+
+
 def execute(root: Path, source: Path, run: Run) -> None:
     destination = root / "artifacts/notebooks" / source.name
     signature = execution_signature(root, source)
@@ -175,6 +195,7 @@ def execute(root: Path, source: Path, run: Run) -> None:
     def action() -> None:
         notebook = nbformat.read(source, as_version=4)
         nbformat.validate(notebook)
+        validate_review_controls(notebook)
         shell = InteractiveShell.instance()
         count = 0
         for cell in notebook.cells:

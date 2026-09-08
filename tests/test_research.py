@@ -107,3 +107,76 @@ def test_quality_export_does_not_overwrite_owner_artifact():
 def test_unknown_error_budget_dimension_fails(evidence):
     with pytest.raises(ValueError):
         error_budget(evidence, "player_identity")
+
+
+def notebook_runner():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "review_controls_test", ROOT / "scripts/notebooks.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.mark.parametrize("switch", ["RUN_FEATURE_EXPERIMENT", "GENERATE_EXPORT"])
+def test_automatic_render_refuses_enabled_owner_switch(switch):
+    notebook = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell(f"{switch} = True")])
+    with pytest.raises(ValueError, match="Turn off manual"):
+        notebook_runner().validate_review_controls(notebook)
+
+
+@pytest.mark.parametrize("switch", ["RUN_FEATURE_EXPERIMENT", "GENERATE_EXPORT"])
+def test_automatic_render_accepts_default_owner_switch(switch):
+    notebook = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell(f"{switch} = False")])
+    notebook_runner().validate_review_controls(notebook)
+
+
+def test_prediction_identity_matches_ingestion_export_and_review():
+    from nfl_trajectory.data import COMPETITION
+
+    assert COMPETITION == "nfl-big-data-bowl-2026-prediction"
+    assert COMPETITION in (ROOT / "kaggle/export.py").read_text()
+    for name in ("README.md", "START_HERE.md"):
+        text = (ROOT / name).read_text()
+        assert text.startswith("# NFL Big Data Bowl 2026 - Prediction")
+        assert COMPETITION in text
+    notebook = nbformat.read(ROOT / "notebooks/00_project_readiness.ipynb", as_version=4)
+    assert COMPETITION in notebook.cells[0].source
+    assert "load_evidence(ROOT)" in notebook.cells[1].source
+
+
+def test_readiness_rejects_an_analytics_audit(tmp_path):
+    from nfl_trajectory.data import COMPETITION
+
+    folder = tmp_path / "artifacts"
+    folder.mkdir()
+    (folder / "audit_summary.json").write_text(
+        json.dumps({"competition": "nfl-big-data-bowl-2026-analytics", "status": "passed"})
+    )
+    notebook = nbformat.read(ROOT / "notebooks/00_project_readiness.ipynb", as_version=4)
+    namespace = {"ROOT": tmp_path, "COMPETITION": COMPETITION, "json": json}
+    with pytest.raises(ValueError, match="different competition"):
+        exec(compile(notebook.cells[7].source, "readiness.py", "exec"), namespace)
+
+
+def test_readiness_without_local_audit_retains_published_evidence(tmp_path):
+    from IPython.display import Markdown
+
+    notebook = nbformat.read(ROOT / "notebooks/00_project_readiness.ipynb", as_version=4)
+    messages = []
+    namespace = {"ROOT": tmp_path, "Markdown": Markdown, "display": messages.append}
+    exec(compile(notebook.cells[7].source, "readiness.py", "exec"), namespace)
+    assert "not mounted" in messages[0].data
+    assert "published real-data results above remain available" in messages[0].data
+    assert "not run" not in messages[0].data
+
+
+def test_readiness_no_longer_calls_completed_work_phase_zero():
+    notebook = nbformat.read(ROOT / "notebooks/00_project_readiness.ipynb", as_version=4)
+    source = "\n".join(cell.source for cell in notebook.cells)
+    assert "Phase 0" not in source
+    assert "Phase 1 will" not in source
+    assert "synthetic scoring check" in source
+    assert "No model was refitted" in source

@@ -157,3 +157,77 @@ def test_export_rejects_incompatible_model_without_overwriting_artifact(tmp_path
     )
     assert result.returncode != 0
     assert destination.read_text() == "previous valid artifact"
+
+
+def checkpoint_namespace():
+    import importlib.util
+
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location(
+        "export_checkpoint_test", root / "kaggle/export.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    notebook, _ = module.build_notebook(root, "constant_velocity", root / "docs/results/model.json")
+    cells = [c.source for c in notebook.cells if c.cell_type == "code"]
+    namespace = {}
+    exec(compile(cells[0], "model.py", "exec"), namespace)
+    interface = next(
+        n
+        for n in ast.parse(cells[-1]).body
+        if isinstance(n, ast.FunctionDef) and n.name == "predict"
+    )
+    exec(compile(ast.Module(body=[interface], type_ignores=[]), "predict.py", "exec"), namespace)
+    return namespace
+
+
+def test_inference_reuses_verified_predictions_without_recomputing(tmp_path, monkeypatch):
+    from nfl_trajectory.runtime import Run
+
+    namespace = checkpoint_namespace()
+    observed, truth = synthetic_play()
+    monkeypatch.chdir(tmp_path)
+    with Run(tmp_path, "inference_test") as run:
+        namespace["_gateway_run"] = run
+        expected = namespace["predict"](truth[KEYS], observed)
+
+        def prohibited(*args, **kwargs):
+            raise AssertionError("Verified predictions must not be recomputed")
+
+        namespace["constant_velocity"] = prohibited
+        pd.testing.assert_frame_equal(namespace["predict"](truth[KEYS], observed), expected)
+    assert '"stage_reused"' in run.log_path.read_text()
+
+
+def test_corrupt_inference_cache_is_rebuilt(tmp_path, monkeypatch):
+    from nfl_trajectory.runtime import Run
+
+    namespace = checkpoint_namespace()
+    observed, truth = synthetic_play()
+    monkeypatch.chdir(tmp_path)
+    with Run(tmp_path, "inference_test") as run:
+        namespace["_gateway_run"] = run
+        expected = namespace["predict"](truth[KEYS], observed)
+        path = next((tmp_path / "artifacts/inference").glob("*.json"))
+        path.write_text("truncated")
+        pd.testing.assert_frame_equal(namespace["predict"](truth[KEYS], observed), expected)
+
+
+@pytest.mark.parametrize("change", ["target_order", "observed_values"])
+def test_changed_inference_inputs_get_distinct_checkpoints(tmp_path, monkeypatch, change):
+    from nfl_trajectory.runtime import Run
+
+    namespace = checkpoint_namespace()
+    observed, truth = synthetic_play()
+    target = truth[KEYS]
+    monkeypatch.chdir(tmp_path)
+    with Run(tmp_path, "inference_test") as run:
+        namespace["_gateway_run"] = run
+        namespace["predict"](target, observed)
+        if change == "target_order":
+            target = target.iloc[::-1]
+        else:
+            observed = observed.copy()
+            observed["x"] += 1.0
+        namespace["predict"](target, observed)
+    assert len(list((tmp_path / "artifacts/inference").glob("*.json"))) == 2

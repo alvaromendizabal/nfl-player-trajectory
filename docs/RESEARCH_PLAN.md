@@ -89,3 +89,7 @@ https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/writeups/3
 
 The additive, role-conditioned, and subsequent nonlinear challengers have not been
 run in this update. Notebook 02 records this decision alongside the measured data.
+
+Every inner chronological fold must refit the baseline as well as its feature selector.
+Residual caches computed with the baseline fitted to all training games are not
+out-of-fold residuals and must not be reused for inner-fold model selection.

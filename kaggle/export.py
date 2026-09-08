@@ -77,10 +77,14 @@ def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]
     """Build a numerical cell without project-package imports and list its dependencies."""
     folder = root / "src/nfl_trajectory"
     paths = [folder / "motion.py", folder / "runtime.py"]
-    nodes = definitions(paths[0]) + definitions(paths[1], {"Run"})
+    nodes = definitions(paths[0]) + definitions(
+        paths[1], {"Run", "stage", "sha256", "atomic_bytes", "atomic_json"}
+    )
     imports = (
-        "from __future__ import annotations\nimport importlib\nimport json\nimport os\n"
-        "import sys\nimport threading\nimport time\nimport uuid\n"
+        "from __future__ import annotations\nimport hashlib\nimport importlib\n"
+        "import json\nimport os\n"
+        "import sys\nimport tempfile\nimport threading\nimport time\nimport uuid\n"
+        "from collections.abc import Callable\nfrom filelock import FileLock\n"
         "from datetime import UTC, datetime\nfrom pathlib import Path\nfrom typing import Any\n"
         "import numpy as np\nimport pandas as pd\n"
     )
@@ -125,6 +129,7 @@ def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]
         )
     if model in RESIDUAL_MODELS:
         source += "BATCH_ROWS = 1024\nRESIDUAL_MODEL = " + pprint.pformat(residual, width=85) + "\n"
+    source += "INFERENCE_SIGNATURE = " + repr(hashlib.sha256(source.encode()).hexdigest()) + "\n"
     source += "_gateway_run: Run | None = None\n"
     return source, paths
 
@@ -157,23 +162,49 @@ inference_module = importlib.import_module('kaggle_evaluation.nfl_inference_serv
     # Ignore target coordinates and retain the exact incoming target row order.
     target = test.to_pandas() if hasattr(test, 'to_pandas') else test
     observed = test_input.to_pandas() if hasattr(test_input, 'to_pandas') else test_input
-    PREDICTION
-    if _gateway_run is not None:
-        _gateway_run.event('prediction_batch_completed', rows=len(predictions))
-    return predictions[['x', 'y']]
+    require_keys(target)
 
-with Run(Path.cwd(), 'kaggle_gateway') as _gateway_run:
-    server = inference_module.NFLInferenceServer(predict)
-    if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
-        server.serve()
-    else:
-        server.run_local_gateway((str(COMPETITION_PATH),))
+    def compute():
+        PREDICTION
+        return predictions[['x', 'y']]
+
+    if _gateway_run is None:
+        return compute()
+    digest = hashlib.sha256(INFERENCE_SIGNATURE.encode())
+    digest.update((np.__version__ + pd.__version__).encode())
+    digest.update(json.dumps(list(observed.columns)).encode())
+    digest.update(pd.util.hash_pandas_object(observed, index=False).to_numpy().tobytes())
+    digest.update(target[KEYS].to_numpy(dtype=np.int64).tobytes())
+    key = digest.hexdigest()
+    destination = Path.cwd() / 'artifacts/inference' / (key + '.json')
+
+    def save_prediction():
+        result = compute()
+        atomic_json(destination, result.to_numpy(dtype=float).tolist())
+
+    stage(Path.cwd(), 'inference-' + key, key, [destination], save_prediction, _gateway_run)
+    values = np.asarray(json.loads(destination.read_text()), dtype=float)
+    if values.shape != (len(target), 2) or not np.isfinite(values).all():
+        raise ValueError('Cached predictions must match the requested rows and be finite.')
+    _gateway_run.event('prediction_batch_completed', rows=len(target))
+    return pd.DataFrame(values, columns=['x', 'y'])
+
+with Run(Path.cwd(), 'kaggle_gateway') as active_run:
+    _gateway_run = active_run
+    try:
+        server = inference_module.NFLInferenceServer(predict)
+        if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+            server.serve()
+        else:
+            server.run_local_gateway((str(COMPETITION_PATH),))
+    finally:
+        _gateway_run = None
 
 if not os.getenv('KAGGLE_IS_COMPETITION_RERUN') and Path('submission.parquet').is_file():
     from IPython.display import FileLink, display
 
     display(FileLink('submission.parquet', result_html_prefix='Download local gateway output: '))
-""".replace("PREDICTION", prediction)
+""".replace("PREDICTION", prediction.replace("\n", "\n    "))
     notebook = nbformat.v4.new_notebook(
         cells=[
             nbformat.v4.new_markdown_cell(
@@ -186,6 +217,9 @@ if not os.getenv('KAGGLE_IS_COMPETITION_RERUN') and Path('submission.parquet').i
                 "Running this notebook invokes the organizer gateway; it does not submit anything. "
                 "Local sample predictions are not hidden-test predictions or a leaderboard score. "
                 "You control any subsequent Kaggle submission.\n\n"
+                "Verified per-play predictions are reused while the working directory is retained. "
+                "Restore saved outputs before expecting a fresh runtime to reuse checkpoints. "
+                "UTC logs include stage and total timing plus a 15-second heartbeat.\n\n"
                 "Interface: [official organizer example]"
                 "(https://www.kaggle.com/code/sohier/nfl-2026-demo-submission)."
             ),
@@ -235,11 +269,7 @@ def main() -> int:
         input_hashes = {str(p): sha256(p) for p in dependencies}
         signature = hashlib.sha256(
             json.dumps(
-                {
-                    "inputs": input_hashes,
-                    "model": args.model,
-                    "output": str(destination),
-                },
+                {"inputs": input_hashes, "model": args.model, "output": str(destination)},
                 sort_keys=True,
             ).encode()
         ).hexdigest()
@@ -274,6 +304,21 @@ def main() -> int:
                     "-",
                 ],
                 input=ordered.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=formatted.stdout,
                 text=True,
                 capture_output=True,
                 check=True,

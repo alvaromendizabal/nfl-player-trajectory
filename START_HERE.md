@@ -1,4 +1,16 @@
-# Review the completed experiment
+# NFL Big Data Bowl 2026 - Prediction
+
+This is the Prediction project, not the separate Analytics competition.
+`nfl-player-trajectory` is the repository name; a trajectory is a player's x/y
+path while the pass is in the air. Both ingestion and inference use the official
+`nfl-big-data-bowl-2026-prediction` competition slug.
+
+Continue in the existing `nfl-trajectory-dev` SageMaker space and
+`$HOME/nfl-player-trajectory` directory. No new space or dataset download is needed
+merely to continue this project. Notebook 00 now distinguishes completed real-data
+evidence from its small synthetic scoring demonstration.
+
+## Review the completed experiment
 
 The feature run completed successfully: landing ridge reached 0.9268683892 RMSE;
 all three notebooks were published locally and the final S3 backup completed.
@@ -55,3 +67,9 @@ implemented or claimed complete in this presentation/export update.
 The existing optional training cell in notebook 01 can run/resume `nfl features`
 when explicitly enabled. It is off for normal review. Rerun it only when a verified
 stage is missing or a deliberate numerical change warrants recomputation.
+
+Automatic publication refuses an enabled training/export switch before any cell runs.
+Restore those manual controls to `False` before publication. The exported predictor
+retains verified per-play results only while its working directory is retained or
+restored from saved outputs; it does not assume a fresh Kaggle session restores
+earlier disk state.

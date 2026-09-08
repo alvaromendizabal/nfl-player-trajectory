@@ -42,6 +42,19 @@ def train_pair(x: np.ndarray, y: np.ndarray) -> list[Any]:
     return [HistGradientBoostingRegressor(**SETTINGS).fit(x, y[:, axis]) for axis in range(2)]
 
 
+def probe_summary(errors: pd.DataFrame, variants: dict[str, list[str]]) -> dict[str, Any]:
+    from nfl_trajectory.benchmark import bootstrap_scores, summarize
+
+    summary = summarize(errors)
+    reference = bootstrap_scores(errors[errors.model.eq("landing_features")])
+    for row in summary["models"]:
+        row["feature_count"] = len(variants.get(row["model"], []))
+        row["delta_vs_landing_ci95"] = np.quantile(
+            bootstrap_scores(errors[errors.model.eq(row["model"])]) - reference, [0.025, 0.975]
+        ).tolist()
+    return summary
+
+
 def feature_sets(
     core: dict[str, Any], context: dict[str, Any], rep: dict[str, Any]
 ) -> dict[str, list[str]]:
@@ -134,8 +147,8 @@ def nonlinear_probe(root: Path, run: Any) -> None:
     import sklearn
     from filelock import FileLock
 
-    from nfl_trajectory.benchmark import bootstrap_scores, summarize
-    from nfl_trajectory.feature_research import verify_inputs
+    from nfl_trajectory.feature_research import verify_inputs, weeks
+    from nfl_trajectory.motion import KEYS
     from nfl_trajectory.research import feature_research_snapshot
     from nfl_trajectory.runtime import atomic_bytes, atomic_json, sha256, stage
 
@@ -227,15 +240,13 @@ def nonlinear_probe(root: Path, run: Any) -> None:
                     run,
                 )
                 results.append(pd.read_csv(error_path))
+            for _, _, arrays, state, _ in weeks(root, caches, set(fold["evaluation_games"])):
+                reference = state[KEYS + ["player_role", "num_frames_output"]].copy()
+                reference[["dx", "dy"]] = arrays["velocity"] - arrays["truth"]
+                reference["model"] = "constant_velocity"
+                results.append(reference)
             errors = pd.concat(results, ignore_index=True)
-            summary = summarize(errors)
-            reference = bootstrap_scores(errors[errors.model.eq("landing_features")])
-            for row in summary["models"]:
-                row["feature_count"] = len(variants[row["model"]])
-                row["delta_vs_landing_ci95"] = np.quantile(
-                    bootstrap_scores(errors[errors.model.eq(row["model"])]) - reference,
-                    [0.025, 0.975],
-                ).tolist()
+            summary = probe_summary(errors, variants)
             summary.update(fold=fold, source_signature=source, settings=SETTINGS)
             atomic_json(folder / "summary.json", summary)
             if fold["name"] != "development":
@@ -294,6 +305,25 @@ def self_test() -> None:
         raise ValueError("Nonlinear probe failed its independent synthetic signal check.")
     if any(m.n_iter_ != SETTINGS["max_iter"] for m in first):
         raise ValueError("Random-row early stopping must remain disabled.")
+    observed = pd.DataFrame(
+        {
+            "game_id": [2024010100] * len(a),
+            "play_id": 1,
+            "nfl_id": 1,
+            "frame_id": np.arange(1, len(a) + 1),
+            "num_frames_output": len(a),
+            "player_role": "Defensive Coverage",
+            "dx": (a - y[750:])[:, 0],
+            "dy": (a - y[750:])[:, 1],
+            "model": "landing_features",
+        }
+    )
+    reference = observed.assign(model="constant_velocity", dx=-y[750:, 0], dy=-y[750:, 1])
+    summary = probe_summary(
+        pd.concat([observed, reference], ignore_index=True), {"landing_features": list("abcd")}
+    )
+    if summary["status"] != "passed" or summary["selected_model"] != "landing_features":
+        raise ValueError("Nonlinear probe metric integration failed.")
     print(json.dumps({"self_test": "passed", "fixed_iterations": SETTINGS["max_iter"]}))
 
 
@@ -301,11 +331,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root / "src"))
     if args.self_test:
         self_test()
     else:
-        root = Path(__file__).resolve().parents[1]
-        sys.path.insert(0, str(root / "src"))
         from nfl_trajectory.runtime import Run
 
         with Run(root, "nonlinear-probe") as run:

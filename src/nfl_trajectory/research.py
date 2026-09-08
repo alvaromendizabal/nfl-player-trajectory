@@ -253,7 +253,7 @@ def feature_research_snapshot(root: Path) -> dict[str, Any]:
             "Fixed linear probes; conditional importance is not causal importance.",
             "Three chronological folds from one season; no across-season claim.",
             "The previously inspected development set is not an untouched holdout.",
-            "Research additions are not yet promoted to the official inference exporter.",
+            "Standalone research inference is verified separately; the official gateway is unrun.",
         ],
     }
 

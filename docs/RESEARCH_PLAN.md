@@ -94,7 +94,7 @@ raw-feature/standalone inference has equivalent validation.
 | Avenue | Current decision |
 |---|---|
 | Wider screened representations | Test the complete eligible pool; review incremental fold gains before stopping |
-| Robustness of the strongest wide representation | Refit without metadata/history and without optional telemetry |
+| Robustness of the strongest wide representation | Refit without body/position metadata and optional telemetry; stress-test cold history |
 | Training-only selection and redundancy | Implemented; preserve family and fold evidence |
 | External team ratings, coaching, organization, strength of schedule | Deferred: no verified as-of join, availability contract, or demonstrated relation to this frame-level task |
 | Player identities and historical outcomes | Earlier-date smoothed residual/count features only; no full-season target means |
@@ -106,7 +106,13 @@ Close feature engineering only when the major realistic families have explicit
 evidence, fixed-estimator feature gains are robust, the latest useful representation
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
-Current status: **open pending width, robustness, and representation handoff review**.
+Current status: **open pending wide-profile group refits, robustness, and representation handoff review**.
+
+The [wide ablation protocol](WIDE_ABLATION_PROTOCOL.md) extends strict refits to
+the selected wide availability profile, covers all 20 catalog families in
+12 disjoint groups, and tests whether removing a group is still a high-value
+feature-engineering avenue. This adds a current-model requirement to the
+original compact-union ablations.
 
 ### Operational closure thresholds
 

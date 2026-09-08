@@ -109,9 +109,9 @@ def main() -> None:
     bucket, job = os.environ["NFL_BUCKET"], os.environ["NFL_JOB_NAME"]
     commit, snapshot_key = os.environ["NFL_REPO_REF"], os.environ["NFL_SNAPSHOT"]
     mode = os.environ.get("NFL_MODE", "research")
-    if mode not in {"research", "finalize"}:
+    if mode not in {"research", "finalize", "wide_refits"}:
         raise ValueError("Unknown cloud research mode.")
-    if (mode == "research" or os.environ.get("NFL_EXPAND_FULL_POOL") == "1") and (
+    if (mode in {"research", "wide_refits"} or os.environ.get("NFL_EXPAND_FULL_POOL") == "1") and (
         memory_budget_gib() < 96
     ):
         raise ValueError(
@@ -291,7 +291,7 @@ def main() -> None:
                 wide.result()
                 inference.result()
             backup("completed-feature-experiments")
-        else:
+        elif mode == "finalize":
             if os.environ.get("NFL_EXPAND_FULL_POOL") == "1":
                 # The largest full-bank fit exceeds 64 GiB including sklearn's
                 # float64 buffers. Use at least 128 GiB and keep folds sequential.
@@ -320,6 +320,14 @@ def main() -> None:
             )
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")
+        else:
+            for fold in ("inner_1", "inner_2", "inner_3", "development"):
+                command(
+                    [uv, "run", "--locked", "scripts/ablate_wide_features.py", "--fold", fold],
+                    "wide-refits-" + fold,
+                    threads=6,
+                )
+                backup("wide-refits-" + fold)
         # Only presentation files may come from a later, explicitly pinned review commit.
         report_commit = None
         for attempt in range(80):
@@ -401,6 +409,10 @@ def main() -> None:
             root / "scripts/review_feature_gate.py",
             root / "src/nfl_trajectory/research_gate.py",
             root / "tests/test_research_gate.py",
+            root / "scripts/ablate_wide_features.py",
+            root / "scripts/ablate_wide_features.py.lock",
+            root / "src/nfl_trajectory/wide_ablation.py",
+            root / "tests/test_wide_ablation.py",
         ]
         files.extend(
             [root / "scripts/cloud_research.py", root / "src/nfl_trajectory/research_evidence.py"]

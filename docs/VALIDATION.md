@@ -1,6 +1,6 @@
 # Validation record
 
-The research milestone passes **190 tests** in the actual locked cloud environment.
+The research milestone passes **211 tests** in the actual locked cloud environment.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.
@@ -26,7 +26,7 @@ and refuses stale inference or report artifacts. Notebook outputs are executed
 before replacing canonical files. Enabled training/export switches block automated
 publication before any cell runs.
 
-The wide search fits deterministic 512/1,024/2,048 budgets and preserves the parent
+The wide search fits deterministic 512/1,024/2,048/4,096/8,192 budgets and preserves the parent
 features. Missingness, variance, duplicate names, schema, finite values, and
 training-only correlation screening are checked. Exact dependency tests confirm
 that declared positional features remain unchanged when telemetry/metadata vanish.

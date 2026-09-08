@@ -24,6 +24,7 @@ EXTRA_REPORTS = {
     "feature_attribution.png": "feature_attribution/figure.png",
     "feature_gateway.json": "research/gateway/summary.json",
     "feature_tree.json": "research/tree/summary.json",
+    "feature_wide_ablation.json": "wide_ablation/summary.json",
     "feature_gate.json": "research/gate/summary.json",
     "feature_freeze.json": "research/gate/selection_manifest.json",
     "feature_diagnostics.json": "research/gate/diagnostics.json",
@@ -130,6 +131,117 @@ def joint_evidence(root: Path, sources: dict[str, str]) -> dict[str, Any] | None
     }
 
 
+def wide_group_evidence(
+    root: Path, sources: dict[str, str], bundle_hash: str
+) -> dict[str, Any] | None:
+    """Verify every wide refit and recompute its reported error before publication."""
+    from nfl_trajectory.runtime import Run, stage
+    from nfl_trajectory.wide_ablation import GROUPS
+
+    folder = root / "artifacts/wide_ablation"
+    if not folder.exists():
+        return None
+    results: list[dict[str, Any]] = []
+    paths = [Path(__file__), root / "src/nfl_trajectory/wide_ablation.py"]
+    for fold in FOLDS:
+        path = folder / fold / "summary.json"
+        report = read(path)
+        provenance = report["provenance"]
+        source = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()
+        if (
+            source != report["source_signature"]
+            or report["source_signatures"] != sources
+            or provenance["bundle_sha256"] != bundle_hash
+            or report["fold"] != fold
+            or report["holdout_evaluation"] != "not_run"
+            or provenance["groups"] != {name: sorted(group) for name, group in GROUPS.items()}
+        ):
+            raise ValueError("Wide group refits do not cover the current representation.")
+        for relative, expected in provenance["inputs"].items():
+            if sha256(root / relative) != expected:
+                raise ValueError("Wide group refit source or inputs changed.")
+        verified_checkpoint(root, "wide-group-" + fold, source, path)
+        reference = root / "artifacts/feature_attribution" / fold / (report["profile"] + ".csv")
+        verify_error_metric(reference, report["reference"])
+        if {row["group"] for row in report["models"]} != set(GROUPS):
+            raise ValueError("A predeclared wide ablation group is missing.")
+        for row in report["models"]:
+            if row["refitted"]:
+                for phase, extension in (("fit", ".pkl"), ("evaluate", ".csv")):
+                    output = folder / fold / (row["model"] + extension)
+                    verified_checkpoint(
+                        root, f"wide-group-{fold}-{row['group']}-{phase}", source, output
+                    )
+                verify_error_metric(folder / fold / (row["model"] + ".csv"), row)
+            elif (
+                row["removed_features"] != 0
+                or row["coordinate_rmse_yards"] != report["reference"]["coordinate_rmse_yards"]
+            ):
+                raise ValueError("An absent-group control cannot claim a refitted improvement.")
+        paths.append(path)
+        results.append(report)
+    weights = [r["rows"] for r in results[:3]]
+    reference_rmse = float(
+        np.sqrt(
+            np.average(
+                [r["reference"]["coordinate_rmse_yards"] ** 2 for r in results[:3]], weights=weights
+            )
+        )
+    )
+    scores = pooled_scores(results[:3], "rows")
+    comparison = []
+    for group in GROUPS:
+        name = "without_" + group
+        changes = [
+            next(row["coordinate_rmse_yards"] for row in report["models"] if row["model"] == name)
+            / report["reference"]["coordinate_rmse_yards"]
+            - 1
+            for report in results[:3]
+        ]
+        comparison.append(
+            {
+                "group": group,
+                "pooled_coordinate_rmse_yards": scores[name],
+                "pooled_rmse_change": scores[name] - reference_rmse,
+                "pooled_relative_gain": 1 - scores[name] / reference_rmse,
+                "inner_relative_costs": changes,
+            }
+        )
+    provenance = {
+        "inputs": {str(path.relative_to(root)): sha256(path) for path in paths},
+        "source_signatures": sources,
+        "bundle_sha256": bundle_hash,
+        "groups": {name: sorted(group) for name, group in GROUPS.items()},
+    }
+    signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()
+    summary = {
+        "status": "passed",
+        "source_signature": signature,
+        "source_signatures": sources,
+        "provenance": provenance,
+        "selected_model": results[-1]["selected_model"],
+        "profile": results[-1]["profile"],
+        "inner_folds": results[:3],
+        "development": results[-1],
+        "pooled_reference_rmse_yards": reference_rmse,
+        "pooled_comparisons": comparison,
+        "covered_families": sorted(set().union(*GROUPS.values())),
+        "holdout_evaluation": "not_run",
+        "final_model": False,
+    }
+    output = folder / "summary.json"
+    with Run(root, "wide-group-report") as run:
+        stage(
+            root,
+            "wide-group-report",
+            signature,
+            [output],
+            lambda: atomic_json(output, summary),
+            run,
+        )
+    return read(output)
+
+
 def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str]:
     """Recompute metrics from verified errors; do not publish unverified JSON summaries."""
     from nfl_trajectory.research import feature_research_snapshot
@@ -233,6 +345,7 @@ def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str
     inference = read(root / "artifacts/research/inference/summary.json")
     bundle = research_bundle(root)
     bundle_hash = hashlib.sha256(json.dumps(bundle, sort_keys=True).encode()).hexdigest()
+    wide_group_evidence(root, sources, bundle_hash)
     if (
         inference["validator_sha256"] != sha256(root / "scripts/validate_research.py")
         or inference["bundle_sha256"] != bundle_hash
@@ -249,6 +362,7 @@ def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str
         ("feature_attribution/summary.json", "feature-attribution-report"),
         ("research/gateway/summary.json", "official-gateway"),
         ("research/tree/summary.json", "research-tree-bundle"),
+        ("wide_ablation/summary.json", "wide-group-report"),
     ]
     if include_gate:
         optional_reports.append(("research/gate/summary.json", "feature-gate-review"))

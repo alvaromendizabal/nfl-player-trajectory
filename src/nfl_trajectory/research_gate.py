@@ -19,8 +19,26 @@ TOLERANCES = {
     "maximum_tail_gain_any_fold": 0.01,
     "maximum_metadata_omission_cost": 0.01,
     "maximum_positional_fallback_cost": 0.05,
+    "minimum_wide_removal_gain_to_reopen": 0.005,
+    "maximum_wide_removal_fold_cost": 0.01,
 }
 POLICY_COMMIT = "87f7d5479c85203d0f9634190637e9e0e989ef37"
+
+
+def wide_removal_candidates(comparisons: list[dict[str, Any]]) -> list[str]:
+    """Do not let a nonfinite result or a harmed fold masquerade as a stopping decision."""
+    candidates = []
+    for row in comparisons:
+        costs = row["inner_relative_costs"]
+        gain = row["pooled_relative_gain"]
+        if len(costs) != 3 or not np.isfinite([gain, *costs]).all():
+            raise ValueError("Wide removals require finite evidence from three inner folds.")
+        if (
+            gain >= TOLERANCES["minimum_wide_removal_gain_to_reopen"]
+            and max(costs) <= TOLERANCES["maximum_wide_removal_fold_cost"]
+        ):
+            candidates.append(row["group"])
+    return candidates
 
 
 def seasons_from_audit(audit: dict[str, Any], games: list[int]) -> set[int]:
@@ -60,6 +78,8 @@ def closure_checks(evidence: dict[str, Any]) -> list[dict[str, Any]]:
         "positional_fallback_remains_strong": evidence["positional_cost"]
         <= TOLERANCES["maximum_positional_fallback_cost"],
         "family_removals_and_permutations": evidence["family_evidence"],
+        "current_profile_group_refits": evidence["wide_refits_verified"],
+        "no_unresolved_profitable_group_removal": not evidence["unresolved_wide_removals"],
         "latest_tree_raw_replay_and_input_stress": evidence["raw_verified"],
         "latest_tree_organizer_gateway": evidence["gateway_verified"],
         "reserved_holdout_unscored": evidence["holdout_unscored"],
@@ -83,6 +103,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         if name in hashes and name.endswith(".json")
     }
     attribution = reports["feature_attribution.json"]
+    wide = reports.get("feature_wide_ablation.json")
     tree, inference, gateway = (
         reports[name]
         for name in ("feature_tree.json", "feature_inference.json", "feature_gateway.json")
@@ -230,6 +251,12 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         "positional_cost": positional / reference - 1,
         "family_evidence": all(len(f["permutation"]) >= 15 for f in folds)
         and all(len(f["models"]) >= 8 for f in reports["feature_ablation.json"]["inner_folds"]),
+        "wide_refits_verified": wide is not None
+        and wide["selected_model"] == tree["selected_model"]
+        and set(wide["covered_families"]) == set(catalog.family),
+        "unresolved_wide_removals": []
+        if wide is None
+        else wide_removal_candidates(wide["pooled_comparisons"]),
         "raw_verified": inference["status"] == "passed"
         and raw_robust
         and inference["selected_stage"] == "fixed_tree"
@@ -251,6 +278,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     inputs["src/nfl_trajectory/research_gate.py"] = sha256(Path(__file__))
     inputs["artifacts/data_inventory.json"] = sha256(inventory_path)
     inputs["artifacts/audit_summary.json"] = sha256(audit_path)
+    inputs["docs/WIDE_ABLATION_PROTOCOL.md"] = sha256(root / "docs/WIDE_ABLATION_PROTOCOL.md")
     variant = tree["provenance"]["selected_variant"]
     used_sets = {
         item["fold"]: set(item["used_features"])
@@ -284,6 +312,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         "source_signatures": bundle["source_signatures"],
         "bundle_sha256": hashlib.sha256(json.dumps(bundle, sort_keys=True).encode()).hexdigest(),
         "policy_commit": POLICY_COMMIT,
+        "additional_refit_protocol_sha256": inputs["docs/WIDE_ABLATION_PROTOCOL.md"],
         "tolerances": TOLERANCES,
     }
     signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()

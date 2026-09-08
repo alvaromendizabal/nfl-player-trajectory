@@ -53,3 +53,17 @@ Those ideas are independently implemented and tested under this project’s chro
 protocol. We do not reproduce that author’s Transformer, random grouped-fold evaluation,
 medal claim, or leaderboard score. Our coordinate-RMSE definition follows the organizer
 contract rather than the Euclidean-error wording in that repository’s README.
+
+## Additional representation context
+
+[Deep Sets (Zaheer et al., NeurIPS 2017)](https://arxiv.org/abs/1703.06114)
+studies permutation-invariant functions on sets. It provides a methodological
+reference for treating neighbouring players as an unordered set. This project's
+distance-weighted moments are deterministic engineered summaries; they are not
+a reproduction of the paper's learned architecture.
+
+[Trajectron++ (Salzmann et al., ECCV 2020)](https://arxiv.org/abs/2001.03093)
+incorporates dynamics and interactions into trajectory forecasting. Our inference
+from that work is to test motion feasibility and relative-player context explicitly.
+The implemented reachability, matched-history, and destination features remain
+locally evaluated hypotheses, and this repository does not implement Trajectron++.

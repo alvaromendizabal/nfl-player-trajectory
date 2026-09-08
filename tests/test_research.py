@@ -33,9 +33,13 @@ def test_recorded_champion_and_metric_reconciliation(evidence):
 
 @pytest.mark.parametrize(
     "field,value",
-    [("status", "running"), ("screening_split", "validation"),
-     ("holdout_evaluation", "scored"), ("split", "holdout"),
-     ("selected_model", "constant_velocity")],
+    [
+        ("status", "running"),
+        ("screening_split", "validation"),
+        ("holdout_evaluation", "scored"),
+        ("split", "holdout"),
+        ("selected_model", "constant_velocity"),
+    ],
 )
 def test_invalid_completion_evidence_is_rejected(evidence, field, value):
     evidence[field] = value
@@ -82,7 +86,9 @@ def test_default_notebooks_neither_train_nor_export_implicitly():
     for filename, switch in expected.items():
         notebook = nbformat.read(ROOT / "notebooks" / filename, as_version=4)
         assignments = [
-            node for cell in notebook.cells if cell.cell_type == "code"
+            node
+            for cell in notebook.cells
+            if cell.cell_type == "code"
             for node in ast.walk(ast.parse(cell.source))
             if isinstance(node, ast.Assign)
             and any(isinstance(t, ast.Name) and t.id == switch for t in node.targets)
@@ -106,7 +112,9 @@ def test_unknown_error_budget_dimension_fails(evidence):
 def notebook_runner():
     import importlib.util
 
-    spec = importlib.util.spec_from_file_location("review_controls_test", ROOT / "scripts/notebooks.py")
+    spec = importlib.util.spec_from_file_location(
+        "review_controls_test", ROOT / "scripts/notebooks.py"
+    )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

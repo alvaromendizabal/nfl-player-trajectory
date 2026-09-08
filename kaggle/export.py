@@ -276,17 +276,52 @@ def main() -> int:
 
         def write() -> None:
             ordered = subprocess.run(
-                [sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix",
-                 "--stdin-filename", "submission.ipynb", "-"],
-                input=nbformat.writes(notebook), text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--select",
+                    "I,UP",
+                    "--fix",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=nbformat.writes(notebook),
+                text=True,
+                capture_output=True,
+                check=True,
             )
             formatted = subprocess.run(
-                [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
-                input=ordered.stdout, text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "format",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=ordered.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
             )
             subprocess.run(
-                [sys.executable, "-m", "ruff", "check", "--stdin-filename", "submission.ipynb", "-"],
-                input=formatted.stdout, text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=formatted.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
             )
             nbformat.validate(nbformat.reads(formatted.stdout, as_version=4))
             if any(sha256(p) != input_hashes[str(p)] for p in dependencies):
@@ -296,8 +331,11 @@ def main() -> int:
         key = hashlib.sha256(str(destination.relative_to(root)).encode()).hexdigest()[:12]
         stage(root, f"kaggle-export-{key}", signature, [destination], write, run)
         run.event(
-            "notebook_exported", path=str(destination.relative_to(root)), model=args.model,
-            sha256=sha256(destination), official_gateway_status="not_run",
+            "notebook_exported",
+            path=str(destination.relative_to(root)),
+            model=args.model,
+            sha256=sha256(destination),
+            official_gateway_status="not_run",
             automatically_submitted=False,
         )
     return 0

@@ -94,6 +94,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     from nfl_trajectory.representation_features import representation_catalog
     from nfl_trajectory.research_evidence import EXTRA_REPORTS, FOLDS, extended_evidence
     from nfl_trajectory.research_inference import research_bundle
+    from nfl_trajectory.wide_ablation import retained_indices
 
     # Recompute reported metrics and verify all underlying fit/evaluation receipts.
     hashes = extended_evidence(root, include_gate=False)
@@ -279,7 +280,22 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     inputs["artifacts/data_inventory.json"] = sha256(inventory_path)
     inputs["artifacts/audit_summary.json"] = sha256(audit_path)
     inputs["docs/WIDE_ABLATION_PROTOCOL.md"] = sha256(root / "docs/WIDE_ABLATION_PROTOCOL.md")
+    inputs["src/nfl_trajectory/wide_ablation.py"] = sha256(
+        root / "src/nfl_trajectory/wide_ablation.py"
+    )
     variant = tree["provenance"]["selected_variant"]
+    all_names = attribution["development"]["features"]
+    family_lookup = dict(zip(catalog.feature, catalog.family, strict=True))
+    profile_features = {
+        profile: [all_names[i] for i in retained_indices(all_names, family_lookup, profile, set())]
+        for profile in ("without_metadata", "without_optional_inputs")
+    }
+    if len(profile_features[variant]) != bundle["tree"]["screened_feature_count"] or not set(
+        bundle["tree"]["features"]
+    ) <= set(profile_features[variant]):
+        raise ValueError(
+            "The frozen training columns must contain the actual exported tree inputs."
+        )
     used_sets = {
         item["fold"]: set(item["used_features"])
         for item in tree["feature_use"]
@@ -383,6 +399,8 @@ def review(root: Path, run: Run) -> dict[str, Any]:
                 "bundle_sha256": provenance["bundle_sha256"],
                 "selected_model": tree["selected_model"],
                 "features": bundle["tree"]["features"],
+                "screened_features": profile_features[variant],
+                "availability_profile_features": profile_features,
                 "screened_feature_count": bundle["tree"]["screened_feature_count"],
                 "used_feature_count": bundle["retained_features"],
                 "historical_priors_used": [
@@ -394,6 +412,11 @@ def review(root: Path, run: Run) -> dict[str, Any]:
                 "training_games": bundle["training_games"],
                 "development_games": bundle["evaluation_games"],
                 "holdout_evaluation": "not_run",
+                "refit_rule": (
+                    "Refit the frozen screened feature definitions on authorized training games. "
+                    "Prune unused inputs only after fitting and verifying prediction parity; "
+                    "a new fit can use columns that the research fit did not."
+                ),
             },
         )
         atomic_bytes(destination / "catalog.csv", catalog.to_csv(index=False).encode())

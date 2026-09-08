@@ -68,7 +68,7 @@ def closure_checks(evidence: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def review(root: Path, run: Run) -> dict[str, Any]:
-    from nfl_trajectory.benchmark import error_metrics
+    from nfl_trajectory.benchmark import bootstrap_scores, error_metrics
     from nfl_trajectory.context_features import context_catalog
     from nfl_trajectory.feature_candidates import research_catalog
     from nfl_trajectory.representation_features import representation_catalog
@@ -205,6 +205,20 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         "missing_telemetry",
         "cold_player_history",
     }
+    raw_scores = {r["scenario"]: r["coordinate_rmse_yards"] for r in inference["scenarios"]}
+    raw_robust = set(raw_scores) == expected_scenarios and bool(
+        np.isfinite(list(raw_scores.values())).all()
+    )
+    if raw_robust:
+        reference_raw = raw_scores["complete_inputs"]
+        raw_robust = all(
+            raw_scores[name] <= reference_raw * (1 + limit)
+            for name, limit in (
+                ("missing_metadata", TOLERANCES["maximum_metadata_omission_cost"]),
+                ("cold_player_history", TOLERANCES["maximum_metadata_omission_cost"]),
+                ("missing_telemetry", TOLERANCES["maximum_positional_fallback_cost"]),
+            )
+        )
     evidence = {
         "all_screened": all(r["all_screened"] for r in coverage),
         "complete_pool": all(r["complete_pool"] for r in coverage),
@@ -217,6 +231,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         "family_evidence": all(len(f["permutation"]) >= 15 for f in folds)
         and all(len(f["models"]) >= 8 for f in reports["feature_ablation.json"]["inner_folds"]),
         "raw_verified": inference["status"] == "passed"
+        and raw_robust
         and inference["selected_stage"] == "fixed_tree"
         and inference["selected_model"] == tree["selected_model"]
         and {r["scenario"] for r in inference["scenarios"]} == expected_scenarios
@@ -236,6 +251,34 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     inputs["src/nfl_trajectory/research_gate.py"] = sha256(Path(__file__))
     inputs["artifacts/data_inventory.json"] = sha256(inventory_path)
     inputs["artifacts/audit_summary.json"] = sha256(audit_path)
+    variant = tree["provenance"]["selected_variant"]
+    used_sets = {
+        item["fold"]: set(item["used_features"])
+        for item in tree["feature_use"]
+        if item["variant"] == variant and item["fold"] != "development"
+    }
+    if set(used_sets) != set(FOLDS[:3]):
+        raise ValueError("Actual tree feature use is required for every inner fold.")
+    common_used = sorted(set.intersection(*used_sets.values()))
+    used_stability = {
+        "used_in_all_inner_fits": common_used,
+        "count_used_in_all_inner_fits": len(common_used),
+        "pairwise_jaccard": [
+            {
+                "first": first,
+                "second": second,
+                "jaccard": len(used_sets[first] & used_sets[second])
+                / len(used_sets[first] | used_sets[second]),
+            }
+            for i, first in enumerate(FOLDS[:3])
+            for second in FOLDS[i + 1 : 3]
+        ],
+        "caveat": "Shared definitions; learned route component axes can rotate between fits.",
+    }
+    error_path = root / "artifacts/feature_attribution/development" / (variant + ".csv")
+    baseline_path = root / "artifacts/nonlinear_probe/development/landing_features.csv"
+    inputs[str(error_path.relative_to(root))] = sha256(error_path)
+    inputs[str(baseline_path.relative_to(root))] = sha256(baseline_path)
     provenance = {
         "inputs": inputs,
         "source_signatures": bundle["source_signatures"],
@@ -247,10 +290,24 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     destination = root / "artifacts/research/gate"
 
     def write_reports() -> None:
-        variant = tree["provenance"]["selected_variant"]
-        errors = pd.read_csv(
-            root / "artifacts/feature_attribution/development" / (variant + ".csv")
-        )
+        errors = pd.read_csv(error_path)
+        baseline = pd.read_csv(baseline_path)
+        keys = ["game_id", "play_id", "nfl_id", "frame_id"]
+        pd.testing.assert_frame_equal(errors[keys], baseline[keys])
+        baseline_rmse = error_metrics(baseline)["coordinate_rmse_yards"]
+        current_rmse = error_metrics(errors)["coordinate_rmse_yards"]
+        paired_delta = bootstrap_scores(errors) - bootstrap_scores(baseline)
+        comparison = {
+            "estimator_settings": attribution["provenance"]["settings"],
+            "baseline_model": "landing_features",
+            "baseline_features": 64,
+            "baseline_coordinate_rmse_yards": baseline_rmse,
+            "engineered_model": tree["selected_model"],
+            "engineered_coordinate_rmse_yards": current_rmse,
+            "feature_gain_percent": 100 * (1 - current_rmse / baseline_rmse),
+            "paired_delta_ci95_yards": np.quantile(paired_delta, [0.025, 0.975]).tolist(),
+            "interpretation": "Fixed estimators and baseline; paired game bootstrap.",
+        }
         slices = []
         groups = {
             "role": errors.player_role,
@@ -284,6 +341,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
                 "selected_model": tree["selected_model"],
                 "rows": len(errors),
                 "metrics": error_metrics(errors),
+                "controlled_comparison": comparison,
                 "slices": slices,
                 "scope": "Inspected development games; descriptive rather than selection evidence.",
             },
@@ -322,6 +380,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
                 "checks": checks,
                 "measurements": evidence,
                 "coverage": coverage,
+                "controlled_comparison": comparison,
                 "data_scope": {
                     "competition": "nfl-big-data-bowl-2026-prediction",
                     "verified_inventory_files": len(inventory),
@@ -335,6 +394,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
                 "selected_model": tree["selected_model"],
                 "retained_features": bundle["retained_features"],
                 "stable_screened_columns": len(attribution["selected_in_all_inner_folds"]),
+                "used_feature_stability": used_stability,
                 "holdout_evaluation": "not_run",
                 "final_model": False,
                 "scope": "Documented, data-supported avenues; no global optimum claim.",

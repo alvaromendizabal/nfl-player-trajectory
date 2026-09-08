@@ -30,6 +30,10 @@ uv run --locked scripts/nonlinear_probe.py
 Run each of the following scripts for `inner_1`, `inner_2`, `inner_3`, and
 `development` via its `--fold` argument:
 
+The full-bank budget and omission fits require **128 GiB RAM**. The cloud runner
+checks the actual container memory limit before starting this phase. Reviewing
+published notebooks and predicting individual plays have much smaller requirements.
+
 ```bash
 uv run --locked scripts/ablate_features.py --fold inner_1
 uv run --locked scripts/joint_feature_fit.py --fold inner_1

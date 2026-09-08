@@ -30,6 +30,17 @@ from botocore.config import Config
 REGION = "us-west-2"
 
 
+def memory_budget_gib(cgroup: Path = Path("/sys/fs/cgroup")) -> float:
+    """Respect container limits even when the host reports substantially more RAM."""
+    limits = [os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")]
+    for path in (cgroup / "memory.max", cgroup / "memory/memory.limit_in_bytes"):
+        if path.is_file():
+            value = path.read_text().strip()
+            if value.isdecimal():
+                limits.append(int(value))
+    return min(limits) / 1024**3
+
+
 def digest(path: Path) -> str:
     value = hashlib.sha256()
     with path.open("rb") as handle:
@@ -100,6 +111,12 @@ def main() -> None:
     mode = os.environ.get("NFL_MODE", "research")
     if mode not in {"research", "finalize"}:
         raise ValueError("Unknown cloud research mode.")
+    if (mode == "research" or os.environ.get("NFL_EXPAND_FULL_POOL") == "1") and (
+        memory_budget_gib() < 96
+    ):
+        raise ValueError(
+            "Full-bank feature fits require a processing instance with at least 128 GiB."
+        )
     root = Path("/opt/ml/processing/project")
     root.mkdir(parents=True, exist_ok=True)
     s3 = boto3.client(
@@ -267,7 +284,7 @@ def main() -> None:
             batch("scripts/joint_feature_fit.py", folds, workers=4, threads=1)
             backup("ablations-and-joint-fits")
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-                wide = pool.submit(batch, "scripts/feature_budget.py", folds, 2, 6)
+                wide = pool.submit(batch, "scripts/feature_budget.py", folds, 1, 6)
                 inference = pool.submit(
                     command, [python, "scripts/validate_research.py"], "raw-inference", 1
                 )
@@ -276,8 +293,8 @@ def main() -> None:
             backup("completed-feature-experiments")
         else:
             if os.environ.get("NFL_EXPAND_FULL_POOL") == "1":
-                # Full-bank arrays plus sklearn's float64 fit buffers do not
-                # safely fit two concurrent folds in a 64 GiB processing job.
+                # The largest full-bank fit exceeds 64 GiB including sklearn's
+                # float64 buffers. Use at least 128 GiB and keep folds sequential.
                 for fold in ("inner_1", "inner_2", "inner_3", "development"):
                     command(
                         [uv, "run", "--locked", "scripts/feature_budget.py", "--fold", fold],

@@ -144,6 +144,7 @@ def main(root: Path) -> None:
 
     def action() -> None:
         parity_rows = []
+        feature_use = []
         deployment: dict[str, dict[str, Any]] = {}
         selected_names: list[str] = []
         for fold in folds:
@@ -161,6 +162,9 @@ def main(root: Path) -> None:
                 retained = [names[i] for i in indices]
                 pair = pickle.loads((folder / name / (variant + ".pkl")).read_bytes())
                 converted = portable(pair, retained)
+                feature_use.append(
+                    {"fold": name, "variant": variant, "used_features": converted["features"]}
+                )
                 matrix = evaluation[0][:, indices]
                 expected = np.column_stack([model.predict(matrix) for model in pair])
                 lookup = {feature: i for i, feature in enumerate(retained)}
@@ -238,6 +242,7 @@ def main(root: Path) -> None:
                 "retained_features": len(selected_names),
                 "inner_scores": scores,
                 "parity": parity_rows,
+                "feature_use": feature_use,
                 "validation_coordinate_rmse_yards": bundle["validation_coordinate_rmse_yards"],
                 "training": "No refit; verified diagnostic trees converted to numeric arrays.",
                 "raw_inference_validation": "required separately",

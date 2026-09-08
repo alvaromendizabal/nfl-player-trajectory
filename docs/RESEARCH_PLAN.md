@@ -62,7 +62,9 @@ Compare budgets of 512, 1,024, 2,048, 4,096, and 8,192 features at the same
 estimator capacity. The last budget exceeds the 7,999-column catalog and therefore
 tests every eligible column that survives redundancy screening; its actual width
 will be smaller than its budget. Run the full-bank folds sequentially within
-64 GiB and checkpoint each completed fold.
+at least 128 GiB and checkpoint each completed fold. A 64 GiB attempt completed
+all three inner folds but exceeded memory on the largest development fit; its
+verified stage checkpoints preserve the completed work.
 
 Strict family removals refit without replacement columns. Family permutations
 move entire trajectories within role/horizon with exact forecast-frame alignment
@@ -121,6 +123,11 @@ permutations, exact inference parity, all-frame availability stress tests, and
 a pass through the organizer's unchanged unlabelled sample gateway. A failed
 criterion keeps the gate open. Development intervals contextualize the decision;
 the reserved holdout cannot be used to choose whether these criteria pass.
+
+Raw replay also requires finite metrics and respects the same 1% metadata and
+5% positional tolerances. Clearing player-history lookups receives the 1%
+tolerance. That cold-history check is a development availability stress test,
+not a player-disjoint refit or a cross-season evaluation.
 
 After closure, freeze the feature/selection manifest, refit on authorized training
 partitions, evaluate the reserved holdout once, finalize model and data cards,

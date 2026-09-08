@@ -63,3 +63,13 @@ def test_seed_restores_artifacts_without_overwriting_canonical_code(tmp_path):
     cloud_module().unpack(archive, destination)
     assert (destination / "artifacts/research/plan.json").read_text() == "{}"
     assert not (destination / "scripts/cloud_research.py").exists()
+
+
+@pytest.mark.parametrize(("container_limit", "expected"), [("max", 128), (str(64 * 1024**3), 64)])
+def test_memory_budget_respects_container_limit(monkeypatch, tmp_path, container_limit, expected):
+    module = cloud_module()
+    monkeypatch.setattr(
+        module.os, "sysconf", lambda name: 1 if name == "SC_PAGE_SIZE" else 128 * 1024**3
+    )
+    (tmp_path / "memory.max").write_text(container_limit)
+    assert module.memory_budget_gib(tmp_path) == expected

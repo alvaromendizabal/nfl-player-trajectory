@@ -30,15 +30,35 @@ def project(tmp_path: Path) -> Path:
     (tmp_path / "artifacts/benchmark").mkdir(parents=True)
     (tmp_path / "artifacts/game_splits.csv").write_text("synthetic split fixture\n")
     split_hash = sha256(tmp_path / "artifacts/game_splits.csv")
-    summary = {"status": "passed", "split": "validation", "holdout_evaluation": "not_run", "numerical_signature": "synthetic-benchmark-signature", "split_sha256": split_hash}
+    summary = {
+        "status": "passed",
+        "split": "validation",
+        "holdout_evaluation": "not_run",
+        "numerical_signature": "synthetic-benchmark-signature",
+        "split_sha256": split_hash,
+    }
     atomic_json(tmp_path / "artifacts/benchmark/summary.json", summary)
-    atomic_json(tmp_path / "artifacts/benchmark/protocol.json", {"split_sha256": split_hash, "holdout_evaluation": "not_run"})
+    atomic_json(
+        tmp_path / "artifacts/benchmark/protocol.json",
+        {"split_sha256": split_hash, "holdout_evaluation": "not_run"},
+    )
     atomic_json(tmp_path / "artifacts/benchmark/model.json", {"split_sha256": split_hash})
     for name in runner.REPORT_FILES:
         path = tmp_path / "artifacts/benchmark" / name
         if not path.exists():
             path.write_bytes(b"synthetic report fixture")
-    atomic_json(tmp_path / ".state/benchmark-summary.json", {"status": "completed", "signature": summary["numerical_signature"], "outputs": {"artifacts/benchmark/summary.json": sha256(tmp_path / "artifacts/benchmark/summary.json")}})
+    atomic_json(
+        tmp_path / ".state/benchmark-summary.json",
+        {
+            "status": "completed",
+            "signature": summary["numerical_signature"],
+            "outputs": {
+                "artifacts/benchmark/summary.json": sha256(
+                    tmp_path / "artifacts/benchmark/summary.json"
+                )
+            },
+        },
+    )
     return tmp_path
 
 
@@ -75,7 +95,11 @@ def test_execute_reuses_verified_output_and_recovers_corruption(project: Path) -
     output.write_text("corrupt")
     execute(project, source)
     assert output.read_bytes() == payload
-    events = [json.loads(line) for path in (project / "logs").glob("*.jsonl") for line in path.read_text().splitlines()]
+    events = [
+        json.loads(line)
+        for path in (project / "logs").glob("*.jsonl")
+        for line in path.read_text().splitlines()
+    ]
     assert any(event["event"] == "stage_reused" for event in events)
     assert all("timestamp" in event and "elapsed_seconds" in event for event in events)
 
@@ -93,12 +117,17 @@ def test_changed_source_and_results_invalidate_execution(project: Path) -> None:
     assert nbformat.read(output, as_version=4).metadata.execution.signature != after
 
 
-@pytest.mark.parametrize("code,error", [
-    ("raise ValueError('deliberate test failure')", ValueError),
-    ("import warnings; warnings.warn('deliberate test warning', UserWarning)", UserWarning),
-    ("import sys; print('deliberate stderr', file=sys.stderr)", RuntimeError),
-])
-def test_failed_cell_preserves_last_good_output(project: Path, code: str, error: type[Exception]) -> None:
+@pytest.mark.parametrize(
+    "code,error",
+    [
+        ("raise ValueError('deliberate test failure')", ValueError),
+        ("import warnings; warnings.warn('deliberate test warning', UserWarning)", UserWarning),
+        ("import sys; print('deliberate stderr', file=sys.stderr)", RuntimeError),
+    ],
+)
+def test_failed_cell_preserves_last_good_output(
+    project: Path, code: str, error: type[Exception]
+) -> None:
     source = notebook(project)
     output = execute(project, source)
     before = output.read_bytes()
@@ -178,10 +207,20 @@ def test_changed_snapshot_is_not_published(project: Path) -> None:
 
 def test_subprocess_execution_and_publication(project: Path) -> None:
     first = notebook(project, code="isolated_value = 1; print('first')")
-    second = notebook(project, "02_analysis.ipynb", "assert 'isolated_value' not in globals(); print('second')")
+    second = notebook(
+        project, "02_analysis.ipynb", "assert 'isolated_value' not in globals(); print('second')"
+    )
     environment = dict(os.environ)
     environment["PYTHONPATH"] = str(ROOT / "src")
-    result = subprocess.run([sys.executable, str(project / "scripts/notebooks.py"), "--publish"], cwd=project, env=environment, text=True, capture_output=True, timeout=30, check=True)
+    result = subprocess.run(
+        [sys.executable, str(project / "scripts/notebooks.py"), "--publish"],
+        cwd=project,
+        env=environment,
+        text=True,
+        capture_output=True,
+        timeout=30,
+        check=True,
+    )
     assert "notebooks_published" in result.stdout
     assert result.stderr == ""
     for source in (first, second):
@@ -189,7 +228,16 @@ def test_subprocess_execution_and_publication(project: Path) -> None:
 
 
 def test_generated_demo_does_not_invalidate_notebook(project: Path) -> None:
-    source = notebook(project, code=("from pathlib import Path\n" f"folder = Path({str(project)!r}) / 'artifacts/demo'\n" "folder.mkdir(parents=True, exist_ok=True)\n" "(folder / 'metrics.json').write_text('{}')\n" "print('demo generated')"))
+    source = notebook(
+        project,
+        code=(
+            "from pathlib import Path\n"
+            f"folder = Path({str(project)!r}) / 'artifacts/demo'\n"
+            "folder.mkdir(parents=True, exist_ok=True)\n"
+            "(folder / 'metrics.json').write_text('{}')\n"
+            "print('demo generated')"
+        ),
+    )
     assert execute(project, source).is_file()
 
 
@@ -215,10 +263,13 @@ def test_exporter_change_invalidates_notebook_checkpoint(project: Path) -> None:
 
 
 def test_inline_download_payload_cannot_be_published(project: Path) -> None:
-    source = notebook(project, code=(
-        "from IPython.display import HTML, display\n"
-        "display(HTML('<a href=\"data:application/octet-stream;base64,dGVzdA==\">get</a>'))"
-    ))
+    source = notebook(
+        project,
+        code=(
+            "from IPython.display import HTML, display\n"
+            "display(HTML('<a href=\"data:application/octet-stream;base64,dGVzdA==\">get</a>'))"
+        ),
+    )
     execute(project, source)
     original = source.read_bytes()
     with Run(project, "publish") as run, pytest.raises(ValueError, match="Disable submission"):
@@ -233,7 +284,10 @@ def test_documented_update_preserves_untracked_local_results(tmp_path: Path) -> 
     def git(folder: Path, *args: str) -> str:
         return subprocess.run(
             ["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", *args],
-            cwd=folder, check=True, text=True, capture_output=True,
+            cwd=folder,
+            check=True,
+            text=True,
+            capture_output=True,
         ).stdout
 
     git(tmp_path, "init", "--bare", str(remote))
@@ -257,8 +311,13 @@ def test_documented_update_preserves_untracked_local_results(tmp_path: Path) -> 
     git(author, "push", "origin", "main")
     block = (ROOT / "START_HERE.md").read_text().split("```bash\n", 1)[1].split("```", 1)[0]
     commands = [line.rstrip(" &") for line in block.splitlines()]
-    subprocess.run(["bash", "-c", " && ".join(commands[1:4])], cwd=local, check=True,
-                   text=True, capture_output=True)
+    subprocess.run(
+        ["bash", "-c", " && ".join(commands[1:4])],
+        cwd=local,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
     assert (local / "docs/results/feature_summary.json").read_text() == "published evidence"
     assert (local / "notebooks/02.ipynb").read_text() == "original notebook"
     assert (local / "artifacts/private.json").read_text() == "private saved run"

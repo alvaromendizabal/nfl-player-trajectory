@@ -9,7 +9,9 @@ from filelock import FileLock, Timeout
 from nfl_trajectory.runtime import Run, atomic_bytes, fingerprint, stage
 
 
-def test_completed_stage_is_reused_but_corruption_and_changed_signature_recompute(tmp_path: Path) -> None:
+def test_completed_stage_is_reused_but_corruption_and_changed_signature_recompute(
+    tmp_path: Path,
+) -> None:
     output = tmp_path / "result.json"
     executions = []
 

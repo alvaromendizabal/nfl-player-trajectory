@@ -22,7 +22,7 @@ from nfl_trajectory.runtime import Run, atomic_bytes, atomic_json, sha256
 MODELS = ("constant_velocity", "role_ridge", "motion_ridge", "landing_ridge", "interaction_ridge")
 
 # Embedded in the exported notebook, not imported from this repository at inference time.
-RUNTIME = '''
+RUNTIME = """
 CACHE_ENABLED = False
 CACHE_DIR = Path.cwd() / "nfl_inference_cache"
 RUN_STARTED = time.monotonic()
@@ -191,7 +191,7 @@ def run_gateway(server, competition_path):
     finally:
         stop.set()
         worker.join()
-'''
+"""
 
 
 def validate_residual(model: dict[str, Any], baseline_path: Path) -> None:
@@ -220,8 +220,10 @@ def validate_residual(model: dict[str, Any], baseline_path: Path) -> None:
         if not names or len(names) != len(set(names)) or not set(names).issubset(known):
             raise ValueError("Residual feature schema is invalid.")
         for name, shape in (
-            ("mean", (len(names),)), ("scale", (len(names),)),
-            ("coefficients", (len(names), 2)), ("intercept", (2,)),
+            ("mean", (len(names),)),
+            ("scale", (len(names),)),
+            ("coefficients", (len(names), 2)),
+            ("intercept", (2,)),
         ):
             array = np.asarray(fitted.get(name), dtype=float)
             if array.shape != shape or not np.isfinite(array).all():
@@ -246,15 +248,18 @@ def build_source(
     definitions: list[ast.stmt] = []
     for path in paths:
         definitions.extend(
-            node for node in ast.parse(path.read_text()).body
+            node
+            for node in ast.parse(path.read_text()).body
             if not isinstance(node, (ast.Import, ast.ImportFrom))
             and not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant))
         )
     if residual:
         parsed = ast.parse((root / "src/nfl_trajectory/feature_experiment.py").read_text())
         definitions.extend(
-            node for node in parsed.body
-            if isinstance(node, ast.FunctionDef) and node.name in ("target_state", "predict_residual")
+            node
+            for node in parsed.body
+            if isinstance(node, ast.FunctionDef)
+            and node.name in ("target_state", "predict_residual")
         )
     source = (
         "from __future__ import annotations\n"
@@ -264,7 +269,8 @@ def build_source(
         + ("from typing import Any\n" if model != "constant_velocity" else "")
         + ("from dataclasses import dataclass\n" if residual else "")
         + "import numpy as np\nimport pandas as pd\n"
-        + ast.unparse(ast.Module(body=definitions, type_ignores=[])) + "\n"
+        + ast.unparse(ast.Module(body=definitions, type_ignores=[]))
+        + "\n"
     )
     evidence: dict[str, Any] = {"model": model, "sources": {p.name: sha256(p) for p in paths}}
     if model != "constant_velocity":
@@ -273,7 +279,8 @@ def build_source(
             raise ValueError("Use weights produced by nfl benchmark.")
         source += (
             "trajectory_predict = predict\nFITTED_MODEL = "
-            + pprint.pformat(fitted, width=85, sort_dicts=True) + "\n"
+            + pprint.pformat(fitted, width=85, sort_dicts=True)
+            + "\n"
         )
         evidence["baseline_sha256"] = sha256(weights)
     if residual:
@@ -283,7 +290,8 @@ def build_source(
             raise ValueError("The selected residual model has not been trained.")
         source += (
             "BATCH_ROWS = 1024\nRESIDUAL_MODEL = "
-            + pprint.pformat(feature_model["models"][model], width=85, sort_dicts=True) + "\n"
+            + pprint.pformat(feature_model["models"][model], width=85, sort_dicts=True)
+            + "\n"
         )
         evidence["feature_model_sha256"] = sha256(feature_weights)
     if model == "constant_velocity":
@@ -300,14 +308,28 @@ def build_source(
         implementation += "return result[['x', 'y']]"
     source += (
         "\ndef model_prediction(target, observed):\n"
-        + "\n".join("    " + line for line in implementation.splitlines()) + "\n"
+        + "\n".join("    " + line for line in implementation.splitlines())
+        + "\n"
     )
     identity = hashlib.sha256((source + RUNTIME).encode()).hexdigest()
     source += f"\nMODEL_NAME = {model!r}\nMODEL_FINGERPRINT = {identity!r}\n" + RUNTIME
     ordered = subprocess.run(
-        [sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix",
-         "--stdin-filename", "model.py", "-"],
-        input=source, text=True, capture_output=True, check=True,
+        [
+            sys.executable,
+            "-m",
+            "ruff",
+            "check",
+            "--select",
+            "I,UP",
+            "--fix",
+            "--stdin-filename",
+            "model.py",
+            "-",
+        ],
+        input=source,
+        text=True,
+        capture_output=True,
+        check=True,
     )
     return ordered.stdout, evidence
 
@@ -321,7 +343,7 @@ def export_notebook(root: Path, model: str, weights: Path, feature_weights: Path
         Run(root, "export_kaggle") as run,
     ):
         source, evidence = build_source(root, model, weights, feature_weights)
-        setup = '''DEFAULT_DATA = "/kaggle/input/nfl-big-data-bowl-2026-prediction"
+        setup = """DEFAULT_DATA = "/kaggle/input/nfl-big-data-bowl-2026-prediction"
 COMPETITION_PATH = Path(os.getenv("NFL_COMPETITION_PATH", DEFAULT_DATA)).expanduser().resolve()
 if not COMPETITION_PATH.is_dir():
     candidates = list(Path("/kaggle/input").glob("competitions/nfl-big-data-bowl-2026-prediction"))
@@ -332,8 +354,8 @@ if not COMPETITION_PATH.is_dir():
     COMPETITION_PATH = candidates[0].resolve()
 sys.path.insert(0, str(COMPETITION_PATH))
 inference_module = importlib.import_module("kaggle_evaluation.nfl_inference_server")
-'''
-        interface = '''def predict(test, test_input):
+"""
+        interface = """def predict(test, test_input):
     # Preserve incoming target order. Return x/y only; the official gateway adds IDs.
     target = test.to_pandas() if hasattr(test, "to_pandas") else test
     observed = test_input.to_pandas() if hasattr(test_input, "to_pandas") else test_input
@@ -341,7 +363,7 @@ inference_module = importlib.import_module("kaggle_evaluation.nfl_inference_serv
 
 server = inference_module.NFLInferenceServer(predict)
 run_gateway(server, COMPETITION_PATH)
-'''
+"""
         description = (
             f"# NFL trajectory inference\n\n**Model:** `{model}`. "
             "Generated by your notebook from saved weights; no training occurs here. "
@@ -377,13 +399,17 @@ run_gateway(server, COMPETITION_PATH)
         )
         formatted = subprocess.run(
             [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
-            input=nbformat.writes(notebook), text=True, capture_output=True, check=True,
+            input=nbformat.writes(notebook),
+            text=True,
+            capture_output=True,
+            check=True,
         ).stdout
         result = nbformat.reads(formatted, as_version=4)
         nbformat.validate(result)
         compile(
             "\n".join(c.source for c in result.cells if c.cell_type == "code"),
-            "submission.py", "exec",
+            "submission.py",
+            "exec",
         )
         # Compare before writing so a repeated export does not invalidate downstream receipts.
         # nbformat IDs are normalized for byte-for-byte reproducible generation.
@@ -393,12 +419,17 @@ run_gateway(server, COMPETITION_PATH)
         if not destination.exists() or destination.read_bytes() != payload:
             atomic_bytes(destination, payload)
         manifest = {
-            "format": 1, **evidence, "notebook_sha256": sha256(destination),
-            "official_gateway_status": "not_run", "uploaded_to_kaggle": False,
+            "format": 1,
+            **evidence,
+            "notebook_sha256": sha256(destination),
+            "official_gateway_status": "not_run",
+            "uploaded_to_kaggle": False,
         }
         atomic_json(destination.parent / "export_manifest.json", manifest)
         run.event(
-            "notebook_exported", path=str(destination.relative_to(root)), model=model,
+            "notebook_exported",
+            path=str(destination.relative_to(root)),
+            model=model,
             official_gateway_status="not_run",
             total_elapsed_seconds=round(time.monotonic() - run.started, 3),
         )

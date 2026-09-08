@@ -36,8 +36,17 @@ def test_export_passes_lint_and_format_without_git(exported_notebook: Path) -> N
     assert not (root / ".git").exists()
     for arguments in [["check"], ["format", "--check"]]:
         result = subprocess.run(
-            [sys.executable, "-m", "ruff", *arguments, "--no-respect-gitignore", str(exported_notebook)],
-            cwd=root, capture_output=True, text=True,
+            [
+                sys.executable,
+                "-m",
+                "ruff",
+                *arguments,
+                "--no-respect-gitignore",
+                str(exported_notebook),
+            ],
+            cwd=root,
+            capture_output=True,
+            text=True,
         )
         assert result.returncode == 0, result.stdout + result.stderr
 
@@ -48,7 +57,11 @@ def test_exported_predictor_matches_reference_and_preserves_order(exported_noteb
     compile("\n".join(cells), "submission.py", "exec")
     namespace = {}
     exec(compile(cells[0], "model.py", "exec"), namespace)
-    function = next(node for node in ast.parse(cells[-1]).body if isinstance(node, ast.FunctionDef) and node.name == "predict")
+    function = next(
+        node
+        for node in ast.parse(cells[-1]).body
+        if isinstance(node, ast.FunctionDef) and node.name == "predict"
+    )
     exec(compile(ast.Module(body=[function], type_ignores=[]), "predict.py", "exec"), namespace)
     observed, truth = synthetic_play()
     targets = truth[KEYS].sample(frac=1, random_state=3)
@@ -63,7 +76,12 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
     from nfl_trajectory.models import design, fit_statistics, predict, sufficient_statistics
 
     source_root = Path(__file__).resolve().parents[1]
-    for relative in ["kaggle/export.py", "src/nfl_trajectory/motion.py", "src/nfl_trajectory/models.py", "pyproject.toml"]:
+    for relative in [
+        "kaggle/export.py",
+        "src/nfl_trajectory/motion.py",
+        "src/nfl_trajectory/models.py",
+        "pyproject.toml",
+    ]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source_root / relative, target)
@@ -76,16 +94,31 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
     fitted = fit_statistics([sufficient_statistics(state, features, truth)])
     weights = tmp_path / "model.json"
     weights.write_text(json.dumps(fitted))
-    subprocess.run([sys.executable, "kaggle/export.py", "--model", "role_ridge", "--weights", str(weights)], cwd=tmp_path, check=True, capture_output=True, text=True)
+    subprocess.run(
+        [sys.executable, "kaggle/export.py", "--model", "role_ridge", "--weights", str(weights)],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
     path = tmp_path / "artifacts/kaggle/submission.ipynb"
     for command in [["check"], ["format", "--check"]]:
-        subprocess.run([sys.executable, "-m", "ruff", *command, "--no-respect-gitignore", str(path)], cwd=tmp_path, check=True, capture_output=True)
+        subprocess.run(
+            [sys.executable, "-m", "ruff", *command, "--no-respect-gitignore", str(path)],
+            cwd=tmp_path,
+            check=True,
+            capture_output=True,
+        )
     notebook = nbformat.read(path, as_version=4)
     cells = [cell.source for cell in notebook.cells if cell.cell_type == "code"]
     compile("\n".join(cells), "submission.py", "exec")
     namespace = {}
     exec(compile(cells[0], "model.py", "exec"), namespace)
-    interface = next(node for node in ast.parse(cells[-1]).body if isinstance(node, ast.FunctionDef) and node.name == "predict")
+    interface = next(
+        node
+        for node in ast.parse(cells[-1]).body
+        if isinstance(node, ast.FunctionDef) and node.name == "predict"
+    )
     exec(compile(ast.Module(body=[interface], type_ignores=[]), "predict.py", "exec"), namespace)
     targets = truth[KEYS].sample(frac=1, random_state=31)
     actual = namespace["predict"](targets, observed)
@@ -95,7 +128,12 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
 
 def test_export_rejects_incompatible_model_without_overwriting_artifact(tmp_path: Path) -> None:
     source_root = Path(__file__).resolve().parents[1]
-    for relative in ["kaggle/export.py", "src/nfl_trajectory/motion.py", "src/nfl_trajectory/models.py", "pyproject.toml"]:
+    for relative in [
+        "kaggle/export.py",
+        "src/nfl_trajectory/motion.py",
+        "src/nfl_trajectory/models.py",
+        "pyproject.toml",
+    ]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source_root / relative, target)
@@ -104,7 +142,12 @@ def test_export_rejects_incompatible_model_without_overwriting_artifact(tmp_path
     destination = tmp_path / "artifacts/kaggle/submission.ipynb"
     destination.parent.mkdir(parents=True)
     destination.write_text("previous valid artifact")
-    result = subprocess.run([sys.executable, "kaggle/export.py", "--model", "role_ridge", "--weights", str(weights)], cwd=tmp_path, capture_output=True, text=True)
+    result = subprocess.run(
+        [sys.executable, "kaggle/export.py", "--model", "role_ridge", "--weights", str(weights)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+    )
     assert result.returncode != 0
     assert destination.read_text() == "previous valid artifact"
 
@@ -132,14 +175,28 @@ def inference_namespace(tmp_path):
     from nfl_trajectory.motion import require_keys
 
     namespace = dict(
-        hashlib=hashlib, io=io, json=json, os=os, tempfile=tempfile,
-        threading=threading, time=time, UTC=UTC, datetime=datetime,
-        Path=Path, np=np, pd=pd, KEYS=KEYS, require_keys=require_keys,
-        MODEL_NAME="constant_velocity", MODEL_FINGERPRINT="tested-model",
+        hashlib=hashlib,
+        io=io,
+        json=json,
+        os=os,
+        tempfile=tempfile,
+        threading=threading,
+        time=time,
+        UTC=UTC,
+        datetime=datetime,
+        Path=Path,
+        np=np,
+        pd=pd,
+        KEYS=KEYS,
+        require_keys=require_keys,
+        MODEL_NAME="constant_velocity",
+        MODEL_FINGERPRINT="tested-model",
         model_prediction=lambda target, observed: constant_velocity(observed, target)[["x", "y"]],
     )
     exec(exporter_module()["RUNTIME"], namespace)
-    namespace.update(CACHE_ENABLED=True, CACHE_DIR=tmp_path / "cache", LOG_PATH=tmp_path / "events.jsonl")
+    namespace.update(
+        CACHE_ENABLED=True, CACHE_DIR=tmp_path / "cache", LOG_PATH=tmp_path / "events.jsonl"
+    )
     return namespace
 
 
@@ -263,29 +320,54 @@ def residual_project(tmp_path):
     from nfl_trajectory.runtime import sha256
 
     root = Path(__file__).resolve().parents[1]
-    for relative in ["kaggle/export.py", "pyproject.toml", *[f"src/nfl_trajectory/{name}.py" for name in ("motion", "models", "features", "feature_experiment", "benchmark")]]:
+    for relative in [
+        "kaggle/export.py",
+        "pyproject.toml",
+        *[
+            f"src/nfl_trajectory/{name}.py"
+            for name in ("motion", "models", "features", "feature_experiment", "benchmark")
+        ],
+    ]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(root / relative, target)
     observed, truth = synthetic_play()
-    observed = observed.assign(ball_land_x=44.0, ball_land_y=28.0, num_frames_output=20,
-                               player_role="Targeted Receiver", player_side="Offense", play_direction="right")
+    observed = observed.assign(
+        ball_land_x=44.0,
+        ball_land_y=28.0,
+        num_frames_output=20,
+        player_role="Targeted Receiver",
+        player_side="Offense",
+        play_direction="right",
+    )
     state, x = design(observed, truth[KEYS])
     baseline = fit_statistics([sufficient_statistics(state, x, truth)])
     baseline.update(training_games=[1], split_sha256="synthetic-frozen-split")
     basepath = tmp_path / "baseline.json"
     basepath.write_text(json.dumps(baseline))
-    residual = {"features": ["time_seconds", "time_squared"], "mean": [0.0, 0.0], "scale": [1.0, 1.0],
-                "coefficients": [[0.01, -0.02], [0.03, 0.04]], "intercept": [0.1, -0.1]}
-    bundle = {"format": 1, "baseline_sha256": sha256(basepath), "split_sha256": baseline["split_sha256"],
-              "training_games": baseline["training_games"], "source_sha256": numerical_sources(),
-              "models": {"landing_ridge": residual}}
+    residual = {
+        "features": ["time_seconds", "time_squared"],
+        "mean": [0.0, 0.0],
+        "scale": [1.0, 1.0],
+        "coefficients": [[0.01, -0.02], [0.03, 0.04]],
+        "intercept": [0.1, -0.1],
+    }
+    bundle = {
+        "format": 1,
+        "baseline_sha256": sha256(basepath),
+        "split_sha256": baseline["split_sha256"],
+        "training_games": baseline["training_games"],
+        "source_sha256": numerical_sources(),
+        "models": {"landing_ridge": residual},
+    }
     featurepath = tmp_path / "features.json"
     featurepath.write_text(json.dumps(bundle))
     return tmp_path, basepath, featurepath, observed, truth, baseline, residual
 
 
-@pytest.mark.parametrize("problem", ["baseline", "source", "split", "scale", "feature", "nonfinite"])
+@pytest.mark.parametrize(
+    "problem", ["baseline", "source", "split", "scale", "feature", "nonfinite"]
+)
 def test_residual_export_provenance_validation(residual_project, problem):
     import json
 
@@ -327,4 +409,9 @@ def test_residual_export_matches_package_and_is_byte_reproducible(residual_proje
         expected = predict(current, target, "role_ridge", baseline)[["x", "y"]]
         expected += predict_residual(build_player_features(current), target, residual)
         pd.testing.assert_frame_equal(actual, expected)
-    subprocess.run([sys.executable, "-m", "ruff", "check", "--no-respect-gitignore", str(path)], cwd=root, check=True, capture_output=True)
+    subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "--no-respect-gitignore", str(path)],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )

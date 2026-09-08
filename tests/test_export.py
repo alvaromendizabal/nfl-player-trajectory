@@ -17,7 +17,12 @@ from nfl_trajectory.report import synthetic_play
 @pytest.fixture
 def exported_notebook(tmp_path: Path) -> Path:
     source_root = Path(__file__).resolve().parents[1]
-    for relative in ["kaggle/export.py", "src/nfl_trajectory/motion.py", "pyproject.toml"]:
+    for relative in [
+        "kaggle/export.py",
+        "src/nfl_trajectory/motion.py",
+        "src/nfl_trajectory/runtime.py",
+        "pyproject.toml",
+    ]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source_root / relative, target)
@@ -54,7 +59,6 @@ def test_export_passes_lint_and_format_without_git(exported_notebook: Path) -> N
 def test_exported_predictor_matches_reference_and_preserves_order(exported_notebook: Path) -> None:
     notebook = nbformat.read(exported_notebook, as_version=4)
     cells = [cell.source for cell in notebook.cells if cell.cell_type == "code"]
-    # Compilation as one script catches misplaced future imports across cell boundaries.
     compile("\n".join(cells), "submission.py", "exec")
     namespace = {}
     exec(compile(cells[0], "model.py", "exec"), namespace)
@@ -81,6 +85,7 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
         "kaggle/export.py",
         "src/nfl_trajectory/motion.py",
         "src/nfl_trajectory/models.py",
+        "src/nfl_trajectory/runtime.py",
         "pyproject.toml",
     ]:
         target = tmp_path / relative
@@ -133,6 +138,7 @@ def test_export_rejects_incompatible_model_without_overwriting_artifact(tmp_path
         "kaggle/export.py",
         "src/nfl_trajectory/motion.py",
         "src/nfl_trajectory/models.py",
+        "src/nfl_trajectory/runtime.py",
         "pyproject.toml",
     ]:
         target = tmp_path / relative

@@ -60,3 +60,32 @@ files. Keep `main` deployable; use a feature branch per phase. PRs explain why, 
 tests, results, limitations, and resume behavior. Merge after CI succeeds, then pull
 `main` into Studio. Branch protection is an account-side step after the repository exists.
 
+## Decision after the completed feature experiment
+
+Landing-aware residual ridge achieved 0.9268683892 RMSE on the frozen validation
+set, versus 0.9895687826 for role ridge. The interaction model reached 0.9421978915,
+but replaced 23 of the landing model's 64 columns. It even removed
+`fraction__lateral_speed`, whose standardized lateral coefficient is large in the
+landing fit. This observation is a **hypothesis about selection interference**,
+not a causal attribution of the metric difference.
+
+Next, retain the landing champion and its entire representation; train a small
+additive correction from interaction signals. Compare no correction, a
+family-balanced correction, and a role-conditioned correction. Select budgets and
+regularization in chronological training-only folds, then compare on the frozen
+development validation with paired game-cluster uncertainty. Keep the holdout
+unscored. Do not select individual interaction features by their validation error.
+
+The existing univariate screen optimizes individual associations, not conditional
+incremental information. Thirty-one selected landing terms derive from `ball_ux`;
+family redundancy and temporal feature stability merit evaluation. Defensive
+coverage (89.0% of squared error) and forecast seconds two/three (80.2%) are the
+priority error regimes. Fourth-second results have only 127 rows.
+
+External evidence: the competition's third-place writeup describes pre-training
+and fine-tuning with a small trusted feature set. This is research context, not a
+reproduced implementation or score:
+https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/writeups/3rd-place-solution
+
+The additive, role-conditioned, and subsequent nonlinear challengers have not been
+run in this update. Notebook 02 records this decision alongside the measured data.

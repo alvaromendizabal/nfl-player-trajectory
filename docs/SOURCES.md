@@ -17,3 +17,19 @@ not establish whether the user's authenticated account can submit late. Authenti
 space. Phase 1 restores the private snapshot for development evaluation. The official
 gateway and leaderboard submission remain pending.
 
+## Completed feature study and inference interface
+
+- The owner's real-data feature run completed on 2026-09-07 at 23:48 UTC. Its
+  uploaded summary matched the private S3 object SHA-256
+  `d0af7f89e3b375e97e8cf5d74386a613539784d08412fb81811de3db80339371`.
+- `docs/results/feature_selection.json` contains only selected-feature membership
+  and standardized coefficient diagnostics derived from completed model object
+  `c6ee5b69f0aa9a8acc0b12a25daf616c80784424d184663a92c4a6fdbcc9f6a0`.
+  It is not a submission or an independently fitted model. `selection_study` in
+  `src/nfl_trajectory/research.py` reproduces it from the local completed model.
+- [Official organizer inference example](https://www.kaggle.com/code/sohier/nfl-2026-demo-submission).
+  The exporter follows this interface; package/export parity is tested separately
+  from official gateway execution, which is not claimed complete.
+- [Third-place competition writeup](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/writeups/3rd-place-solution).
+  Its pre-training/fine-tuning and small trusted feature set are research context,
+  not a reproduced architecture, score, or guarantee for this project.

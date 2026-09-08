@@ -134,6 +134,9 @@ def execution_signature(root: Path, source: Path) -> str:
         for name in ("audit_summary.json", "game_splits.csv")
         if (path := root / "artifacts" / name).is_file()
     )
+    selection_path = root / "docs/results/feature_selection.json"
+    if selection_path.is_file() and not (feature_local / "summary.json").is_file():
+        inputs.append(selection_path)
     return fingerprint(
         root,
         inputs,
@@ -254,6 +257,17 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
         if hashlib.sha256(payload).hexdigest() != expected[key]:
             raise ValueError("A feature report changed during publication validation.")
         payloads[root / "docs/results" / published] = payload
+    if "features/summary.json" in expected:
+        from nfl_trajectory.research import selection_study
+
+        study = selection_study(
+            json.loads((root / "artifacts/features/model.json").read_text()),
+            expected["features/summary.json"],
+            expected["features/model.json"],
+        )
+        payloads[root / "docs/results/feature_selection.json"] = (
+            json.dumps(study, indent=2, allow_nan=False) + "\n"
+        ).encode()
     receipt = root / "artifacts/notebooks/publication.json"
     atomic_json(receipt, {"status": "running"})
     try:
@@ -272,7 +286,9 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
     except BaseException:
         atomic_json(receipt, {"status": "failed"})
         raise
-    run.event("notebooks_published", notebooks=len(sources), report_files=len(expected))
+    run.event(
+        "notebooks_published", notebooks=len(sources), report_files=len(payloads) - len(sources)
+    )
 
 
 def main() -> int:

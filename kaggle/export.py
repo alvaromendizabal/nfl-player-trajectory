@@ -1,80 +1,150 @@
-"""Export the tested reference predictor into a standalone Kaggle notebook."""
+"""Build a standalone inference notebook on explicit request; never submit to Kaggle."""
 
 from __future__ import annotations
 
 import argparse
 import ast
+import hashlib
 import json
 import pprint
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 import nbformat
+import numpy as np
 
-from nfl_trajectory.runtime import Run, atomic_bytes
+from nfl_trajectory.runtime import Run, atomic_bytes, sha256, stage
+
+RESIDUAL_MODELS = ("motion_ridge", "landing_ridge", "interaction_ridge")
 
 
-def main() -> int:
-    root = Path(__file__).resolve().parents[1]
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--model", choices=["constant_velocity", "role_ridge"], default="constant_velocity"
+def definitions(path: Path, names: set[str] | None = None) -> list[ast.stmt]:
+    """Reuse tested numerical definitions, not a separately maintained inference implementation."""
+    result = []
+    for node in ast.parse(path.read_text()).body:
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            continue
+        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant):
+            continue
+        if names is None or getattr(node, "name", None) in names:
+            result.append(node)
+    return result
+
+
+def residual_parameters(root: Path, model: str, baseline_path: Path) -> dict[str, Any]:
+    from nfl_trajectory.features import feature_catalog
+    from nfl_trajectory.research import load_evidence
+
+    summary, _, label = load_evidence(root)
+    if label != "Verified local experiment":
+        raise ValueError("Use your completed local feature experiment to generate an export.")
+    path = root / "artifacts/features/model.json"
+    bundle = json.loads(path.read_text())
+    baseline = json.loads(baseline_path.read_text())
+    if (
+        bundle.get("format") != 1
+        or bundle.get("baseline_sha256") != sha256(baseline_path)
+        or bundle.get("split_sha256") != summary["split_sha256"]
+        or bundle.get("training_games") != baseline.get("training_games")
+        or bundle.get("source_sha256") != summary.get("source_sha256")
+    ):
+        raise ValueError("Residual model and baseline provenance disagree.")
+    parameters = bundle["models"][model]
+    names = parameters["features"]
+    if (
+        not names
+        or len(names) != len(set(names))
+        or not set(names).issubset(feature_catalog().feature)
+    ):
+        raise ValueError("Residual feature names are invalid.")
+    for key, shape in (
+        ("mean", (len(names),)),
+        ("scale", (len(names),)),
+        ("coefficients", (len(names), 2)),
+        ("intercept", (2,)),
+    ):
+        values = np.asarray(parameters[key], dtype=float)
+        if values.shape != shape or not np.isfinite(values).all():
+            raise ValueError("Residual parameters must have valid shapes and finite values.")
+        if key == "scale" and (values <= 0).any():
+            raise ValueError("Residual scales must be positive.")
+    return parameters
+
+
+def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]]:
+    """Build a numerical cell without project-package imports and list its dependencies."""
+    folder = root / "src/nfl_trajectory"
+    paths = [folder / "motion.py", folder / "runtime.py"]
+    nodes = definitions(paths[0]) + definitions(paths[1], {"Run"})
+    imports = (
+        "from __future__ import annotations\nimport importlib\nimport json\nimport os\n"
+        "import sys\nimport threading\nimport time\nimport uuid\n"
+        "from datetime import UTC, datetime\nfrom pathlib import Path\nfrom typing import Any\n"
+        "import numpy as np\nimport pandas as pd\n"
     )
-    parser.add_argument("--weights", type=Path, default=root / "artifacts/benchmark/model.json")
-    args = parser.parse_args()
-    with Run(root, "export_kaggle") as run:
-        paths = [root / "src/nfl_trajectory/motion.py"]
-        if args.model == "role_ridge":
-            paths.append(root / "src/nfl_trajectory/models.py")
-        definitions: list[ast.stmt] = []
-        for path in paths:
-            parsed = ast.parse(path.read_text())
-            definitions.extend(
-                node
-                for node in parsed.body
-                if not isinstance(node, (ast.Import, ast.ImportFrom))
-                and not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant))
-            )
-        imports = (
-            "from __future__ import annotations\nimport importlib\nimport os\n"
-            "import sys\nfrom pathlib import Path\n"
-        )
-        if args.model == "role_ridge":
-            imports += "from typing import Any\n"
-        imports += "import numpy as np\nimport pandas as pd\n"
-        source = imports + ast.unparse(ast.Module(body=definitions, type_ignores=[])) + "\n"
-        if args.model == "role_ridge":
-            from nfl_trajectory.models import BASIS
+    learned = model != "constant_velocity"
+    if learned:
+        from nfl_trajectory.models import BASIS
 
-            fitted = json.loads(args.weights.read_text())
-            if fitted.get("basis") != BASIS or fitted.get("format") != 1:
-                raise ValueError("Use weights produced by nfl benchmark.")
-            source += (
-                "trajectory_predict = predict\nFITTED_MODEL = "
-                + pprint.pformat(fitted, width=85, sort_dicts=True)
-                + "\n"
-            )
-        ordered = subprocess.run(
+        paths.extend([folder / "models.py", weights])
+        nodes.extend(definitions(folder / "models.py"))
+        fitted = json.loads(weights.read_text())
+        if fitted.get("format") != 1 or fitted.get("basis") != BASIS:
+            raise ValueError("Use weights produced by nfl benchmark.")
+        for parameters in [fitted["global"], *fitted["roles"].values()]:
+            array = np.asarray(parameters["coefficients"], dtype=float)
+            if array.shape != (len(BASIS),) or not np.isfinite(array).all():
+                raise ValueError("Invalid baseline coefficients.")
+    if model in RESIDUAL_MODELS:
+        imports += "from dataclasses import dataclass\n"
+        paths.extend(
             [
-                sys.executable,
-                "-m",
-                "ruff",
-                "check",
-                "--select",
-                "I,UP",
-                "--fix",
-                "--stdin-filename",
-                "model.py",
-                "-",
-            ],
-            input=source,
-            text=True,
-            capture_output=True,
-            check=True,
+                folder / "features.py",
+                folder / "feature_experiment.py",
+                root / "artifacts/features/model.json",
+                root / "artifacts/features/summary.json",
+                root / ".state/features-report.json",
+                root / "artifacts/game_splits.csv",
+                folder / "research.py",
+                folder / "benchmark.py",
+            ]
         )
-        source = ordered.stdout
-        setup = """COMPETITION_PATH = Path('/kaggle/input/nfl-big-data-bowl-2026-prediction')
+        residual = residual_parameters(root, model, weights)
+        nodes.extend(definitions(folder / "features.py"))
+        nodes.extend(
+            definitions(folder / "feature_experiment.py", {"target_state", "predict_residual"})
+        )
+    source = imports + ast.unparse(ast.Module(body=nodes, type_ignores=[])) + "\n"
+    if learned:
+        source += (
+            "trajectory_predict = predict\nFITTED_MODEL = "
+            + pprint.pformat(fitted, width=85)
+            + "\n"
+        )
+    if model in RESIDUAL_MODELS:
+        source += "BATCH_ROWS = 1024\nRESIDUAL_MODEL = " + pprint.pformat(residual, width=85) + "\n"
+    source += "_gateway_run: Run | None = None\n"
+    return source, paths
+
+
+def build_notebook(root: Path, model: str, weights: Path) -> tuple[Any, list[Path]]:
+    if model not in ("constant_velocity", "role_ridge", *RESIDUAL_MODELS):
+        raise ValueError("Unknown export model.")
+    source, dependencies = model_source(root, model, weights)
+    prediction = "predictions = constant_velocity(observed, target[KEYS])"
+    if model != "constant_velocity":
+        prediction = (
+            "predictions = trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)"
+        )
+    if model in RESIDUAL_MODELS:
+        prediction += (
+            "\n    bank = build_player_features(observed, target[ENTITY])"
+            "\n    predictions[['x', 'y']] = predictions[['x', 'y']].to_numpy() + "
+            "predict_residual(bank, target[KEYS], RESIDUAL_MODEL)"
+        )
+    setup = """COMPETITION_PATH = Path('/kaggle/input/nfl-big-data-bowl-2026-prediction')
 if not COMPETITION_PATH.exists():
     candidates = list(Path('/kaggle/input').glob('competitions/nfl-big-data-bowl-2026-prediction'))
     if len(candidates) != 1:
@@ -83,65 +153,145 @@ if not COMPETITION_PATH.exists():
 sys.path.insert(0, str(COMPETITION_PATH))
 inference_module = importlib.import_module('kaggle_evaluation.nfl_inference_server')
 """
-        interface = """def predict(test, test_input):
-    # Preserve the exact incoming target row order. Only public, observed input is used.
+    interface = """def predict(test, test_input):
+    # Ignore target coordinates and retain the exact incoming target row order.
     target = test.to_pandas() if hasattr(test, 'to_pandas') else test
     observed = test_input.to_pandas() if hasattr(test_input, 'to_pandas') else test_input
-    predictions = constant_velocity(observed, target[KEYS])
+    PREDICTION
+    if _gateway_run is not None:
+        _gateway_run.event('prediction_batch_completed', rows=len(predictions))
     return predictions[['x', 'y']]
 
-server = inference_module.NFLInferenceServer(predict)
-if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
-    server.serve()
-else:
-    server.run_local_gateway((str(COMPETITION_PATH),))
-"""
-        if args.model == "role_ridge":
-            interface = interface.replace(
-                "constant_velocity(observed, target[KEYS])",
-                "trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)",
-            )
-        description = (
-            "Role-conditioned ridge model fitted on the frozen training games. "
-            "The learned weights are embedded; inference requires no external model download. "
-            if args.model == "role_ridge"
-            else "Constant velocity reference using only observed pre-throw coordinates. "
-        )
-        notebook = nbformat.v4.new_notebook(
-            cells=[
-                nbformat.v4.new_markdown_cell(
-                    "# NFL trajectory reference submission\n\n"
-                    + description
-                    + "Enable the official competition input, use CPU, and disable internet. "
-                    "Run the local gateway before attempting a late submission. "
-                    "No Kaggle score has been obtained.\n\n"
-                    "Interface: [official organizer example]"
-                    "(https://www.kaggle.com/code/sohier/nfl-2026-demo-submission)."
-                ),
-                nbformat.v4.new_code_cell(source),
-                nbformat.v4.new_code_cell(setup),
-                nbformat.v4.new_code_cell(interface),
-            ],
-            metadata={
-                "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}
+with Run(Path.cwd(), 'kaggle_gateway') as _gateway_run:
+    server = inference_module.NFLInferenceServer(predict)
+    if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+        server.serve()
+    else:
+        server.run_local_gateway((str(COMPETITION_PATH),))
+
+if not os.getenv('KAGGLE_IS_COMPETITION_RERUN') and Path('submission.parquet').is_file():
+    from IPython.display import FileLink, display
+
+    display(FileLink('submission.parquet', result_html_prefix='Download local gateway output: '))
+""".replace("PREDICTION", prediction)
+    notebook = nbformat.v4.new_notebook(
+        cells=[
+            nbformat.v4.new_markdown_cell(
+                "# NFL trajectory inference\n\n"
+                f"**Model:** `{model}`. Generated by the project owner "
+                "from verified local weights. "
+                "The numerical code and fitted parameters are embedded; "
+                "no model download is needed. "
+                "Attach the official competition input, use CPU, and disable internet. "
+                "Running this notebook invokes the organizer gateway; it does not submit anything. "
+                "Local sample predictions are not hidden-test predictions or a leaderboard score. "
+                "You control any subsequent Kaggle submission.\n\n"
+                "Interface: [official organizer example]"
+                "(https://www.kaggle.com/code/sohier/nfl-2026-demo-submission)."
+            ),
+            nbformat.v4.new_code_cell(source),
+            nbformat.v4.new_code_cell(setup),
+            nbformat.v4.new_code_cell(interface),
+        ],
+        metadata={
+            "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+            "nfl_export": {
+                "model": model,
+                "official_gateway_status": "not_run",
+                "automatically_submitted": False,
             },
+        },
+    )
+    for index, cell in enumerate(notebook.cells):
+        cell.id = f"nfl-inference-{index}"
+    compile(
+        "\n".join(c.source for c in notebook.cells if c.cell_type == "code"), "inference.py", "exec"
+    )
+    nbformat.validate(notebook)
+    return notebook, dependencies
+
+
+def main() -> int:
+    root = Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--model",
+        choices=["constant_velocity", "role_ridge", *RESIDUAL_MODELS],
+        default="constant_velocity",
+    )
+    parser.add_argument("--weights", type=Path, default=root / "artifacts/benchmark/model.json")
+    parser.add_argument("--output", type=Path, default=root / "artifacts/kaggle/submission.ipynb")
+    args = parser.parse_args()
+    destination = args.output.resolve()
+    if not destination.is_relative_to(root / "artifacts") or destination.suffix != ".ipynb":
+        raise ValueError("Export destination must be an .ipynb inside this project's artifacts/.")
+    with Run(root, "export_kaggle") as run:
+        notebook, dependencies = build_notebook(root, args.model, args.weights)
+        dependencies += (
+            [Path(__file__).resolve(), root / "uv.lock"]
+            if (root / "uv.lock").exists()
+            else [Path(__file__).resolve()]
         )
-        nbformat.validate(notebook)
-        destination = root / "artifacts/kaggle/submission.ipynb"
-        formatted = subprocess.run(
-            [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
-            input=nbformat.writes(notebook),
-            text=True,
-            capture_output=True,
-            check=True,
-        )
-        nbformat.validate(nbformat.reads(formatted.stdout, as_version=4))
-        atomic_bytes(destination, formatted.stdout.encode())
+        input_hashes = {str(p): sha256(p) for p in dependencies}
+        signature = hashlib.sha256(
+            json.dumps(
+                {
+                    "inputs": input_hashes,
+                    "model": args.model,
+                    "output": str(destination),
+                },
+                sort_keys=True,
+            ).encode()
+        ).hexdigest()
+
+        def write() -> None:
+            ordered = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--select",
+                    "I,UP",
+                    "--fix",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=nbformat.writes(notebook),
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            formatted = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "format",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=ordered.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
+            )
+            nbformat.validate(nbformat.reads(formatted.stdout, as_version=4))
+            if any(sha256(p) != input_hashes[str(p)] for p in dependencies):
+                raise ValueError("Export inputs changed; the previous artifact was preserved.")
+            atomic_bytes(destination, formatted.stdout.encode())
+
+        key = hashlib.sha256(str(destination.relative_to(root)).encode()).hexdigest()[:12]
+        stage(root, f"kaggle-export-{key}", signature, [destination], write, run)
         run.event(
             "notebook_exported",
             path=str(destination.relative_to(root)),
             model=args.model,
+            sha256=sha256(destination),
             official_gateway_status="not_run",
+            automatically_submitted=False,
         )
     return 0
 

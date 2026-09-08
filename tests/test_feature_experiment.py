@@ -77,7 +77,11 @@ def project(tmp_path):
     atomic_json(tmp_path / "artifacts/benchmark/model.json", fitted)
     atomic_json(
         tmp_path / "artifacts/audit_summary.json",
-        {"status": "passed", "competition": "nfl-big-data-bowl-2026-prediction", "pairs": pairs},
+        {
+            "status": "passed",
+            "competition": "nfl-big-data-bowl-2026-prediction",
+            "pairs": pairs,
+        },
     )
     return tmp_path
 
@@ -225,3 +229,84 @@ def test_remote_checkpoint_hook_runs_between_completed_phases(project):
         feature_experiment(project, run, lambda: calls.append("checkpoint"))
     # Three development weeks, three fitted challengers, one completed report.
     assert len(calls) == 7
+
+
+def export_tools(root):
+    import importlib.util
+    import shutil
+
+    source = Path(__file__).resolve().parents[1]
+    for folder in ("src", "kaggle"):
+        shutil.copytree(source / folder, root / folder, dirs_exist_ok=True)
+    spec = importlib.util.spec_from_file_location("export_tools", root / "kaggle/export.py")
+    tools = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tools)
+    return tools
+
+
+@pytest.mark.parametrize("model_name", ["motion_ridge", "landing_ridge", "interaction_ridge"])
+def test_residual_standalone_export_matches_package(project, model_name):
+    import ast
+
+    from nfl_trajectory.feature_experiment import predict_residual
+    from nfl_trajectory.features import build_player_features
+    from nfl_trajectory.models import predict
+
+    run_project(project)
+    tools = export_tools(project)
+    notebook, _ = tools.build_notebook(
+        project, model_name, project / "artifacts/benchmark/model.json"
+    )
+    cells = [c.source for c in notebook.cells if c.cell_type == "code"]
+    compile("\n".join(cells), "inference.py", "exec")
+    namespace = {"__name__": "__main__"}
+    exec(compile(cells[0], "model.py", "exec"), namespace)
+    interface = next(
+        n
+        for n in ast.parse(cells[-1]).body
+        if isinstance(n, ast.FunctionDef) and n.name == "predict"
+    )
+    exec(compile(ast.Module(body=[interface], type_ignores=[]), "callback.py", "exec"), namespace)
+    observed = pd.read_csv(project / "data/raw/train/input_2023_w03.csv")
+    truth = pd.read_csv(project / "data/raw/train/output_2023_w03.csv")
+    targets = truth.sample(frac=1, random_state=7).reset_index(drop=True)
+    bundle = json.loads((project / "artifacts/features/model.json").read_text())
+    baseline = json.loads((project / "artifacts/benchmark/model.json").read_text())
+    expected = predict(observed, targets[KEYS], "role_ridge", baseline)[["x", "y"]]
+    bank = build_player_features(observed, targets[KEYS[:3]])
+    expected += predict_residual(bank, targets[KEYS], bundle["models"][model_name])
+    targets[["x", "y"]] = np.nan
+    actual = namespace["predict"](targets, observed)
+    np.testing.assert_allclose(actual, expected, rtol=1e-12, atol=1e-12)
+    batches = pd.concat(
+        [
+            namespace["predict"](targets.iloc[:9], observed),
+            namespace["predict"](targets.iloc[9:], observed),
+        ],
+        ignore_index=True,
+    )
+    np.testing.assert_allclose(batches, actual, rtol=1e-12, atol=1e-12)
+    assert notebook.metadata.nfl_export.model == model_name
+    assert notebook.metadata.nfl_export.automatically_submitted is False
+    assert notebook.metadata.nfl_export.official_gateway_status == "not_run"
+    assert not (project / "artifacts/kaggle/submission.ipynb").exists()
+
+
+def test_residual_export_rejects_tampered_weights(project):
+    run_project(project)
+    tools = export_tools(project)
+    path = project / "artifacts/features/model.json"
+    path.write_text(path.read_text() + " ")
+    with pytest.raises(ValueError, match="checksum"):
+        tools.build_notebook(project, "landing_ridge", project / "artifacts/benchmark/model.json")
+
+
+def test_local_selection_analysis_matches_completed_model(project):
+    from nfl_trajectory.research import load_evidence
+
+    run_project(project)
+    summary, study, label = load_evidence(project)
+    assert label == "Verified local experiment"
+    assert study["summary_sha256"] == sha256(project / "artifacts/features/summary.json")
+    assert study["training_rows"] == 72
+    assert summary["validation_rows_per_model"] == 36

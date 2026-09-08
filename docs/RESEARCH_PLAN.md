@@ -56,9 +56,13 @@ Independent train/evaluation noise is a negative control, excluded from selectio
 
 Screen all candidates using training-only residual associations and variance.
 Detect repeated names and redundant columns. Wider budgets preserve the
-250-feature union, interleave families from a ranked 3,584-column pool, and
+250-feature union, interleave families from the entire training-eligible pool, and
 remove new columns correlated at 0.9995 on 8,192 deterministic training rows.
-Compare 512, 1,024, and 2,048 features at the same estimator capacity.
+Compare budgets of 512, 1,024, 2,048, 4,096, and 8,192 features at the same
+estimator capacity. The last budget exceeds the 7,999-column catalog and therefore
+tests every eligible column that survives redundancy screening; its actual width
+will be smaller than its budget. Run the full-bank folds sequentially within
+64 GiB and checkpoint each completed fold.
 
 Strict family removals refit without replacement columns. Family permutations
 move entire trajectories within role/horizon with exact forecast-frame alignment
@@ -87,7 +91,7 @@ raw-feature/standalone inference has equivalent validation.
 
 | Avenue | Current decision |
 |---|---|
-| Wider screened representations | Test through 2,048 retained columns; review incremental fold gains before stopping |
+| Wider screened representations | Test the complete eligible pool; review incremental fold gains before stopping |
 | Robustness of the strongest wide representation | Refit without metadata/history and without optional telemetry |
 | Training-only selection and redundancy | Implemented; preserve family and fold evidence |
 | External team ratings, coaching, organization, strength of schedule | Deferred: no verified as-of join, availability contract, or demonstrated relation to this frame-level task |
@@ -101,6 +105,22 @@ evidence, fixed-estimator feature gains are robust, the latest useful representa
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
 Current status: **open pending width, robustness, and representation handoff review**.
+
+### Operational closure thresholds
+
+Recorded before reviewing the full-pool results: require every candidate to be
+screened in each training fold, complete eligible-pool coverage, and fixed-estimator
+feature gains of at least 5% in each chronological inner fold. The final width
+increment must improve pooled inner RMSE by less than 0.5%, with no individual
+fold improving by 1% or more. These are explicit project stopping tolerances,
+not statistical laws or a claim of universal feature optimality.
+
+Metadata omission may cost at most 1% pooled inner RMSE and the independently
+fitted positional fallback at most 5%. Require family ablations, trajectory
+permutations, exact inference parity, all-frame availability stress tests, and
+a pass through the organizer's unchanged unlabelled sample gateway. A failed
+criterion keeps the gate open. Development intervals contextualize the decision;
+the reserved holdout cannot be used to choose whether these criteria pass.
 
 After closure, freeze the feature/selection manifest, refit on authorized training
 partitions, evaluate the reserved holdout once, finalize model and data cards,

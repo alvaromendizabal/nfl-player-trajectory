@@ -232,6 +232,10 @@ def main() -> None:
         )
         uv = str(root.parent / "uv-tools/bin/uv")
         command([uv, "sync", "--frozen", "--group", "dev"], "locked-environment")
+        command(
+            [python, "-m", "ruff", "format", "scripts/cloud_research.py",
+             "src/nfl_trajectory/research_evidence.py"], "normalize-report-source",
+        )
         command([python, "-m", "pytest", "-q"], "tests", threads=2)
         folds = ["inner_1", "inner_2", "inner_3", "development"]
         for stage_name in (
@@ -256,13 +260,19 @@ def main() -> None:
             inference.result()
         backup("completed-feature-experiments")
         # Only presentation files may come from a later, explicitly pinned review commit.
-        try:
-            response = s3.get_object(Bucket=bucket, Key=prefix + "/report_ref.json")
-        except s3.exceptions.NoSuchKey:
-            report_commit = commit
-        else:
-            with response["Body"] as body:
-                report_commit = json.loads(body.read())["commit"]
+        report_commit = None
+        for attempt in range(80):
+            try:
+                response = s3.get_object(Bucket=bucket, Key=prefix + "/report_ref.json")
+            except s3.exceptions.NoSuchKey:
+                event("awaiting_report_commit", attempt=attempt)
+                time.sleep(15)
+            else:
+                with response["Body"] as body:
+                    report_commit = json.loads(body.read())["commit"]
+                break
+        if report_commit is None:
+            raise ValueError("No pinned presentation commit was delivered; results are checkpointed.")
         if report_commit != commit:
             with tempfile.TemporaryDirectory() as temporary:
                 stage = Path(temporary)
@@ -290,8 +300,8 @@ def main() -> None:
             ) if p.exists()
         ]
         if report_scripts:
-            command([python, "-m", "ruff", "check", "--fix", *report_scripts], "report-script-lint")
             command([python, "-m", "ruff", "format", *report_scripts], "report-script-format")
+            command([python, "-m", "ruff", "check", "--fix", *report_scripts], "report-script-lint")
         if (root / "scripts/feature_attribution.py").exists():
             command(
                 [uv, "run", "--locked", "scripts/feature_attribution.py"],
@@ -312,6 +322,7 @@ def main() -> None:
             root / "artifacts/quality.json",
             root / "artifacts/notebooks/publication.json",
         ]
+        files.extend([root / "scripts/cloud_research.py", root / "src/nfl_trajectory/research_evidence.py"])
         files.extend(
             p for pattern in ("scripts/feature_attribution.py*", "scripts/validate_gateway.py*")
             for p in root.glob(pattern)

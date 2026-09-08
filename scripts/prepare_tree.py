@@ -131,7 +131,8 @@ def main(root: Path) -> None:
         "inner_scores": scores,
         "selected_variant": selected,
         "policy": (
-            "Deployment excludes player metadata/history. Choose between the two already-fitted "
+            "Deployment excludes body/position metadata. Historical priors remain eligible; "
+            "cold-history stress is checked separately. Choose between the already-fitted "
             "availability profiles by inner-fold RMSE; development is excluded."
         ),
     }

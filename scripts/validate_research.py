@@ -31,10 +31,8 @@ def main() -> None:
         bundle = research_bundle(root)
         evaluation = set(bundle["evaluation_games"])
         folder = root / "artifacts/research/inference"
-        before = root / "artifacts/research/inference_before_fallback.json"
-        previous = folder / "summary.json"
-        if previous.exists() and not before.exists():
-            atomic_json(before, json.loads(previous.read_text()))
+        # Historical failure reports are retained from their actual run. Do not
+        # relabel an arbitrary previous predictor as the original zero-fill failure.
         raw_paths = [root / "data/raw/train" / (c.parent.name + ".csv") for c in caches]
         manifest = json.loads((root / "artifacts/research/input_manifest.json").read_text())
         expected = {item["path"]: item["sha256"] for item in manifest["files"]}

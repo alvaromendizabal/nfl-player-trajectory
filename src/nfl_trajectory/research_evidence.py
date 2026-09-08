@@ -24,7 +24,12 @@ EXTRA_REPORTS = {
     "feature_attribution.png": "feature_attribution/figure.png",
     "feature_gateway.json": "research/gateway/summary.json",
     "feature_tree.json": "research/tree/summary.json",
+    "feature_gate.json": "research/gate/summary.json",
+    "feature_freeze.json": "research/gate/selection_manifest.json",
+    "feature_diagnostics.json": "research/gate/diagnostics.json",
+    "feature_provenance.csv": "research/gate/catalog.csv",
 }
+GATE_REPORTS = {name for name, path in EXTRA_REPORTS.items() if path.startswith("research/gate/")}
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -125,7 +130,7 @@ def joint_evidence(root: Path, sources: dict[str, str]) -> dict[str, Any] | None
     }
 
 
-def extended_evidence(root: Path) -> dict[str, str]:
+def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str]:
     """Recompute metrics from verified errors; do not publish unverified JSON summaries."""
     from nfl_trajectory.research import feature_research_snapshot
     from nfl_trajectory.research_inference import research_bundle
@@ -240,11 +245,14 @@ def extended_evidence(root: Path) -> dict[str, str]:
         verified_checkpoint(
             root, "research-inference-" + output.stem, inference["validation_signature"], output
         )
-    for relative, stage_name in (
+    optional_reports = [
         ("feature_attribution/summary.json", "feature-attribution-report"),
         ("research/gateway/summary.json", "official-gateway"),
         ("research/tree/summary.json", "research-tree-bundle"),
-    ):
+    ]
+    if include_gate:
+        optional_reports.append(("research/gate/summary.json", "feature-gate-review"))
+    for relative, stage_name in optional_reports:
         output = root / "artifacts" / relative
         if not output.exists():
             continue
@@ -263,8 +271,14 @@ def extended_evidence(root: Path) -> dict[str, str]:
             verified_checkpoint(
                 root, stage_name, signature, root / "artifacts/feature_attribution/figure.png"
             )
+        if stage_name == "feature-gate-review":
+            for name in GATE_REPORTS:
+                verified_checkpoint(
+                    root, stage_name, signature, root / "artifacts" / EXTRA_REPORTS[name]
+                )
     return {
         published: sha256(root / "artifacts" / local)
         for published, local in EXTRA_REPORTS.items()
         if (root / "artifacts" / local).is_file()
+        and (include_gate or published not in GATE_REPORTS)
     }

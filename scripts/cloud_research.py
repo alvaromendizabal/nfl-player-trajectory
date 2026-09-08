@@ -365,6 +365,9 @@ def main() -> None:
                 "organizer-gateway",
                 threads=2,
             )
+        if (root / "scripts/review_feature_gate.py").exists():
+            command([python, "scripts/review_feature_gate.py"], "feature-gate-review", threads=2)
+            backup("feature-gate-review")
         command([python, "scripts/notebooks.py", "--publish"], "publish-notebooks", threads=2)
         command([python, "scripts/quality.py"], "quality", threads=2)
         backup("published-and-tested")
@@ -378,6 +381,9 @@ def main() -> None:
             root / "src/nfl_trajectory/tree_inference.py",
             root / "scripts/prepare_tree.py",
             root / "tests/test_tree_inference.py",
+            root / "scripts/review_feature_gate.py",
+            root / "src/nfl_trajectory/research_gate.py",
+            root / "tests/test_research_gate.py",
         ]
         files.extend(
             [root / "scripts/cloud_research.py", root / "src/nfl_trajectory/research_evidence.py"]

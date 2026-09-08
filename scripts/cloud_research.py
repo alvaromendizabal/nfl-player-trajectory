@@ -276,12 +276,15 @@ def main() -> None:
             backup("completed-feature-experiments")
         else:
             if os.environ.get("NFL_EXPAND_FULL_POOL") == "1":
-                batch(
-                    "scripts/feature_budget.py",
-                    ["inner_1", "inner_2", "inner_3", "development"],
-                    workers=2,
-                    threads=6,
-                )
+                # Full-bank arrays plus sklearn's float64 fit buffers do not
+                # safely fit two concurrent folds in a 64 GiB processing job.
+                for fold in ("inner_1", "inner_2", "inner_3", "development"):
+                    command(
+                        [uv, "run", "--locked", "scripts/feature_budget.py", "--fold", fold],
+                        "feature_budget-" + fold,
+                        threads=6,
+                    )
+                    backup("full-pool-" + fold)
                 command(
                     [uv, "run", "--locked", "scripts/feature_attribution.py"],
                     "full-pool-attribution",
@@ -418,8 +421,16 @@ def main() -> None:
         )
         event("completed", report_commit=report_commit, holdout_evaluation="not_run")
     except BaseException as exc:
-        event("failed", error_type=type(exc).__name__)
-        # AWS owns job shutdown. Completed phase checkpoints remain in the private bucket.
+        # A killed child need not discard other completed, hash-verified stages.
+        # Partial outputs are harmless: their incomplete receipts prevent reuse.
+        checkpoint_error = None
+        if Path(nfl).is_file():
+            try:
+                backup("interrupted")
+            except Exception as backup_exc:
+                checkpoint_error = type(backup_exc).__name__
+        event("failed", error_type=type(exc).__name__, checkpoint_error=checkpoint_error)
+        # AWS owns job shutdown; no processing endpoint is left running.
         raise
 
 

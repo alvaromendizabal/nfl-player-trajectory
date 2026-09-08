@@ -36,13 +36,16 @@ uv run --locked scripts/joint_feature_fit.py --fold inner_1
 uv run --locked scripts/feature_budget.py --fold inner_1
 ```
 
-Then validate raw inference, wider attribution, and the organizer's unlabelled
-sample interface before publishing:
+Then attribute the selected width, convert its verified trees, replay raw
+inference, and check the organizer's unlabelled sample before publishing:
 
 ```bash
-.venv/bin/python scripts/validate_research.py
 uv run --locked scripts/feature_attribution.py
+uv run --locked scripts/prepare_tree.py --self-test
+uv run --locked scripts/prepare_tree.py
+.venv/bin/python scripts/validate_research.py
 uv run --locked scripts/validate_gateway.py
+.venv/bin/python scripts/review_feature_gate.py
 .venv/bin/python scripts/notebooks.py --publish
 .venv/bin/python scripts/quality.py
 .venv/bin/nfl backup
@@ -51,7 +54,7 @@ uv run --locked scripts/validate_gateway.py
 These commands document reproduction; the current research run is executed and
 monitored on the project's bounded SageMaker processing job. Its runner restores
 checksum-verified inputs, excludes holdout tracking, resumes completed stages,
-and checkpoints each major phase. S3 snapshot manifests reference content-addressed
+and checkpoints each full-bank fold and major phase. S3 snapshots reference content-addressed
 objects; the canonical restore command verifies those hashes. Do not use a
 checkpoint from changed numerical source as if it were current.
 
@@ -63,10 +66,13 @@ private, source-verified artifacts from this run, not files to load from strange
 
 The final cell in notebook 02 is off by default. Enabling it checks the current
 research bundle and creates `artifacts/kaggle/submission.ipynb` for your download.
-The linear research predictor and the stronger experimental tree are labelled
-separately. Automated quality exports and sample gateway output live under
+The exporter resolves the latest verified inference artifact and checks its source
+lineage. Automated quality exports and sample gateway output live under
 `artifacts/quality/` and cannot replace the owner's generated artifact.
 
 The generated notebook uses the organizer inference interface and never submits
 to Kaggle. A local sample Parquet is an interface check, not a hidden-test score.
 No public model-hosting service is required to review the project.
+
+The [data card](docs/DATA_CARD.md) explains the exact Prediction inventory,
+season boundaries, supplied task information, and limits of the evidence.

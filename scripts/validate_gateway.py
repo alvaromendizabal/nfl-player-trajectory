@@ -170,7 +170,7 @@ def main(root: Path) -> None:
                 "retained_features": bundle["retained_features"],
                 "sample_rows": len(actual),
                 "plays": len(callbacks),
-                "sample_seasons": sorted((request.game_id // 1000000).unique().tolist()),
+                "sample_calendar_years": sorted((request.game_id // 1000000).unique().tolist()),
                 "callback_seconds_median": float(np.median(latencies)),
                 "callback_seconds_p95": float(np.quantile(latencies, 0.95)),
                 "callback_seconds_max": float(np.max(latencies)),

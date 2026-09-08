@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +23,18 @@ TOLERANCES = {
 POLICY_COMMIT = "87f7d5479c85203d0f9634190637e9e0e989ef37"
 
 
+def seasons_from_audit(audit: dict[str, Any], games: list[int]) -> set[int]:
+    """Use the organizer's season filename; January's calendar year is misleading."""
+    mapping = {}
+    for pair in audit["pairs"]:
+        match = re.fullmatch(r"input_(\d{4})_w\d{2}\.csv", pair["file"])
+        if match is None:
+            raise ValueError("The audited filename does not identify an NFL season.")
+        for game in pair["games"]:
+            mapping[game] = int(match[1])
+    return {mapping[game] for game in games}
+
+
 def closure_checks(evidence: dict[str, Any]) -> list[dict[str, Any]]:
     """Apply the tolerances recorded before the full-pool result was reviewed."""
     measurements = [
@@ -36,6 +49,7 @@ def closure_checks(evidence: dict[str, Any]) -> list[dict[str, Any]]:
     checks = {
         "every_catalog_candidate_screened": evidence["all_screened"],
         "complete_eligible_pool_explored": evidence["complete_pool"],
+        "available_labelled_seasons_represented": evidence["scope_verified"],
         "fixed_estimator_gain_in_every_inner_fold": min(evidence["feature_gains"])
         >= TOLERANCES["minimum_feature_gain_each_fold"],
         "small_final_width_gain": evidence["pooled_tail_gain"]
@@ -74,6 +88,19 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         for name in ("feature_tree.json", "feature_inference.json", "feature_gateway.json")
     )
     bundle = research_bundle(root)
+    inventory_path = root / "artifacts/data_inventory.json"
+    inventory = json.loads(inventory_path.read_text())
+    audit_path = root / "artifacts/audit_summary.json"
+    research_seasons = seasons_from_audit(
+        json.loads(audit_path.read_text()), bundle["training_games"] + bundle["evaluation_games"]
+    )
+    labelled_seasons = sorted(
+        {
+            int(match[1])
+            for item in inventory
+            if (match := re.fullmatch(r"train/output_(\d{4})_w\d{2}\.csv", item["name"]))
+        }
+    )
     catalog = pd.concat(
         [
             research_catalog().assign(stage="research"),
@@ -90,6 +117,15 @@ def review(root: Path, run: Run) -> dict[str, Any]:
             raise ValueError("Every candidate requires documented rationale and provenance.")
     if catalog.feature.duplicated().any():
         raise ValueError("Feature catalog contains duplicate names.")
+    catalog["leakage_guard"] = np.where(
+        catalog.family.eq("player_history"),
+        "Exclude the complete current date; freeze training lookup during evaluation.",
+        np.where(
+            catalog.family.eq("route_representation"),
+            "Fit components/prototypes on fold training inputs only; no outcome labels.",
+            "Use observed input frames and supplied context; future player coordinates excluded.",
+        ),
+    )
     folds = [*attribution["inner_folds"], attribution["development"]]
     coverage, gains, tails, weights = [], [], [], []
     previous_scores, last_scores = [], []
@@ -172,6 +208,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     evidence = {
         "all_screened": all(r["all_screened"] for r in coverage),
         "complete_pool": all(r["complete_pool"] for r in coverage),
+        "scope_verified": bool(labelled_seasons) and set(labelled_seasons) <= research_seasons,
         "feature_gains": gains,
         "tail_gains": tails,
         "pooled_tail_gain": max(0.0, 1 - pooled(last_scores) / pooled(previous_scores)),
@@ -197,6 +234,8 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     status = "closed" if all(c["passed"] for c in checks) else "open"
     inputs = {"artifacts/" + EXTRA_REPORTS[name]: value for name, value in hashes.items()}
     inputs["src/nfl_trajectory/research_gate.py"] = sha256(Path(__file__))
+    inputs["artifacts/data_inventory.json"] = sha256(inventory_path)
+    inputs["artifacts/audit_summary.json"] = sha256(audit_path)
     provenance = {
         "inputs": inputs,
         "source_signatures": bundle["source_signatures"],
@@ -239,6 +278,8 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         atomic_json(
             destination / "diagnostics.json",
             {
+                "status": "passed",
+                "holdout_evaluation": "not_run",
                 "source_signature": signature,
                 "selected_model": tree["selected_model"],
                 "rows": len(errors),
@@ -281,6 +322,15 @@ def review(root: Path, run: Run) -> dict[str, Any]:
                 "checks": checks,
                 "measurements": evidence,
                 "coverage": coverage,
+                "data_scope": {
+                    "competition": "nfl-big-data-bowl-2026-prediction",
+                    "verified_inventory_files": len(inventory),
+                    "inventory_sha256": sha256(inventory_path),
+                    "labelled_seasons": labelled_seasons,
+                    "research_seasons": sorted(research_seasons),
+                    "sample_calendar_years": gateway["sample_calendar_years"],
+                    "across_season_accuracy": "not_established",
+                },
                 "families": int(catalog.family.nunique()),
                 "selected_model": tree["selected_model"],
                 "retained_features": bundle["retained_features"],

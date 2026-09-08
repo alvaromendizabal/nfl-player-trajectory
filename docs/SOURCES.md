@@ -19,6 +19,11 @@ Public Kaggle pages may require authentication. The downloaded source files and
 their checksums are the operative interface evidence. No authenticated leaderboard
 position or reproduced winning score is claimed.
 
+The verified Prediction inventory has 49 files and 2023-season labels. The
+unlabelled sample spans December 2024 through January 2025; those are calendar
+years, not two labelled NFL seasons. See the [data card](DATA_CARD.md) for the
+inventory digest and its distinction from the broader NFL event description.
+
 ## Methodology
 
 - [Histogram boosting, scikit-learn 1.8](https://scikit-learn.org/1.8/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html):

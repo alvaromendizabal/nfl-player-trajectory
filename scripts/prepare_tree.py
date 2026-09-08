@@ -27,8 +27,14 @@ VARIANTS = ("without_metadata", "without_optional_inputs")
 
 
 def portable(pair: list[Any], names: list[str]) -> dict[str, Any]:
-    axes = []
-    initial = []
+    used = sorted({
+        int(node["feature_idx"])
+        for model in pair for predictors in model._predictors
+        for node in predictors[0].nodes if not node["is_leaf"]
+    })
+    positions = {old: new for new, old in enumerate(used)}
+    axes: list[list[dict[str, Any]]] = []
+    initial: list[float] = []
     for model in pair:
         if model.n_features_in_ != len(names) or model.n_trees_per_iteration_ != 1:
             raise ValueError("Expected independent numerical regression trees.")
@@ -39,12 +45,15 @@ def portable(pair: list[Any], names: list[str]) -> dict[str, Any]:
             if nodes["is_categorical"].any():
                 raise ValueError("Categorical splits need a different export contract.")
             trees.append({
-                "value": nodes["value"].tolist(), "feature": nodes["feature_idx"].tolist(),
+                "value": nodes["value"].tolist(), "feature": [positions[int(n["feature_idx"])] if not n["is_leaf"] else 0 for n in nodes],
                 "threshold": nodes["num_threshold"].tolist(), "left": nodes["left"].tolist(),
                 "right": nodes["right"].tolist(), "leaf": nodes["is_leaf"].astype(bool).tolist(),
             })
         axes.append(trees)
-    return {"features": names, "initial": initial, "axes": axes}
+    return {
+        "features": [names[i] for i in used], "initial": initial, "axes": axes,
+        "screened_feature_count": len(names),
+    }
 
 
 def main(root: Path) -> None:
@@ -91,7 +100,7 @@ def main(root: Path) -> None:
         "selected_variant": selected,
         "policy": (
             "Deployment excludes player metadata/history. Choose between the two already-fitted "
-            "availability profiles on pooled inner-fold RMSE; development is not used for selection."
+            "availability profiles by inner-fold RMSE; development is excluded."
         ),
     }
     source = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()
@@ -102,7 +111,7 @@ def main(root: Path) -> None:
 
     def action() -> None:
         parity_rows = []
-        deployment = {}
+        deployment: dict[str, dict[str, Any]] = {}
         selected_names: list[str] = []
         for fold in folds:
             name = fold["fold"]
@@ -119,7 +128,9 @@ def main(root: Path) -> None:
                 converted = portable(pair, retained)
                 matrix = evaluation[0][:, indices]
                 expected = np.column_stack([model.predict(matrix) for model in pair])
-                actual = tree_correction(matrix, converted)
+                lookup = {feature: i for i, feature in enumerate(retained)}
+                used = [lookup[feature] for feature in converted["features"]]
+                actual = tree_correction(matrix[:, used], converted)
                 np.testing.assert_allclose(actual, expected, rtol=1e-12, atol=1e-12)
                 errors = error_rows(evaluation, actual, variant)
                 score = error_metrics(errors)["coordinate_rmse_yards"]
@@ -128,13 +139,14 @@ def main(root: Path) -> None:
                     raise ValueError("Portable predictor does not reproduce the experiment metric.")
                 parity_rows.append({
                     "fold": name, "variant": variant, "rows": len(matrix),
-                    "features": len(retained), "coordinate_rmse_yards": score,
+                    "screened_features": len(retained), "features": len(converted["features"]),
+                    "coordinate_rmse_yards": score,
                     "max_absolute_prediction_difference": float(np.max(np.abs(actual - expected))),
                 })
                 if name == "development":
                     deployment[variant] = converted
                     if variant == selected:
-                        selected_names = retained
+                        selected_names = converted["features"]
         bundle = copy.deepcopy(parent)
         bundle.update(
             selected_stage="fixed_tree",
@@ -189,7 +201,7 @@ def self_test(root: Path) -> None:
     pair = probe_module(root).train_pair(x[:750], y[:750])
     converted = portable(pair, [str(i) for i in range(5)])
     expected = np.column_stack([model.predict(x[750:]) for model in pair])
-    actual = tree_correction(x[750:], converted)
+    actual = tree_correction(x[750:, [int(name) for name in converted["features"]]], converted)
     np.testing.assert_allclose(actual, expected, rtol=1e-12, atol=1e-12)
     print(json.dumps({"portable_tree_self_test": "passed", "rows": 250}))
 

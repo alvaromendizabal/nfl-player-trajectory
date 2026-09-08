@@ -90,42 +90,38 @@ def main() -> None:
             ServerSideEncryption="AES256",
         )
     subprocess.run(
-        [
-            python,
-            "-m",
-            "ruff",
-            "check",
-            "--fix",
-            *[name for name in formatted if not name.endswith(".lock")],
-        ],
-        check=True,
-        env=env,
+        [python, "-m", "ruff", "check", "--fix", *[
+            name for name in formatted if not name.endswith(".lock")
+        ]], env=env,
     )
-    if (root / "scripts/prepare_tree.py").exists():
-        subprocess.run(
-            [uv, "run", "--locked", "scripts/prepare_tree.py", "--self-test"],
-            check=True, env=env,
-        )
-    for command in [
+    checks = []
+    commands = [
         [python, "-m", "ruff", "check", "."],
         [python, "-m", "ruff", "format", "--check", "."],
         [python, "-m", "mypy", "src", "scripts", "kaggle"],
         [python, "-m", "pytest", "-q"],
         [python, "scripts/notebooks.py"],
-    ]:
-        subprocess.run(command, check=True, env=env)
+    ]
+    if (root / "scripts/prepare_tree.py").exists():
+        commands.insert(0, [uv, "run", "--locked", "scripts/prepare_tree.py", "--self-test"])
+    for command in commands:
+        completed = subprocess.run(command, env=env)
+        checks.append({"command": command, "return_code": completed.returncode})
+    passed = all(item["return_code"] == 0 for item in checks)
     s3.put_object(
         Bucket=os.environ["NFL_BUCKET"],
         Key=os.environ["NFL_PREFIX"] + "/validation.json",
         Body=json.dumps(
             {
-                "status": "passed",
+                "status": "passed" if passed else "failed",
                 "source_commit": ref,
-                "checks": ["lint", "format", "types", "tests"],
+                "checks": checks,
             }
         ).encode(),
         ServerSideEncryption="AES256",
     )
+    if not passed:
+        raise RuntimeError("Cloud validation failed; all check outcomes are recorded.")
     print("CLOUD_ENVIRONMENT_VALIDATION_PASSED", flush=True)
 
 

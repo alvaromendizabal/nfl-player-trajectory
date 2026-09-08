@@ -20,8 +20,8 @@ import numpy as np
 import pandas as pd
 from ablate_features import error_rows, probe_module
 
-BUDGETS = (512, 1024, 2048)
-POOL = 3584
+BUDGETS = (512, 1024, 2048, 4096, 8192)
+POOL = 8192
 
 
 def candidate_pool(root: Path, fold: str, parent: list[str]) -> list[str]:

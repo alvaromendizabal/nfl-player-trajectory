@@ -273,6 +273,17 @@ def main() -> None:
                 inference.result()
             backup("completed-feature-experiments")
         else:
+            if os.environ.get("NFL_EXPAND_FULL_POOL") == "1":
+                batch(
+                    "scripts/feature_budget.py",
+                    ["inner_1", "inner_2", "inner_3", "development"],
+                    workers=2, threads=6,
+                )
+                command(
+                    [uv, "run", "--locked", "scripts/feature_attribution.py"],
+                    "full-pool-attribution", threads=6,
+                )
+                backup("full-feature-pool")
             command(
                 [uv, "run", "--locked", "scripts/prepare_tree.py", "--self-test"],
                 "portable-tree-self-test", threads=2,

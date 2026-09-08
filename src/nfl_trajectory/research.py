@@ -17,27 +17,38 @@ from nfl_trajectory.runtime import sha256
 
 def validate_summary(summary: dict[str, Any]) -> None:
     """Reject incomplete evidence and arithmetic-inconsistent validation slices."""
-    if (summary.get("status") != "passed" or summary.get("split") != "validation"
-            or summary.get("screening_split") != "train"
-            or summary.get("holdout_evaluation") != "not_run"):
+    if (
+        summary.get("status") != "passed"
+        or summary.get("split") != "validation"
+        or summary.get("screening_split") != "train"
+        or summary.get("holdout_evaluation") != "not_run"
+    ):
         raise ValueError("A completed, training-screened validation experiment is required.")
     scores = summary.get("models", [])
     names = [r["model"] for r in scores]
     if not scores or len(names) != len(set(names)):
         raise ValueError("Model names must be nonempty and unique.")
     for row in scores:
-        for key in ("coordinate_rmse_yards", "ade_frame_weighted_yards",
-                    "fde_trajectory_weighted_yards", "p95_displacement_yards"):
+        for key in (
+            "coordinate_rmse_yards",
+            "ade_frame_weighted_yards",
+            "fde_trajectory_weighted_yards",
+            "p95_displacement_yards",
+        ):
             if not math.isfinite(row[key]) or row[key] < 0:
                 raise ValueError("Metrics must be finite and nonnegative.")
         for dimension in ("role", "forecast_second"):
-            records = [r for r in summary["slices"]
-                       if r["model"] == row["model"] and r["dimension"] == dimension]
+            records = [
+                r
+                for r in summary["slices"]
+                if r["model"] == row["model"] and r["dimension"] == dimension
+            ]
             rows = sum(r["rows"] for r in records)
             if rows != summary["validation_rows_per_model"] or rows <= 0:
                 raise ValueError("Diagnostic slices must cover every scored row.")
-            rmse = math.sqrt(sum(r["rows"] * r["coordinate_rmse_yards"] ** 2
-                                 for r in records) / rows)
+            rmse = math.sqrt(
+                sum(r["rows"] * r["coordinate_rmse_yards"] ** 2 for r in records) / rows
+            )
             if not math.isclose(rmse, row["coordinate_rmse_yards"], rel_tol=1e-10):
                 raise ValueError("Diagnostic slices disagree with the pooled RMSE.")
     best = min(scores, key=lambda r: r["coordinate_rmse_yards"])["model"]
@@ -55,15 +66,22 @@ def selection_study(bundle: dict[str, Any], summary_hash: str, model_hash: str) 
         raise ValueError("Invalid coefficients in completed model.")
     ranked = sorted(range(len(names)), key=lambda i: -float(np.linalg.norm(weights[i])))[:12]
     return {
-        "format": 1, "summary_sha256": summary_hash, "feature_model_sha256": model_hash,
-        "training_rows": landing["training_rows"], "landing_selected_count": len(names),
+        "format": 1,
+        "summary_sha256": summary_hash,
+        "feature_model_sha256": model_hash,
+        "training_rows": landing["training_rows"],
+        "landing_selected_count": len(names),
         "landing_ball_ux_count": sum("ball_ux" in name for name in names),
         "overlap_count": len(set(names) & set(interaction["features"])),
         "removed_from_landing": sorted(set(names) - set(interaction["features"])),
         "added_by_interaction": sorted(set(interaction["features"]) - set(names)),
         "coefficient_rows": [
-            {"feature": names[i], "x_coefficient": float(weights[i, 0]),
-             "y_coefficient": float(weights[i, 1])} for i in ranked
+            {
+                "feature": names[i],
+                "x_coefficient": float(weights[i, 0]),
+                "y_coefficient": float(weights[i, 1]),
+            }
+            for i in ranked
         ],
     }
 
@@ -80,17 +98,20 @@ def load_evidence(root: Path) -> tuple[dict[str, Any], dict[str, Any], str]:
     if local.exists():
         model_path = local / "model.json"
         checkpoint = json.loads((root / ".state/features-report.json").read_text())
-        if (checkpoint.get("status") != "completed"
-                or checkpoint.get("signature") != summary.get("numerical_signature")):
+        if checkpoint.get("status") != "completed" or checkpoint.get("signature") != summary.get(
+            "numerical_signature"
+        ):
             raise ValueError("Feature completion receipt is stale or incomplete.")
         for item in (path, model_path, local / "benchmark.png"):
             if checkpoint.get("outputs", {}).get(item.relative_to(root).as_posix()) != sha256(item):
                 raise ValueError("Feature output checksum failed.")
         model = json.loads(model_path.read_text())
         baseline = root / "artifacts/benchmark/model.json"
-        if (summary.get("baseline_sha256") != sha256(baseline)
-                or model.get("baseline_sha256") != sha256(baseline)
-                or summary.get("split_sha256") != sha256(root / "artifacts/game_splits.csv")):
+        if (
+            summary.get("baseline_sha256") != sha256(baseline)
+            or model.get("baseline_sha256") != sha256(baseline)
+            or summary.get("split_sha256") != sha256(root / "artifacts/game_splits.csv")
+        ):
             raise ValueError("Feature evidence no longer matches the baseline or frozen split.")
         study = selection_study(model, sha256(path), sha256(model_path))
         return summary, study, "Verified local experiment"
@@ -108,10 +129,18 @@ def error_budget(summary: dict[str, Any], dimension: str) -> pd.DataFrame:
     if dimension not in ("role", "forecast_second"):
         raise ValueError("Choose role or forecast_second.")
     selected = summary["selected_model"]
-    frame = pd.DataFrame([r for r in summary["slices"]
-                          if r["model"] == selected and r["dimension"] == dimension])
-    squared = frame.rows * frame.coordinate_rmse_yards ** 2
+    frame = pd.DataFrame(
+        [r for r in summary["slices"] if r["model"] == selected and r["dimension"] == dimension]
+    )
+    squared = frame.rows * frame.coordinate_rmse_yards**2
     frame["row_share_percent"] = 100 * frame.rows / frame.rows.sum()
     frame["squared_error_share_percent"] = 100 * squared / squared.sum()
-    return frame[["value", "rows", "coordinate_rmse_yards", "row_share_percent",
-                  "squared_error_share_percent"]]
+    return frame[
+        [
+            "value",
+            "rows",
+            "coordinate_rmse_yards",
+            "row_share_percent",
+            "squared_error_share_percent",
+        ]
+    ]

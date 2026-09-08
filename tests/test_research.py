@@ -31,9 +31,16 @@ def test_recorded_champion_and_metric_reconciliation(evidence):
     assert defense.squared_error_share_percent == pytest.approx(89.04839371915061)
 
 
-@pytest.mark.parametrize("field,value", [("status", "running"), ("screening_split", "validation"),
-                                         ("holdout_evaluation", "scored"), ("split", "holdout"),
-                                         ("selected_model", "constant_velocity")])
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("status", "running"),
+        ("screening_split", "validation"),
+        ("holdout_evaluation", "scored"),
+        ("split", "holdout"),
+        ("selected_model", "constant_velocity"),
+    ],
+)
 def test_invalid_completion_evidence_is_rejected(evidence, field, value):
     evidence[field] = value
     with pytest.raises(ValueError):
@@ -72,14 +79,20 @@ def test_published_selection_study_is_bound_to_actual_summary(tmp_path):
 
 
 def test_default_notebooks_neither_train_nor_export_implicitly():
-    expected = {"01_data_analysis.ipynb": "RUN_FEATURE_EXPERIMENT",
-                "02_motion_benchmarks.ipynb": "GENERATE_EXPORT"}
+    expected = {
+        "01_data_analysis.ipynb": "RUN_FEATURE_EXPERIMENT",
+        "02_motion_benchmarks.ipynb": "GENERATE_EXPORT",
+    }
     for filename, switch in expected.items():
         notebook = nbformat.read(ROOT / "notebooks" / filename, as_version=4)
-        assignments = [node for cell in notebook.cells if cell.cell_type == "code"
-                       for node in ast.walk(ast.parse(cell.source))
-                       if isinstance(node, ast.Assign)
-                       and any(isinstance(t, ast.Name) and t.id == switch for t in node.targets)]
+        assignments = [
+            node
+            for cell in notebook.cells
+            if cell.cell_type == "code"
+            for node in ast.walk(ast.parse(cell.source))
+            if isinstance(node, ast.Assign)
+            and any(isinstance(t, ast.Name) and t.id == switch for t in node.targets)
+        ]
         assert len(assignments) == 1
         assert isinstance(assignments[0].value, ast.Constant)
         assert assignments[0].value.value is False

@@ -43,17 +43,28 @@ def residual_parameters(root: Path, model: str, baseline_path: Path) -> dict[str
     path = root / "artifacts/features/model.json"
     bundle = json.loads(path.read_text())
     baseline = json.loads(baseline_path.read_text())
-    if (bundle.get("format") != 1 or bundle.get("baseline_sha256") != sha256(baseline_path)
-            or bundle.get("split_sha256") != summary["split_sha256"]
-            or bundle.get("training_games") != baseline.get("training_games")
-            or bundle.get("source_sha256") != summary.get("source_sha256")):
+    if (
+        bundle.get("format") != 1
+        or bundle.get("baseline_sha256") != sha256(baseline_path)
+        or bundle.get("split_sha256") != summary["split_sha256"]
+        or bundle.get("training_games") != baseline.get("training_games")
+        or bundle.get("source_sha256") != summary.get("source_sha256")
+    ):
         raise ValueError("Residual model and baseline provenance disagree.")
     parameters = bundle["models"][model]
     names = parameters["features"]
-    if not names or len(names) != len(set(names)) or not set(names).issubset(feature_catalog().feature):
+    if (
+        not names
+        or len(names) != len(set(names))
+        or not set(names).issubset(feature_catalog().feature)
+    ):
         raise ValueError("Residual feature names are invalid.")
-    for key, shape in (("mean", (len(names),)), ("scale", (len(names),)),
-                       ("coefficients", (len(names), 2)), ("intercept", (2,))):
+    for key, shape in (
+        ("mean", (len(names),)),
+        ("scale", (len(names),)),
+        ("coefficients", (len(names), 2)),
+        ("intercept", (2,)),
+    ):
         values = np.asarray(parameters[key], dtype=float)
         if values.shape != shape or not np.isfinite(values).all():
             raise ValueError("Residual parameters must have valid shapes and finite values.")
@@ -88,16 +99,30 @@ def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]
                 raise ValueError("Invalid baseline coefficients.")
     if model in RESIDUAL_MODELS:
         imports += "from dataclasses import dataclass\n"
-        paths.extend([folder / "features.py", folder / "feature_experiment.py",
-                      root / "artifacts/features/model.json", root / "artifacts/features/summary.json",
-                      root / ".state/features-report.json", root / "artifacts/game_splits.csv",
-                      folder / "research.py", folder / "benchmark.py"])
+        paths.extend(
+            [
+                folder / "features.py",
+                folder / "feature_experiment.py",
+                root / "artifacts/features/model.json",
+                root / "artifacts/features/summary.json",
+                root / ".state/features-report.json",
+                root / "artifacts/game_splits.csv",
+                folder / "research.py",
+                folder / "benchmark.py",
+            ]
+        )
         residual = residual_parameters(root, model, weights)
         nodes.extend(definitions(folder / "features.py"))
-        nodes.extend(definitions(folder / "feature_experiment.py", {"target_state", "predict_residual"}))
+        nodes.extend(
+            definitions(folder / "feature_experiment.py", {"target_state", "predict_residual"})
+        )
     source = imports + ast.unparse(ast.Module(body=nodes, type_ignores=[])) + "\n"
     if learned:
-        source += "trajectory_predict = predict\nFITTED_MODEL = " + pprint.pformat(fitted, width=85) + "\n"
+        source += (
+            "trajectory_predict = predict\nFITTED_MODEL = "
+            + pprint.pformat(fitted, width=85)
+            + "\n"
+        )
     if model in RESIDUAL_MODELS:
         source += "BATCH_ROWS = 1024\nRESIDUAL_MODEL = " + pprint.pformat(residual, width=85) + "\n"
     source += "_gateway_run: Run | None = None\n"
@@ -110,7 +135,9 @@ def build_notebook(root: Path, model: str, weights: Path) -> tuple[Any, list[Pat
     source, dependencies = model_source(root, model, weights)
     prediction = "predictions = constant_velocity(observed, target[KEYS])"
     if model != "constant_velocity":
-        prediction = "predictions = trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)"
+        prediction = (
+            "predictions = trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)"
+        )
     if model in RESIDUAL_MODELS:
         prediction += (
             "\n    bank = build_player_features(observed, target[ENTITY])"
@@ -168,13 +195,18 @@ if not os.getenv('KAGGLE_IS_COMPETITION_RERUN') and Path('submission.parquet').i
         ],
         metadata={
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-            "nfl_export": {"model": model, "official_gateway_status": "not_run",
-                           "automatically_submitted": False},
+            "nfl_export": {
+                "model": model,
+                "official_gateway_status": "not_run",
+                "automatically_submitted": False,
+            },
         },
     )
     for index, cell in enumerate(notebook.cells):
         cell.id = f"nfl-inference-{index}"
-    compile("\n".join(c.source for c in notebook.cells if c.cell_type == "code"), "inference.py", "exec")
+    compile(
+        "\n".join(c.source for c in notebook.cells if c.cell_type == "code"), "inference.py", "exec"
+    )
     nbformat.validate(notebook)
     return notebook, dependencies
 
@@ -182,8 +214,11 @@ if not os.getenv('KAGGLE_IS_COMPETITION_RERUN') and Path('submission.parquet').i
 def main() -> int:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", choices=["constant_velocity", "role_ridge", *RESIDUAL_MODELS],
-                        default="constant_velocity")
+    parser.add_argument(
+        "--model",
+        choices=["constant_velocity", "role_ridge", *RESIDUAL_MODELS],
+        default="constant_velocity",
+    )
     parser.add_argument("--weights", type=Path, default=root / "artifacts/benchmark/model.json")
     parser.add_argument("--output", type=Path, default=root / "artifacts/kaggle/submission.ipynb")
     args = parser.parse_args()
@@ -192,22 +227,56 @@ def main() -> int:
         raise ValueError("Export destination must be an .ipynb inside this project's artifacts/.")
     with Run(root, "export_kaggle") as run:
         notebook, dependencies = build_notebook(root, args.model, args.weights)
-        dependencies += [Path(__file__).resolve(), root / "uv.lock"] if (root / "uv.lock").exists() else [Path(__file__).resolve()]
+        dependencies += (
+            [Path(__file__).resolve(), root / "uv.lock"]
+            if (root / "uv.lock").exists()
+            else [Path(__file__).resolve()]
+        )
         input_hashes = {str(p): sha256(p) for p in dependencies}
-        signature = hashlib.sha256(json.dumps({
-            "inputs": input_hashes,
-            "model": args.model, "output": str(destination),
-        }, sort_keys=True).encode()).hexdigest()
+        signature = hashlib.sha256(
+            json.dumps(
+                {
+                    "inputs": input_hashes,
+                    "model": args.model,
+                    "output": str(destination),
+                },
+                sort_keys=True,
+            ).encode()
+        ).hexdigest()
 
         def write() -> None:
             ordered = subprocess.run(
-                [sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix",
-                 "--stdin-filename", "submission.ipynb", "-"],
-                input=nbformat.writes(notebook), text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--select",
+                    "I,UP",
+                    "--fix",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=nbformat.writes(notebook),
+                text=True,
+                capture_output=True,
+                check=True,
             )
             formatted = subprocess.run(
-                [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
-                input=ordered.stdout, text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "format",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=ordered.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
             )
             nbformat.validate(nbformat.reads(formatted.stdout, as_version=4))
             if any(sha256(p) != input_hashes[str(p)] for p in dependencies):
@@ -216,8 +285,14 @@ def main() -> int:
 
         key = hashlib.sha256(str(destination.relative_to(root)).encode()).hexdigest()[:12]
         stage(root, f"kaggle-export-{key}", signature, [destination], write, run)
-        run.event("notebook_exported", path=str(destination.relative_to(root)), model=args.model,
-                  sha256=sha256(destination), official_gateway_status="not_run", automatically_submitted=False)
+        run.event(
+            "notebook_exported",
+            path=str(destination.relative_to(root)),
+            model=args.model,
+            sha256=sha256(destination),
+            official_gateway_status="not_run",
+            automatically_submitted=False,
+        )
     return 0
 
 

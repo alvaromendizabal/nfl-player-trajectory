@@ -3,6 +3,7 @@
 # dependencies = [
 #   "numpy==2.4.6", "pandas==3.0.5", "filelock==3.32.5",
 #   "plotly==7.0.0", "matplotlib==3.10.8",
+#   "nbformat==5.11.1",
 #   "polars>=1.32,<2", "pyarrow>=20,<24", "grpcio>=1.73,<2", "protobuf>=5.29,<7",
 # ]
 # ///

@@ -13,6 +13,7 @@ import pandas as pd
 from nfl_trajectory.runtime import atomic_json, sha256
 
 FOLDS = ("inner_1", "inner_2", "inner_3", "development")
+ARCHIVED_INPUT_FAILURE_SHA256 = "68b503bfb1727e0ac00687feed1a1992bb02683895b510516c7eb9dda7fea1c1"
 EXTRA_REPORTS = {
     "feature_probe.json": "nonlinear_probe/summary.json",
     "feature_ablation.json": "feature_ablation/summary.json",
@@ -249,6 +250,9 @@ def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str
 
     if not (root / "artifacts/nonlinear_probe/plan.json").exists():
         return {}
+    archived = root / "artifacts/research/inference_before_fallback.json"
+    if archived.exists() and sha256(archived) != ARCHIVED_INPUT_FAILURE_SHA256:
+        raise ValueError("The archived input failure differs from the original recorded result.")
     sources = feature_research_snapshot(root)["source_signatures"]
     parent = root / "artifacts/nonlinear_probe"
     plan = verified_plan(root, parent, "nonlinear_probe.py")

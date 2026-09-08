@@ -154,7 +154,9 @@ def main() -> None:
     def command(args: list[str], label: str, threads: int = 2) -> None:
         event("running", stage=label)
         env = {**os.environ, "OMP_NUM_THREADS": str(threads), "OPENBLAS_NUM_THREADS": "1"}
-        output = root / "logs" / ("cloud-" + label + ".log")
+        # A backup must not hash its own still-growing captured stdout.
+        log_root = root.parent / "runner_logs" if label.startswith("backup-") else root / "logs"
+        output = log_root / ("cloud-" + label + ".log")
         output.parent.mkdir(exist_ok=True)
         with output.open("w") as handle:
             process = subprocess.Popen(
@@ -328,21 +330,14 @@ def main() -> None:
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")
         else:
-            with concurrent.futures.ThreadPoolExecutor(
-                max_workers=wide_refit_workers(memory_budget_gib())
-            ) as pool:
-                futures = {
-                    pool.submit(
-                        command,
-                        [uv, "run", "--locked", "scripts/ablate_wide_features.py", "--fold", fold],
-                        "wide-refits-" + fold,
-                        6,
-                    ): fold
-                    for fold in ("inner_1", "inner_2", "inner_3", "development")
-                }
-                for future in concurrent.futures.as_completed(futures):
-                    future.result()
-                    backup("wide-refits-" + futures[future])
+            folds = ["inner_1", "inner_2", "inner_3", "development"]
+            workers = wide_refit_workers(memory_budget_gib())
+            for start in range(0, len(folds), workers):
+                wave = folds[start : start + workers]
+                batch("scripts/ablate_wide_features.py", wave, workers, threads=6)
+                # The snapshot contract forbids concurrent pipeline writers.
+                # A complete wave stops both writers before content hashing/upload.
+                backup("wide-refits-" + "-".join(wave))
         # Only presentation files may come from a later, explicitly pinned review commit.
         report_commit = None
         for attempt in range(80):

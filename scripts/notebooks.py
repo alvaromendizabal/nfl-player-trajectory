@@ -141,6 +141,9 @@ def execution_signature(root: Path, source: Path) -> str:
     local = root / "artifacts/benchmark"
     results = local if (local / "summary.json").is_file() else root / "docs/results"
     inputs = [root / "scripts/notebooks.py"]
+    helper = root / "src/nfl_trajectory/research_visuals.py"
+    if helper.is_file():
+        inputs.append(helper)
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(

@@ -24,29 +24,68 @@ import pandas as pd
 
 ORGANIZER_HASHES = {
     "kaggle_evaluation/__init__.py":
-        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        (
+        "e3b0c44298fc1c149afbf4c8996fb924"
+        "27ae41e4649b934ca495991b7852b855"
+    ),
     "kaggle_evaluation/core/__init__.py":
-        "7d04526624b1f71259b958206a343546f2ef31fd0ad6f0d606c6f2c8494b8874",
+        (
+        "7d04526624b1f71259b958206a343546"
+        "f2ef31fd0ad6f0d606c6f2c8494b8874"
+    ),
     "kaggle_evaluation/core/base_gateway.py":
-        "0b9f5e8c516202659513c0adc89b51778a1a383d8247137d9bfddce038ee06a5",
+        (
+        "0b9f5e8c516202659513c0adc89b5177"
+        "8a1a383d8247137d9bfddce038ee06a5"
+    ),
     "kaggle_evaluation/core/generated/__init__.py":
-        "7d04526624b1f71259b958206a343546f2ef31fd0ad6f0d606c6f2c8494b8874",
+        (
+        "7d04526624b1f71259b958206a343546"
+        "f2ef31fd0ad6f0d606c6f2c8494b8874"
+    ),
     "kaggle_evaluation/core/generated/kaggle_evaluation_pb2.py":
-        "04108189b4ac7751901a7fbaa95231ed7335b437c33706d5850cab868bd16a11",
+        (
+        "04108189b4ac7751901a7fbaa95231ed"
+        "7335b437c33706d5850cab868bd16a11"
+    ),
     "kaggle_evaluation/core/generated/kaggle_evaluation_pb2_grpc.py":
-        "620d76b7b993a3fbf7809b1e7423ed71a94fe73156918215aeae86cb6f9b8a4f",
+        (
+        "620d76b7b993a3fbf7809b1e7423ed71"
+        "a94fe73156918215aeae86cb6f9b8a4f"
+    ),
     "kaggle_evaluation/core/kaggle_evaluation.proto":
-        "cbc742d6b9e6f9a4981d8354cee79c7136edd8fe30cb90e1f6786ae72bc57ab1",
+        (
+        "cbc742d6b9e6f9a4981d8354cee79c71"
+        "36edd8fe30cb90e1f6786ae72bc57ab1"
+    ),
     "kaggle_evaluation/core/relay.py":
-        "b070f6f2c154b7ae5de2081125a0f27a0a7a577b46136a39d746091d323ae85e",
+        (
+        "b070f6f2c154b7ae5de2081125a0f27a"
+        "0a7a577b46136a39d746091d323ae85e"
+    ),
     "kaggle_evaluation/core/templates.py":
-        "3aa3eaf75139cd9220652b0601c24ef5f6188fcf44d4463b9b7e290271b5fa3a",
+        (
+        "3aa3eaf75139cd9220652b0601c24ef5"
+        "f6188fcf44d4463b9b7e290271b5fa3a"
+    ),
     "kaggle_evaluation/nfl_gateway.py":
-        "29335f26a9f4e8486c99c60072d824f11e4cf581591f588e6ecaf8cd15aa91bb",
+        (
+        "29335f26a9f4e8486c99c60072d824f1"
+        "1e4cf581591f588e6ecaf8cd15aa91bb"
+    ),
     "kaggle_evaluation/nfl_inference_server.py":
-        "37ff289a1d2ab6f49fc4c0096c866b31dae1b7f98f0c9a7f361daff104b1da8e",
-    "test.csv": "6f45e50eb79442561cdb2cc6ba2d05b05f7967fad3964a98916c9a8ffecd44b2",
-    "test_input.csv": "f894c3380da3caba2f0dbc0618ccf8e2a256e4e0fec56760fab050b03d964fd7",
+        (
+        "37ff289a1d2ab6f49fc4c0096c866b31"
+        "dae1b7f98f0c9a7f361daff104b1da8e"
+    ),
+    "test.csv": (
+        "6f45e50eb79442561cdb2cc6ba2d05b0"
+        "5f7967fad3964a98916c9a8ffecd44b2"
+    ),
+    "test_input.csv": (
+        "f894c3380da3caba2f0dbc0618ccf8e2"
+        "a256e4e0fec56760fab050b03d964fd7"
+    ),
 }
 
 
@@ -70,7 +109,10 @@ def main(root: Path) -> None:
     provenance = {
         "inputs": inputs,
         "bundle_sha256": hashlib.sha256(json.dumps(bundle, sort_keys=True).encode()).hexdigest(),
-        "source_snapshot": "c83a828f42f13af498443574284db8d6e014b44967bc4ee09ab7a49f4b362817",
+        "source_snapshot": (
+        "c83a828f42f13af498443574284db8d6"
+        "e014b44967bc4ee09ab7a49f4b362817"
+    ),
         "purpose": "Unlabelled official sample interface and standalone predictor parity only",
     }
     signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()

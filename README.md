@@ -1,79 +1,77 @@
-# NFL Player Trajectory
+# NFL Player Trajectory Lab
 
-**Measured result: 0.9269 coordinate RMSE (yards)** on 32 later validation games.
-Landing-aware residual ridge improves the established learned baseline by **6.34%**
-and constant velocity by **46.19%**. The 48-game holdout remains unscored.
-These are development-validation results, not Kaggle leaderboard scores.
+Predict post-throw player movement from pre-throw tracking, the supplied landing
+point, and player roles. **Landing-aware residual ridge: 0.9269 coordinate RMSE**
+on 32 later games—**6.34% lower** than the learned motion baseline. These are
+measured local validation results, not a Kaggle leaderboard score.
 
 ## Review the work
 
-**[01 · Data, physics, and features](notebooks/01_data_analysis.ipynb) →
-[02 · Results, failure analysis, and your own export](notebooks/02_motion_benchmarks.ipynb)**
+**[01 · Data, football hypotheses, and features](notebooks/01_data_analysis.ipynb) →
+[02 · Models, error analysis, and next decisions](notebooks/02_motion_benchmarks.ipynb)**
 
-The notebooks contain executed tables and embedded figures. No cloud account or
-rerun is needed to review them. [00 · Project readiness](notebooks/00_project_readiness.ipynb)
-is optional orientation and provides an explicit run/resume control.
+The canonical notebooks include executed tables and embedded figures. No AWS,
+Kaggle, or Hugging Face account is needed to review them. Notebook 00 is optional
+orientation. See [run instructions](START_HERE.md) for your existing workspace.
 
-| Model | Coordinate RMSE / yd | Frame ADE / yd | Trajectory FDE / yd |
+| Model | Coordinate RMSE | Frame-weighted ADE | Trajectory-weighted FDE |
 |---|---:|---:|---:|
-| **Landing-aware residual ridge** | **0.9269** | **0.8254** | **1.4168** |
-| Interaction residual ridge | 0.9422 | 0.8438 | 1.4309 |
-| Motion residual ridge | 0.9467 | 0.8545 | 1.4686 |
-| Role-conditioned ridge baseline | 0.9896 | 0.8847 | 1.5057 |
+| Landing-aware residual ridge | **0.9269** | **0.8254** | **1.4168** |
+| Interaction-aware residual ridge | 0.9422 | 0.8438 | 1.4309 |
+| Motion-only residual ridge | 0.9467 | 0.8545 | 1.4686 |
+| Original role-conditioned ridge | 0.9896 | 0.8847 | 1.5057 |
 | Constant velocity | 1.7225 | 1.5142 | 2.8696 |
 
-All five models were evaluated on the same recorded 67,857 player-frames / 5,399
-trajectories. The winning model's paired 95% game-bootstrap RMSE difference versus
-role ridge is **[-0.0829, -0.0434] yards**. Intervals are development diagnostics,
-not selection-adjusted guarantees of future performance.
-[Measured evidence](docs/results/feature_summary.json) · [Model card](docs/MODEL_CARD.md)
+All values are yards; all models score the same 67,857 player-frames / 5,399
+trajectories. The landing model's 95% game-cluster RMSE interval is 0.8587–0.9922.
+Its paired difference versus role ridge is −0.0829 to −0.0434 yards. The
+[recorded feature results](docs/results/feature_summary.json) retain exact values.
 
-## Research conclusions
+## What the experiments teach
 
-The 2,843 deterministic candidates encode observed motion, landing-relative dynamics,
-player interactions, and forecast time. Screening and scaling use training games only;
-three fixed-regularization residual models retain 64 features each. The original
-baseline already uses the supplied landing point, including in the motion-residual ablation.
+The bank contains **2,843 pre-throw candidates**, but each residual challenger
+retains only 64 training-selected features. Thirty-one of the landing model's
+features derive from longitudinal ball bearing (`ball_ux`). The interaction
+model shares only 41 features with it, replacing 23—including a major lateral
+motion term. This is **not a nested, add-only ablation**: the result cannot isolate
+the value of interactions from the cost of removing useful landing features.
 
-**More interaction features did not automatically win.** The interaction candidate
-displaced 23 columns from the landing model. The next controlled experiment must preserve
-the successful feature block and separate added information from changed capacity.
+Defensive coverage accounts for **89.0% of remaining squared error**. Forecast
+seconds two and three contribute **80.2%**; the fourth-second slice has just 127
+rows. The next experiment should preserve the complete landing representation,
+then test a small interaction correction and role-conditioned residuals with
+chronological training-only selection. No new challenger or holdout result is
+claimed before it is measured. The notebooks show the calculations and caveats.
 
-**Target the objective's largest errors.** Defensive coverage accounts for 89.0% of
-remaining squared error. Forecasts beyond one second are 26.9% of frames but 83.6% of
-squared error. Notebook 02 derives and reconciles these quantities from the recorded slices.
-See the [next experiment](docs/RESEARCH_PLAN.md); no new temporal neural result is claimed.
+## Validation and engineering
 
-## Create your own inference notebook
+The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displacement,
+role/horizon slices, and paired game-bootstrap intervals supplement it.
+Training uses 192 games (September 7–December 3, 2023); validation uses 32 games
+(December 4–18). The later **48-game holdout remains unscored**. All frames and
+players from one game stay together. Feature screening/scaling use training only.
 
-In notebook 02, set **`CREATE_SUBMISSION = True`** and run the final cell yourself.
-It verifies your completed local model and creates a download link for
-`artifacts/kaggle/submission.ipynb`. Export supports all three residual challengers
-as well as the preserved physical and role-ridge references.
+Canonical code has explicit numerical, leakage, artifact-integrity, recovery,
+and export-parity tests. CI checks lint, formatting, types, warnings-as-errors,
+and notebook execution in the locked Python 3.11 environment. UTC JSONL logs
+include stage/cell and total durations plus a 15-second heartbeat. Atomic writes,
+locks, input/source signatures, and output hashes protect resumable stages.
+Private content-addressed S3 snapshots retain completed work. Reporting changes
+do not modify numerical source or invalidate the completed feature experiment.
 
-Automatic portfolio rendering leaves generation off. Quality checks use a separate
-artifact path and cannot replace your generated notebook. No credentials are requested
-and no Kaggle submission API is called. This is a code-competition inference notebook,
-not a fabricated hidden-test CSV. Run its official local gateway on Kaggle, review the
-result, and choose whether to submit using your own account. Official gateway execution
-and leaderboard scoring are not claimed complete here.
+## Generate an artifact yourself
 
-## Reproducibility
+The final cell in notebook 02 is **off by default**. Set `GENERATE_EXPORT = True`
+in your workspace to generate and download your own standalone inference notebook
+from the verified, selected local model. The exporter supports the trained residual
+champion; it does not silently substitute the older baseline. Tests use a separate
+quality-output directory and cannot overwrite the owner's generated artifact.
 
-Training: 192 games, September 7–December 3, 2023. Validation: 32 games,
-December 4–18, 2023. Holdout: 48 games, December 21, 2023–January 7, 2024.
-Whole games stay together. Existing numerical source and the dependency lock remain
-unchanged by the report/export release, so completed feature/model work stays reusable.
+The generated notebook uses the official organizer gateway and provides a local
+Parquet download when that gateway creates it. **It never submits to Kaggle.**
+Local sample predictions are not hidden-test results. You control gateway execution
+and any subsequent submission; official gateway execution remains unverified here.
 
-UTC JSONL logs include stage/total timing and a 15-second heartbeat. Completed stages
-are reused only after signature and output-hash checks. Atomic writes preserve the last
-successful outputs. Weekly private S3 snapshots provide phase-level recovery; a fresh
-runtime requires restoring saved artifacts rather than assuming its disk persists.
-The standalone inference notebook also uses verified per-play checkpoints.
-
-[Continue in the existing workspace](START_HERE.md) ·
-[Validation protocol](docs/VALIDATION.md) · [Recovery](docs/RECOVERY.md)
-
-Original code is MIT licensed. Competition data and third-party code have separate
-terms and are not redistributed here. Published evidence contains aggregate measurements,
-figures, and research interpretation. See [sources](docs/SOURCES.md).
+The code is MIT licensed; competition data has separate conditions and is not
+redistributed. See [sources](docs/SOURCES.md). No extra model-hosting service is
+required for the employer review path.

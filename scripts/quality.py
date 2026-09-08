@@ -17,7 +17,7 @@ def main() -> int:
                     sys.executable,
                     "kaggle/export.py",
                     "--output",
-                    "artifacts/quality/submission.ipynb",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
                 [sys.executable, "-m", "compileall", "-q", "src", "scripts", "tests"],
                 [sys.executable, "-m", "ruff", "check", "."],
@@ -36,7 +36,7 @@ def main() -> int:
                     "--weights",
                     "docs/results/model.json",
                     "--output",
-                    "artifacts/quality/submission.ipynb",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
                 [
                     sys.executable,
@@ -44,7 +44,7 @@ def main() -> int:
                     "ruff",
                     "check",
                     "--no-respect-gitignore",
-                    "artifacts/quality/submission.ipynb",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
                 [
                     sys.executable,
@@ -53,7 +53,7 @@ def main() -> int:
                     "format",
                     "--check",
                     "--no-respect-gitignore",
-                    "artifacts/quality/submission.ipynb",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
             ]
             for command in commands:

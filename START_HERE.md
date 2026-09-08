@@ -1,51 +1,63 @@
-# Review the completed experiment and create your own export
+# Review the completed experiment
 
-The real-data feature experiment is complete: `landing_ridge` achieved 0.9268683892
-coordinate RMSE. Do not recreate the data or rerun baseline training.
+The feature run completed successfully: landing ridge reached 0.9268683892 RMSE;
+all three notebooks were published locally and the final S3 backup completed.
+**Do not recreate data, the environment, or the successful benchmark/features.**
 
-Preserve locally executed notebooks and published results before pulling updated sources:
+## Update the notebook presentation without retraining
+
+In your existing SageMaker terminal:
 
 ```bash
 cd "$HOME/nfl-player-trajectory" &&
-git stash push --include-untracked -m "completed results before notebook review" -- notebooks docs/results &&
+git stash push --include-untracked -m "executed feature notebooks before research update" -- notebooks/ docs/results/ &&
 git pull --ff-only origin main &&
 python3 scripts/bootstrap.py &&
 .venv/bin/python scripts/notebooks.py --publish &&
 .venv/bin/nfl backup
 ```
 
-The scoped stash preserves notebook/result edits and newly generated, untracked result
-files. Do not pop an old render over newly published notebooks. Other source edits are
-not discarded; conflicting pulls stop safely. Your data, `.state/`, features, and fitted
-models are not removed. Bootstrap tests the updated code without retraining the baseline,
-and test exports no longer overwrite your own `artifacts/kaggle/submission.ipynb`.
+The narrowly scoped stash preserves tracked notebook edits **and newly generated
+untracked result files** before pulling canonical replacements. It does not touch
+`data/`, `artifacts/`, `.state/`, or other source edits. Do not pop the old render
+over the new notebooks. Bootstrap checks the code/environment; the command block
+does not rerun real-data feature construction or fit a model.
 
-## Your notebook workflow
+Open `notebooks/01_data_analysis.ipynb`, then `notebooks/02_motion_benchmarks.ipynb`
+using **Python (NFL Trajectory)**. They show current real-data results, training
+associations, feature-set overlap, error budgets, and the next modeling decision.
+The numerical modules and dependency lock are unchanged.
 
-Open `notebooks/01_data_analysis.ipynb`, then `notebooks/02_motion_benchmarks.ipynb`,
-using **Python (NFL Trajectory)**. The report renders the saved real results. It checks
-source/baseline provenance and reconciles error slices before presenting conclusions.
+## Your export and download
 
-To create your own inference notebook, set `CREATE_SUBMISSION = True` in notebook 02
-and run the final cell interactively. It uses your completed local model and exposes
-a download link. The default is off; automatic report publication does not perform
-this action even if an edited notebook has the flag enabled. No Kaggle upload or
-submission is performed. Use your own Kaggle account to run the exported notebook's
-local gateway and decide whether to submit. Check submission eligibility there.
+At the end of notebook 02, set `GENERATE_EXPORT = True` and run that cell. It
+reads your current local selected model, verifies the completed model/source/split
+checksums, writes `artifacts/kaggle/submission.ipynb`, and displays a download link.
+No file is submitted or uploaded. Restore the switch to `False` before committing
+the public research notebook.
 
-The exported predictor includes the actual feature implementation and learned weights,
-not a second hand-maintained approximation. Its per-play output hashes and input/model
-signatures permit reuse when the working directory is retained. A fresh cloud runtime
-needs saved outputs restored before those checkpoints can be reused.
+Open the generated inference notebook in Kaggle yourself, attach the competition
+input, use CPU, and disable internet. Run its organizer gateway. A local
+`submission.parquet` link appears if that file is produced. Local sample output
+is not a hidden-test prediction or a leaderboard score. You decide whether to make
+an actual submission; this repository does not call a submission endpoint.
 
-## Modeling comes after the recorded decision
+## Next modeling step
 
-The next research question is a protected landing-feature block plus interactions,
-role-aware residual modeling, and then a temporal attention challenger. Use forward-
-chaining training folds; refit the baseline and feature selector inside each fold.
-The current cached residuals were generated with the full training baseline and must
-not be silently reused as out-of-fold residuals. Holdout remains locked.
+Do not add thousands more columns blindly. Preserve the full landing model and
+compare an additive interaction correction and role-conditioned residuals. The
+prior 64-column interaction experiment displaced 23 landing features, so it is
+not a clean test of interaction value. Inner chronological training folds should
+select feature budgets and hyperparameters; the existing validation compares the
+final candidates and the holdout remains untouched. Those next fits are not yet
+implemented or claimed complete in this presentation/export update.
 
-Notebook 00 has an explicit run/resume control for the existing feature experiment,
-not an implemented new neural experiment. Leave it off for ordinary portfolio review.
-A later new-model experiment needs its own measured evidence before claiming improvement.
+The existing optional training cell in notebook 01 can run/resume `nfl features`
+when explicitly enabled. It is off for normal review. Rerun it only when a verified
+stage is missing or a deliberate numerical change warrants recomputation.
+
+Automatic publication refuses an enabled training/export switch before any cell runs.
+Restore those manual controls to `False` before publication. The exported predictor
+retains verified per-play results only while its working directory is retained or
+restored from saved outputs; it does not assume a fresh Kaggle session restores
+earlier disk state.

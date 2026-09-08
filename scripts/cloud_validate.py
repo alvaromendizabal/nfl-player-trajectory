@@ -62,37 +62,20 @@ def main() -> None:
     uv = str(root.parent / "uv-tools/bin/uv")
     subprocess.run([uv, "sync", "--frozen", "--group", "dev"], check=True, env=env)
     python = str(root / ".venv/bin/python")
-    subprocess.run(
-        [
-            python,
-            "-m",
-            "ruff",
-            "check",
-            "--fix",
-            "scripts/cloud_research.py",
-            "scripts/cloud_validate.py",
-        ],
-        env=env,
-    )
-    subprocess.run(
-        [
-            python,
-            "-m",
-            "ruff",
-            "format",
-            "scripts/cloud_research.py",
-            "scripts/cloud_validate.py",
-            "src/nfl_trajectory/research_evidence.py",
-        ],
-        check=True,
-        env=env,
-    )
-    s3 = boto3.client("s3", region_name="us-west-2")
-    for name in [
-        "scripts/cloud_research.py",
-        "scripts/cloud_validate.py",
+    formatted = [
+        "scripts/cloud_research.py", "scripts/cloud_validate.py",
         "src/nfl_trajectory/research_evidence.py",
-    ]:
+        "scripts/feature_attribution.py", "scripts/validate_gateway.py",
+        *[str(p.relative_to(root)) for p in root.glob("notebooks/*.ipynb")],
+    ]
+    formatted = [name for name in formatted if (root / name).is_file()]
+    subprocess.run([python, "-m", "ruff", "format", *formatted], check=True, env=env)
+    subprocess.run([python, "-m", "ruff", "check", "--fix", *formatted], check=True, env=env)
+    if (root / "scripts/validate_gateway.py").exists():
+        subprocess.run([uv, "lock", "--script", "scripts/validate_gateway.py"], check=True, env=env)
+        formatted.append("scripts/validate_gateway.py.lock")
+    s3 = boto3.client("s3", region_name="us-west-2")
+    for name in formatted:
         path = root / name
         s3.put_object(
             Bucket=os.environ["NFL_BUCKET"],

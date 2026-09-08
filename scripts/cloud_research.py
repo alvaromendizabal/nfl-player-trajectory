@@ -41,6 +41,13 @@ def memory_budget_gib(cgroup: Path = Path("/sys/fs/cgroup")) -> float:
     return min(limits) / 1024**3
 
 
+def wide_refit_workers(memory_gib: float) -> int:
+    """Two full-bank fits need a nominal 256 GiB; never oversubscribe smaller jobs."""
+    if memory_gib < 96:
+        raise ValueError("Wide refits require at least a 128 GiB processing instance.")
+    return 2 if memory_gib >= 224 else 1
+
+
 def digest(path: Path) -> str:
     value = hashlib.sha256()
     with path.open("rb") as handle:
@@ -321,13 +328,21 @@ def main() -> None:
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")
         else:
-            for fold in ("inner_1", "inner_2", "inner_3", "development"):
-                command(
-                    [uv, "run", "--locked", "scripts/ablate_wide_features.py", "--fold", fold],
-                    "wide-refits-" + fold,
-                    threads=6,
-                )
-                backup("wide-refits-" + fold)
+            with concurrent.futures.ThreadPoolExecutor(
+                max_workers=wide_refit_workers(memory_budget_gib())
+            ) as pool:
+                futures = {
+                    pool.submit(
+                        command,
+                        [uv, "run", "--locked", "scripts/ablate_wide_features.py", "--fold", fold],
+                        "wide-refits-" + fold,
+                        6,
+                    ): fold
+                    for fold in ("inner_1", "inner_2", "inner_3", "development")
+                }
+                for future in concurrent.futures.as_completed(futures):
+                    future.result()
+                    backup("wide-refits-" + futures[future])
         # Only presentation files may come from a later, explicitly pinned review commit.
         report_commit = None
         for attempt in range(80):

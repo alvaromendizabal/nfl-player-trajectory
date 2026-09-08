@@ -73,3 +73,13 @@ def test_memory_budget_respects_container_limit(monkeypatch, tmp_path, container
     )
     (tmp_path / "memory.max").write_text(container_limit)
     assert module.memory_budget_gib(tmp_path) == expected
+
+
+@pytest.mark.parametrize(("memory", "workers"), [(128, 1), (256, 2), (512, 2)])
+def test_wide_fold_parallelism_requires_memory_for_both_fits(memory, workers):
+    assert cloud_module().wide_refit_workers(memory) == workers
+
+
+def test_wide_refits_refuse_the_known_insufficient_memory_size():
+    with pytest.raises(ValueError, match="128 GiB"):
+        cloud_module().wide_refit_workers(64)

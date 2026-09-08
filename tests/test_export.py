@@ -17,7 +17,7 @@ from nfl_trajectory.report import synthetic_play
 @pytest.fixture
 def exported_notebook(tmp_path: Path) -> Path:
     source_root = Path(__file__).resolve().parents[1]
-    for relative in ["kaggle/export.py", "src/nfl_trajectory/motion.py", "pyproject.toml"]:
+    for relative in ["kaggle/export.py", "src/nfl_trajectory/motion.py", "src/nfl_trajectory/runtime.py", "pyproject.toml"]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source_root / relative, target)
@@ -36,17 +36,8 @@ def test_export_passes_lint_and_format_without_git(exported_notebook: Path) -> N
     assert not (root / ".git").exists()
     for arguments in [["check"], ["format", "--check"]]:
         result = subprocess.run(
-            [
-                sys.executable,
-                "-m",
-                "ruff",
-                *arguments,
-                "--no-respect-gitignore",
-                str(exported_notebook),
-            ],
-            cwd=root,
-            capture_output=True,
-            text=True,
+            [sys.executable, "-m", "ruff", *arguments, "--no-respect-gitignore", str(exported_notebook)],
+            cwd=root, capture_output=True, text=True,
         )
         assert result.returncode == 0, result.stdout + result.stderr
 
@@ -54,13 +45,11 @@ def test_export_passes_lint_and_format_without_git(exported_notebook: Path) -> N
 def test_exported_predictor_matches_reference_and_preserves_order(exported_notebook: Path) -> None:
     notebook = nbformat.read(exported_notebook, as_version=4)
     cells = [cell.source for cell in notebook.cells if cell.cell_type == "code"]
-    # Compilation as one script catches misplaced future imports across cell boundaries.
     compile("\n".join(cells), "submission.py", "exec")
     namespace = {}
     exec(compile(cells[0], "model.py", "exec"), namespace)
     function = next(
-        node
-        for node in ast.parse(cells[-1]).body
+        node for node in ast.parse(cells[-1]).body
         if isinstance(node, ast.FunctionDef) and node.name == "predict"
     )
     exec(compile(ast.Module(body=[function], type_ignores=[]), "predict.py", "exec"), namespace)
@@ -78,10 +67,8 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
 
     source_root = Path(__file__).resolve().parents[1]
     for relative in [
-        "kaggle/export.py",
-        "src/nfl_trajectory/motion.py",
-        "src/nfl_trajectory/models.py",
-        "pyproject.toml",
+        "kaggle/export.py", "src/nfl_trajectory/motion.py", "src/nfl_trajectory/models.py",
+        "src/nfl_trajectory/runtime.py", "pyproject.toml",
     ]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -97,18 +84,13 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
     weights.write_text(json.dumps(fitted))
     subprocess.run(
         [sys.executable, "kaggle/export.py", "--model", "role_ridge", "--weights", str(weights)],
-        cwd=tmp_path,
-        check=True,
-        capture_output=True,
-        text=True,
+        cwd=tmp_path, check=True, capture_output=True, text=True,
     )
     path = tmp_path / "artifacts/kaggle/submission.ipynb"
     for command in [["check"], ["format", "--check"]]:
         subprocess.run(
             [sys.executable, "-m", "ruff", *command, "--no-respect-gitignore", str(path)],
-            cwd=tmp_path,
-            check=True,
-            capture_output=True,
+            cwd=tmp_path, check=True, capture_output=True,
         )
     notebook = nbformat.read(path, as_version=4)
     cells = [cell.source for cell in notebook.cells if cell.cell_type == "code"]
@@ -116,8 +98,7 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
     namespace = {}
     exec(compile(cells[0], "model.py", "exec"), namespace)
     interface = next(
-        node
-        for node in ast.parse(cells[-1]).body
+        node for node in ast.parse(cells[-1]).body
         if isinstance(node, ast.FunctionDef) and node.name == "predict"
     )
     exec(compile(ast.Module(body=[interface], type_ignores=[]), "predict.py", "exec"), namespace)
@@ -130,10 +111,8 @@ def test_trained_export_matches_package_and_passes_lint(tmp_path: Path) -> None:
 def test_export_rejects_incompatible_model_without_overwriting_artifact(tmp_path: Path) -> None:
     source_root = Path(__file__).resolve().parents[1]
     for relative in [
-        "kaggle/export.py",
-        "src/nfl_trajectory/motion.py",
-        "src/nfl_trajectory/models.py",
-        "pyproject.toml",
+        "kaggle/export.py", "src/nfl_trajectory/motion.py", "src/nfl_trajectory/models.py",
+        "src/nfl_trajectory/runtime.py", "pyproject.toml",
     ]:
         target = tmp_path / relative
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -145,9 +124,7 @@ def test_export_rejects_incompatible_model_without_overwriting_artifact(tmp_path
     destination.write_text("previous valid artifact")
     result = subprocess.run(
         [sys.executable, "kaggle/export.py", "--model", "role_ridge", "--weights", str(weights)],
-        cwd=tmp_path,
-        capture_output=True,
-        text=True,
+        cwd=tmp_path, capture_output=True, text=True,
     )
     assert result.returncode != 0
     assert destination.read_text() == "previous valid artifact"

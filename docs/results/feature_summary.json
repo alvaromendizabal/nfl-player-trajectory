@@ -1,0 +1,479 @@
+{
+  "status": "passed",
+  "split": "validation",
+  "holdout_evaluation": "not_run",
+  "models": [
+    {
+      "model": "landing_ridge",
+      "coordinate_rmse_yards": 0.9268683891794343,
+      "ade_frame_weighted_yards": 0.8253979992418783,
+      "ade_trajectory_weighted_yards": 0.6825204048038989,
+      "fde_trajectory_weighted_yards": 1.416773570760115,
+      "p95_displacement_yards": 2.7537849192273693,
+      "coordinate_mae_yards": 0.5233356577384507,
+      "rmse_ci95_low": 0.8586872994956856,
+      "rmse_ci95_high": 0.9921522115852713,
+      "delta_vs_velocity_ci95_low": -0.8544605997299876,
+      "delta_vs_velocity_ci95_high": -0.742866103989762,
+      "delta_vs_role_ridge_ci95": [
+        -0.08287306035298152,
+        -0.043369497638250376
+      ],
+      "selected_features": 64
+    },
+    {
+      "model": "interaction_ridge",
+      "coordinate_rmse_yards": 0.9421978914682932,
+      "ade_frame_weighted_yards": 0.8438386369568621,
+      "ade_trajectory_weighted_yards": 0.6898987724085927,
+      "fde_trajectory_weighted_yards": 1.4309247899443756,
+      "p95_displacement_yards": 2.8081149463603534,
+      "coordinate_mae_yards": 0.5358396955307834,
+      "rmse_ci95_low": 0.8749804033829544,
+      "rmse_ci95_high": 1.0046413867185489,
+      "delta_vs_velocity_ci95_low": -0.8370770271744913,
+      "delta_vs_velocity_ci95_high": -0.7288798667047788,
+      "delta_vs_role_ridge_ci95": [
+        -0.0648667214577233,
+        -0.030997553452014274
+      ],
+      "selected_features": 64
+    },
+    {
+      "model": "motion_ridge",
+      "coordinate_rmse_yards": 0.9467391697323801,
+      "ade_frame_weighted_yards": 0.8544540934916698,
+      "ade_trajectory_weighted_yards": 0.7134637962107825,
+      "fde_trajectory_weighted_yards": 1.4686271349170235,
+      "p95_displacement_yards": 2.8070922724424525,
+      "coordinate_mae_yards": 0.5443533191428722,
+      "rmse_ci95_low": 0.879970615521722,
+      "rmse_ci95_high": 1.0108737221209017,
+      "delta_vs_velocity_ci95_low": -0.8311721835318395,
+      "delta_vs_velocity_ci95_high": -0.7269895880284536,
+      "delta_vs_role_ridge_ci95": [
+        -0.054758470929262455,
+        -0.0323976599941507
+      ],
+      "selected_features": 64
+    },
+    {
+      "model": "role_ridge",
+      "coordinate_rmse_yards": 0.9895687826191301,
+      "ade_frame_weighted_yards": 0.8847314771784022,
+      "ade_trajectory_weighted_yards": 0.7217791149706978,
+      "fde_trajectory_weighted_yards": 1.5057009557140897,
+      "p95_displacement_yards": 3.002832904634529,
+      "coordinate_mae_yards": 0.5632611595586531,
+      "rmse_ci95_low": 0.9218024375050925,
+      "rmse_ci95_high": 1.0518860666490912,
+      "delta_vs_velocity_ci95_low": -0.7789459115299564,
+      "delta_vs_velocity_ci95_high": -0.6888572619336679,
+      "delta_vs_role_ridge_ci95": [
+        0.0,
+        0.0
+      ],
+      "selected_features": 6
+    },
+    {
+      "model": "constant_velocity",
+      "coordinate_rmse_yards": 1.722516459848302,
+      "ade_frame_weighted_yards": 1.5141787190337654,
+      "ade_trajectory_weighted_yards": 1.1847559117019484,
+      "fde_trajectory_weighted_yards": 2.8696291097654707,
+      "p95_displacement_yards": 5.443052394587203,
+      "coordinate_mae_yards": 0.9638485344179671,
+      "rmse_ci95_low": 1.6285359837058027,
+      "rmse_ci95_high": 1.8061606880326533,
+      "delta_vs_velocity_ci95_low": 0.0,
+      "delta_vs_velocity_ci95_high": 0.0,
+      "delta_vs_role_ridge_ci95": [
+        0.6888572619336679,
+        0.7789459115299564
+      ],
+      "selected_features": 1
+    }
+  ],
+  "slices": [
+    {
+      "model": "constant_velocity",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 1.8400523183376802
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 1.3785282571614397
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.730338871533407
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 2.5862744680251857
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 4.701453701567148
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 6.747435149919001
+    },
+    {
+      "model": "interaction_ridge",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 1.045723077094934
+    },
+    {
+      "model": "interaction_ridge",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.602874062320914
+    },
+    {
+      "model": "interaction_ridge",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.46115028679341186
+    },
+    {
+      "model": "interaction_ridge",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.3311845494092858
+    },
+    {
+      "model": "interaction_ridge",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.6018530510058775
+    },
+    {
+      "model": "interaction_ridge",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 4.019351312470309
+    },
+    {
+      "model": "landing_ridge",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 1.032130694989897
+    },
+    {
+      "model": "landing_ridge",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.5777228273413397
+    },
+    {
+      "model": "landing_ridge",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.43932318711637874
+    },
+    {
+      "model": "landing_ridge",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.3249314956931764
+    },
+    {
+      "model": "landing_ridge",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.5628766534015557
+    },
+    {
+      "model": "landing_ridge",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 3.926028349026575
+    },
+    {
+      "model": "motion_ridge",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 1.0533228272534034
+    },
+    {
+      "model": "motion_ridge",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.5943482196206799
+    },
+    {
+      "model": "motion_ridge",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.4614561993240085
+    },
+    {
+      "model": "motion_ridge",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.3151414512348216
+    },
+    {
+      "model": "motion_ridge",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.6655194257061448
+    },
+    {
+      "model": "motion_ridge",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 4.175976787131382
+    },
+    {
+      "model": "role_ridge",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 1.103274627846993
+    },
+    {
+      "model": "role_ridge",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.6107506225648318
+    },
+    {
+      "model": "role_ridge",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.4738335079858294
+    },
+    {
+      "model": "role_ridge",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.402682885433014
+    },
+    {
+      "model": "role_ridge",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.7555308799102853
+    },
+    {
+      "model": "role_ridge",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 4.143407071424485
+    }
+  ],
+  "selected_model": "landing_ridge",
+  "improvement_vs_velocity_percent": 46.19102860351991,
+  "validation_games": 32,
+  "validation_rows_per_model": 67857,
+  "validation_trajectories": 5399,
+  "candidate_features": 2843,
+  "screening_split": "train",
+  "split_sha256": "383b3b76cd7dd0085ee5eac9e52ff49bb380fbb55e3e46e2603b570c8bf417e7",
+  "numerical_signature": "dc3fe83c781425198adaf7c732c4fbf0ff02fd47a5671dbb74d0086404a31605",
+  "source_sha256": {
+    "feature_experiment.py": "8e6f001addd229b20b9d305f91725dbae3870021dc7b3f0b394618f2ac45ef53",
+    "features.py": "8faaf09d23d145632f78816c835d6b8958ef7b689a8bf7529102f201a9122e19",
+    "models.py": "893b7bfca10f67386d7af454a5affadd6696b27a3855864ea84ddf5e1f25b7b1",
+    "motion.py": "fc8b60a6ba604b3038671ea6ddf85a7b7630ed0dae01449cc1a7c7356b0a30b2",
+    "benchmark.py": "610f501e6806bcc627c58266181593644a36a8e0343d93f80a6df1e74a3b6a37"
+  },
+  "baseline_sha256": "839e65da42647723d2d7a815fe363c1a953d394407c1edd35f4c5404e5174084",
+  "family_counts": {
+    "availability": 31,
+    "context": 12,
+    "forecast": 6,
+    "forecast_interactions": 462,
+    "history_lags": 560,
+    "history_summaries": 1568,
+    "interactions": 204
+  },
+  "top_training_associations": [
+    {
+      "feature": "time_squared",
+      "family": "forecast",
+      "signal": "motion",
+      "training_residual_correlation": 0.27462301951325635,
+      "training_variance": 4.658480635384722
+    },
+    {
+      "feature": "time__lateral_speed",
+      "family": "forecast_interactions",
+      "signal": "landing",
+      "training_residual_correlation": 0.21989644111284246,
+      "training_variance": 8.002725927366418
+    },
+    {
+      "feature": "fraction__receiver1__dx",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.19167083197314586,
+      "training_variance": 8.684442696192741
+    },
+    {
+      "feature": "time__opponent1__closest_time",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.18413632089352322,
+      "training_variance": 0.7036545986067712
+    },
+    {
+      "feature": "receiver1__dx",
+      "family": "interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.17967705247100615,
+      "training_variance": 23.10116044194733
+    },
+    {
+      "feature": "fraction_squared__receiver1__dx",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.17548096335971938,
+      "training_variance": 5.660340602567699
+    },
+    {
+      "feature": "time__receiver1__dx",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.16867553458070433,
+      "training_variance": 26.487697138062682
+    },
+    {
+      "feature": "time__receiver1__ball_distance_advantage",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.16133712398130332,
+      "training_variance": 19.88216670525424
+    },
+    {
+      "feature": "time__receiver1__closest_time",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.15111921690704075,
+      "training_variance": 0.645409921985735
+    },
+    {
+      "feature": "time__ax",
+      "family": "forecast_interactions",
+      "signal": "motion",
+      "training_residual_correlation": 0.14570730231846632,
+      "training_variance": 6.676476140239544
+    },
+    {
+      "feature": "time__teammate5__dx",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.14239338889158915,
+      "training_variance": 103.98138295219367
+    },
+    {
+      "feature": "time__a",
+      "family": "forecast_interactions",
+      "signal": "motion",
+      "training_residual_correlation": 0.13166739745720507,
+      "training_variance": 3.8038078672172126
+    },
+    {
+      "feature": "time__teammate3__closest_time",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.12901532315571432,
+      "training_variance": 1.4685523668892475
+    },
+    {
+      "feature": "passer1__distance",
+      "family": "interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.12819764250937457,
+      "training_variance": 45.21229791771042
+    },
+    {
+      "feature": "line_of_scrimmage_dx",
+      "family": "context",
+      "signal": "motion",
+      "training_residual_correlation": 0.12807510982410195,
+      "training_variance": 45.09489654164133
+    },
+    {
+      "feature": "passer1__closest_distance",
+      "family": "interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.12788816542950723,
+      "training_variance": 46.5254393829584
+    },
+    {
+      "feature": "time__receiver1__closing_speed",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.12709869728237153,
+      "training_variance": 7.756078807316555
+    },
+    {
+      "feature": "time__opponent4__closest_time",
+      "family": "forecast_interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.12706987345306053,
+      "training_variance": 0.7575685619721324
+    },
+    {
+      "feature": "passer1__dx",
+      "family": "interactions",
+      "signal": "interaction",
+      "training_residual_correlation": 0.1266367252770247,
+      "training_variance": 50.49684848685204
+    },
+    {
+      "feature": "time_seconds",
+      "family": "forecast",
+      "signal": "motion",
+      "training_residual_correlation": 0.124745643140188,
+      "training_variance": 0.3532982218396744
+    }
+  ],
+  "limitation": "Training-only univariate screening and fixed ridge; associations are not causal importance. No leaderboard claim.",
+  "official_gateway_status": "not_run"
+}

@@ -22,44 +22,27 @@ def project(tmp_path):
     (tmp_path / "artifacts/benchmark").mkdir(parents=True)
     splits, pairs, statistics = [], [], []
     for week, (game, split) in enumerate(
-        [
-            (2023090700, "train"),
-            (2023091400, "train"),
-            (2023120400, "validation"),
-            (2023122100, "holdout"),
-        ],
-        1,
+        [(2023090700, "train"), (2023091400, "train"),
+         (2023120400, "validation"), (2023122100, "holdout")], 1,
     ):
         observed, truth = [], []
         for player in (1, 2, 3):
             for frame in range(1, 9):
-                observed.append(
-                    {
-                        "game_id": game,
-                        "play_id": 1,
-                        "nfl_id": player,
-                        "frame_id": frame,
-                        "x": 30 + player + frame * (0.2 + 0.03 * week),
-                        "y": 20 + player + frame * 0.1,
-                        "player_role": "Targeted Receiver" if player == 1 else "Defensive Coverage",
-                        "player_side": "Offense" if player == 1 else "Defense",
-                        "play_direction": "right",
-                        "ball_land_x": 42.0,
-                        "ball_land_y": 24.0,
-                        "num_frames_output": 12,
-                    }
-                )
+                observed.append({
+                    "game_id": game, "play_id": 1, "nfl_id": player, "frame_id": frame,
+                    "x": 30 + player + frame * (0.2 + 0.03 * week),
+                    "y": 20 + player + frame * 0.1,
+                    "player_role": "Targeted Receiver" if player == 1 else "Defensive Coverage",
+                    "player_side": "Offense" if player == 1 else "Defense",
+                    "play_direction": "right", "ball_land_x": 42.0,
+                    "ball_land_y": 24.0, "num_frames_output": 12,
+                })
             for frame in range(1, 13):
-                truth.append(
-                    {
-                        "game_id": game,
-                        "play_id": 1,
-                        "nfl_id": player,
-                        "frame_id": frame,
-                        "x": 30 + player + (8 + frame) * (0.2 + 0.03 * week) - 0.005 * frame**2,
-                        "y": 20 + player + (8 + frame) * 0.1 + 0.01 * frame**2,
-                    }
-                )
+                truth.append({
+                    "game_id": game, "play_id": 1, "nfl_id": player, "frame_id": frame,
+                    "x": 30 + player + (8 + frame) * (0.2 + 0.03 * week) - 0.005 * frame**2,
+                    "y": 20 + player + (8 + frame) * 0.1 + 0.01 * frame**2,
+                })
         x, y = pd.DataFrame(observed), pd.DataFrame(truth)
         name = f"input_2023_w{week:02d}.csv"
         x.to_csv(folder / name, index=False)
@@ -75,10 +58,9 @@ def project(tmp_path):
     fitted = fit_statistics(statistics)
     fitted.update({"training_games": [2023090700, 2023091400], "split_sha256": sha256(split_path)})
     atomic_json(tmp_path / "artifacts/benchmark/model.json", fitted)
-    atomic_json(
-        tmp_path / "artifacts/audit_summary.json",
-        {"status": "passed", "competition": "nfl-big-data-bowl-2026-prediction", "pairs": pairs},
-    )
+    atomic_json(tmp_path / "artifacts/audit_summary.json", {
+        "status": "passed", "competition": "nfl-big-data-bowl-2026-prediction", "pairs": pairs,
+    })
     return tmp_path
 
 
@@ -102,11 +84,8 @@ def test_complete_experiment_and_verified_resume(project):
     assert summary["holdout_evaluation"] == "not_run"
     assert len(summary["models"]) == 5
     assert sha256(project / "artifacts/benchmark/model.json") == baseline
-    before = {
-        p: sha256(p)
-        for p in (project / "artifacts/features").rglob("*")
-        if p.is_file() and p.suffix != ".lock"
-    }
+    before = {p: sha256(p) for p in (project / "artifacts/features").rglob("*")
+              if p.is_file() and p.suffix != ".lock"}
     resumed = run_project(project)
     after = {p: sha256(p) for p in before}
     assert before == after
@@ -187,10 +166,8 @@ def test_tampered_week_recomputes_instead_of_reusing(project):
     resumed = run_project(project)
     assert load_week(path)[0].values.size > 0
     events = [json.loads(line) for line in resumed.log_path.read_text().splitlines()]
-    assert any(
-        e["event"] == "stage_started" and e.get("stage") == "features-prepare-input_2023_w01"
-        for e in events
-    )
+    assert any(e["event"] == "stage_started" and e.get("stage") == "features-prepare-input_2023_w01"
+               for e in events)
 
 
 def notebook_tools():
@@ -225,3 +202,74 @@ def test_remote_checkpoint_hook_runs_between_completed_phases(project):
         feature_experiment(project, run, lambda: calls.append("checkpoint"))
     # Three development weeks, three fitted challengers, one completed report.
     assert len(calls) == 7
+
+
+def export_tools(root):
+    import importlib.util
+    import shutil
+
+    source = Path(__file__).resolve().parents[1]
+    for folder in ("src", "kaggle"):
+        shutil.copytree(source / folder, root / folder, dirs_exist_ok=True)
+    spec = importlib.util.spec_from_file_location("export_tools", root / "kaggle/export.py")
+    tools = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tools)
+    return tools
+
+
+@pytest.mark.parametrize("model_name", ["motion_ridge", "landing_ridge", "interaction_ridge"])
+def test_residual_standalone_export_matches_package(project, model_name):
+    import ast
+
+    from nfl_trajectory.feature_experiment import predict_residual
+    from nfl_trajectory.features import build_player_features
+    from nfl_trajectory.models import predict
+
+    run_project(project)
+    tools = export_tools(project)
+    notebook, _ = tools.build_notebook(project, model_name, project / "artifacts/benchmark/model.json")
+    cells = [c.source for c in notebook.cells if c.cell_type == "code"]
+    compile("\n".join(cells), "inference.py", "exec")
+    namespace = {"__name__": "__main__"}
+    exec(compile(cells[0], "model.py", "exec"), namespace)
+    interface = next(n for n in ast.parse(cells[-1]).body
+                     if isinstance(n, ast.FunctionDef) and n.name == "predict")
+    exec(compile(ast.Module(body=[interface], type_ignores=[]), "callback.py", "exec"), namespace)
+    observed = pd.read_csv(project / "data/raw/train/input_2023_w03.csv")
+    truth = pd.read_csv(project / "data/raw/train/output_2023_w03.csv")
+    targets = truth.sample(frac=1, random_state=7).reset_index(drop=True)
+    bundle = json.loads((project / "artifacts/features/model.json").read_text())
+    baseline = json.loads((project / "artifacts/benchmark/model.json").read_text())
+    expected = predict(observed, targets[KEYS], "role_ridge", baseline)[["x", "y"]]
+    bank = build_player_features(observed, targets[KEYS[:3]])
+    expected += predict_residual(bank, targets[KEYS], bundle["models"][model_name])
+    targets[["x", "y"]] = np.nan
+    actual = namespace["predict"](targets, observed)
+    np.testing.assert_allclose(actual, expected, rtol=1e-12, atol=1e-12)
+    batches = pd.concat([namespace["predict"](targets.iloc[:9], observed),
+                         namespace["predict"](targets.iloc[9:], observed)], ignore_index=True)
+    np.testing.assert_allclose(batches, actual, rtol=1e-12, atol=1e-12)
+    assert notebook.metadata.nfl_export.model == model_name
+    assert notebook.metadata.nfl_export.automatically_submitted is False
+    assert notebook.metadata.nfl_export.official_gateway_status == "not_run"
+    assert not (project / "artifacts/kaggle/submission.ipynb").exists()
+
+
+def test_residual_export_rejects_tampered_weights(project):
+    run_project(project)
+    tools = export_tools(project)
+    path = project / "artifacts/features/model.json"
+    path.write_text(path.read_text() + " ")
+    with pytest.raises(ValueError, match="checksum"):
+        tools.build_notebook(project, "landing_ridge", project / "artifacts/benchmark/model.json")
+
+
+def test_local_selection_analysis_matches_completed_model(project):
+    from nfl_trajectory.research import load_evidence
+
+    run_project(project)
+    summary, study, label = load_evidence(project)
+    assert label == "Verified local experiment"
+    assert study["summary_sha256"] == sha256(project / "artifacts/features/summary.json")
+    assert study["training_rows"] == 72
+    assert summary["validation_rows_per_model"] == 36

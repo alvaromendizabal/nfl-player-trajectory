@@ -13,7 +13,7 @@ def main() -> int:
     try:
         with Run(root, "quality") as run:
             commands = [
-                [sys.executable, "kaggle/export.py"],
+                [sys.executable, "kaggle/export.py", "--output", "artifacts/quality/exports/submission.ipynb"],
                 [sys.executable, "-m", "compileall", "-q", "src", "scripts", "tests"],
                 [sys.executable, "-m", "ruff", "check", "."],
                 [sys.executable, "-m", "ruff", "format", "--check", "."],
@@ -30,6 +30,8 @@ def main() -> int:
                     "role_ridge",
                     "--weights",
                     "docs/results/model.json",
+                    "--output",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
                 [
                     sys.executable,
@@ -37,7 +39,7 @@ def main() -> int:
                     "ruff",
                     "check",
                     "--no-respect-gitignore",
-                    "artifacts/kaggle/submission.ipynb",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
                 [
                     sys.executable,
@@ -46,7 +48,7 @@ def main() -> int:
                     "format",
                     "--check",
                     "--no-respect-gitignore",
-                    "artifacts/kaggle/submission.ipynb",
+                    "artifacts/quality/exports/submission.ipynb",
                 ],
             ]
             for command in commands:

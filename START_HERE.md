@@ -1,46 +1,51 @@
-# Continue the completed benchmark
+# Review the completed experiment and create your own export
 
-Preserve the successful baseline, notebooks, and S3 snapshot. The next modeling
-command is `.venv/bin/nfl features --checkpoint-s3`, not another baseline training
-run. It evaluates 2,843 candidates with training-only screening and three
-residual-ridge ablations, retaining at most 64 features per challenger.
+The real-data feature experiment is complete: `landing_ridge` achieved 0.9268683892
+coordinate RMSE. Do not recreate the data or rerun baseline training.
 
-Before pulling this update, preserve your locally rendered notebook outputs:
+Preserve locally executed notebooks and published results before pulling updated sources:
 
 ```bash
 cd "$HOME/nfl-player-trajectory" &&
-git stash push -m "baseline notebook outputs before feature experiment" -- notebooks docs/results &&
+git stash push -m "completed results before notebook review" -- notebooks docs/results &&
 git pull --ff-only origin main &&
 python3 scripts/bootstrap.py &&
-.venv/bin/nfl features --checkpoint-s3 &&
 .venv/bin/python scripts/notebooks.py --publish &&
-.venv/bin/nfl backup &&
-.venv/bin/nfl status
+.venv/bin/nfl backup
 ```
 
-Bootstrap checks the updated environment and tests; it does not retrain the baseline.
-The stash preserves the previous render; do not pop it over newly generated
-notebooks. Your existing S3 snapshot also preserves the successful baseline outputs.
-Other source edits are not stashed or discarded; a conflicting pull stops safely.
-The pipeline does not delete `data/`, `.state/`, or completed baseline artifacts.
+The stash preserves only notebook/result edits. Do not pop an old render over newly
+published notebooks. Other source edits are not discarded; conflicting pulls stop safely.
+Your data, `.state/`, features, and fitted models are not removed. Bootstrap tests the
+updated code without retraining the baseline, and test exports no longer overwrite
+your own `artifacts/kaggle/submission.ipynb`.
 
-Read `notebooks/01_data_analysis.ipynb`, then `notebooks/02_motion_benchmarks.ipynb`.
-Watch for `feature_schema`, `feature_progress`, `features_selected`, and
-`feature_experiment_completed`, plus the existing UTC heartbeat. Interrupted weekly
-stages resume from verified completion receipts. The checkpoint is per stage, not
-mid-matrix operation. Rerun the same modeling command after an interruption.
+## Your notebook workflow
 
-Publication validates feature model/report hashes, frozen split, source hashes,
-baseline provenance, and completed notebooks before updating canonical files.
-Generated changes are local until a reviewed commit/PR publishes `notebooks/` and
-`docs/results/`. Do not stage `data/`, `artifacts/`, credentials, or logs.
+Open `notebooks/01_data_analysis.ipynb`, then `notebooks/02_motion_benchmarks.ipynb`,
+using **Python (NFL Trajectory)**. The report renders the saved real results. It checks
+source/baseline provenance and reconciles error slices before presenting conclusions.
 
-The original role-ridge export already exists. New residual challengers are not yet
-wired into the official Kaggle inference gateway; do not treat a feature experiment
-as a submitted model or a leaderboard result.
+To create your own inference notebook, set `CREATE_SUBMISSION = True` in notebook 02
+and run the final cell interactively. It uses your completed local model and exposes
+a download link. The default is off; automatic report publication does not perform
+this action even if an edited notebook has the flag enabled. No Kaggle upload or
+submission is performed. Use your own Kaggle account to run the exported notebook's
+local gateway and decide whether to submit. Check submission eligibility there.
 
-`--checkpoint-s3` uses the existing private bucket in `aws.local.json` (or explicit
-`--bucket`). It writes full-workspace snapshots after each prepared week, fitted
-model, and feature report. The final backup also includes published notebooks.
-Without this flag, checkpoints remain on the current persistent filesystem until
-`nfl backup` runs. No new compute instance is created by these commands.
+The exported predictor includes the actual feature implementation and learned weights,
+not a second hand-maintained approximation. Its per-play output hashes and input/model
+signatures permit reuse when the working directory is retained. A fresh cloud runtime
+needs saved outputs restored before those checkpoints can be reused.
+
+## Modeling comes after the recorded decision
+
+The next research question is a protected landing-feature block plus interactions,
+role-aware residual modeling, and then a temporal attention challenger. Use forward-
+chaining training folds; refit the baseline and feature selector inside each fold.
+The current cached residuals were generated with the full training baseline and must
+not be silently reused as out-of-fold residuals. Holdout remains locked.
+
+Notebook 00 has an explicit run/resume control for the existing feature experiment,
+not an implemented new neural experiment. Leave it off for ordinary portfolio review.
+A later new-model experiment needs its own measured evidence before claiming improvement.

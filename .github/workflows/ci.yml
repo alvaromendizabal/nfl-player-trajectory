@@ -28,7 +28,9 @@ jobs:
           github.event_name == 'push' &&
           startsWith(github.ref, 'refs/heads/feat/') &&
           contains(github.event.head_commit.message, '[publish notebooks]')
-        run: uv run --frozen ruff format src scripts tests notebooks
+        run: |
+          uv run --frozen ruff check --select I --fix src scripts tests notebooks kaggle
+          uv run --frozen ruff format src scripts tests notebooks kaggle
       - name: Capture tested source
         run: |
           mkdir -p artifacts
@@ -51,6 +53,7 @@ jobs:
             artifacts/demo/
             artifacts/notebooks/
             artifacts/kaggle/
+            artifacts/quality/
           retention-days: 30
           if-no-files-found: error
 
@@ -75,7 +78,9 @@ jobs:
           enable-cache: true
           download-from-astral-mirror: false
       - run: uv sync --frozen --group dev
-      - run: uv run --frozen ruff format src scripts tests notebooks
+      - run: |
+          uv run --frozen ruff check --select I --fix src scripts tests notebooks kaggle
+          uv run --frozen ruff format src scripts tests notebooks kaggle
       - run: uv run --frozen python scripts/quality.py
       - name: Commit executed canonical notebooks
         env:
@@ -87,7 +92,7 @@ jobs:
           done
           uv run --frozen ruff check notebooks/
           uv run --frozen ruff format --check notebooks/
-          git add -- src/nfl_trajectory/features.py src/nfl_trajectory/feature_experiment.py src/nfl_trajectory/cli.py src/nfl_trajectory/storage.py scripts/notebooks.py tests/test_features.py tests/test_feature_experiment.py
+          git add -- src/nfl_trajectory/analysis.py scripts/notebooks.py scripts/quality.py kaggle/export.py tests/test_analysis.py tests/test_export.py
           git add -- notebooks/00_project_readiness.ipynb notebooks/01_data_analysis.ipynb notebooks/02_motion_benchmarks.ipynb
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: format research code and publish executed notebooks'

@@ -7,6 +7,7 @@ starts a persistent endpoint. SageMaker enforces the external runtime limit.
 
 from __future__ import annotations
 
+import base64
 import concurrent.futures
 import hashlib
 import json
@@ -85,7 +86,7 @@ def repository_archive(commit: str, output: Path) -> None:
         except OSError:
             if attempt == 2:
                 raise
-            time.sleep(2 ** attempt)
+            time.sleep(2**attempt)
 
 
 def main() -> None:
@@ -94,7 +95,8 @@ def main() -> None:
     root = Path("/opt/ml/processing/project")
     root.mkdir(parents=True, exist_ok=True)
     s3 = boto3.client(
-        "s3", region_name=REGION,
+        "s3",
+        region_name=REGION,
         config=Config(retries={"mode": "standard", "max_attempts": 5}, max_pool_connections=16),
     )
     prefix = "cloud-runs/" + job
@@ -104,12 +106,17 @@ def main() -> None:
         value = {
             "timestamp": datetime.now(timezone.utc).isoformat(),  # noqa: UP017 - base container may be pre-3.11
             "elapsed_seconds": round(time.monotonic() - started, 3),
-            "status": status, "job": job, "code_commit": commit, **fields,
+            "status": status,
+            "job": job,
+            "code_commit": commit,
+            **fields,
         }
         print(json.dumps(value), flush=True)
         s3.put_object(
-            Bucket=bucket, Key=prefix + "/status.json",
-            Body=json.dumps(value).encode(), ServerSideEncryption="AES256",
+            Bucket=bucket,
+            Key=prefix + "/status.json",
+            Body=json.dumps(value).encode(),
+            ServerSideEncryption="AES256",
         )
 
     def command(args: list[str], label: str, threads: int = 2) -> None:
@@ -119,7 +126,11 @@ def main() -> None:
         output.parent.mkdir(exist_ok=True)
         with output.open("w") as handle:
             process = subprocess.Popen(
-                args, cwd=root, env=env, stdout=handle, stderr=subprocess.STDOUT,
+                args,
+                cwd=root,
+                env=env,
+                stdout=handle,
+                stderr=subprocess.STDOUT,
             )
             while True:
                 try:
@@ -127,11 +138,15 @@ def main() -> None:
                     break
                 except subprocess.TimeoutExpired:
                     s3.upload_file(
-                        str(output), bucket, prefix + "/logs/" + output.name,
+                        str(output),
+                        bucket,
+                        prefix + "/logs/" + output.name,
                         ExtraArgs={"ServerSideEncryption": "AES256"},
                     )
             s3.upload_file(
-                str(output), bucket, prefix + "/logs/" + output.name,
+                str(output),
+                bucket,
+                prefix + "/logs/" + output.name,
                 ExtraArgs={"ServerSideEncryption": "AES256"},
             )
         if return_code:
@@ -145,7 +160,8 @@ def main() -> None:
         command([nfl, "backup", "--bucket", bucket], "backup-" + label)
         receipt = json.loads((root / "artifacts/last_backup.json").read_text())
         s3.put_object(
-            Bucket=bucket, Key=prefix + "/checkpoint.json",
+            Bucket=bucket,
+            Key=prefix + "/checkpoint.json",
             Body=json.dumps({**receipt, "code_commit": commit, "stage": label}).encode(),
             ServerSideEncryption="AES256",
         )
@@ -154,8 +170,10 @@ def main() -> None:
         with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
             futures = [
                 pool.submit(
-                    command, [uv, "run", "--locked", script, "--fold", fold],
-                    Path(script).stem + "-" + fold, threads,
+                    command,
+                    [uv, "run", "--locked", script, "--fold", fold],
+                    Path(script).stem + "-" + fold,
+                    threads,
                 )
                 for fold in folds
             ]
@@ -178,7 +196,11 @@ def main() -> None:
         def restore(item: dict[str, Any]) -> None:
             path = root / item["path"]
             path.parent.mkdir(parents=True, exist_ok=True)
-            if path.exists() and path.stat().st_size == item["size"] and digest(path) == item["sha256"]:
+            if (
+                path.exists()
+                and path.stat().st_size == item["size"]
+                and digest(path) == item["sha256"]
+            ):
                 return
             s3.download_file(bucket, "objects/" + item["sha256"], str(path))
             if path.stat().st_size != item["size"] or digest(path) != item["sha256"]:
@@ -193,14 +215,27 @@ def main() -> None:
         unpack(seed, root)
         event("restored", files=len(selected), holdout_tracking="excluded")
         command(
-            [sys.executable, "-m", "pip", "install", "--target", str(root / ".uv-runner"), "uv==0.11.33"],
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "--target",
+                str(root.parent / "uv-tools"),
+                "uv==0.11.33",
+            ],
             "install-uv",
         )
-        uv = str(root / ".uv-runner/bin/uv")
+        uv = str(root.parent / "uv-tools/bin/uv")
         command([uv, "sync", "--frozen", "--group", "dev"], "locked-environment")
         command([python, "-m", "pytest", "-q"], "tests", threads=2)
         folds = ["inner_1", "inner_2", "inner_3", "development"]
-        for stage_name in ("feature-research", "context-research", "representation-research", "research-report"):
+        for stage_name in (
+            "feature-research",
+            "context-research",
+            "representation-research",
+            "research-report",
+        ):
             command([nfl, stage_name], stage_name, threads=4)
         backup("feature-banks")
         command([uv, "run", "--locked", "scripts/nonlinear_probe.py"], "nonlinear-probe", threads=6)
@@ -210,7 +245,9 @@ def main() -> None:
         backup("ablations-and-joint-fits")
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
             wide = pool.submit(batch, "scripts/feature_budget.py", folds, 2, 6)
-            inference = pool.submit(command, [python, "scripts/validate_research.py"], "raw-inference", 1)
+            inference = pool.submit(
+                command, [python, "scripts/validate_research.py"], "raw-inference", 1
+            )
             wide.result()
             inference.result()
         backup("completed-feature-experiments")
@@ -230,18 +267,28 @@ def main() -> None:
                 candidates = [
                     *(stage / "report/notebooks").glob("*.ipynb"),
                     *(stage / "report/docs").glob("*.md"),
-                    stage / "report/README.md", stage / "report/START_HERE.md",
+                    stage / "report/README.md",
+                    stage / "report/START_HERE.md",
+                    stage / "report/scripts/feature_attribution.py",
+                    stage / "report/scripts/feature_attribution.py.lock",
                 ]
                 for path in candidates:
+                    if not path.is_file():
+                        continue
                     target = root / path.relative_to(stage / "report")
                     target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(path, target)
+        if (root / "scripts/feature_attribution.py").exists():
+            command([uv, "run", "--locked", "scripts/feature_attribution.py"], "wide-attribution", threads=6)
+            backup("wide-attribution")
         command([python, "scripts/notebooks.py", "--publish"], "publish-notebooks", threads=2)
         command([python, "scripts/quality.py"], "quality", threads=2)
         backup("published-and-tested")
         files = [
-            *root.glob("notebooks/*.ipynb"), *root.glob("docs/results/*"),
-            root / "artifacts/quality.json", root / "artifacts/notebooks/publication.json",
+            *root.glob("notebooks/*.ipynb"),
+            *root.glob("docs/results/*"),
+            root / "artifacts/quality.json",
+            root / "artifacts/notebooks/publication.json",
         ]
         publication = []
         for path in files:
@@ -249,13 +296,28 @@ def main() -> None:
                 relative = path.relative_to(root).as_posix()
                 key = prefix + "/public/" + relative
                 s3.upload_file(
-                    str(path), bucket, key,
-                    ExtraArgs={"ServerSideEncryption": "AES256", "Metadata": {"sha256": digest(path)}},
+                    str(path),
+                    bucket,
+                    key,
+                    ExtraArgs={
+                        "ServerSideEncryption": "AES256",
+                        "Metadata": {"sha256": digest(path)},
+                    },
                 )
-                publication.append({"path": relative, "key": key, "sha256": digest(path)})
+                entry = {"path": relative, "key": key, "sha256": digest(path)}
+                if path.suffix == ".png":
+                    entry["transfer_key"] = key + ".base64"
+                    s3.put_object(
+                        Bucket=bucket, Key=entry["transfer_key"],
+                        Body=base64.b64encode(path.read_bytes()), ServerSideEncryption="AES256",
+                    )
+                publication.append(entry)
         s3.put_object(
-            Bucket=bucket, Key=prefix + "/publication.json",
-            Body=json.dumps({"files": publication, "code_commit": commit, "report_commit": report_commit}).encode(),
+            Bucket=bucket,
+            Key=prefix + "/publication.json",
+            Body=json.dumps(
+                {"files": publication, "code_commit": commit, "report_commit": report_commit}
+            ).encode(),
             ServerSideEncryption="AES256",
         )
         event("completed", report_commit=report_commit, holdout_evaluation="not_run")

@@ -237,6 +237,7 @@ def extended_evidence(root: Path) -> dict[str, str]:
             root, "research-inference-" + output.stem, inference["validation_signature"], output
         )
     return {
-        published: sha256(root / "artifacts" / local) for published, local in EXTRA_REPORTS.items()
+        published: sha256(root / "artifacts" / local)
+        for published, local in EXTRA_REPORTS.items()
         if (root / "artifacts" / local).is_file()
     }

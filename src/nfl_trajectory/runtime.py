@@ -52,17 +52,23 @@ class Run:
         self.run_id = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid.uuid4().hex[:8]
         self.log_path = root / "logs" / f"{self.run_id}-{name}.jsonl"
         self.started = time.monotonic()
+        self.stage_name = name
+        self.stage_started = self.started
         self.interval = heartbeat_seconds
         self.stop = threading.Event()
         self.lock = threading.Lock()
         self.thread = threading.Thread(target=self._heartbeat, daemon=True)
 
     def event(self, event: str, **fields: Any) -> None:
+        now = time.monotonic()
         record = {
             "timestamp": datetime.now(UTC).isoformat(timespec="milliseconds"),
             "run_id": self.run_id,
             "event": event,
-            "elapsed_seconds": round(time.monotonic() - self.started, 3),
+            "elapsed_seconds": round(now - self.started, 3),
+            "total_elapsed_seconds": round(now - self.started, 3),
+            "stage_elapsed_seconds": round(now - self.stage_started, 3),
+            "stage": self.stage_name,
             **fields,
         }
         line = json.dumps(record, allow_nan=False)
@@ -121,6 +127,8 @@ def stage(
             )
             return False
         stage_started = time.monotonic()
+        previous_stage = (run.stage_name, run.stage_started)
+        run.stage_name, run.stage_started = name, stage_started
         run.event("stage_started", stage=name)
         atomic_json(state, {"status": "running", "signature": signature})
         try:
@@ -128,6 +136,7 @@ def stage(
             hashes = {str(p.relative_to(root)): sha256(p) for p in outputs}
         except BaseException:
             atomic_json(state, {"status": "failed", "signature": signature})
+            run.stage_name, run.stage_started = previous_stage
             raise
         atomic_json(
             state,
@@ -143,6 +152,7 @@ def stage(
             stage=name,
             elapsed_stage_seconds=round(time.monotonic() - stage_started, 3),
         )
+        run.stage_name, run.stage_started = previous_stage
         return True
 
 

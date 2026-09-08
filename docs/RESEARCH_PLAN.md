@@ -2,12 +2,12 @@
 
 | Phase | Deliverable | Exit gate |
 | --- | --- | --- |
-| 0 | Tested environment, ingestion, schema audit, metrics, recovery, notebook | All offline checks plus real-data audit and backup |
+| 0 — complete | Tested environment, ingestion, schema audit, metrics, recovery, notebook | Offline checks plus real-data audit and backup |
 | 1 — complete | Training EDA, animated play, frozen temporal protocol, five physical baselines and role-conditioned ridge | 0.9896 validation RMSE; tested recovery; published notebooks and report |
-| 2 | Physics-informed features and strong tree/residual regressors | Validation improvement with ablations and latency measurements |
+| 2 — residual ridge complete | 2,843 candidate features; three 64-feature ablations | Landing RMSE 0.9269 vs role ridge 0.9896; nonlinear models and challenger latency remain next |
 | 3 | PyTorch temporal model with player interactions, then attention/graph alternatives | Full optimizer/scheduler/RNG checkpoint restore test, temporal CV, stable training |
 | 4 | Hyperparameter research, seed ensembles, uncertainty, robustness | Locked model selection, game-cluster intervals, held-out evaluation |
-| 5 | Self-contained Kaggle inference notebook and employer-facing results | Official local gateway pass, resource limits, reproducible model card and report |
+| 5 — user-controlled export implemented | Self-contained Kaggle inference notebook and employer-facing results | Official local gateway pass and scored submission still require user execution |
 
 This is a research path, not a promise of gold-medal performance. Winning approaches
 will be studied and credited. Every new model must beat the reference under the same
@@ -15,9 +15,9 @@ data and validation contract. Public leaderboard comparisons require equivalent 
 and evaluation settings. Do not compare a local holdout number directly with a public
 leaderboard score as proof of rank.
 
-Hugging Face is deferred until a trained, documented model exists and the terms for
-sharing weights are reviewed. No Hub repository, GPU job, or public dataset is needed
-to start Phase 0. No managed endpoint or always-running service is required.
+Hugging Face publication is deferred until model sharing terms and final evaluation
+are reviewed. No Hub repository, GPU job, or public dataset is needed to read the
+executed notebooks. No managed endpoint or always-running service is required.
 
 ## Validation and leakage boundaries
 
@@ -59,4 +59,3 @@ canonical file in place. Do not create alternate `fixed`, `repair`, or numbered 
 files. Keep `main` deployable; use a feature branch per phase. PRs explain why, behavior,
 tests, results, limitations, and resume behavior. Merge after CI succeeds, then pull
 `main` into Studio. Branch protection is an account-side step after the repository exists.
-

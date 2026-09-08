@@ -19,21 +19,8 @@ from IPython.utils.capture import capture_output
 
 from nfl_trajectory.runtime import Run, atomic_bytes, atomic_json, fingerprint, sha256, stage
 
-REPORT_FILES = (
-    "summary.json",
-    "protocol.json",
-    "model.json",
-    "eda.json",
-    "latency.json",
-    "benchmark.png",
-    "coefficients.png",
-    "eda.png",
-)
-FEATURE_REPORTS = {
-    "summary.json": "feature_summary.json",
-    "model.json": "feature_model.json",
-    "benchmark.png": "feature_benchmark.png",
-}
+REPORT_FILES = ("summary.json", "protocol.json", "model.json", "eda.json", "latency.json", "benchmark.png", "coefficients.png", "eda.png")
+FEATURE_REPORTS = {"summary.json": "feature_summary.json", "model.json": "feature_model.json", "benchmark.png": "feature_benchmark.png"}
 
 
 def feature_results(root: Path) -> dict[str, str]:
@@ -60,10 +47,7 @@ def feature_results(root: Path) -> dict[str, str]:
         or checkpoint.get("signature") != summary.get("numerical_signature")
         or any(value.get("split_sha256") != split_hash for value in (model, summary))
         or any(value.get("source_sha256") != numerical_sources() for value in (model, summary))
-        or any(
-            value.get("baseline_sha256") != sha256(root / "artifacts/benchmark/model.json")
-            for value in (model, summary)
-        )
+        or any(value.get("baseline_sha256") != sha256(root / "artifacts/benchmark/model.json") for value in (model, summary))
     ):
         raise ValueError("Feature results are stale or have inconsistent completion evidence.")
     for path in paths:
@@ -99,8 +83,7 @@ def local_results(root: Path) -> dict[str, str]:
         or checkpoint.get("status") != "completed"
         or not summary.get("numerical_signature")
         or checkpoint.get("signature") != summary["numerical_signature"]
-        or checkpoint.get("outputs", {}).get("artifacts/benchmark/summary.json")
-        != sha256(folder / "summary.json")
+        or checkpoint.get("outputs", {}).get("artifacts/benchmark/summary.json") != sha256(folder / "summary.json")
     ):
         raise ValueError("Local benchmark completion evidence is missing or inconsistent.")
     split_path = root / "artifacts/game_splits.csv"
@@ -116,32 +99,16 @@ def execution_signature(root: Path, source: Path) -> str:
     local = root / "artifacts/benchmark"
     results = local if (local / "summary.json").is_file() else root / "docs/results"
     inputs = [root / "scripts/notebooks.py"]
+    if (root / "kaggle/export.py").is_file():
+        inputs.append(root / "kaggle/export.py")
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(
-        path
-        for original, published in FEATURE_REPORTS.items()
-        if (
-            path := (
-                feature_local / original
-                if (feature_local / "summary.json").is_file()
-                else root / "docs/results" / published
-            )
-        ).is_file()
+        path for original, published in FEATURE_REPORTS.items()
+        if (path := (feature_local / original if (feature_local / "summary.json").is_file() else root / "docs/results" / published)).is_file()
     )
-    inputs.extend(
-        path
-        for name in ("audit_summary.json", "game_splits.csv")
-        if (path := root / "artifacts" / name).is_file()
-    )
-    return fingerprint(
-        root,
-        inputs,
-        {
-            "notebook": source.name,
-            "source_sha256": source_hash(nbformat.read(source, as_version=4)),
-        },
-    )
+    inputs.extend(path for name in ("audit_summary.json", "game_splits.csv") if (path := root / "artifacts" / name).is_file())
+    return fingerprint(root, inputs, {"notebook": source.name, "source_sha256": source_hash(nbformat.read(source, as_version=4))})
 
 
 def validate_executed(source: Path, executed: Any) -> None:
@@ -157,9 +124,7 @@ def validate_executed(source: Path, executed: Any) -> None:
         if cell.execution_count != count:
             raise ValueError("Every code cell must have a consecutive execution count.")
         for output in cell.outputs:
-            if output.output_type == "error" or (
-                output.output_type == "stream" and output.name == "stderr" and output.text
-            ):
+            if output.output_type == "error" or (output.output_type == "stream" and output.name == "stderr" and output.text):
                 raise ValueError("Notebook contains an error or stderr output.")
     if count == 0:
         raise ValueError("An executed notebook must contain at least one code cell.")
@@ -190,27 +155,11 @@ def execute(root: Path, source: Path, run: Run) -> None:
                 raise RuntimeError(f"Notebook {source.name} cell {count} emitted stderr.")
             cell.execution_count = count
             if captured.stdout:
-                cell.outputs.append(
-                    nbformat.v4.new_output("stream", name="stdout", text=captured.stdout)
-                )
+                cell.outputs.append(nbformat.v4.new_output("stream", name="stdout", text=captured.stdout))
             for output in captured.outputs:
-                cell.outputs.append(
-                    nbformat.v4.new_output(
-                        "display_data", data=output.data, metadata=output.metadata
-                    )
-                )
-            run.event(
-                "cell_completed",
-                notebook=source.name,
-                cell=count,
-                elapsed_cell_seconds=round(time.monotonic() - started, 3),
-            )
-        notebook.metadata["execution"] = {
-            "method": "isolated_process_ipython",
-            "cells": count,
-            "signature": signature,
-            "source_sha256": source_hash(notebook),
-        }
+                cell.outputs.append(nbformat.v4.new_output("display_data", data=output.data, metadata=output.metadata))
+            run.event("cell_completed", notebook=source.name, cell=count, elapsed_cell_seconds=round(time.monotonic() - started, 3))
+        notebook.metadata["execution"] = {"method": "isolated_process_ipython", "cells": count, "signature": signature, "source_sha256": source_hash(notebook)}
         validate_executed(source, notebook)
         if execution_signature(root, source) != signature:
             raise ValueError("Notebook inputs changed during execution; no output was replaced.")
@@ -228,9 +177,11 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
         path = root / "artifacts/notebooks" / source.name
         notebook = nbformat.read(path, as_version=4)
         validate_executed(source, notebook)
-        if notebook.metadata.get("execution", {}).get("signature") != execution_signature(
-            root, source
-        ):
+        for cell in notebook.cells:
+            for output in cell.get("outputs", []):
+                if any("data:application/octet-stream;base64," in str(value) for value in output.get("data", {}).values()):
+                    raise ValueError("Disable submission generation and rerun before public publication.")
+        if notebook.metadata.get("execution", {}).get("signature") != execution_signature(root, source):
             raise ValueError("Executed notebook is stale; rerun scripts/notebooks.py --publish.")
         checkpoint_path = root / ".state" / f"notebook-{source.stem}.json"
         checkpoint = json.loads(checkpoint_path.read_text())
@@ -260,15 +211,7 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
         for path, payload in payloads.items():
             if not path.exists() or path.read_bytes() != payload:
                 atomic_bytes(path, payload)
-        atomic_json(
-            receipt,
-            {
-                "status": "passed",
-                "files": {str(path.relative_to(root)): sha256(path) for path in payloads},
-                "official_gateway_status": "not_run",
-                "holdout_evaluation": "not_run",
-            },
-        )
+        atomic_json(receipt, {"status": "passed", "files": {str(path.relative_to(root)): sha256(path) for path in payloads}, "official_gateway_status": "not_run", "holdout_evaluation": "not_run"})
     except BaseException:
         atomic_json(receipt, {"status": "failed"})
         raise
@@ -279,9 +222,7 @@ def main() -> int:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--notebook", help="Execute one notebook by its basename.")
-    parser.add_argument(
-        "--publish", action="store_true", help="Refresh canonical files from local results."
-    )
+    parser.add_argument("--publish", action="store_true", help="Refresh canonical files from local results.")
     args = parser.parse_args()
     if args.notebook is not None:
         if args.publish:
@@ -299,11 +240,7 @@ def main() -> int:
         expected = local_results(root) if args.publish else {}
         for source in sources:
             run.event("notebook_started", notebook=source.name)
-            subprocess.run(
-                [sys.executable, str(Path(__file__).resolve()), "--notebook", source.name],
-                cwd=root,
-                check=True,
-            )
+            subprocess.run([sys.executable, str(Path(__file__).resolve()), "--notebook", source.name], cwd=root, check=True)
             run.event("notebook_completed", notebook=source.name)
         if args.publish:
             publish(root, sources, expected, run)

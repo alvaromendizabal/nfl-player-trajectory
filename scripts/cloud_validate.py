@@ -88,6 +88,7 @@ def main() -> None:
         [python, "-m", "ruff", "format", "--check", "."],
         [python, "-m", "mypy", "src", "scripts", "kaggle"],
         [python, "-m", "pytest", "-q"],
+        [python, "scripts/notebooks.py"],
     ]:
         subprocess.run(command, check=True, env=env)
     s3.put_object(

@@ -1,87 +1,83 @@
 # NFL Big Data Bowl 2026 - Prediction
 
-**This repository implements the [NFL Big Data Bowl 2026 Prediction competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).**
-The repository name `nfl-player-trajectory` describes the target: each player's
-x/y path after the quarterback releases the pass. It is not a separate competition.
-The [Analytics competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-analytics)
-is a different entry point; an Analytics workspace is not needed for this project.
+Predict each selected player's post-throw x/y trajectory from observed tracking,
+the organizer-supplied landing point, player roles, and forecast horizon.
+This implements the [Prediction competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).
+The repository name describes its target; the separate Analytics competition is
+not this project's entry point.
 
-The ingestion code and inference exporter both target the exact competition slug
-`nfl-big-data-bowl-2026-prediction`. Keep the existing repository, Prediction
-workspace, data, fitted models, and verified checkpoints; do not start over.
+**Feature research, with measurable attribution:** 7,999 candidates across 20
+families; training-only screening; three chronological inner folds; strict family
+ablations; fixed-estimator comparisons; and explicit input-availability contracts.
 
-Predict post-throw player movement from pre-throw tracking, the supplied landing
-point, and player roles. **Landing-aware residual ridge: 0.9269 coordinate RMSE**
-on 32 later games—**6.34% lower** than the learned motion baseline. These are
-measured local validation results, not a Kaggle leaderboard score.
+## Review in five minutes
 
-## Review the work
+Start with [02 · Why the features work](notebooks/02_motion_benchmarks.ipynb), then
+[01 · Data and football hypotheses](notebooks/01_data_analysis.ipynb).
+[00 · Readiness](notebooks/00_project_readiness.ipynb) distinguishes real evidence
+from synthetic software demonstrations. The canonical notebooks contain tables,
+Plotly views, and embedded static figures for GitHub review.
 
-**[01 · Data, football hypotheses, and features](notebooks/01_data_analysis.ipynb) →
-[02 · Models, error analysis, and next decisions](notebooks/02_motion_benchmarks.ipynb)**
+| Controlled comparison | Reference RMSE | Engineered RMSE | Interpretation |
+|---|---:|---:|---|
+| Fixed shallow boosting: landing 64 → engineered union 250 | 0.80120 | **0.72802** | **9.13% improvement from features at identical estimator settings** |
+| Residual ridge: landing 64 → joint representation without metadata 236 | 0.92687 | **0.82226** | Expanded features with the same ridge regularization; joint fit |
+| Sequential linear correction: core 128 → context 186 | 0.90045 | **0.86434** | Context adds useful conditional information |
 
-The canonical notebooks include executed tables and embedded figures. No AWS,
-Kaggle, or Hugging Face account is needed to review them. Notebook 00 is optional
-orientation. See [run instructions](START_HERE.md) for your existing workspace.
+All values are coordinate RMSE in yards on the same 67,857 development frames
+from 32 games. The tree comparison's paired 95% game-bootstrap difference is
+−0.08342 to −0.06295 yards. The wider 512/1,024/2,048-column search is reported
+separately in notebook 02; its outcome is not inferred from feature count.
 
-| Model | Coordinate RMSE | Frame-weighted ADE | Trajectory-weighted FDE |
-|---|---:|---:|---:|
-| Landing-aware residual ridge | **0.9269** | **0.8254** | **1.4168** |
-| Interaction-aware residual ridge | 0.9422 | 0.8438 | 1.4309 |
-| Motion-only residual ridge | 0.9467 | 0.8545 | 1.4686 |
-| Original role-conditioned ridge | 0.9896 | 0.8847 | 1.5057 |
-| Constant velocity | 1.7225 | 1.5142 | 2.8696 |
+## What the research demonstrates
 
-All values are yards; all models score the same 67,857 player-frames / 5,399
-trajectories. The landing model's 95% game-cluster RMSE interval is 0.8587–0.9922.
-Its paired difference versus role ridge is −0.0829 to −0.0434 yards. The
-[recorded feature results](docs/results/feature_summary.json) retain exact values.
+Motion history alone leaves substantial error. Arrival feasibility, landing-relative
+geometry, coverage relationships, and role-specific destination features supply
+complementary signal. Train-only route components and geometric player-set pools
+test learned and interaction representations without changing estimator capacity.
+Metadata is weak in several controlled comparisons; individual selected columns
+are less stable than the strongest families. Failed ideas and caveats remain visible.
 
-## What the experiments teach
+The first interaction experiment replaced 23 of 64 landing columns. Its worse
+score did not isolate the value of interactions. The expanded study corrects that
+confounding with nested additions and removals without replacement.
 
-The bank contains **2,843 pre-throw candidates**, but each residual challenger
-retains only 64 training-selected features. Thirty-one of the landing model's
-features derive from longitudinal ball bearing (`ball_ux`). The interaction
-model shares only 41 features with it, replacing 23—including a major lateral
-motion term. This is **not a nested, add-only ablation**: the result cannot isolate
-the value of interactions from the cost of removing useful landing features.
-
-Defensive coverage accounts for **89.0% of remaining squared error**. Forecast
-seconds two and three contribute **80.2%**; the fourth-second slice has just 127
-rows. The next experiment should preserve the complete landing representation,
-then test a small interaction correction and role-conditioned residuals with
-chronological training-only selection. No new challenger or holdout result is
-claimed before it is measured. The notebooks show the calculations and caveats.
+The feature gate remains open pending the final width and robustness review.
+There is no final-model or leaderboard claim. The current inference bundle is a
+236-feature joint linear profile with a 212-feature positional fallback; the
+stronger tree remains an explicitly labelled feature diagnostic until its own
+inference path is validated.
 
 ## Validation and engineering
 
+Games remain intact. Training contains 192 games; development contains 32 later
+games; the final 48 games remain unscored. Each chronological inner fold refits
+the physical baseline, historical encodings, route representations, screening,
+scaling, and estimator. Target histories exclude the entire current date, and
+evaluation histories stay frozen. One labelled season does not establish
+across-season generalization.
+
 The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displacement,
-role/horizon slices, and paired game-bootstrap intervals supplement it.
-Training uses 192 games (September 7–December 3, 2023); validation uses 32 games
-(December 4–18). The later **48-game holdout remains unscored**. All frames and
-players from one game stay together. Feature screening/scaling use training only.
+role/horizon slices, and paired game-cluster intervals supply additional context.
+Inference replay checks fresh raw features against saved experiment predictions.
 
-Canonical code has explicit numerical, leakage, artifact-integrity, recovery,
-and export-parity tests. CI checks lint, formatting, types, warnings-as-errors,
-and notebook execution in the locked Python 3.11 environment. UTC JSONL logs
-include stage/cell and total durations plus a 15-second heartbeat. Atomic writes,
-locks, input/source signatures, and output hashes protect resumable stages.
-Private content-addressed S3 snapshots retain completed work. Reporting changes
-do not modify numerical source or invalidate the completed feature experiment.
+The locked Python 3.11 project has **190 automated tests** at the current research
+milestone, including leakage, geometry, missing-input dependencies, artifact
+integrity, recovery, and standalone parity. CI checks lint, formatting, types,
+warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
+locks, source/input hashes, and content-addressed S3 checkpoints make long work
+auditable and resumable. Numerical diagnostics have separate pinned script locks.
 
-## Generate an artifact yourself
+See the [research plan](docs/RESEARCH_PLAN.md), [model card](docs/MODEL_CARD.md),
+[validation record](docs/VALIDATION.md), and [reproduction guide](START_HERE.md).
 
-The final cell in notebook 02 is **off by default**. Set `GENERATE_EXPORT = True`
-in your workspace to generate and download your own standalone inference notebook
-from the verified, selected local model. The exporter supports the trained residual
-champion; it does not silently substitute the older baseline. Tests use a separate
-quality-output directory and cannot overwrite the owner's generated artifact.
+## Owner-controlled export
 
-The generated notebook uses the official organizer gateway and provides a local
-Parquet download when that gateway creates it. **It never submits to Kaggle.**
-Local sample predictions are not hidden-test results. You control gateway execution
-and any subsequent submission; official gateway execution remains unverified here.
+The final cell of notebook 02 defaults to `GENERATE_EXPORT = False`. Enabling it
+exports the current verified local research predictor and provides a download.
+It never submits to Kaggle. Quality checks use a separate output directory.
 
-The code is MIT licensed; competition data has separate conditions and is not
-redistributed. See [sources](docs/SOURCES.md). No extra model-hosting service is
-required for the employer review path.
+The organizer's sample gateway test is reported separately from accuracy and
+the offline quality suite. Unlabelled sample predictions are not hidden-test
+scores. Code is MIT licensed; competition data has separate terms and is not
+redistributed. [Sources and attribution](docs/SOURCES.md) describe the evidence.

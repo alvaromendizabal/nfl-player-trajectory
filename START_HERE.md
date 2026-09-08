@@ -1,75 +1,72 @@
 # NFL Big Data Bowl 2026 - Prediction
 
-This is the Prediction project, not the separate Analytics competition.
-`nfl-player-trajectory` is the repository name; a trajectory is a player's x/y
-path while the pass is in the air. Both ingestion and inference use the official
-`nfl-big-data-bowl-2026-prediction` competition slug.
+This is the Prediction project. The canonical notebooks are 00, 01, and 02;
+the repository name describes the player's trajectory prediction target.
 
-Continue in the existing `nfl-trajectory-dev` SageMaker space and
-`$HOME/nfl-player-trajectory` directory. No new space or dataset download is needed
-merely to continue this project. Notebook 00 now distinguishes completed real-data
-evidence from its small synthetic scoring demonstration.
+## Review the evidence
 
-## Review the completed experiment
+Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution,
+then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature rationale.
+Public aggregates support review without private tracking or cloud credentials.
+Final training is gated on the research evidence, not on a successful pipeline run.
 
-The feature run completed successfully: landing ridge reached 0.9268683892 RMSE;
-all three notebooks were published locally and the final S3 backup completed.
-**Do not recreate data, the environment, or the successful benchmark/features.**
+## Reproduce in the existing project
 
-## Update the notebook presentation without retraining
+Use the locked Python 3.11 environment created by `scripts/bootstrap.py`.
+Private data, trained artifacts, and stage receipts belong in the existing
+workspace or its verified S3 restore. Keep the canonical repository checkout;
+do not create alternate notebook copies or overwrite owner exports.
 
-In your existing SageMaker terminal:
+The canonical research sequence is:
 
 ```bash
-cd "$HOME/nfl-player-trajectory" &&
-git stash push --include-untracked -m "executed feature notebooks before research update" -- notebooks/ docs/results/ &&
-git pull --ff-only origin main &&
-python3 scripts/bootstrap.py &&
-.venv/bin/python scripts/notebooks.py --publish &&
+.venv/bin/nfl feature-research
+.venv/bin/nfl context-research
+.venv/bin/nfl representation-research
+.venv/bin/nfl research-report
+uv run --locked scripts/nonlinear_probe.py
+```
+
+Run each of the following scripts for `inner_1`, `inner_2`, `inner_3`, and
+`development` via its `--fold` argument:
+
+```bash
+uv run --locked scripts/ablate_features.py --fold inner_1
+uv run --locked scripts/joint_feature_fit.py --fold inner_1
+uv run --locked scripts/feature_budget.py --fold inner_1
+```
+
+Then validate raw inference, wider attribution, and the organizer's unlabelled
+sample interface before publishing:
+
+```bash
+.venv/bin/python scripts/validate_research.py
+uv run --locked scripts/feature_attribution.py
+uv run --locked scripts/validate_gateway.py
+.venv/bin/python scripts/notebooks.py --publish
+.venv/bin/python scripts/quality.py
 .venv/bin/nfl backup
 ```
 
-The narrowly scoped stash preserves tracked notebook edits **and newly generated
-untracked result files** before pulling canonical replacements. It does not touch
-`data/`, `artifacts/`, `.state/`, or other source edits. Do not pop the old render
-over the new notebooks. Bootstrap checks the code/environment; the command block
-does not rerun real-data feature construction or fit a model.
+These commands document reproduction; the current research run is executed and
+monitored on the project's bounded SageMaker processing job. Its runner restores
+checksum-verified inputs, excludes holdout tracking, resumes completed stages,
+and checkpoints each major phase. S3 snapshot manifests reference content-addressed
+objects; the canonical restore command verifies those hashes. Do not use a
+checkpoint from changed numerical source as if it were current.
 
-Open `notebooks/01_data_analysis.ipynb`, then `notebooks/02_motion_benchmarks.ipynb`
-using **Python (NFL Trajectory)**. They show current real-data results, training
-associations, feature-set overlap, error budgets, and the next modeling decision.
-The numerical modules and dependency lock are unchanged.
+The main dependency lock is unchanged. The nonlinear and gateway scripts use
+separate PEP 723 locks, invoked with `uv run --locked`. Raw model pickle files are
+private, source-verified artifacts from this run, not files to load from strangers.
 
-## Your export and download
+## Export only when you choose
 
-At the end of notebook 02, set `GENERATE_EXPORT = True` and run that cell. It
-reads your current local selected model, verifies the completed model/source/split
-checksums, writes `artifacts/kaggle/submission.ipynb`, and displays a download link.
-No file is submitted or uploaded. Restore the switch to `False` before committing
-the public research notebook.
+The final cell in notebook 02 is off by default. Enabling it checks the current
+research bundle and creates `artifacts/kaggle/submission.ipynb` for your download.
+The linear research predictor and the stronger experimental tree are labelled
+separately. Automated quality exports and sample gateway output live under
+`artifacts/quality/` and cannot replace the owner's generated artifact.
 
-Open the generated inference notebook in Kaggle yourself, attach the competition
-input, use CPU, and disable internet. Run its organizer gateway. A local
-`submission.parquet` link appears if that file is produced. Local sample output
-is not a hidden-test prediction or a leaderboard score. You decide whether to make
-an actual submission; this repository does not call a submission endpoint.
-
-## Next modeling step
-
-Do not add thousands more columns blindly. Preserve the full landing model and
-compare an additive interaction correction and role-conditioned residuals. The
-prior 64-column interaction experiment displaced 23 landing features, so it is
-not a clean test of interaction value. Inner chronological training folds should
-select feature budgets and hyperparameters; the existing validation compares the
-final candidates and the holdout remains untouched. Those next fits are not yet
-implemented or claimed complete in this presentation/export update.
-
-The existing optional training cell in notebook 01 can run/resume `nfl features`
-when explicitly enabled. It is off for normal review. Rerun it only when a verified
-stage is missing or a deliberate numerical change warrants recomputation.
-
-Automatic publication refuses an enabled training/export switch before any cell runs.
-Restore those manual controls to `False` before publication. The exported predictor
-retains verified per-play results only while its working directory is retained or
-restored from saved outputs; it does not assume a fresh Kaggle session restores
-earlier disk state.
+The generated notebook uses the organizer inference interface and never submits
+to Kaggle. A local sample Parquet is an interface check, not a hidden-test score.
+No public model-hosting service is required to review the project.

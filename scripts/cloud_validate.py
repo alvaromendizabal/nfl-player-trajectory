@@ -90,9 +90,15 @@ def main() -> None:
             ServerSideEncryption="AES256",
         )
     subprocess.run(
-        [python, "-m", "ruff", "check", "--fix", *[
-            name for name in formatted if not name.endswith(".lock")
-        ]], env=env,
+        [
+            python,
+            "-m",
+            "ruff",
+            "check",
+            "--fix",
+            *[name for name in formatted if not name.endswith(".lock")],
+        ],
+        env=env,
     )
     checks = []
     commands = [

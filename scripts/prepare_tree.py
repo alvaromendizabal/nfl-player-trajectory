@@ -27,11 +27,15 @@ VARIANTS = ("without_metadata", "without_optional_inputs")
 
 
 def portable(pair: list[Any], names: list[str]) -> dict[str, Any]:
-    used = sorted({
-        int(node["feature_idx"])
-        for model in pair for predictors in model._predictors
-        for node in predictors[0].nodes if not node["is_leaf"]
-    })
+    used = sorted(
+        {
+            int(node["feature_idx"])
+            for model in pair
+            for predictors in model._predictors
+            for node in predictors[0].nodes
+            if not node["is_leaf"]
+        }
+    )
     positions = {old: new for new, old in enumerate(used)}
     axes: list[list[dict[str, Any]]] = []
     initial: list[float] = []
@@ -44,14 +48,23 @@ def portable(pair: list[Any], names: list[str]) -> dict[str, Any]:
             nodes = predictors[0].nodes
             if nodes["is_categorical"].any():
                 raise ValueError("Categorical splits need a different export contract.")
-            trees.append({
-                "value": nodes["value"].tolist(), "feature": [positions[int(n["feature_idx"])] if not n["is_leaf"] else 0 for n in nodes],
-                "threshold": nodes["num_threshold"].tolist(), "left": nodes["left"].tolist(),
-                "right": nodes["right"].tolist(), "leaf": nodes["is_leaf"].astype(bool).tolist(),
-            })
+            trees.append(
+                {
+                    "value": nodes["value"].tolist(),
+                    "feature": [
+                        positions[int(n["feature_idx"])] if not n["is_leaf"] else 0 for n in nodes
+                    ],
+                    "threshold": nodes["num_threshold"].tolist(),
+                    "left": nodes["left"].tolist(),
+                    "right": nodes["right"].tolist(),
+                    "leaf": nodes["is_leaf"].astype(bool).tolist(),
+                }
+            )
         axes.append(trees)
     return {
-        "features": [names[i] for i in used], "initial": initial, "axes": axes,
+        "features": [names[i] for i in used],
+        "initial": initial,
+        "axes": axes,
         "screened_feature_count": len(names),
     }
 
@@ -68,8 +81,13 @@ def main(root: Path) -> None:
     parent = research_bundle(root, include_tree=False)
     folder = root / "artifacts/feature_attribution"
     report = json.loads((folder / "summary.json").read_text())
-    signature = hashlib.sha256(json.dumps(report["provenance"], sort_keys=True).encode()).hexdigest()
-    if signature != report["source_signature"] or report["source_signatures"] != parent["source_signatures"]:
+    signature = hashlib.sha256(
+        json.dumps(report["provenance"], sort_keys=True).encode()
+    ).hexdigest()
+    if (
+        signature != report["source_signature"]
+        or report["source_signatures"] != parent["source_signatures"]
+    ):
         raise ValueError("Wide attribution belongs to another feature lineage.")
     verified_checkpoint(root, "feature-attribution-report", signature, folder / "summary.json")
     for relative, expected in report["provenance"]["inputs"].items():
@@ -77,10 +95,21 @@ def main(root: Path) -> None:
             raise ValueError("Wide attribution source or fitted artifacts changed.")
     folds = [*report["inner_folds"], report["development"]]
     scores = {
-        name: float(np.sqrt(sum(
-            next(row["coordinate_rmse_yards"] for row in fold["omissions"] if row["model"] == name)
-            ** 2 * fold["rows"] for fold in folds[:3]
-        ) / sum(fold["rows"] for fold in folds[:3])))
+        name: float(
+            np.sqrt(
+                sum(
+                    next(
+                        row["coordinate_rmse_yards"]
+                        for row in fold["omissions"]
+                        if row["model"] == name
+                    )
+                    ** 2
+                    * fold["rows"]
+                    for fold in folds[:3]
+                )
+                / sum(fold["rows"] for fold in folds[:3])
+            )
+        )
         for name in VARIANTS
     }
     selected = min(scores, key=lambda name: (scores[name], name))
@@ -95,8 +124,11 @@ def main(root: Path) -> None:
         paths.append(root / "src/nfl_trajectory" / (name + ".py"))
     provenance = {
         "inputs": {str(path.relative_to(root)): sha256(path) for path in sorted(set(paths))},
-        "parent_bundle_sha256": hashlib.sha256(json.dumps(parent, sort_keys=True).encode()).hexdigest(),
-        "wide_attribution_source": signature, "inner_scores": scores,
+        "parent_bundle_sha256": hashlib.sha256(
+            json.dumps(parent, sort_keys=True).encode()
+        ).hexdigest(),
+        "wide_attribution_source": signature,
+        "inner_scores": scores,
         "selected_variant": selected,
         "policy": (
             "Deployment excludes player metadata/history. Choose between the two already-fitted "
@@ -119,10 +151,12 @@ def main(root: Path) -> None:
             names = fold["features"]
             evaluation = probe.materialize(root, caches, split, names, False)
             for variant in VARIANTS:
-                indices = [i for i, feature in enumerate(names)
-                           if not metadata_dependent(feature)
-                           and (variant != "without_optional_inputs"
-                                or not telemetry_dependent(feature))]
+                indices = [
+                    i
+                    for i, feature in enumerate(names)
+                    if not metadata_dependent(feature)
+                    and (variant != "without_optional_inputs" or not telemetry_dependent(feature))
+                ]
                 retained = [names[i] for i in indices]
                 pair = pickle.loads((folder / name / (variant + ".pkl")).read_bytes())
                 converted = portable(pair, retained)
@@ -137,12 +171,19 @@ def main(root: Path) -> None:
                 recorded = next(row for row in fold["omissions"] if row["model"] == variant)
                 if not np.isclose(score, recorded["coordinate_rmse_yards"], rtol=1e-10, atol=1e-10):
                     raise ValueError("Portable predictor does not reproduce the experiment metric.")
-                parity_rows.append({
-                    "fold": name, "variant": variant, "rows": len(matrix),
-                    "screened_features": len(retained), "features": len(converted["features"]),
-                    "coordinate_rmse_yards": score,
-                    "max_absolute_prediction_difference": float(np.max(np.abs(actual - expected))),
-                })
+                parity_rows.append(
+                    {
+                        "fold": name,
+                        "variant": variant,
+                        "rows": len(matrix),
+                        "screened_features": len(retained),
+                        "features": len(converted["features"]),
+                        "coordinate_rmse_yards": score,
+                        "max_absolute_prediction_difference": float(
+                            np.max(np.abs(actual - expected))
+                        ),
+                    }
+                )
                 if name == "development":
                     deployment[variant] = converted
                     if variant == selected:
@@ -155,7 +196,8 @@ def main(root: Path) -> None:
             blocks=[{"kind": "tree", "model": {"features": selected_names}}],
             retained_features=len(selected_names),
             validation_coordinate_rmse_yards=next(
-                row["coordinate_rmse_yards"] for row in parity_rows
+                row["coordinate_rmse_yards"]
+                for row in parity_rows
                 if row["fold"] == "development" and row["variant"] == selected
             ),
             selection=provenance["policy"],
@@ -163,7 +205,9 @@ def main(root: Path) -> None:
             fallbacks={
                 alias: {
                     "tree": deployment[variant],
-                    "blocks": [{"kind": "tree", "model": {"features": deployment[variant]["features"]}}],
+                    "blocks": [
+                        {"kind": "tree", "model": {"features": deployment[variant]["features"]}}
+                    ],
                     "reason": "Independently fitted fixed-tree availability profile.",
                 }
                 for alias, variant in (
@@ -172,24 +216,44 @@ def main(root: Path) -> None:
                 )
             },
         )
-        atomic_json(output / "bundle.json", {
-            "bundle": bundle, "provenance": provenance, "source_signature": source,
-        })
+        atomic_json(
+            output / "bundle.json",
+            {
+                "bundle": bundle,
+                "provenance": provenance,
+                "source_signature": source,
+            },
+        )
         atomic_bytes(output / "parity.csv", pd.DataFrame(parity_rows).to_csv(index=False).encode())
-        atomic_json(output / "summary.json", {
-            "status": "passed", "source_signature": source, "provenance": provenance,
-            "source_signatures": parent["source_signatures"], "selected_model": bundle["selected_model"],
-            "selected_stage": "fixed_tree", "retained_features": len(selected_names),
-            "inner_scores": scores, "parity": parity_rows,
-            "validation_coordinate_rmse_yards": bundle["validation_coordinate_rmse_yards"],
-            "training": "No refit; verified diagnostic trees converted to numeric arrays.",
-            "raw_inference_validation": "required separately",
-            "holdout_evaluation": "not_run", "final_model": False,
-        })
+        atomic_json(
+            output / "summary.json",
+            {
+                "status": "passed",
+                "source_signature": source,
+                "provenance": provenance,
+                "source_signatures": parent["source_signatures"],
+                "selected_model": bundle["selected_model"],
+                "selected_stage": "fixed_tree",
+                "retained_features": len(selected_names),
+                "inner_scores": scores,
+                "parity": parity_rows,
+                "validation_coordinate_rmse_yards": bundle["validation_coordinate_rmse_yards"],
+                "training": "No refit; verified diagnostic trees converted to numeric arrays.",
+                "raw_inference_validation": "required separately",
+                "holdout_evaluation": "not_run",
+                "final_model": False,
+            },
+        )
 
     with Run(root, "portable-feature-tree") as run:
-        stage(root, "research-tree-bundle", source,
-              [output / "bundle.json", output / "summary.json", output / "parity.csv"], action, run)
+        stage(
+            root,
+            "research-tree-bundle",
+            source,
+            [output / "bundle.json", output / "summary.json", output / "parity.csv"],
+            action,
+            run,
+        )
 
 
 def self_test(root: Path) -> None:

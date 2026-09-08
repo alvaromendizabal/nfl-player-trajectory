@@ -41,9 +41,12 @@ def tree_correction(x: np.ndarray, model: dict[str, Any]) -> np.ndarray:
                 raise ValueError("Tree parameters must be finite.")
             branches = np.flatnonzero(~leaf)
             if (
-                (feature[branches] < 0).any() or (feature[branches] >= width).any()
-                or (left[branches] <= branches).any() or (right[branches] <= branches).any()
-                or (left[branches] >= count).any() or (right[branches] >= count).any()
+                (feature[branches] < 0).any()
+                or (feature[branches] >= width).any()
+                or (left[branches] <= branches).any()
+                or (right[branches] <= branches).any()
+                or (left[branches] >= count).any()
+                or (right[branches] >= count).any()
             ):
                 raise ValueError("Invalid tree feature or child indices.")
             nodes = np.zeros(len(data), dtype=np.int64)
@@ -75,7 +78,8 @@ def load_tree_bundle(root: Path, parent: dict[str, Any]) -> dict[str, Any]:
     receipt = json.loads((root / ".state/research-tree-bundle.json").read_text())
     if (
         signature != payload["source_signature"]
-        or receipt.get("signature") != signature or receipt.get("status") != "completed"
+        or receipt.get("signature") != signature
+        or receipt.get("status") != "completed"
         or receipt.get("outputs", {}).get(str(path.relative_to(root))) != sha256(path)
         or provenance["parent_bundle_sha256"]
         != hashlib.sha256(json.dumps(parent, sort_keys=True).encode()).hexdigest()
@@ -118,8 +122,9 @@ def predict_tree(
     }
     if len(names) != len(set(names)) or not set(names).issubset(set().union(*catalogs.values())):
         raise ValueError("Unknown or duplicate tree features.")
-    requested = {kind: [name for name in names if name in group]
-                 for kind, group in catalogs.items()}
+    requested = {
+        kind: [name for name in names if name in group] for kind, group in catalogs.items()
+    }
     positions = {name: i for i, name in enumerate(names)}
     banks: dict[str, Any] = {}
     if requested["context"]:
@@ -137,7 +142,8 @@ def predict_tree(
                 continue
             current = (
                 candidate_matrix(bank, request, history[start:end], columns)
-                if kind == "research" else banks[kind].matrix(request, columns)
+                if kind == "research"
+                else banks[kind].matrix(request, columns)
             )
             matrix[:, [positions[name] for name in columns]] = current
         values[start:end] += sign[start:end] * tree_correction(matrix, bundle["tree"])

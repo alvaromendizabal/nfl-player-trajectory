@@ -259,7 +259,9 @@ def main() -> None:
             ):
                 command([nfl, stage_name], stage_name, threads=4)
             backup("feature-banks")
-            command([uv, "run", "--locked", "scripts/nonlinear_probe.py"], "nonlinear-probe", threads=6)
+            command(
+                [uv, "run", "--locked", "scripts/nonlinear_probe.py"], "nonlinear-probe", threads=6
+            )
             backup("fixed-nonlinear")
             batch("scripts/ablate_features.py", folds, workers=4, threads=2)
             batch("scripts/joint_feature_fit.py", folds, workers=4, threads=1)
@@ -277,20 +279,24 @@ def main() -> None:
                 batch(
                     "scripts/feature_budget.py",
                     ["inner_1", "inner_2", "inner_3", "development"],
-                    workers=2, threads=6,
+                    workers=2,
+                    threads=6,
                 )
                 command(
                     [uv, "run", "--locked", "scripts/feature_attribution.py"],
-                    "full-pool-attribution", threads=6,
+                    "full-pool-attribution",
+                    threads=6,
                 )
                 backup("full-feature-pool")
             command(
                 [uv, "run", "--locked", "scripts/prepare_tree.py", "--self-test"],
-                "portable-tree-self-test", threads=2,
+                "portable-tree-self-test",
+                threads=2,
             )
             command(
                 [uv, "run", "--locked", "scripts/prepare_tree.py"],
-                "portable-tree-conversion", threads=4,
+                "portable-tree-conversion",
+                threads=4,
             )
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")

@@ -352,7 +352,8 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
                     json.loads((root / "artifacts/research/gateway/summary.json").read_text())[
                         "official_gateway_status"
                     ]
-                    if "extended/feature_gateway.json" in expected else "not_run"
+                    if "extended/feature_gateway.json" in expected
+                    else "not_run"
                 ),
                 "holdout_evaluation": "not_run",
             },

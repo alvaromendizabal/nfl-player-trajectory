@@ -12,9 +12,12 @@ from nfl_trajectory.tree_inference import tree_correction
 
 def model() -> dict:
     tree = {
-        "value": [0.0, -2.0, 3.0], "feature": [0, 0, 0],
-        "threshold": [0.5, 0.0, 0.0], "left": [1, 0, 0],
-        "right": [2, 0, 0], "leaf": [False, True, True],
+        "value": [0.0, -2.0, 3.0],
+        "feature": [0, 0, 0],
+        "threshold": [0.5, 0.0, 0.0],
+        "left": [1, 0, 0],
+        "right": [2, 0, 0],
+        "leaf": [False, True, True],
     }
     return {"features": ["x"], "initial": [1.0, -1.0], "axes": [[tree], [tree, tree]]}
 
@@ -28,8 +31,9 @@ def test_tree_threshold_equality_and_accumulation() -> None:
 def test_float32_inputs_use_raw_double_threshold_comparisons() -> None:
     fitted = model()
     fitted["axes"][0][0]["threshold"][0] = 0.499999999999
-    np.testing.assert_array_equal(tree_correction(np.array([[0.5]], dtype=np.float32), fitted),
-                                  np.array([[4.0, 5.0]]))
+    np.testing.assert_array_equal(
+        tree_correction(np.array([[0.5]], dtype=np.float32), fitted), np.array([[4.0, 5.0]])
+    )
 
 
 @pytest.mark.parametrize("value", [np.nan, np.inf, -np.inf])

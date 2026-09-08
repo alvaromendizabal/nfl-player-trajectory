@@ -1,4 +1,14 @@
-# NFL Player Trajectory Lab
+# NFL Big Data Bowl 2026 - Prediction
+
+**This repository implements the [NFL Big Data Bowl 2026 Prediction competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).**
+The repository name `nfl-player-trajectory` describes the target: each player's
+x/y path after the quarterback releases the pass. It is not a separate competition.
+The [Analytics competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-analytics)
+is a different entry point; an Analytics workspace is not needed for this project.
+
+The ingestion code and inference exporter both target the exact competition slug
+`nfl-big-data-bowl-2026-prediction`. Keep the existing repository, Prediction
+workspace, data, fitted models, and verified checkpoints; do not start over.
 
 Predict post-throw player movement from pre-throw tracking, the supplied landing
 point, and player roles. **Landing-aware residual ridge: 0.9269 coordinate RMSE**

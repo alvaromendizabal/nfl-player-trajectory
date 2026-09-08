@@ -13,6 +13,7 @@ import urllib.request
 
 import boto3
 
+
 def main() -> None:
     root = pathlib.Path("/opt/ml/processing/project")
     root.mkdir(parents=True, exist_ok=True)
@@ -46,7 +47,15 @@ def main() -> None:
     os.chdir(root)
     env = dict(os.environ, OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="1")
     subprocess.run(
-        [sys.executable, "-m", "pip", "install", "--target", str(root.parent / "uv-tools"), "uv==0.11.33"],
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--target",
+            str(root.parent / "uv-tools"),
+            "uv==0.11.33",
+        ],
         check=True,
         env=env,
     )
@@ -102,7 +111,11 @@ def main() -> None:
         Bucket=os.environ["NFL_BUCKET"],
         Key=os.environ["NFL_PREFIX"] + "/validation.json",
         Body=json.dumps(
-            {"status": "passed", "source_commit": ref, "checks": ["lint", "format", "types", "tests"]}
+            {
+                "status": "passed",
+                "source_commit": ref,
+                "checks": ["lint", "format", "types", "tests"],
+            }
         ).encode(),
         ServerSideEncryption="AES256",
     )

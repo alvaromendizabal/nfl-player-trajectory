@@ -20,6 +20,9 @@ EXTRA_REPORTS = {
     "feature_inference.json": "research/inference/summary.json",
     "feature_input_failure.json": "research/inference_before_fallback.json",
     "feature_joint.json": "joint_linear/summary.json",
+    "feature_attribution.json": "feature_attribution/summary.json",
+    "feature_attribution.png": "feature_attribution/figure.png",
+    "feature_gateway.json": "research/gateway/summary.json",
 }
 
 
@@ -236,6 +239,28 @@ def extended_evidence(root: Path) -> dict[str, str]:
         verified_checkpoint(
             root, "research-inference-" + output.stem, inference["validation_signature"], output
         )
+    for relative, stage_name in (
+        ("feature_attribution/summary.json", "feature-attribution-report"),
+        ("research/gateway/summary.json", "official-gateway"),
+    ):
+        output = root / "artifacts" / relative
+        if not output.exists():
+            continue
+        report = read(output)
+        provenance = report["provenance"]
+        signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()
+        if signature != report["source_signature"] or report["source_signatures"] != sources:
+            raise ValueError("Extended attribution or gateway provenance is inconsistent.")
+        for path, expected in provenance["inputs"].items():
+            if sha256(root / path) != expected:
+                raise ValueError("Extended evidence has stale inputs or source code.")
+        if "bundle_sha256" in provenance and provenance["bundle_sha256"] != bundle_hash:
+            raise ValueError("Gateway evidence uses another inference bundle.")
+        verified_checkpoint(root, stage_name, signature, output)
+        if stage_name == "feature-attribution-report":
+            verified_checkpoint(
+                root, stage_name, signature, root / "artifacts/feature_attribution/figure.png"
+            )
     return {
         published: sha256(root / "artifacts" / local)
         for published, local in EXTRA_REPORTS.items()

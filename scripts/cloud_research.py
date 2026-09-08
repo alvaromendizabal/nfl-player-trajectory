@@ -44,6 +44,10 @@ def selected_input(name: str) -> bool:
         raise ValueError("Unsafe source snapshot path.")
     if re.search(r"2023_w(?:16|17|18)(?:[./_]|$)", name):
         return False
+    if name.startswith("data/raw/kaggle_evaluation/") or name in {
+        "data/raw/test.csv", "data/raw/test_input.csv",
+    }:
+        return True
     if path.parts[0] in {"artifacts", ".state", "logs"}:
         return not name.startswith("artifacts/kaggle/")
     return bool(re.fullmatch(r"data/raw/train/input_2023_w(?:0[1-9]|1[0-5])\.csv", name))
@@ -271,6 +275,8 @@ def main() -> None:
                     stage / "report/START_HERE.md",
                     stage / "report/scripts/feature_attribution.py",
                     stage / "report/scripts/feature_attribution.py.lock",
+                    stage / "report/scripts/validate_gateway.py",
+                    stage / "report/scripts/validate_gateway.py.lock",
                 ]
                 for path in candidates:
                     if not path.is_file():
@@ -278,9 +284,25 @@ def main() -> None:
                     target = root / path.relative_to(stage / "report")
                     target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(path, target)
+        report_scripts = [
+            str(p.relative_to(root)) for p in (
+                root / "scripts/feature_attribution.py", root / "scripts/validate_gateway.py"
+            ) if p.exists()
+        ]
+        if report_scripts:
+            command([python, "-m", "ruff", "check", "--fix", *report_scripts], "report-script-lint")
+            command([python, "-m", "ruff", "format", *report_scripts], "report-script-format")
         if (root / "scripts/feature_attribution.py").exists():
-            command([uv, "run", "--locked", "scripts/feature_attribution.py"], "wide-attribution", threads=6)
+            command(
+                [uv, "run", "--locked", "scripts/feature_attribution.py"],
+                "wide-attribution",
+                threads=6,
+            )
             backup("wide-attribution")
+        if (root / "scripts/validate_gateway.py").exists():
+            if not (root / "scripts/validate_gateway.py.lock").exists():
+                command([uv, "lock", "--script", "scripts/validate_gateway.py"], "gateway-lock")
+            command([uv, "run", "--locked", "scripts/validate_gateway.py"], "organizer-gateway", threads=2)
         command([python, "scripts/notebooks.py", "--publish"], "publish-notebooks", threads=2)
         command([python, "scripts/quality.py"], "quality", threads=2)
         backup("published-and-tested")
@@ -290,6 +312,10 @@ def main() -> None:
             root / "artifacts/quality.json",
             root / "artifacts/notebooks/publication.json",
         ]
+        files.extend(
+            p for pattern in ("scripts/feature_attribution.py*", "scripts/validate_gateway.py*")
+            for p in root.glob(pattern)
+        )
         publication = []
         for path in files:
             if path.is_file():
@@ -308,8 +334,10 @@ def main() -> None:
                 if path.suffix == ".png":
                     entry["transfer_key"] = key + ".base64"
                     s3.put_object(
-                        Bucket=bucket, Key=entry["transfer_key"],
-                        Body=base64.b64encode(path.read_bytes()), ServerSideEncryption="AES256",
+                        Bucket=bucket,
+                        Key=entry["transfer_key"],
+                        Body=base64.b64encode(path.read_bytes()),
+                        ServerSideEncryption="AES256",
                     )
                 publication.append(entry)
         s3.put_object(

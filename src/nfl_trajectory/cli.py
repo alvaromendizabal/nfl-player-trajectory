@@ -87,6 +87,7 @@ def main() -> int:
             "feature-research",
             "context-research",
             "research-report",
+            "representation-research",
         ],
     )
     parser.add_argument("--bucket")
@@ -115,6 +116,10 @@ def main() -> int:
                 from nfl_trajectory.research import publish_research_report
 
                 publish_research_report(root, run)
+            elif args.command == "representation-research":
+                from nfl_trajectory.representation_experiment import representation_research
+
+                representation_research(root, run)
             elif args.command in ("features", "feature-research", "context-research"):
                 checkpoint: Callable[[], object] | None = None
                 if args.checkpoint_s3:

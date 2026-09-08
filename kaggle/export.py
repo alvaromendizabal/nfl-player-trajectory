@@ -88,7 +88,7 @@ def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]
         "from datetime import UTC, datetime\nfrom pathlib import Path\nfrom typing import Any\n"
         "import numpy as np\nimport pandas as pd\n"
     )
-    learned = model != "constant_velocity"
+    learned = model not in ("constant_velocity", "research")
     if learned:
         from nfl_trajectory.models import BASIS
 
@@ -121,6 +121,38 @@ def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]
             definitions(folder / "feature_experiment.py", {"target_state", "predict_residual"})
         )
     source = imports + ast.unparse(ast.Module(body=nodes, type_ignores=[])) + "\n"
+    if model == "research":
+        from nfl_trajectory.research_inference import INFERENCE_MODULES, research_bundle
+
+        bundle = research_bundle(root)
+        modules = {}
+        for name in INFERENCE_MODULES:
+            path = folder / (name + ".py")
+            paths.append(path)
+            modules[name] = path.read_text().replace("nfl_trajectory.", "_nfl_export.")
+        paths.extend(
+            root / "artifacts" / stage_name / "development" / "models.json"
+            for stage_name in ("research", "context", "representation")
+        )
+        paths.append(root / "artifacts/representation/development/routes.json")
+        source += (
+            "import types\n"
+            "_package = types.ModuleType('_nfl_export')\n"
+            "_package.__path__ = []\n"
+            "sys.modules['_nfl_export'] = _package\n"
+            "_MODULE_SOURCES = " + pprint.pformat(modules, width=85) + "\n"
+            "_MODULE_ORDER = " + repr(INFERENCE_MODULES) + "\n"
+            "for _name in _MODULE_ORDER:\n"
+            "    _source = _MODULE_SOURCES[_name]\n"
+            "    _qualified = '_nfl_export.' + _name\n"
+            "    _module = types.ModuleType(_qualified)\n"
+            "    _module.__file__ = _name + '.py'\n"
+            "    _module.__package__ = '_nfl_export'\n"
+            "    sys.modules[_qualified] = _module\n"
+            "    exec(compile(_source, _module.__file__, 'exec'), _module.__dict__)\n"
+            "research_predict = sys.modules['_nfl_export.research_inference'].predict_research\n"
+            "RESEARCH_MODEL = " + pprint.pformat(bundle, width=85) + "\n"
+        )
     if learned:
         source += (
             "trajectory_predict = predict\nFITTED_MODEL = "
@@ -135,7 +167,7 @@ def model_source(root: Path, model: str, weights: Path) -> tuple[str, list[Path]
 
 
 def build_notebook(root: Path, model: str, weights: Path) -> tuple[Any, list[Path]]:
-    if model not in ("constant_velocity", "role_ridge", *RESIDUAL_MODELS):
+    if model not in ("constant_velocity", "role_ridge", "research", *RESIDUAL_MODELS):
         raise ValueError("Unknown export model.")
     source, dependencies = model_source(root, model, weights)
     prediction = "predictions = constant_velocity(observed, target[KEYS])"
@@ -149,6 +181,8 @@ def build_notebook(root: Path, model: str, weights: Path) -> tuple[Any, list[Pat
             "\n    predictions[['x', 'y']] = predictions[['x', 'y']].to_numpy() + "
             "predict_residual(bank, target[KEYS], RESIDUAL_MODEL)"
         )
+    if model == "research":
+        prediction = "predictions = research_predict(observed, target[KEYS], RESEARCH_MODEL)"
     setup = """COMPETITION_PATH = Path('/kaggle/input/nfl-big-data-bowl-2026-prediction')
 if not COMPETITION_PATH.exists():
     candidates = list(Path('/kaggle/input').glob('competitions/nfl-big-data-bowl-2026-prediction'))
@@ -250,7 +284,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--model",
-        choices=["constant_velocity", "role_ridge", *RESIDUAL_MODELS],
+        choices=["constant_velocity", "role_ridge", "research", *RESIDUAL_MODELS],
         default="constant_velocity",
     )
     parser.add_argument("--weights", type=Path, default=root / "artifacts/benchmark/model.json")

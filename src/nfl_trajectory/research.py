@@ -46,7 +46,10 @@ def research_stage_evidence(root: Path, folder_name: str) -> dict[str, Any]:
     """Read a complete research run only after checking all numerical output receipts."""
     from nfl_trajectory.context_experiment import context_signature
     from nfl_trajectory.feature_research import research_signature, verify_inputs
+    from nfl_trajectory.representation_experiment import representation_signature
 
+    if folder_name not in {"research", "context", "representation"}:
+        raise ValueError("Unknown research stage.")
     folder = root / "artifacts" / folder_name
     plan = json.loads((folder / "plan.json").read_text())
     summary = json.loads((folder / "summary.json").read_text())
@@ -62,6 +65,9 @@ def research_stage_evidence(root: Path, folder_name: str) -> dict[str, Any]:
         signature = research_signature(
             root, inputs, {"method": 1, "alpha": 0.01, "folds": plan["folds"]}
         )
+    elif folder_name == "representation":
+        hashes = {path: sha256(root / path) for path in plan["inputs"]}
+        signature = representation_signature(hashes, plan["parameters"])
     else:
         hashes = {path: sha256(root / path) for path in plan["inputs"]}
         signature = context_signature(
@@ -76,8 +82,10 @@ def research_stage_evidence(root: Path, folder_name: str) -> dict[str, Any]:
         raise ValueError("Research code or inputs changed since the completed experiment.")
     folds = [r["fold"] for r in summary["inner_folds"]] + [summary["fold"]]
     for fold in folds:
-        prefix = "research" if folder_name == "research" else "context"
-        suffixes = ("-screen", "-fit", "-evaluate") if prefix == "context" else ("",)
+        prefix = folder_name
+        suffixes = ("",) if prefix == "research" else ("-screen", "-fit", "-evaluate")
+        if prefix == "representation":
+            suffixes = ("-prepare", *suffixes)
         for suffix in suffixes:
             receipt_name = f"{prefix}-{fold['name']}{suffix}.json"
             receipt = json.loads((root / ".state" / receipt_name).read_text())
@@ -106,15 +114,18 @@ def feature_research_snapshot(root: Path) -> dict[str, Any]:
 
     from nfl_trajectory.context_features import context_catalog
     from nfl_trajectory.feature_candidates import research_catalog
+    from nfl_trajectory.representation_features import representation_catalog
 
     core = research_stage_evidence(root, "research")
     context = research_stage_evidence(root, "context")
+    representation = research_stage_evidence(root, "representation")
+    stages = {"research": core, "context": context, "representation": representation}
     family_counts = []
     retention = []
     stability = []
     fold_rows = []
     models_for_stage = {}
-    for label, result in (("research", core), ("context", context)):
+    for label, result in stages.items():
         folder = root / "artifacts" / label
         screen = pd.read_csv(folder / "development" / "screening.csv")
         for family, rows in screen.groupby("family", sort=True):
@@ -192,28 +203,31 @@ def feature_research_snapshot(root: Path) -> dict[str, Any]:
             )
     choices = [
         (value, stage_name, name)
-        for stage_name, result in (("research", core), ("context", context))
+        for stage_name, result in stages.items()
         for name, value in result["inner_scores"].items()
     ]
     _, chosen_stage, chosen_name = min(choices)
-    chosen_summary = core if chosen_stage == "research" else context
+    chosen_summary = stages[chosen_stage]
     selected_row = next(row for row in chosen_summary["models"] if row["model"] == chosen_name)
     core_models = models_for_stage["research"]
     core_addition = chosen_name if chosen_stage == "research" else "plus_balanced"
     retained = len(core_models["landing"]["features"]) + len(
         core_models["additions"].get(core_addition, {}).get("features", [])
     )
-    if chosen_stage == "context":
+    if chosen_stage != "research":
         retained += len(
-            models_for_stage["context"]["additions"].get(chosen_name, {}).get("features", [])
+            models_for_stage[chosen_stage]["additions"].get(chosen_name, {}).get("features", [])
         )
     baseline = next(row for row in core["models"] if row["model"] == "role_ridge")
     return {
         "format": 1,
         "status": "passed",
-        "candidate_features": len(research_catalog()) + len(context_catalog()),
+        "candidate_features": len(research_catalog())
+        + len(context_catalog())
+        + len(representation_catalog()),
         "core_candidate_features": len(research_catalog()),
         "context_candidate_features": len(context_catalog()),
+        "representation_candidate_features": len(representation_catalog()),
         "selected_stage": chosen_stage,
         "selected_model": chosen_name,
         "selected_metrics": selected_row,
@@ -221,8 +235,8 @@ def feature_research_snapshot(root: Path) -> dict[str, Any]:
         "original_role_ridge_rmse": baseline["coordinate_rmse_yards"],
         "improvement_vs_role_ridge_percent": 100
         * (1 - selected_row["coordinate_rmse_yards"] / baseline["coordinate_rmse_yards"]),
-        "models": {"research": core["models"], "context": context["models"]},
-        "inner_scores": {"research": core["inner_scores"], "context": context["inner_scores"]},
+        "models": {label: result["models"] for label, result in stages.items()},
+        "inner_scores": {label: result["inner_scores"] for label, result in stages.items()},
         "families": family_counts,
         "retention": retention,
         "stability": stability,
@@ -233,8 +247,7 @@ def feature_research_snapshot(root: Path) -> dict[str, Any]:
         "feature_gate": "open",
         "final_training_ready": False,
         "source_signatures": {
-            "research": core["source_signature"],
-            "context": context["source_signature"],
+            label: result["source_signature"] for label, result in stages.items()
         },
         "limitations": [
             "Fixed linear probes; conditional importance is not causal importance.",
@@ -258,6 +271,7 @@ def permutation_study(root: Path, snapshot: dict[str, Any]) -> dict[str, Any]:
         verify_inputs,
     )
     from nfl_trajectory.motion import KEYS
+    from nfl_trajectory.representation_features import build_representation, representation_catalog
 
     caches, _ = verify_inputs(root)
     core = json.loads((root / "artifacts/research/development/models.json").read_text())
@@ -270,13 +284,25 @@ def permutation_study(root: Path, snapshot: dict[str, Any]) -> dict[str, Any]:
         blocks.append(("research", core["additions"][core_name]))
     if names[1] == "context" and names[0] in context["additions"]:
         blocks.append(("context", context["additions"][names[0]]))
-    catalog = pd.concat([research_catalog(), context_catalog()], ignore_index=True)
+    route_model = None
+    if names[1] == "representation":
+        rep_folder = root / "artifacts/representation/development"
+        rep = json.loads((rep_folder / "models.json").read_text())
+        if names[0] in rep["additions"]:
+            blocks.append(("representation", rep["additions"][names[0]]))
+        route_model = json.loads((rep_folder / "routes.json").read_text())
+    catalog = pd.concat(
+        [research_catalog(), context_catalog(), representation_catalog()], ignore_index=True
+    )
     families = dict(zip(catalog.feature, catalog.family, strict=True))
     active = sorted({families[f] for _, model in blocks for f in model["features"]})
     components: dict[str, list[np.ndarray]] = {family: [] for family in active}
     errors, states, signs = [], [], []
     evaluation = set(core["fold"]["evaluation_games"])
     for bank, targets, arrays, state, basis, ctx in context_weeks(root, caches, evaluation):
+        representations: dict[str, Any] = {"context": ctx}
+        if route_model is not None:
+            representations["representation"] = build_representation(bank, route_model)
         sign = target_state(bank, targets).sign.to_numpy()[:, None]
         prediction = baseline_prediction(state, basis, core["baseline"])
         h = history_rows(history, targets)
@@ -290,7 +316,7 @@ def permutation_study(root: Path, snapshot: dict[str, Any]) -> dict[str, Any]:
                 x = (
                     candidate_matrix(bank, targets.iloc[start:end], h[start:end], features)
                     if kind == "research"
-                    else ctx.matrix(targets.iloc[start:end], features)
+                    else representations[kind].matrix(targets.iloc[start:end], features)
                 ).astype(float)
                 standardized = (x - np.asarray(model["mean"])) / np.asarray(model["scale"])
                 coefficients = np.asarray(model["coefficients"])
@@ -359,7 +385,10 @@ def permutation_study(root: Path, snapshot: dict[str, Any]) -> dict[str, Any]:
 
 def publish_research_report(root: Path, run: Any) -> None:
     """Materialize current verified aggregates; all computation remains reproducible."""
-    from nfl_trajectory.runtime import atomic_json, stage
+    from nfl_trajectory.context_features import context_catalog
+    from nfl_trajectory.feature_candidates import research_catalog
+    from nfl_trajectory.representation_features import representation_catalog
+    from nfl_trajectory.runtime import atomic_bytes, atomic_json, stage
 
     snapshot = feature_research_snapshot(root)
     destination = root / "artifacts/research/report"
@@ -374,15 +403,130 @@ def publish_research_report(root: Path, run: Any) -> None:
         importance = permutation_study(root, snapshot)
         atomic_json(destination / "summary.json", snapshot)
         atomic_json(destination / "permutation.json", importance)
+        research_static_figure(snapshot, destination / "stability.png")
+        catalog = pd.concat(
+            [
+                research_catalog().assign(stage="research"),
+                context_catalog().assign(stage="context"),
+                representation_catalog().assign(stage="representation"),
+            ],
+            ignore_index=True,
+        )
+        atomic_bytes(
+            destination / "catalog.csv",
+            catalog[["feature", "family", "stage"]].to_csv(index=False).encode(),
+        )
 
     stage(
         root,
         "research-report",
         signature,
-        [destination / "summary.json", destination / "permutation.json"],
+        [
+            destination / name
+            for name in ("summary.json", "permutation.json", "stability.png", "catalog.csv")
+        ],
         action,
         run,
     )
+
+
+def load_research_report(root: Path) -> tuple[dict[str, Any], dict[str, Any], str]:
+    """Use verified current local results or the clearly identified public aggregate."""
+    local = root / "artifacts/research/report"
+    if (local / "summary.json").exists():
+        summary = json.loads((local / "summary.json").read_text())
+        if summary != feature_research_snapshot(root):
+            raise ValueError("Research report is stale; rerun nfl research-report.")
+        receipt = json.loads((root / ".state/research-report.json").read_text())
+        if receipt.get("status") != "completed":
+            raise ValueError("Research report has no completed receipt.")
+        for path, digest in receipt["outputs"].items():
+            if sha256(root / path) != digest:
+                raise ValueError("Research report output checksum failed.")
+        importance = json.loads((local / "permutation.json").read_text())
+        label = "Verified local feature research"
+    else:
+        summary = json.loads((root / "docs/results/feature_research.json").read_text())
+        importance = json.loads((root / "docs/results/feature_permutation.json").read_text())
+        label = "Published aggregate from the verified research run"
+    if (
+        summary.get("status") != "passed"
+        or summary.get("holdout_evaluation") != "not_run"
+        or summary.get("source_signatures") != importance.get("source_signatures")
+        or summary.get("selected_model") != importance.get("selected_model")
+    ):
+        raise ValueError("Research report and attribution provenance disagree.")
+    if sum(r["candidates"] for r in summary["families"]) != summary["candidate_features"]:
+        raise ValueError("Research family counts do not cover the catalog.")
+    return summary, importance, label
+
+
+def feature_importance_figure(importance: dict[str, Any]) -> Any:
+    import plotly.graph_objects as go
+
+    rows = pd.DataFrame(importance["rows"]).sort_values("mean_rmse_increase_yards")
+    figure = go.Figure(
+        go.Bar(
+            x=rows.mean_rmse_increase_yards,
+            y=rows.family.str.replace("_", " "),
+            orientation="h",
+            error_x={"type": "data", "array": rows.shuffle_sd_yards},
+            marker_color="#167c80",
+            hovertemplate="%{y}<br>RMSE increase: %{x:.4f} yd<extra></extra>",
+        )
+    )
+    figure.update_layout(
+        title="Which retained feature families does the predictor use?",
+        template="plotly_white",
+        height=440,
+        xaxis_title="Development RMSE increase after joint trajectory permutation (yards)",
+        yaxis_title=None,
+        margin={"l": 190, "r": 40, "t": 65, "b": 70},
+    )
+    return figure
+
+
+def research_static_figure(snapshot: dict[str, Any], destination: Path) -> None:
+    """Readable GitHub fallback for the interactive chronological-fold heatmap."""
+    from io import BytesIO
+
+    import matplotlib.pyplot as plt
+
+    from nfl_trajectory.runtime import atomic_bytes
+
+    rows = pd.DataFrame(snapshot["fold_results"])
+    rows = rows[rows.model.str.startswith("plus_")].copy()
+    rows["label"] = rows.stage + " / " + rows.model.str.removeprefix("plus_")
+    pivot = rows.pivot(index="label", columns="fold", values="improvement_vs_parent_percent")
+    values = pivot.to_numpy()
+    limit = max(float(np.abs(values).max()), 0.1)
+    fig, ax = plt.subplots(figsize=(11, 8), layout="constrained")
+    chart = ax.imshow(values, cmap="RdBu", vmin=-limit, vmax=limit, aspect="auto")
+    ax.set_yticks(range(len(pivot)), pivot.index.str.replace("_", " "), fontsize=9)
+    ax.set_xticks(range(len(pivot.columns)), ["Earlier", "Middle", "Later"])
+    ax.set_title(
+        "Feature gains must survive time\nChronological training-only evaluation folds",
+        loc="left",
+        fontsize=15,
+        pad=18,
+    )
+    ax.set_xlabel("Positive: lower official coordinate RMSE versus the fixed parent")
+    for i in range(len(pivot)):
+        for j in range(len(pivot.columns)):
+            ax.text(
+                j,
+                i,
+                f"{values[i, j]:+.2f}%",
+                ha="center",
+                va="center",
+                color="white" if abs(values[i, j]) > limit * 0.6 else "#17252c",
+                fontsize=9,
+            )
+    fig.colorbar(chart, ax=ax, shrink=0.6, label="RMSE improvement (%)")
+    buffer = BytesIO()
+    fig.savefig(buffer, format="png", dpi=155)
+    plt.close(fig)
+    atomic_bytes(destination, buffer.getvalue())
 
 
 def research_comparison_figure(snapshot: dict[str, Any]) -> Any:

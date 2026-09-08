@@ -301,17 +301,79 @@ def test_research_end_to_end_resume_and_original_preservation(research_project):
     with Run(root, "context-research", heartbeat_seconds=0.1) as context_resume:
         context_research(root, context_resume)
     assert '"stage_started"' not in context_resume.log_path.read_text()
+    from nfl_trajectory.representation_experiment import representation_research
+
+    with Run(root, "representation-research", heartbeat_seconds=0.1) as rep_run:
+        representation_research(root, rep_run)
+    with Run(root, "representation-research", heartbeat_seconds=0.1) as rep_resume:
+        representation_research(root, rep_resume)
+    assert '"stage_started"' not in rep_resume.log_path.read_text()
+    routes = json.loads((root / "artifacts/representation/inner_1/routes.json").read_text())
+    expected_training = summary["inner_folds"][0]["fold"]["training_games"]
+    assert routes["training_games"] == expected_training
+    assert routes["training_entities"] == 3 * len(expected_training)
     from nfl_trajectory.research import feature_research_snapshot, permutation_study
 
     snapshot = feature_research_snapshot(root)
-    assert snapshot["candidate_features"] == 6855
-    assert len(snapshot["families"]) == 17
+    assert snapshot["candidate_features"] == 7999
+    assert len(snapshot["families"]) == 20
     assert not snapshot["final_training_ready"]
     importance = permutation_study(root, snapshot)
     assert importance["status"] == "passed"
     assert importance["unpermuted_coordinate_rmse_yards"] == pytest.approx(
         snapshot["selected_metrics"]["coordinate_rmse_yards"]
     )
+    from nfl_trajectory.research_inference import predict_research, research_bundle
+
+    bundle = research_bundle(root)
+    observed = pd.read_csv(root / "data/raw/train/input_2023_w07.csv")
+    targets = pd.read_csv(root / "data/raw/train/output_2023_w07.csv")
+    actual = predict_research(observed, targets, bundle)
+    error = actual[["x", "y"]].to_numpy() - targets[["x", "y"]].to_numpy()
+    assert np.sqrt(np.mean(error**2)) == pytest.approx(
+        snapshot["selected_metrics"]["coordinate_rmse_yards"], abs=1e-8
+    )
+    poisoned = targets.copy()
+    poisoned[["x", "y"]] = np.nan
+    pd.testing.assert_frame_equal(predict_research(observed, poisoned, bundle), actual)
+    with pytest.raises(ValueError, match="strictly follow"):
+        predict_research(observed, targets.assign(game_id=bundle["training_games"][0]), bundle)
+    import importlib.util
+    import shutil
+
+    from nfl_trajectory.research_inference import INFERENCE_MODULES
+
+    source_root = Path(__file__).resolve().parents[1]
+    for name in (*INFERENCE_MODULES, "runtime"):
+        destination = root / "src/nfl_trajectory" / (name + ".py")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source_root / "src/nfl_trajectory" / (name + ".py"), destination)
+    spec = importlib.util.spec_from_file_location(
+        "research_export_test", source_root / "kaggle/export.py"
+    )
+    exporter = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(exporter)
+    source, _ = exporter.model_source(root, "research", root / "artifacts/benchmark/model.json")
+    namespace = {}
+    exec(compile(source, "standalone.py", "exec"), namespace)
+    exported = namespace["research_predict"](observed, poisoned, namespace["RESEARCH_MODEL"])
+    pd.testing.assert_frame_equal(exported, actual)
+    probe_spec = importlib.util.spec_from_file_location(
+        "nonlinear_probe_test", source_root / "scripts/nonlinear_probe.py"
+    )
+    probe = importlib.util.module_from_spec(probe_spec)
+    probe_spec.loader.exec_module(probe)
+    core = json.loads((root / "artifacts/research/inner_1/models.json").read_text())
+    ctx = json.loads((root / "artifacts/context/inner_1/models.json").read_text())
+    rep = json.loads((root / "artifacts/representation/inner_1/models.json").read_text())
+    variants = probe.feature_sets(core, ctx, rep)
+    names = sorted(set(variants["all_engineered"] + variants["core_plus_noise"]))
+    caches, _ = verify_inputs(root)
+    matrix, residual, _, _, _, states = probe.materialize(root, caches, core["fold"], names, True)
+    assert set(states.game_id) == set(core["fold"]["training_games"])
+    assert matrix.shape == (len(states), len(names))
+    assert residual.shape == (len(states), 2)
+    assert np.isfinite(matrix).all()
     context_model = root / "artifacts/context/development/models.json"
     context_model.write_text(context_model.read_text() + " ")
     with pytest.raises(ValueError, match="checksum"):

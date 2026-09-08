@@ -7,18 +7,18 @@ Preserve locally executed notebooks and published results before pulling updated
 
 ```bash
 cd "$HOME/nfl-player-trajectory" &&
-git stash push -m "completed results before notebook review" -- notebooks docs/results &&
+git stash push --include-untracked -m "completed results before notebook review" -- notebooks docs/results &&
 git pull --ff-only origin main &&
 python3 scripts/bootstrap.py &&
 .venv/bin/python scripts/notebooks.py --publish &&
 .venv/bin/nfl backup
 ```
 
-The stash preserves only notebook/result edits. Do not pop an old render over newly
-published notebooks. Other source edits are not discarded; conflicting pulls stop safely.
-Your data, `.state/`, features, and fitted models are not removed. Bootstrap tests the
-updated code without retraining the baseline, and test exports no longer overwrite
-your own `artifacts/kaggle/submission.ipynb`.
+The scoped stash preserves notebook/result edits and newly generated, untracked result
+files. Do not pop an old render over newly published notebooks. Other source edits are
+not discarded; conflicting pulls stop safely. Your data, `.state/`, features, and fitted
+models are not removed. Bootstrap tests the updated code without retraining the baseline,
+and test exports no longer overwrite your own `artifacts/kaggle/submission.ipynb`.
 
 ## Your notebook workflow
 

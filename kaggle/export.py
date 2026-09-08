@@ -169,13 +169,17 @@ CORRECTION        return prediction[['x', 'y']]
         raise ValueError('Cached predictions must match the requested rows and be finite.')
     return pd.DataFrame(values, columns=['x', 'y'])
 
-with Run(Path.cwd(), 'kaggle_gateway') as gateway_run:
-    server = inference_module.NFLInferenceServer(predict)
-    if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
-        server.serve()
-    else:
-        server.run_local_gateway((str(COMPETITION_PATH),))
-        gateway_run.event('local_gateway_completed', submission_status='not_submitted')
+with Run(Path.cwd(), 'kaggle_gateway') as active_run:
+    gateway_run = active_run
+    try:
+        server = inference_module.NFLInferenceServer(predict)
+        if os.getenv('KAGGLE_IS_COMPETITION_RERUN'):
+            server.serve()
+        else:
+            server.run_local_gateway((str(COMPETITION_PATH),))
+            active_run.event('local_gateway_completed', submission_status='not_submitted')
+    finally:
+        gateway_run = None
 """.replace("MODEL_EXPRESSION", expression).replace("CORRECTION", correction)
     notebook = nbformat.v4.new_notebook(
         cells=[
@@ -234,6 +238,10 @@ def export_notebook(root: Path, model: str, weights: Path | None = None,
             formatted = subprocess.run(
                 [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
                 input=ordered.stdout, text=True, capture_output=True, check=True,
+            )
+            subprocess.run(
+                [sys.executable, "-m", "ruff", "check", "--stdin-filename", "submission.ipynb", "-"],
+                input=formatted.stdout, text=True, capture_output=True, check=True,
             )
             nbformat.validate(nbformat.reads(formatted.stdout, as_version=4))
             atomic_bytes(destination, formatted.stdout.encode())

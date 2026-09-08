@@ -229,6 +229,21 @@ def test_same_inputs_make_identical_notebook_source():
     assert a == b
     assert "competition_submit" not in a
     assert "kernels_push" not in a
+    # Exercise the full generated residual template, not only the smaller motion baselines.
+    ordered = subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix",
+         "--stdin-filename", "submission.ipynb", "-"],
+        input=a, text=True, capture_output=True, check=True, cwd=root,
+    )
+    formatted = subprocess.run(
+        [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
+        input=ordered.stdout, text=True, capture_output=True, check=True, cwd=root,
+    )
+    checked = subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "--stdin-filename", "submission.ipynb", "-"],
+        input=formatted.stdout, text=True, capture_output=True, cwd=root,
+    )
+    assert checked.returncode == 0, checked.stdout + checked.stderr
 
 
 def test_feature_export_requires_matching_completion_evidence(tmp_path):

@@ -295,7 +295,7 @@ def main() -> None:
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")
         # Only presentation files may come from a later, explicitly pinned review commit.
-        report_commit = commit if mode == "finalize" else None
+        report_commit = None
         for attempt in range(80):
             if report_commit is not None:
                 break

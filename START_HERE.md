@@ -12,7 +12,7 @@ updated canonical sources. Run this in the **NFL** terminal, not the Jigsaw term
 ```bash
 cd "$HOME/nfl-player-trajectory" &&
 test "$(git branch --show-current)" = main &&
-git stash push -m "notebook-session-$(date -u +%Y%m%dT%H%M%SZ)" -- notebooks docs/results &&
+git stash push --include-untracked -m "notebook-session-$(date -u +%Y%m%dT%H%M%SZ)" -- notebooks docs/results &&
 git pull --ff-only origin main &&
 .venv/bin/python scripts/quality.py &&
 .venv/bin/python scripts/notebooks.py --publish &&
@@ -20,12 +20,13 @@ git pull --ff-only origin main &&
 .venv/bin/nfl status
 ```
 
-The named stash preserves tracked local notebook/results edits. Do not pop it over
-the new sources, reset hard, or clean private artifacts. Unrelated source edits are
-not discarded; a conflicting pull stops. This sequence does not change dependencies,
-retrain the baseline/feature models, or create an AWS instance. It verifies code,
-executes the review notebooks, publishes validated local evidence into the same
-canonical paths, and backs up the completed work to the existing private bucket.
+The scoped stash preserves tracked and untracked local notebook/results files.
+Do not pop it over the new sources, reset hard, or clean private artifacts.
+Unrelated source edits are not discarded; a conflicting pull stops. This sequence
+does not change dependencies, retrain the baseline/feature models, or create an
+AWS instance. It verifies code, executes the review notebooks, publishes validated
+local evidence into the same canonical paths, and backs up the completed work to
+the existing private bucket.
 
 Watch UTC cell/stage events, `stage_reused`, 15-second heartbeats, stage/total elapsed
 time, `notebooks_published`, and `backup_completed`. Logs are under `logs/`.

@@ -77,7 +77,8 @@ def cached_predict(target, observed):
     digest = hashlib.sha256(MODEL_FINGERPRINT.encode())
     digest.update(json.dumps([np.__version__, pd.__version__]).encode())
     for frame in (target, observed):
-        digest.update(json.dumps(list(zip(frame.columns, map(str, frame.dtypes), strict=True))).encode())
+        schema = list(zip(frame.columns, map(str, frame.dtypes), strict=True))
+        digest.update(json.dumps(schema).encode())
         digest.update(pd.util.hash_pandas_object(frame, index=False).to_numpy().tobytes())
     signature = digest.hexdigest()
     folder = CACHE_DIR / signature
@@ -93,7 +94,10 @@ def cached_predict(target, observed):
         if valid:
             values = np.load(io.BytesIO(payload), allow_pickle=False)
             result = validate_prediction(pd.DataFrame(values, columns=["x", "y"]), len(target))
-            emit("prediction_reused", rows=len(target), stage_elapsed_seconds=round(time.monotonic() - started, 3))
+            emit(
+                "prediction_reused", rows=len(target),
+                stage_elapsed_seconds=round(time.monotonic() - started, 3),
+            )
             return result
     except (OSError, ValueError, TypeError, KeyError, EOFError):
         pass  # Missing or invalid receipts cause recomputation, never silent reuse.
@@ -102,9 +106,15 @@ def cached_predict(target, observed):
     np.save(buffer, result.to_numpy(dtype=float), allow_pickle=False)
     payload = buffer.getvalue()
     atomic_write(prediction_path, payload)
-    receipt = {"signature": signature, "sha256": hashlib.sha256(payload).hexdigest(), "rows": len(target)}
+    receipt = {
+        "signature": signature, "sha256": hashlib.sha256(payload).hexdigest(),
+        "rows": len(target),
+    }
     atomic_write(receipt_path, (json.dumps(receipt, sort_keys=True) + "\\n").encode())
-    emit("prediction_completed", rows=len(target), stage_elapsed_seconds=round(time.monotonic() - started, 3))
+    emit(
+        "prediction_completed", rows=len(target),
+        stage_elapsed_seconds=round(time.monotonic() - started, 3),
+    )
     return result
 
 
@@ -138,7 +148,10 @@ def run_gateway(server, competition_path):
     stop = threading.Event()
     def heartbeat():
         while not stop.wait(15):
-            emit("heartbeat", status="running", stage_elapsed_seconds=round(time.monotonic() - RUN_STARTED, 3))
+            emit(
+                "heartbeat", status="running",
+                stage_elapsed_seconds=round(time.monotonic() - RUN_STARTED, 3),
+            )
     worker = threading.Thread(target=heartbeat, daemon=True)
     worker.start()
     emit("inference_started", model=MODEL_NAME, competition_rerun=rerun)
@@ -156,13 +169,21 @@ def run_gateway(server, competition_path):
             finally:
                 os.chdir(output_root)
             # An unsuccessful gateway never overwrites the previous valid submission.
-            atomic_write(output_root / "submission.parquet", (folder / "submission.parquet").read_bytes())
-            atomic_write(output_root / "submission_manifest.json", (json.dumps(manifest, indent=2) + "\\n").encode())
+            atomic_write(
+                output_root / "submission.parquet",
+                (folder / "submission.parquet").read_bytes(),
+            )
+            atomic_write(
+                output_root / "submission_manifest.json",
+                (json.dumps(manifest, indent=2) + "\\n").encode(),
+            )
         emit("SUBMISSION_VALIDATED", rows=manifest["rows"], preview_only=True,
              stage_elapsed_seconds=round(time.monotonic() - RUN_STARTED, 3))
         from IPython.display import FileLink, display
         display(FileLink("submission.parquet", result_html_prefix="Download your gateway output: "))
-        display(FileLink("submission_manifest.json", result_html_prefix="Download validation manifest: "))
+        display(FileLink(
+            "submission_manifest.json", result_html_prefix="Download validation manifest: "
+        ))
         print("This is preview inference, not a scored submission. You control Kaggle submission.")
     except BaseException as error:
         emit("inference_failed", error_type=type(error).__name__)
@@ -188,7 +209,9 @@ def validate_residual(model: dict[str, Any], baseline_path: Path) -> None:
         or model.get("training_games") != baseline.get("training_games")
         or model.get("source_sha256") != numerical_sources()
     ):
-        raise ValueError("Residual weights do not match the baseline, training split, or numerical code.")
+        raise ValueError(
+            "Residual weights do not match the baseline, training split, or numerical code."
+        )
     known = set(feature_catalog().feature)
     if not isinstance(model.get("models"), dict) or not model["models"]:
         raise ValueError("Residual model collection is missing.")
@@ -196,8 +219,10 @@ def validate_residual(model: dict[str, Any], baseline_path: Path) -> None:
         names = fitted.get("features", [])
         if not names or len(names) != len(set(names)) or not set(names).issubset(known):
             raise ValueError("Residual feature schema is invalid.")
-        for name, shape in (("mean", (len(names),)), ("scale", (len(names),)),
-                            ("coefficients", (len(names), 2)), ("intercept", (2,))):
+        for name, shape in (
+            ("mean", (len(names),)), ("scale", (len(names),)),
+            ("coefficients", (len(names), 2)), ("intercept", (2,)),
+        ):
             array = np.asarray(fitted.get(name), dtype=float)
             if array.shape != shape or not np.isfinite(array).all():
                 raise ValueError("Residual weights have an invalid shape or nonfinite value.")
@@ -205,7 +230,9 @@ def validate_residual(model: dict[str, Any], baseline_path: Path) -> None:
                 raise ValueError("Residual scales must be positive.")
 
 
-def build_source(root: Path, model: str, weights: Path, feature_weights: Path) -> tuple[str, dict[str, Any]]:
+def build_source(
+    root: Path, model: str, weights: Path, feature_weights: Path
+) -> tuple[str, dict[str, Any]]:
     from nfl_trajectory.models import BASIS
 
     if model not in MODELS:
@@ -218,13 +245,17 @@ def build_source(root: Path, model: str, weights: Path, feature_weights: Path) -
         paths.append(root / "src/nfl_trajectory/features.py")
     definitions: list[ast.stmt] = []
     for path in paths:
-        definitions.extend(node for node in ast.parse(path.read_text()).body
-                           if not isinstance(node, (ast.Import, ast.ImportFrom))
-                           and not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant)))
+        definitions.extend(
+            node for node in ast.parse(path.read_text()).body
+            if not isinstance(node, (ast.Import, ast.ImportFrom))
+            and not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant))
+        )
     if residual:
         parsed = ast.parse((root / "src/nfl_trajectory/feature_experiment.py").read_text())
-        definitions.extend(node for node in parsed.body
-                           if isinstance(node, ast.FunctionDef) and node.name in ("target_state", "predict_residual"))
+        definitions.extend(
+            node for node in parsed.body
+            if isinstance(node, ast.FunctionDef) and node.name in ("target_state", "predict_residual")
+        )
     source = (
         "from __future__ import annotations\n"
         "import hashlib\nimport importlib\nimport io\nimport json\nimport os\n"
@@ -240,26 +271,44 @@ def build_source(root: Path, model: str, weights: Path, feature_weights: Path) -
         fitted = json.loads(weights.read_text())
         if fitted.get("basis") != BASIS or fitted.get("format") != 1:
             raise ValueError("Use weights produced by nfl benchmark.")
-        source += "trajectory_predict = predict\nFITTED_MODEL = " + pprint.pformat(fitted, width=85, sort_dicts=True) + "\n"
+        source += (
+            "trajectory_predict = predict\nFITTED_MODEL = "
+            + pprint.pformat(fitted, width=85, sort_dicts=True) + "\n"
+        )
         evidence["baseline_sha256"] = sha256(weights)
     if residual:
         feature_model = json.loads(feature_weights.read_text())
         validate_residual(feature_model, weights)
         if model not in feature_model["models"]:
             raise ValueError("The selected residual model has not been trained.")
-        source += "BATCH_ROWS = 1024\nRESIDUAL_MODEL = " + pprint.pformat(feature_model["models"][model], width=85, sort_dicts=True) + "\n"
+        source += (
+            "BATCH_ROWS = 1024\nRESIDUAL_MODEL = "
+            + pprint.pformat(feature_model["models"][model], width=85, sort_dicts=True) + "\n"
+        )
         evidence["feature_model_sha256"] = sha256(feature_weights)
     if model == "constant_velocity":
-        implementation = "return constant_velocity(observed, target[KEYS])[[\"x\", \"y\"]]"
+        implementation = 'return constant_velocity(observed, target[KEYS])[["x", "y"]]'
     else:
-        implementation = "result = trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)\n"
+        implementation = (
+            "result = trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)\n"
+        )
         if residual:
-            implementation += "bank = build_player_features(observed, target[ENTITY].drop_duplicates())\nresult[['x', 'y']] += predict_residual(bank, target[KEYS], RESIDUAL_MODEL)\n"
+            implementation += (
+                "bank = build_player_features(observed, target[ENTITY].drop_duplicates())\n"
+                "result[['x', 'y']] += predict_residual(bank, target[KEYS], RESIDUAL_MODEL)\n"
+            )
         implementation += "return result[['x', 'y']]"
-    source += "\ndef model_prediction(target, observed):\n" + "\n".join("    " + line for line in implementation.splitlines()) + "\n"
+    source += (
+        "\ndef model_prediction(target, observed):\n"
+        + "\n".join("    " + line for line in implementation.splitlines()) + "\n"
+    )
     identity = hashlib.sha256((source + RUNTIME).encode()).hexdigest()
     source += f"\nMODEL_NAME = {model!r}\nMODEL_FINGERPRINT = {identity!r}\n" + RUNTIME
-    ordered = subprocess.run([sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix", "--stdin-filename", "model.py", "-"], input=source, text=True, capture_output=True, check=True)
+    ordered = subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix",
+         "--stdin-filename", "model.py", "-"],
+        input=source, text=True, capture_output=True, check=True,
+    )
     return ordered.stdout, evidence
 
 
@@ -267,13 +316,19 @@ def export_notebook(root: Path, model: str, weights: Path, feature_weights: Path
     """Generate a reproducible, checksummed notebook from saved weights; never retrain."""
     destination = root / "artifacts/kaggle/submission.ipynb"
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with FileLock(str(destination.parent / "export.lock"), timeout=1), Run(root, "export_kaggle") as run:
+    with (
+        FileLock(str(destination.parent / "export.lock"), timeout=1),
+        Run(root, "export_kaggle") as run,
+    ):
         source, evidence = build_source(root, model, weights, feature_weights)
-        setup = '''COMPETITION_PATH = Path(os.getenv("NFL_COMPETITION_PATH", "/kaggle/input/nfl-big-data-bowl-2026-prediction")).expanduser().resolve()
+        setup = '''DEFAULT_DATA = "/kaggle/input/nfl-big-data-bowl-2026-prediction"
+COMPETITION_PATH = Path(os.getenv("NFL_COMPETITION_PATH", DEFAULT_DATA)).expanduser().resolve()
 if not COMPETITION_PATH.is_dir():
     candidates = list(Path("/kaggle/input").glob("competitions/nfl-big-data-bowl-2026-prediction"))
     if len(candidates) != 1:
-        raise FileNotFoundError("Attach the official competition, or set NFL_COMPETITION_PATH to its local data directory.")
+        raise FileNotFoundError(
+            "Attach the official competition, or set NFL_COMPETITION_PATH to its data directory."
+        )
     COMPETITION_PATH = candidates[0].resolve()
 sys.path.insert(0, str(COMPETITION_PATH))
 inference_module = importlib.import_module("kaggle_evaluation.nfl_inference_server")
@@ -288,22 +343,48 @@ server = inference_module.NFLInferenceServer(predict)
 run_gateway(server, COMPETITION_PATH)
 '''
         description = (
-            f"# NFL trajectory inference\n\n**Model:** `{model}`. Generated by your notebook from saved weights; no training occurs here. "
-            "The learned weights and required inference code are embedded. Attach the official competition, use CPU, and disable internet. "
-            "Run all cells to generate and validate `submission.parquet`, then use the displayed download link. "
-            "The preview is not a leaderboard score; you decide whether to submit the saved version to Kaggle.\n\n"
-            "Completed local play predictions are reusable only with matching input/code/model/version signatures and checksums. "
-            "An interrupted play is recomputed. Cache files survive only while their filesystem or a saved copy is retained; "
-            "a new Kaggle session does not automatically restore them. Hidden competition reruns do not reuse preview caches.\n\n"
-            "UTC events, per-play elapsed time, total time, and 15-second heartbeats are written to `inference.jsonl`. "
-            "The previous valid output is preserved if gateway validation fails. No automatic upload or submission is performed.\n\n"
-            "Interface: [official organizer example](https://www.kaggle.com/code/sohier/nfl-2026-demo-submission)."
+            f"# NFL trajectory inference\n\n**Model:** `{model}`. "
+            "Generated by your notebook from saved weights; no training occurs here. "
+            "The learned weights and required inference code are embedded. "
+            "Attach the official competition, use CPU, and disable internet. "
+            "Run all cells to generate and validate `submission.parquet`, "
+            "then use the displayed download link. "
+            "The preview is not a leaderboard score; you decide whether to "
+            "submit the saved version to Kaggle.\n\n"
+            "Completed local play predictions are reusable only with matching "
+            "input/code/model/version signatures and checksums. "
+            "An interrupted play is recomputed. Cache files survive only while "
+            "their filesystem or a saved copy is retained; a new Kaggle session "
+            "does not automatically restore them. Hidden competition reruns "
+            "do not reuse preview caches.\n\n"
+            "UTC events, per-play elapsed time, total time, and 15-second "
+            "heartbeats are written to `inference.jsonl`. "
+            "The previous valid output is preserved if gateway validation fails. "
+            "No automatic upload or submission is performed.\n\n"
+            "Interface: [official organizer example]"
+            "(https://www.kaggle.com/code/sohier/nfl-2026-demo-submission)."
         )
-        notebook = nbformat.v4.new_notebook(cells=[nbformat.v4.new_markdown_cell(description), nbformat.v4.new_code_cell(source), nbformat.v4.new_code_cell(setup), nbformat.v4.new_code_cell(interface)], metadata={"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}})
-        formatted = subprocess.run([sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"], input=nbformat.writes(notebook), text=True, capture_output=True, check=True).stdout
+        notebook = nbformat.v4.new_notebook(
+            cells=[
+                nbformat.v4.new_markdown_cell(description),
+                nbformat.v4.new_code_cell(source),
+                nbformat.v4.new_code_cell(setup),
+                nbformat.v4.new_code_cell(interface),
+            ],
+            metadata={
+                "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}
+            },
+        )
+        formatted = subprocess.run(
+            [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
+            input=nbformat.writes(notebook), text=True, capture_output=True, check=True,
+        ).stdout
         result = nbformat.reads(formatted, as_version=4)
         nbformat.validate(result)
-        compile("\n".join(c.source for c in result.cells if c.cell_type == "code"), "submission.py", "exec")
+        compile(
+            "\n".join(c.source for c in result.cells if c.cell_type == "code"),
+            "submission.py", "exec",
+        )
         # Compare before writing so a repeated export does not invalidate downstream receipts.
         # nbformat IDs are normalized for byte-for-byte reproducible generation.
         for i, cell in enumerate(result.cells):
@@ -311,9 +392,16 @@ run_gateway(server, COMPETITION_PATH)
         payload = nbformat.writes(result).encode()
         if not destination.exists() or destination.read_bytes() != payload:
             atomic_bytes(destination, payload)
-        manifest = {"format": 1, **evidence, "notebook_sha256": sha256(destination), "official_gateway_status": "not_run", "uploaded_to_kaggle": False}
+        manifest = {
+            "format": 1, **evidence, "notebook_sha256": sha256(destination),
+            "official_gateway_status": "not_run", "uploaded_to_kaggle": False,
+        }
         atomic_json(destination.parent / "export_manifest.json", manifest)
-        run.event("notebook_exported", path=str(destination.relative_to(root)), model=model, official_gateway_status="not_run", total_elapsed_seconds=round(time.monotonic() - run.started, 3))
+        run.event(
+            "notebook_exported", path=str(destination.relative_to(root)), model=model,
+            official_gateway_status="not_run",
+            total_elapsed_seconds=round(time.monotonic() - run.started, 3),
+        )
     return destination
 
 
@@ -322,7 +410,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", choices=MODELS, default="constant_velocity")
     parser.add_argument("--weights", type=Path, default=root / "artifacts/benchmark/model.json")
-    parser.add_argument("--feature-weights", type=Path, default=root / "artifacts/features/model.json")
+    parser.add_argument(
+        "--feature-weights", type=Path, default=root / "artifacts/features/model.json"
+    )
     args = parser.parse_args()
     export_notebook(root, args.model, args.weights, args.feature_weights)
     return 0

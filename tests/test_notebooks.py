@@ -215,9 +215,52 @@ def test_exporter_change_invalidates_notebook_checkpoint(project: Path) -> None:
 
 
 def test_inline_download_payload_cannot_be_published(project: Path) -> None:
-    source = notebook(project, code=("from IPython.display import HTML, display\n" "display(HTML('<a href=\"data:application/octet-stream;base64,dGVzdA==\">download</a>'))"))
+    source = notebook(project, code=(
+        "from IPython.display import HTML, display\n"
+        "display(HTML('<a href=\"data:application/octet-stream;base64,dGVzdA==\">get</a>'))"
+    ))
     execute(project, source)
     original = source.read_bytes()
     with Run(project, "publish") as run, pytest.raises(ValueError, match="Disable submission"):
         runner.publish(project, [source], runner.local_results(project), run)
     assert source.read_bytes() == original
+
+
+def test_documented_update_preserves_untracked_local_results(tmp_path: Path) -> None:
+    """The published feature summary may already exist locally before Git tracks it."""
+    remote, author, local = [tmp_path / name for name in ("remote.git", "author", "local")]
+
+    def git(folder: Path, *args: str) -> str:
+        return subprocess.run(
+            ["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", *args],
+            cwd=folder, check=True, text=True, capture_output=True,
+        ).stdout
+
+    git(tmp_path, "init", "--bare", str(remote))
+    git(tmp_path, "clone", str(remote), str(author))
+    git(author, "switch", "-c", "main")
+    (author / "notebooks").mkdir()
+    (author / "notebooks/02.ipynb").write_text("original notebook")
+    git(author, "add", "notebooks")
+    git(author, "commit", "-m", "initial")
+    git(author, "push", "origin", "main")
+    git(tmp_path, "clone", "--branch", "main", str(remote), str(local))
+    for folder in (author, local):
+        (folder / "docs/results").mkdir(parents=True)
+    (local / "docs/results/feature_summary.json").write_text("local evidence")
+    (local / "notebooks/02.ipynb").write_text("local executed notebook")
+    (local / "artifacts").mkdir()
+    (local / "artifacts/private.json").write_text("private saved run")
+    (author / "docs/results/feature_summary.json").write_text("published evidence")
+    git(author, "add", "docs")
+    git(author, "commit", "-m", "publish results")
+    git(author, "push", "origin", "main")
+    block = (ROOT / "START_HERE.md").read_text().split("```bash\n", 1)[1].split("```", 1)[0]
+    commands = [line.rstrip(" &") for line in block.splitlines()]
+    subprocess.run(["bash", "-c", " && ".join(commands[1:4])], cwd=local, check=True,
+                   text=True, capture_output=True)
+    assert (local / "docs/results/feature_summary.json").read_text() == "published evidence"
+    assert (local / "notebooks/02.ipynb").read_text() == "original notebook"
+    assert (local / "artifacts/private.json").read_text() == "private saved run"
+    assert git(local, "show", "stash@{0}:notebooks/02.ipynb") == "local executed notebook"
+    assert git(local, "show", "stash@{0}^3:docs/results/feature_summary.json") == "local evidence"

@@ -21,8 +21,9 @@ MODELS = ("constant_velocity", "role_ridge", "motion_ridge", "landing_ridge", "i
 RESIDUAL_MODELS = MODELS[2:]
 
 
-def load_parameters(root: Path, model: str, weights: Path,
-                    feature_weights: Path) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
+def load_parameters(
+    root: Path, model: str, weights: Path, feature_weights: Path
+) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:
     if model not in MODELS:
         raise ValueError("Choose a supported, explicitly named model.")
     if model == "constant_velocity":
@@ -46,28 +47,40 @@ def load_parameters(root: Path, model: str, weights: Path,
     summary_path = root / "artifacts/features/summary.json"
     summary = json.loads(summary_path.read_text())
     relative = feature_weights.resolve().relative_to(root.resolve()).as_posix()
-    if (bundle.get("format") != 1 or bundle.get("source_sha256") != numerical_sources()
-            or bundle.get("baseline_sha256") != sha256(weights)
-            or not fitted.get("training_games")
-            or bundle.get("training_games") != fitted["training_games"]
-            or bundle.get("split_sha256") != fitted.get("split_sha256")
-            or receipt.get("status") != "completed"
-            or receipt.get("outputs", {}).get(relative) != sha256(feature_weights)
-            or receipt.get("outputs", {}).get("artifacts/features/summary.json") != sha256(summary_path)
-            or receipt.get("signature") != summary.get("numerical_signature")
-            or summary.get("status") != "passed" or summary.get("split") != "validation"
-            or summary.get("holdout_evaluation") != "not_run"
-            or summary.get("screening_split") != "train"
-            or summary.get("source_sha256") != bundle.get("source_sha256")
-            or summary.get("baseline_sha256") != bundle.get("baseline_sha256")
-            or summary.get("split_sha256") != bundle.get("split_sha256")):
+    if (
+        bundle.get("format") != 1
+        or bundle.get("source_sha256") != numerical_sources()
+        or bundle.get("baseline_sha256") != sha256(weights)
+        or not fitted.get("training_games")
+        or bundle.get("training_games") != fitted["training_games"]
+        or bundle.get("split_sha256") != fitted.get("split_sha256")
+        or receipt.get("status") != "completed"
+        or receipt.get("outputs", {}).get(relative) != sha256(feature_weights)
+        or receipt.get("outputs", {}).get("artifacts/features/summary.json") != sha256(summary_path)
+        or receipt.get("signature") != summary.get("numerical_signature")
+        or summary.get("status") != "passed"
+        or summary.get("split") != "validation"
+        or summary.get("holdout_evaluation") != "not_run"
+        or summary.get("screening_split") != "train"
+        or summary.get("source_sha256") != bundle.get("source_sha256")
+        or summary.get("baseline_sha256") != bundle.get("baseline_sha256")
+        or summary.get("split_sha256") != bundle.get("split_sha256")
+    ):
         raise ValueError("Feature export requires completed, matching source/model/split evidence.")
     residual = bundle["models"][model]
     names = residual["features"]
-    if not names or len(names) != len(set(names)) or not set(names).issubset(feature_catalog().feature):
+    if (
+        not names
+        or len(names) != len(set(names))
+        or not set(names).issubset(feature_catalog().feature)
+    ):
         raise ValueError("Invalid residual feature names.")
-    shapes = {"mean": (len(names),), "scale": (len(names),),
-              "coefficients": (len(names), 2), "intercept": (2,)}
+    shapes = {
+        "mean": (len(names),),
+        "scale": (len(names),),
+        "coefficients": (len(names), 2),
+        "intercept": (2,),
+    }
     for name, shape in shapes.items():
         value = np.asarray(residual[name], dtype=float)
         if value.shape != shape or not np.isfinite(value).all():
@@ -93,8 +106,13 @@ def definitions(path: Path, selected: set[str] | None = None) -> list[ast.stmt]:
     return result
 
 
-def build_notebook(root: Path, model: str, fitted: dict[str, Any] | None,
-                   residual: dict[str, Any] | None, signature: str) -> Any:
+def build_notebook(
+    root: Path,
+    model: str,
+    fitted: dict[str, Any] | None,
+    residual: dict[str, Any] | None,
+    signature: str,
+) -> Any:
     """Pure notebook construction; export validates provenance before calling this function."""
     package = root / "src/nfl_trajectory"
     nodes = definitions(package / "motion.py")
@@ -102,10 +120,12 @@ def build_notebook(root: Path, model: str, fitted: dict[str, Any] | None,
         nodes += definitions(package / "models.py")
     if model in RESIDUAL_MODELS:
         nodes += definitions(package / "features.py")
-        nodes += definitions(package / "feature_experiment.py",
-                             {"BATCH_ROWS", "target_state", "predict_residual"})
-    nodes += definitions(package / "runtime.py",
-                         {"Run", "stage", "sha256", "atomic_bytes", "atomic_json"})
+        nodes += definitions(
+            package / "feature_experiment.py", {"BATCH_ROWS", "target_state", "predict_residual"}
+        )
+    nodes += definitions(
+        package / "runtime.py", {"Run", "stage", "sha256", "atomic_bytes", "atomic_json"}
+    )
     source = (
         "from __future__ import annotations\n"
         "import hashlib\nimport importlib\nimport json\nimport os\nimport sys\n"
@@ -113,8 +133,11 @@ def build_notebook(root: Path, model: str, fitted: dict[str, Any] | None,
         "from collections.abc import Callable\nfrom dataclasses import dataclass\n"
         "from datetime import UTC, datetime\nfrom pathlib import Path\nfrom typing import Any\n"
         "import numpy as np\nimport pandas as pd\nfrom filelock import FileLock\n"
-        + ast.unparse(ast.Module(body=nodes, type_ignores=[])) + "\n"
-        + "EXPORT_SIGNATURE = " + repr(signature) + "\n"
+        + ast.unparse(ast.Module(body=nodes, type_ignores=[]))
+        + "\n"
+        + "EXPORT_SIGNATURE = "
+        + repr(signature)
+        + "\n"
         + "gateway_run: Run | None = None\n"
     )
     if model not in RESIDUAL_MODELS:
@@ -132,12 +155,16 @@ if not COMPETITION_PATH.exists():
 sys.path.insert(0, str(COMPETITION_PATH))
 inference_module = importlib.import_module('kaggle_evaluation.nfl_inference_server')
 """
-    expression = ("constant_velocity(observed, target[KEYS])" if model == "constant_velocity"
-                  else "trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)")
+    expression = (
+        "constant_velocity(observed, target[KEYS])"
+        if model == "constant_velocity"
+        else "trajectory_predict(observed, target[KEYS], 'role_ridge', FITTED_MODEL)"
+    )
     correction = (
         "        bank = build_player_features(observed, target[ENTITY])\n"
         "        prediction[['x', 'y']] += predict_residual(bank, target[KEYS], RESIDUAL_MODEL)\n"
-        if residual is not None else ""
+        if residual is not None
+        else ""
     )
     interface = """def predict(test, test_input):
     target = test.to_pandas() if hasattr(test, 'to_pandas') else test
@@ -201,9 +228,15 @@ with Run(Path.cwd(), 'kaggle_gateway') as active_run:
             nbformat.v4.new_code_cell(setup),
             nbformat.v4.new_code_cell(interface),
         ],
-        metadata={"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-                  "export": {"model": model, "signature": signature,
-                             "official_gateway_status": "not_run", "submission_status": "not_submitted"}},
+        metadata={
+            "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+            "export": {
+                "model": model,
+                "signature": signature,
+                "official_gateway_status": "not_run",
+                "submission_status": "not_submitted",
+            },
+        },
     )
     for i, cell in enumerate(notebook.cells):
         cell.id = hashlib.sha256(f"nfl-export-{i}".encode()).hexdigest()[:8]
@@ -211,8 +244,13 @@ with Run(Path.cwd(), 'kaggle_gateway') as active_run:
     return notebook
 
 
-def export_notebook(root: Path, model: str, weights: Path | None = None,
-                    feature_weights: Path | None = None, output: Path | None = None) -> Path:
+def export_notebook(
+    root: Path,
+    model: str,
+    weights: Path | None = None,
+    feature_weights: Path | None = None,
+    output: Path | None = None,
+) -> Path:
     root = root.resolve()
     weights = weights or root / "artifacts/benchmark/model.json"
     feature_weights = feature_weights or root / "artifacts/features/model.json"
@@ -224,32 +262,78 @@ def export_notebook(root: Path, model: str, weights: Path | None = None,
     if model != "constant_velocity":
         inputs.append(weights.resolve())
     if model in RESIDUAL_MODELS:
-        inputs += [feature_weights.resolve(), root / ".state/features-report.json",
-                   root / "artifacts/features/summary.json"]
-    signature = fingerprint(root, inputs, {"model": model, "output": str(destination.relative_to(root))})
+        inputs += [
+            feature_weights.resolve(),
+            root / ".state/features-report.json",
+            root / "artifacts/features/summary.json",
+        ]
+    signature = fingerprint(
+        root, inputs, {"model": model, "output": str(destination.relative_to(root))}
+    )
     with Run(root, "export_kaggle") as run:
+
         def write() -> None:
             notebook = build_notebook(root, model, fitted, residual, signature)
             ordered = subprocess.run(
-                [sys.executable, "-m", "ruff", "check", "--select", "I,UP", "--fix",
-                 "--stdin-filename", "submission.ipynb", "-"],
-                input=nbformat.writes(notebook), text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--select",
+                    "I,UP",
+                    "--fix",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=nbformat.writes(notebook),
+                text=True,
+                capture_output=True,
+                check=True,
             )
             formatted = subprocess.run(
-                [sys.executable, "-m", "ruff", "format", "--stdin-filename", "submission.ipynb", "-"],
-                input=ordered.stdout, text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "format",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=ordered.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
             )
             subprocess.run(
-                [sys.executable, "-m", "ruff", "check", "--stdin-filename", "submission.ipynb", "-"],
-                input=formatted.stdout, text=True, capture_output=True, check=True,
+                [
+                    sys.executable,
+                    "-m",
+                    "ruff",
+                    "check",
+                    "--stdin-filename",
+                    "submission.ipynb",
+                    "-",
+                ],
+                input=formatted.stdout,
+                text=True,
+                capture_output=True,
+                check=True,
             )
             nbformat.validate(nbformat.reads(formatted.stdout, as_version=4))
             atomic_bytes(destination, formatted.stdout.encode())
 
         key = hashlib.sha256(str(destination.relative_to(root)).encode()).hexdigest()[:12]
         stage(root, "export-kaggle-" + model + "-" + key, signature, [destination], write, run)
-        run.event("notebook_exported", path=str(destination.relative_to(root)), model=model,
-                  official_gateway_status="not_run", submission_status="not_submitted")
+        run.event(
+            "notebook_exported",
+            path=str(destination.relative_to(root)),
+            model=model,
+            official_gateway_status="not_run",
+            submission_status="not_submitted",
+        )
     return destination
 
 

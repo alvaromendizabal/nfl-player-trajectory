@@ -48,13 +48,21 @@ def test_actual_improvement_and_error_budgets_reconcile(evidence):
         pooled = np.sqrt(result.squared_error_yards2.sum() / (2 * result.rows.sum()))
         assert pooled == pytest.approx(0.9268683891794343)
     time = error_budget(evidence, "forecast_second")
-    assert time.loc[time.value.astype(int) > 1, "squared_error_share_percent"].sum() == pytest.approx(83.5739574691)
+    assert time.loc[
+        time.value.astype(int) > 1, "squared_error_share_percent"
+    ].sum() == pytest.approx(83.5739574691)
 
 
-@pytest.mark.parametrize("field,value", [("status", "running"), ("split", "holdout"),
-                                         ("screening_split", "validation"),
-                                         ("holdout_evaluation", "completed"),
-                                         ("selected_model", "interaction_ridge")])
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("status", "running"),
+        ("split", "holdout"),
+        ("screening_split", "validation"),
+        ("holdout_evaluation", "completed"),
+        ("selected_model", "interaction_ridge"),
+    ],
+)
 def test_incomplete_or_misrepresented_experiments_fail(evidence, field, value):
     evidence[field] = value
     with pytest.raises(ValueError):
@@ -87,9 +95,15 @@ def test_analysis_does_not_modify_measurements(evidence):
     assert evidence == before
 
 
-@pytest.mark.parametrize("builder", [experiment_figure, association_figure,
-                                       lambda x: budget_figure(x, "role"),
-                                       lambda x: budget_figure(x, "forecast_second")])
+@pytest.mark.parametrize(
+    "builder",
+    [
+        experiment_figure,
+        association_figure,
+        lambda x: budget_figure(x, "role"),
+        lambda x: budget_figure(x, "forecast_second"),
+    ],
+)
 def test_figures_are_rendered_portable_pngs(evidence, builder):
     png = figure_png(builder(evidence))
     assert png.startswith(b"\x89PNG\r\n\x1a\n")
@@ -99,8 +113,10 @@ def test_figures_are_rendered_portable_pngs(evidence, builder):
 def test_publication_never_opts_into_training_or_submission_creation():
     import nbformat
 
-    for name, flag in [("00_project_readiness.ipynb", "RUN_FEATURE_EXPERIMENT"),
-                       ("02_motion_benchmarks.ipynb", "CREATE_SUBMISSION")]:
+    for name, flag in [
+        ("00_project_readiness.ipynb", "RUN_FEATURE_EXPERIMENT"),
+        ("02_motion_benchmarks.ipynb", "CREATE_SUBMISSION"),
+    ]:
         notebook = nbformat.read(ROOT / "notebooks" / name, as_version=4)
         source = "\n".join(c.source for c in notebook.cells if c.cell_type == "code")
         assert f"{flag} = False" in source

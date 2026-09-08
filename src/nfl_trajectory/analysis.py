@@ -25,7 +25,9 @@ LABELS = {
 def validate_summary(summary: dict[str, Any]) -> None:
     """Reject ambiguous, incomplete, or internally inconsistent development evidence."""
     if (summary.get("status"), summary.get("split"), summary.get("screening_split")) != (
-        "passed", "validation", "train"
+        "passed",
+        "validation",
+        "train",
     ) or summary.get("holdout_evaluation") != "not_run":
         raise ValueError("A completed training-screened validation experiment is required.")
     models = summary["models"]
@@ -39,15 +41,20 @@ def validate_summary(summary: dict[str, Any]) -> None:
         raise ValueError("Selected model disagrees with the recorded selection metric.")
     for name in names:
         for dimension in ("role", "forecast_second"):
-            rows = [s for s in summary["slices"]
-                    if s["model"] == name and s["dimension"] == dimension]
+            rows = [
+                s for s in summary["slices"] if s["model"] == name and s["dimension"] == dimension
+            ]
             if not rows or len({s["value"] for s in rows}) != len(rows):
                 raise ValueError("Evaluation slices must be nonempty and uniquely named.")
             counts = np.asarray([s["rows"] for s in rows], dtype=float)
             values = np.asarray([s[METRIC] for s in rows], dtype=float)
-            if (not np.isfinite(counts).all() or (counts <= 0).any()
-                    or not np.equal(counts, np.floor(counts)).all()
-                    or not np.isfinite(values).all() or (values < 0).any()):
+            if (
+                not np.isfinite(counts).all()
+                or (counts <= 0).any()
+                or not np.equal(counts, np.floor(counts)).all()
+                or not np.isfinite(values).all()
+                or (values < 0).any()
+            ):
                 raise ValueError("Slice counts and scores must be valid measurements.")
             if int(counts.sum()) != summary["validation_rows_per_model"]:
                 raise ValueError("Slices must account for the full validation population.")
@@ -67,8 +74,9 @@ def load_evidence(root: Path) -> tuple[dict[str, Any], dict[str, Any], str]:
     validate_summary(summary)
     if summary.get("source_sha256") != numerical_sources():
         raise ValueError("Feature evidence was produced by different numerical source code.")
-    baseline = root / ("artifacts/benchmark/model.json" if path == local
-                       else "docs/results/model.json")
+    baseline = root / (
+        "artifacts/benchmark/model.json" if path == local else "docs/results/model.json"
+    )
     if sha256(baseline) != summary.get("baseline_sha256"):
         raise ValueError("Feature evidence refers to a different baseline model.")
     audit_path = root / "docs/results/feature_analysis.json"
@@ -92,19 +100,17 @@ def comparison(summary: dict[str, Any]) -> pd.DataFrame:
     return result
 
 
-def error_budget(summary: dict[str, Any], dimension: str,
-                 model: str | None = None) -> pd.DataFrame:
+def error_budget(summary: dict[str, Any], dimension: str, model: str | None = None) -> pd.DataFrame:
     """Decompose squared error, not an unweighted average of slice RMSEs."""
     validate_summary(summary)
     if dimension not in ("role", "forecast_second"):
         raise ValueError("Choose role or forecast_second.")
     model = summary["selected_model"] if model is None else model
-    rows = [s for s in summary["slices"]
-            if s["model"] == model and s["dimension"] == dimension]
+    rows = [s for s in summary["slices"] if s["model"] == model and s["dimension"] == dimension]
     if not rows:
         raise ValueError("Model is not represented in the experiment.")
     frame = pd.DataFrame(rows).sort_values("value").reset_index(drop=True)
-    frame["squared_error_yards2"] = 2 * frame.rows * frame[METRIC]**2
+    frame["squared_error_yards2"] = 2 * frame.rows * frame[METRIC] ** 2
     frame["frame_share_percent"] = 100 * frame.rows / frame.rows.sum()
     total = float(frame.squared_error_yards2.sum())
     frame["squared_error_share_percent"] = (
@@ -119,21 +125,33 @@ def experiment_figure(summary: dict[str, Any]) -> Any:
     rows = comparison(summary)
     fig, ax = plt.subplots(figsize=(10, 4.5), layout="constrained")
     y = np.arange(len(rows))
-    ax.errorbar(rows[METRIC], y,
-                xerr=np.maximum(np.stack((rows[METRIC] - rows.rmse_ci95_low,
-                                           rows.rmse_ci95_high - rows[METRIC])), 0),
-                fmt="o", capsize=5, markersize=7)
+    ax.errorbar(
+        rows[METRIC],
+        y,
+        xerr=np.maximum(
+            np.stack((rows[METRIC] - rows.rmse_ci95_low, rows.rmse_ci95_high - rows[METRIC])), 0
+        ),
+        fmt="o",
+        capsize=5,
+        markersize=7,
+    )
     ax.set_yticks(y, [LABELS.get(n, n) for n in rows.model])
     ax.invert_yaxis()
     ax.set_xlabel("Coordinate RMSE (yards) · lower is better")
     ax.set_title("Landing-aware features improve the measured baseline", loc="left")
     ax.spines[["top", "right"]].set_visible(False)
     for position, row in rows.iterrows():
-        ax.annotate(f"{row[METRIC]:.4f}", (row.rmse_ci95_high, position),
-                    xytext=(8, 0), textcoords="offset points", va="center")
+        ax.annotate(
+            f"{row[METRIC]:.4f}",
+            (row.rmse_ci95_high, position),
+            xytext=(8, 0),
+            textcoords="offset points",
+            va="center",
+        )
     ax.set_xlim(0.75 * rows.rmse_ci95_low.min(), 1.12 * rows.rmse_ci95_high.max())
-    fig.supxlabel("95% game-cluster intervals. Development validation only; holdout unscored.",
-                  fontsize=9)
+    fig.supxlabel(
+        "95% game-cluster intervals. Development validation only; holdout unscored.", fontsize=9
+    )
     return fig
 
 
@@ -147,8 +165,10 @@ def budget_figure(summary: dict[str, Any], dimension: str) -> Any:
     ax.bar(x + 0.18, frame.squared_error_share_percent, 0.36, label="Share of squared error")
     labels = frame.value.tolist()
     if dimension == "forecast_second":
-        labels = [f"({int(v)-1}, {v}] seconds\n{n:,} frames"
-                  for v, n in zip(frame.value, frame.rows, strict=True)]
+        labels = [
+            f"({int(v) - 1}, {v}] seconds\n{n:,} frames"
+            for v, n in zip(frame.value, frame.rows, strict=True)
+        ]
     ax.set_xticks(x, labels)
     ax.set_ylabel("Percent of validation total")
     ax.set_ylim(0, 100)

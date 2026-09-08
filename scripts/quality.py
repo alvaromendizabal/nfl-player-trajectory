@@ -13,7 +13,12 @@ def main() -> int:
     try:
         with Run(root, "quality") as run:
             commands = [
-                [sys.executable, "kaggle/export.py", "--output", "artifacts/quality/submission.ipynb"],
+                [
+                    sys.executable,
+                    "kaggle/export.py",
+                    "--output",
+                    "artifacts/quality/submission.ipynb",
+                ],
                 [sys.executable, "-m", "compileall", "-q", "src", "scripts", "tests"],
                 [sys.executable, "-m", "ruff", "check", "."],
                 [sys.executable, "-m", "ruff", "format", "--check", "."],

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-09T18:49:02Z",
+  "competition": "nfl-big-data-bowl-2026-prediction",
+  "notebook": "alvaromendizabal/nfl-frozen-final-trajectory-inference",
+  "notebook_version": 1,
+  "script_version_id": 348603502,
+  "notebook_url": "https://www.kaggle.com/code/alvaromendizabal/nfl-frozen-final-trajectory-inference?scriptVersionId=348603502",
+  "submissions_url": "https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/submissions",
+  "source_commit": "bdd2a6880791343e51fbb2be29586a795045cd05",
+  "notebook_sha256": "03e8b7c9be36da432c7bca59f4b0e15d82b38d6b0e09d1b49ba2d5be7c1de2f9",
+  "notebook_bytes": 502974,
+  "packaging": "Lossless zlib/Base85 compression of JSON model and ordered module sources; embedded offline inference.",
+  "local_gateway": {
+    "status": "passed",
+    "prediction_rows": 5837,
+    "prediction_parity": "exact against sealed sample predictions",
+    "elapsed_seconds": 87.808
+  },
+  "kaggle_gateway": {
+    "status": "completed",
+    "accelerator": "None",
+    "internet_enabled": false,
+    "private": true,
+    "prediction_batches": 143,
+    "prediction_rows": 5837,
+    "elapsed_seconds": 106.338,
+    "completed_at_utc": "2026-09-09T18:44:20.968+00:00",
+    "error_type": null,
+    "output": "submission.parquet"
+  },
+  "submission": {
+    "accepted": true,
+    "late": true,
+    "observed_status": "Notebook Running (after deadline)",
+    "public_score": null,
+    "private_score": null,
+    "evidence": "Authenticated Kaggle submissions page after pressing Submit for Version 1; hidden-test score pending."
+  }
+}

@@ -26,10 +26,12 @@ reserved-holdout score. Historical research and training receipts retain their
 original `holdout_evaluation: not_run` values to preserve the sequence of
 evidence. Use the separate final evaluation receipt for the current result.
 
-The remaining delivery step is to generate and download the owner-controlled
-submission notebook from a verified restored final bundle, then run it in
-Kaggle if desired. The repository does not record a Kaggle submission or
-leaderboard score. The reproduction commands below document completed work;
+The final notebook was submitted to Kaggle on September 9, 2026 as a late
+submission. Its private, offline CPU run completed all 5,837 organizer sample
+predictions. The [Kaggle submission record](docs/results/kaggle_submission.json)
+identifies Version 1 and the exact source and notebook hashes. The hidden-test
+rerun was accepted and was still running at the recorded observation; no Kaggle
+score is claimed yet. The reproduction commands below document completed work;
 they are not instructions to rerun training merely to review the project.
 
 For a public software review, run the following from the repository with Python
@@ -192,7 +194,9 @@ long-horizon errors and uncertainty before interpreting either score.
 The final cell in notebook 02 is off by default. Enabling it checks the current
 final bundle and creates `artifacts/kaggle/submission.ipynb` for your download.
 The exporter resolves the latest verified inference artifact and checks its source
-lineage. Automated quality exports and sample gateway output live under
+lineage. The exporter losslessly compresses fitted parameters and embedded source,
+and rejects notebooks at or above Kaggle's 1 MB source limit before writing them.
+Automated quality exports and sample gateway output live under
 `artifacts/quality/` and cannot replace the owner's generated artifact.
 
 The generated notebook uses the organizer inference interface and never submits

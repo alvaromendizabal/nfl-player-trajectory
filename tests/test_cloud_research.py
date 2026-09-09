@@ -2,6 +2,9 @@
 
 import importlib.util
 import io
+import shutil
+import subprocess
+import sys
 import tarfile
 from pathlib import Path
 
@@ -83,3 +86,26 @@ def test_wide_fold_parallelism_requires_memory_for_both_fits(memory, workers):
 def test_wide_refits_refuse_the_known_insufficient_memory_size():
     with pytest.raises(ValueError, match="128 GiB"):
         cloud_module().wide_refit_workers(64)
+
+
+@pytest.mark.parametrize("arguments", [["check"], ["format", "--check"]])
+def test_archive_quality_preserves_vendor_code_and_checks_project_sources(tmp_path, arguments):
+    root = Path(__file__).resolve().parents[1]
+    shutil.copyfile(root / "pyproject.toml", tmp_path / "pyproject.toml")
+    shutil.copyfile(root / ".gitignore", tmp_path / ".gitignore")
+    vendor = tmp_path / "data/raw/kaggle_evaluation/gateway.py"
+    vendor.parent.mkdir(parents=True)
+    vendor.write_text("import os\nx=1\n")
+    original = vendor.read_bytes()
+    source = tmp_path / "src/project.py"
+    source.parent.mkdir()
+    source.write_text("value = 1\n")
+    command = [sys.executable, "-m", "ruff", *arguments, "."]
+    clean = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)
+    assert clean.returncode == 0, clean.stdout + clean.stderr
+    source.write_text("import os\nvalue=1\n")
+    invalid = subprocess.run(command, cwd=tmp_path, capture_output=True, text=True)
+    assert invalid.returncode != 0
+    assert "src/project.py" in invalid.stdout + invalid.stderr
+    assert "gateway.py" not in invalid.stdout + invalid.stderr
+    assert vendor.read_bytes() == original

@@ -89,6 +89,12 @@ redistributed in the public repository.
 
 Use the notebooks to assess football reasoning, leakage prevention, controlled
 feature gains, engineering, and reproducibility. This is a research artifact,
-not a certified production or player-evaluation system. Final model selection,
-one-time reserved holdout evaluation, and final inference validation follow the
-feature completion decision.
+not a certified production or player-evaluation system. Feature research now
+passes all 15 closure criteria. Complete wide-profile group refits identify no
+omission meeting the predeclared follow-up threshold; the combined removal of
+direct histories and forecast crosses improves pooled inner RMSE by just 0.170%,
+with mixed fold results. The final width gain is 0.071%.
+
+The feature and refit-column manifest is frozen. Final refitting, one-time
+reserved holdout evaluation, and validation of the final inference artifact
+remain the next phase. The measured scores above are research results.

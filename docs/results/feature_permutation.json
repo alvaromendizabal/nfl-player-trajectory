@@ -1,0 +1,249 @@
+{
+  "status": "passed",
+  "selected_stage": "context",
+  "selected_model": "plus_context",
+  "unpermuted_coordinate_rmse_yards": 0.8643360835624717,
+  "source_signatures": {
+    "research": "5f505c475c192746e2233c55ce6e32fe5a003495a4d9a48bd51df1f817ce6097",
+    "context": "596312f4a04628217cae78f3a22253d54c3dcd3fb5bdde2891aed1826637fccd",
+    "representation": "4c5b8a77dc9ad64f511fb88bccd77c00cff29ba79a089c56507fc0bb70bd5ab3"
+  },
+  "rows": [
+    {
+      "family": "forecast_interactions",
+      "retained_features": 23,
+      "mean_absolute_contribution_yards": 0.21267262352152638,
+      "mean_rmse_increase_yards": 0.10856701219534533,
+      "shuffle_sd_yards": 0.004353013773308662,
+      "seed_deltas_yards": [
+        0.11202500736672505,
+        0.11292756296998796,
+        0.10639973867777586,
+        0.10921680886413387,
+        0.10226594309810388
+      ]
+    },
+    {
+      "family": "history_lags",
+      "retained_features": 23,
+      "mean_absolute_contribution_yards": 0.175523401984912,
+      "mean_rmse_increase_yards": 0.09602289038979947,
+      "shuffle_sd_yards": 0.0019326762519162842,
+      "seed_deltas_yards": [
+        0.09570765540188242,
+        0.09617001263748493,
+        0.09870585265843501,
+        0.09327224572964532,
+        0.0962586855215497
+      ]
+    },
+    {
+      "family": "reachability",
+      "retained_features": 12,
+      "mean_absolute_contribution_yards": 0.16576031430118804,
+      "mean_rmse_increase_yards": 0.06410618782766042,
+      "shuffle_sd_yards": 0.002514319356491002,
+      "seed_deltas_yards": [
+        0.06401895524596246,
+        0.06592095592783154,
+        0.06484855013774082,
+        0.05983933232809624,
+        0.06590314549867105
+      ]
+    },
+    {
+      "family": "multiscale",
+      "retained_features": 6,
+      "mean_absolute_contribution_yards": 0.12398197127760055,
+      "mean_rmse_increase_yards": 0.04167723063376807,
+      "shuffle_sd_yards": 0.0011569499664629119,
+      "seed_deltas_yards": [
+        0.042727347556365314,
+        0.04167372266800384,
+        0.03979712477436015,
+        0.04166431732461817,
+        0.04252364084549287
+      ]
+    },
+    {
+      "family": "role_response",
+      "retained_features": 9,
+      "mean_absolute_contribution_yards": 0.13725141526392234,
+      "mean_rmse_increase_yards": 0.026360188862540858,
+      "shuffle_sd_yards": 0.006261915820252228,
+      "seed_deltas_yards": [
+        0.02666874429243138,
+        0.02178942601603151,
+        0.025496567607259046,
+        0.03673259671753393,
+        0.02111360967944842
+      ]
+    },
+    {
+      "family": "matched_history",
+      "retained_features": 12,
+      "mean_absolute_contribution_yards": 0.0969701173459626,
+      "mean_rmse_increase_yards": 0.02357759626195908,
+      "shuffle_sd_yards": 0.0013261692892705948,
+      "seed_deltas_yards": [
+        0.02557595799567658,
+        0.02214349612171107,
+        0.0239013983267502,
+        0.023626327457236806,
+        0.02264080140842073
+      ]
+    },
+    {
+      "family": "nonlinear",
+      "retained_features": 10,
+      "mean_absolute_contribution_yards": 0.08596985612973489,
+      "mean_rmse_increase_yards": 0.022165214399063316,
+      "shuffle_sd_yards": 0.0014982926749460151,
+      "seed_deltas_yards": [
+        0.023456937903643227,
+        0.020652991438658064,
+        0.021639783837394733,
+        0.021043209041165523,
+        0.02403314977445503
+      ]
+    },
+    {
+      "family": "interactions",
+      "retained_features": 3,
+      "mean_absolute_contribution_yards": 0.06768499321187639,
+      "mean_rmse_increase_yards": 0.01955093612993657,
+      "shuffle_sd_yards": 0.0009416240028316342,
+      "seed_deltas_yards": [
+        0.01921636920130343,
+        0.019975089124769974,
+        0.018589037398086483,
+        0.01899990747644631,
+        0.02097427744907665
+      ]
+    },
+    {
+      "family": "history_summaries",
+      "retained_features": 30,
+      "mean_absolute_contribution_yards": 0.11122773577570177,
+      "mean_rmse_increase_yards": 0.017307721292904855,
+      "shuffle_sd_yards": 0.00033506201798067734,
+      "seed_deltas_yards": [
+        0.0175513969826796,
+        0.01674083815674865,
+        0.01749964007672733,
+        0.017480325232648197,
+        0.017266406015720492
+      ]
+    },
+    {
+      "family": "peer_context",
+      "retained_features": 12,
+      "mean_absolute_contribution_yards": 0.20075294672431268,
+      "mean_rmse_increase_yards": 0.008648525139838891,
+      "shuffle_sd_yards": 0.000564830857768905,
+      "seed_deltas_yards": [
+        0.008464500281298415,
+        0.008872945255568254,
+        0.007970173268880276,
+        0.00948143460616424,
+        0.008453572287283273
+      ]
+    },
+    {
+      "family": "robust_history",
+      "retained_features": 11,
+      "mean_absolute_contribution_yards": 0.050895993263944866,
+      "mean_rmse_increase_yards": 0.0059241594325538435,
+      "shuffle_sd_yards": 0.00029138735718369207,
+      "seed_deltas_yards": [
+        0.005906879582966873,
+        0.006121065434940398,
+        0.0057958081070875744,
+        0.006274532114509901,
+        0.005522511923264473
+      ]
+    },
+    {
+      "family": "projected_geometry",
+      "retained_features": 10,
+      "mean_absolute_contribution_yards": 0.06532981996396132,
+      "mean_rmse_increase_yards": 0.005914591032848771,
+      "shuffle_sd_yards": 0.001604526542065265,
+      "seed_deltas_yards": [
+        0.006211428432021493,
+        0.006511173370215895,
+        0.008020647634467082,
+        0.005093120955734887,
+        0.0037365847718044964
+      ]
+    },
+    {
+      "family": "context",
+      "retained_features": 2,
+      "mean_absolute_contribution_yards": 0.04042551758407191,
+      "mean_rmse_increase_yards": 0.001434897159518167,
+      "shuffle_sd_yards": 0.00037093431727607527,
+      "seed_deltas_yards": [
+        0.0009905935059651982,
+        0.001927168051982342,
+        0.0012053981285654602,
+        0.0016696873622290553,
+        0.0013816387488487791
+      ]
+    },
+    {
+      "family": "player_history",
+      "retained_features": 10,
+      "mean_absolute_contribution_yards": 0.04847801785657935,
+      "mean_rmse_increase_yards": 0.0002176566440728278,
+      "shuffle_sd_yards": 0.00011167891961354941,
+      "seed_deltas_yards": [
+        0.00016728829869439021,
+        0.0002988195315171138,
+        4.9793978418866125e-05,
+        0.00032614461717295207,
+        0.0002462367945608168
+      ]
+    },
+    {
+      "family": "metadata",
+      "retained_features": 11,
+      "mean_absolute_contribution_yards": 0.18102073515630848,
+      "mean_rmse_increase_yards": 0.00015007196723879624,
+      "shuffle_sd_yards": 0.0007339614425830047,
+      "seed_deltas_yards": [
+        -0.0009526960377898019,
+        0.0005037821178458524,
+        -0.00022553105830824816,
+        0.0008539664792380774,
+        0.0005708383352081015
+      ]
+    },
+    {
+      "family": "forecast",
+      "retained_features": 2,
+      "mean_absolute_contribution_yards": 0.0853468393180733,
+      "mean_rmse_increase_yards": 0.0,
+      "shuffle_sd_yards": 0.0,
+      "seed_deltas_yards": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "method": "Joint canonical family contribution permutation; whole trajectories within role/horizon, restored using the recipient's field direction.",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "baseline_and_intercepts": "fixed",
+  "scope": "Selected residual feature representation on development games.",
+  "limitation": "Predictive, not causal. Correlated families can substitute. Cross-family combinations may be unrealistic. Shuffle SD is not a confidence interval.",
+  "holdout_evaluation": "not_run"
+}

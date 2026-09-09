@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "selected_stage": "context",
+  "selected_model": "plus_context",
+  "source_signatures": {
+    "research": "5f505c475c192746e2233c55ce6e32fe5a003495a4d9a48bd51df1f817ce6097",
+    "context": "596312f4a04628217cae78f3a22253d54c3dcd3fb5bdde2891aed1826637fccd",
+    "representation": "4c5b8a77dc9ad64f511fb88bccd77c00cff29ba79a089c56507fc0bb70bd5ab3"
+  },
+  "inference_sources": {
+    "runtime": "ecfcf3cd35ad4f692eaaf0aac5606271311a38e29d4203adeb4936302e05d291",
+    "motion": "fc8b60a6ba604b3038671ea6ddf85a7b7630ed0dae01449cc1a7c7356b0a30b2",
+    "models": "893b7bfca10f67386d7af454a5affadd6696b27a3855864ea84ddf5e1f25b7b1",
+    "features": "8faaf09d23d145632f78816c835d6b8958ef7b689a8bf7529102f201a9122e19",
+    "feature_candidates": "53984d98886f7508225a8e910f298e8f6dd4e22b25b6dca364d3e88f519a030b",
+    "context_features": "acb4e431983fe4450a6efcf323906f06a6d4d5c3bafd5567e60a1ea1d19d31e6",
+    "representation_features": "bc3d92785e0cef85733cdd2518753f7d81100a0863c53d643013daf43e57245c",
+    "research_inference": "25ed4be6469eb72a0e5095238b4838e73ca1005c171f580ce5fe58567ae9a0d4"
+  },
+  "retained_features": 186,
+  "scenarios": [
+    {
+      "scenario": "complete_inputs",
+      "coordinate_rmse_yards": 0.8643360835624717,
+      "rows": 67857,
+      "elapsed_seconds": 166.39534702899982
+    },
+    {
+      "scenario": "missing_metadata",
+      "coordinate_rmse_yards": 0.9760698937874285,
+      "rows": 67857,
+      "elapsed_seconds": 205.22071178399347
+    },
+    {
+      "scenario": "missing_telemetry",
+      "coordinate_rmse_yards": 8.154920884636265,
+      "rows": 67857,
+      "elapsed_seconds": 210.858582654997
+    },
+    {
+      "scenario": "cold_player_history",
+      "coordinate_rmse_yards": 0.8684337362272009,
+      "rows": 67857,
+      "elapsed_seconds": 233.5622922190014
+    }
+  ],
+  "standalone_export_parity": "passed on one complete development play; source shared with all-frame package test",
+  "single_play_seconds": [
+    0.6256894109974382,
+    0.7172922850004397,
+    0.6516190370020922
+  ],
+  "single_play_rows": 27,
+  "gateway_status": "not_run",
+  "holdout_evaluation": "not_run",
+  "limitations": "Input stress tests on previously inspected development data; cold history is not a player-disjoint refit."
+}

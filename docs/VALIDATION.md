@@ -1,6 +1,6 @@
 # Validation record
 
-The research milestone passes **237 tests** in the locked project environment.
+The research milestone passes **239 tests** in the locked project environment.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.
@@ -39,3 +39,36 @@ step is never represented as passed.
 
 No test or publication step submits to Kaggle. Owner output and quality output
 directories remain separate.
+
+## Feature-research closure and recovery
+
+All 15 feature-gate criteria pass after the complete current-profile group refits
+and combined-omission study. The frozen manifest records 6,308 refit columns and
+953 active inputs for the selected research trees; it does not treat lossless
+pruning of an existing fit as feature selection for a future refit.
+
+The final AWS review successfully verified the feature gate, raw inference,
+organizer gateway, and all three notebooks. Its subsequent quality command
+failed because Ruff included downloaded organizer Python in a source archive
+without Git metadata. Explicit exclusions now keep raw data and generated
+artifacts outside lint and format discovery. Two regression cases reproduce the
+archive environment, preserve vendor bytes, and still reject invalid project
+source. Recovery restored 215 files with verified hashes, including 106 complete
+wide-ablation and simplification experiment files totaling 677,275,790 bytes,
+from snapshot `30e0ce438b9d9f57a184487a55e0de20e47e59eff82ed4945b612c37c2f367e1`.
+
+The fresh feature-gate review passed all 15 criteria and reused its verified
+numerical evidence. Local publication executed notebooks 00, 01, and 02 with
+29 consecutive code-cell outputs, nine Plotly outputs, eight embedded PNG
+figures, and no errors or stderr outputs. All eight figures were inspected.
+
+The complete public quality workflow passed in an isolated source archive with
+no Git metadata or private fitted artifacts: 239 tests, lint, formatting, mypy
+on 47 source files, synthetic execution/recovery, three notebook executions,
+and isolated export validation. Run `20260909T020202Z-a62332af` completed all
+13 checks in 115.75 seconds. An earlier attempt correctly stopped at the shared
+workspace's free-space check; the successful review used a directory with more
+than 5 GiB available and retained the original storage requirement.
+
+The recovery reuses completed numerical experiments. It does not refit a final
+model or score the reserved holdout.

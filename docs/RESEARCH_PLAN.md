@@ -99,8 +99,8 @@ metadata-free, and cold-history inputs; 0.69396 without optional telemetry.
 |---|---|
 | Wider screened representations | Complete pool tested; final pooled inner improvement is 0.071%, with mixed folds |
 | Robustness of the strongest wide representation | Metadata omission, positional refits, lossless conversion, and all-frame raw stress tests verified |
-| Strict group removals on the selected wide profile | Running across all three inner folds and development under the committed protocol |
-| Combined omission of direct histories and generic forecast crosses | One follow-up tests whether their small individual inner-fold gains survive together |
+| Strict group removals on the selected wide profile | Complete across all three inner folds and development; no omission meets the predeclared follow-up criterion |
+| Combined omission of direct histories and generic forecast crosses | Complete; 0.170% pooled inner gain with mixed folds, below the 0.5% follow-up threshold |
 | Training-only selection and redundancy | Implemented; preserve family and fold evidence |
 | External team ratings, coaching, organization, strength of schedule | Deferred: no verified as-of join, availability contract, or demonstrated relation to this frame-level task |
 | Player identities and historical outcomes | Earlier-date smoothed residual/count features only; no full-season target means |
@@ -112,7 +112,9 @@ Close feature engineering only when the major realistic families have explicit
 evidence, fixed-estimator feature gains are robust, the latest useful representation
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
-Current status: **open pending the complete wide-group review and targeted combined-omission study**.
+Current status: **closed after all 15 evidence criteria passed**. The source-bound
+selection manifest is frozen for the final phase. Final refitting and the
+48-game reserved holdout have not run.
 
 The [wide ablation protocol](WIDE_ABLATION_PROTOCOL.md) extends strict refits to
 the selected wide availability profile, covers all 20 catalog families in
@@ -123,8 +125,10 @@ original compact-union ablations.
 The [combined-omission protocol](SIMPLIFICATION_PROTOCOL.md) adds one specific
 follow-up after two direct groups each slightly improved all inner folds when
 removed. It uses the same 0.5% pooled-gain and 1% maximum-fold-cost thresholds.
-This study must finish before closure; the gate does not treat small individual
-effects as proof that their combination is unhelpful.
+The completed study changes pooled inner RMSE from 0.7026010 to 0.7014072, a
+0.170% gain. Per-fold relative RMSE changes are −0.298%, +0.324%, and −0.399%.
+This mixed, small result does not meet the recorded threshold for another
+representation search. Development results were excluded from that decision.
 
 ### Operational closure thresholds
 

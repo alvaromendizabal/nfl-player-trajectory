@@ -46,8 +46,11 @@ The first interaction experiment replaced 23 of 64 landing columns. Its worse
 score did not isolate the value of interactions. The expanded study corrects that
 confounding with nested additions and removals without replacement.
 
-The feature gate remains open pending the complete wide-group review and a
-targeted combined omission of two consistently weak direct groups. The complete bank contains 7,999
+**The feature-research gate is closed:** all 15 evidence criteria pass, including
+the complete wide-group refits and the combined omission of two weak direct
+groups. That combined removal improves pooled inner RMSE by only **0.170%**,
+with mixed fold results, below the predeclared 0.5% follow-up threshold.
+The complete bank contains 7,999
 candidates; 6,385 survive development-training screening and redundancy removal.
 The selected metadata-free refit uses 6,308 columns. Its trees use **953 active
 inputs**, which are exported without changing any predictions. These are distinct
@@ -73,7 +76,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **237 automated tests** at the current research
+The locked Python 3.11 project has **239 automated tests** at the current research
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
@@ -82,6 +85,15 @@ auditable and resumable. Numerical diagnostics have separate pinned script locks
 
 See the [research plan](docs/RESEARCH_PLAN.md), [model card](docs/MODEL_CARD.md),
 [validation record](docs/VALIDATION.md), and [reproduction guide](START_HERE.md).
+
+## What remains
+
+Feature definitions and refit columns are frozen in the
+[selection manifest](docs/results/feature_freeze.json).
+The next milestone is the final training implementation, followed by one
+reserved-holdout evaluation and validation of its final inference artifact.
+The scores above belong to the completed research phase; final training has
+not yet run.
 
 ## Owner-controlled export
 

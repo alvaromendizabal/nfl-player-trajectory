@@ -1,0 +1,63 @@
+{
+  "status": "passed",
+  "official_gateway_status": "passed",
+  "source_signature": "bd0d06f21bcb8eeaf34620c992abaf986104fee993d531c2a53508c8752b5420",
+  "source_signatures": {
+    "research": "5f505c475c192746e2233c55ce6e32fe5a003495a4d9a48bd51df1f817ce6097",
+    "context": "596312f4a04628217cae78f3a22253d54c3dcd3fb5bdde2891aed1826637fccd",
+    "representation": "4c5b8a77dc9ad64f511fb88bccd77c00cff29ba79a089c56507fc0bb70bd5ab3"
+  },
+  "provenance": {
+    "inputs": {
+      "data/raw/kaggle_evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "data/raw/kaggle_evaluation/core/__init__.py": "7d04526624b1f71259b958206a343546f2ef31fd0ad6f0d606c6f2c8494b8874",
+      "data/raw/kaggle_evaluation/core/base_gateway.py": "0b9f5e8c516202659513c0adc89b51778a1a383d8247137d9bfddce038ee06a5",
+      "data/raw/kaggle_evaluation/core/generated/__init__.py": "7d04526624b1f71259b958206a343546f2ef31fd0ad6f0d606c6f2c8494b8874",
+      "data/raw/kaggle_evaluation/core/generated/kaggle_evaluation_pb2.py": "04108189b4ac7751901a7fbaa95231ed7335b437c33706d5850cab868bd16a11",
+      "data/raw/kaggle_evaluation/core/generated/kaggle_evaluation_pb2_grpc.py": "620d76b7b993a3fbf7809b1e7423ed71a94fe73156918215aeae86cb6f9b8a4f",
+      "data/raw/kaggle_evaluation/core/kaggle_evaluation.proto": "cbc742d6b9e6f9a4981d8354cee79c7136edd8fe30cb90e1f6786ae72bc57ab1",
+      "data/raw/kaggle_evaluation/core/relay.py": "b070f6f2c154b7ae5de2081125a0f27a0a7a577b46136a39d746091d323ae85e",
+      "data/raw/kaggle_evaluation/core/templates.py": "3aa3eaf75139cd9220652b0601c24ef5f6188fcf44d4463b9b7e290271b5fa3a",
+      "data/raw/kaggle_evaluation/nfl_gateway.py": "29335f26a9f4e8486c99c60072d824f11e4cf581591f588e6ecaf8cd15aa91bb",
+      "data/raw/kaggle_evaluation/nfl_inference_server.py": "37ff289a1d2ab6f49fc4c0096c866b31dae1b7f98f0c9a7f361daff104b1da8e",
+      "data/raw/test.csv": "6f45e50eb79442561cdb2cc6ba2d05b05f7967fad3964a98916c9a8ffecd44b2",
+      "data/raw/test_input.csv": "f894c3380da3caba2f0dbc0618ccf8e2a256e4e0fec56760fab050b03d964fd7",
+      "src/nfl_trajectory/runtime.py": "ecfcf3cd35ad4f692eaaf0aac5606271311a38e29d4203adeb4936302e05d291",
+      "src/nfl_trajectory/motion.py": "fc8b60a6ba604b3038671ea6ddf85a7b7630ed0dae01449cc1a7c7356b0a30b2",
+      "src/nfl_trajectory/models.py": "893b7bfca10f67386d7af454a5affadd6696b27a3855864ea84ddf5e1f25b7b1",
+      "src/nfl_trajectory/features.py": "8faaf09d23d145632f78816c835d6b8958ef7b689a8bf7529102f201a9122e19",
+      "src/nfl_trajectory/feature_candidates.py": "53984d98886f7508225a8e910f298e8f6dd4e22b25b6dca364d3e88f519a030b",
+      "src/nfl_trajectory/context_features.py": "acb4e431983fe4450a6efcf323906f06a6d4d5c3bafd5567e60a1ea1d19d31e6",
+      "src/nfl_trajectory/representation_features.py": "bc3d92785e0cef85733cdd2518753f7d81100a0863c53d643013daf43e57245c",
+      "src/nfl_trajectory/feature_contracts.py": "f17344d448eda7e2f01fdc1fda13b16e5f952831a80d046df4dc5af94624cf36",
+      "src/nfl_trajectory/tree_inference.py": "88f7fa3ff04109769854c849d707d6067a0590b82248ba18ac20a4fe6e6dc763",
+      "src/nfl_trajectory/research_inference.py": "054978bfb9d23141a50fc1daed11d142f8fafb2aec4fc1b2be3a70225a6b1e67",
+      "scripts/validate_gateway.py": "71211aa7dd87b12981ff00a1faa2a059ecd99f1294571d0d89023dd178a4075f",
+      "scripts/validate_gateway.py.lock": "53a4ad2a1e7826ba62a2e981021c6a2d3ecaafb2d0b8bfc0b555047a1ac397ea",
+      "kaggle/export.py": "72f08d7218c430110969f31a8abb4e16a544169ab559502efd0df837c22d3dc3"
+    },
+    "bundle_sha256": "2d5c1d55b2a908b90364790ecdba19ee005cb4682faca2e1c035b5bbb5803d40",
+    "source_snapshot": "c83a828f42f13af498443574284db8d6e014b44967bc4ee09ab7a49f4b362817",
+    "purpose": "Unlabelled official sample interface and standalone predictor parity only"
+  },
+  "selected_stage": "fixed_tree",
+  "selected_model": "budget_8192__without_metadata",
+  "retained_features": 953,
+  "sample_rows": 5837,
+  "plays": 143,
+  "sample_calendar_years": [
+    2024,
+    2025
+  ],
+  "callback_seconds_median": 0.5376141149999967,
+  "callback_seconds_p95": 0.5881824176999942,
+  "callback_seconds_max": 0.6441767819999882,
+  "organizer_response_limit_seconds": 300,
+  "standalone_prediction_parity": "exact for every sample callback",
+  "output": "artifacts/quality/official_gateway/submission.parquet",
+  "output_sha256": "f98e5ad5d462177419da1a7de9e6969cdb70a5d5cf22756f079151a23b0583e5",
+  "evaluation_metric": null,
+  "labels_available": false,
+  "competition_submission": "not_run",
+  "holdout_evaluation": "not_run"
+}

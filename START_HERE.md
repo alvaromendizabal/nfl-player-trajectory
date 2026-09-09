@@ -8,7 +8,8 @@ the repository name describes the player's trajectory prediction target.
 Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution,
 then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature rationale.
 Public aggregates support review without private tracking or cloud credentials.
-Final training is gated on the research evidence, not on a successful pipeline run.
+All 15 feature-research criteria now pass, and the feature/selection manifest is
+frozen. Final refitting and the reserved-holdout evaluation remain unfinished.
 
 For a public software review, run the following from the repository with Python
 3.11 or later and at least 5 GiB free storage:
@@ -72,8 +73,8 @@ uv run --locked scripts/validate_gateway.py
 .venv/bin/nfl backup
 ```
 
-These commands document reproduction; the current research run is executed and
-monitored on the project's bounded SageMaker processing job. Its runner restores
+These commands document reproduction of the completed feature research.
+The project's bounded SageMaker runner restores
 checksum-verified inputs, excludes holdout tracking, resumes completed stages,
 and checkpoints each full-bank fold and major phase. S3 snapshots reference content-addressed
 objects; the canonical restore command verifies those hashes. Do not use a

@@ -43,6 +43,14 @@ Training, reserved evaluation, export, hosted validation, and Kaggle hidden-test
 scoring are complete. The reproduction commands below document completed work;
 they are not instructions to rerun training merely to review the project.
 
+**The next goal is higher predictive accuracy.** The submitted model is the
+reference for a new [performance study](docs/RESEARCH_PLAN.md#performance-extension-after-the-kaggle-result).
+Its first [capacity diagnostic](docs/results/model_capacity.json) is complete:
+0.77676 to 0.70239 development RMSE on identical core features, still behind the
+full-feature model's 0.68805. No replacement has been promoted or submitted.
+The next substantive experiment is a temporal neural network that models players
+jointly, with controlled spatial augmentation and motion supervision.
+
 For a public software review, run the following from the repository with Python
 3.11 or later and at least 5 GiB free storage:
 

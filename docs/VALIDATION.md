@@ -1,6 +1,6 @@
 # Validation record
 
-The research milestone passes **228 tests** in the locked project environment.
+The research milestone passes **237 tests** in the locked project environment.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.

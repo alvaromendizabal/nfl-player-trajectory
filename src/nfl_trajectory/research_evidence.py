@@ -26,6 +26,7 @@ EXTRA_REPORTS = {
     "feature_gateway.json": "research/gateway/summary.json",
     "feature_tree.json": "research/tree/summary.json",
     "feature_wide_ablation.json": "wide_ablation/summary.json",
+    "feature_simplification.json": "simplification/summary.json",
     "feature_gate.json": "research/gate/summary.json",
     "feature_freeze.json": "research/gate/selection_manifest.json",
     "feature_diagnostics.json": "research/gate/diagnostics.json",
@@ -243,6 +244,82 @@ def wide_group_evidence(
     return read(output)
 
 
+def simplification_evidence(
+    root: Path, sources: dict[str, str], bundle_hash: str
+) -> dict[str, Any] | None:
+    """Verify the additional combined omission without requiring unfinished group folds."""
+    from nfl_trajectory.runtime import Run, stage
+    from nfl_trajectory.simplification import MODEL, REMOVED_FAMILIES, decision
+
+    folder = root / "artifacts/simplification"
+    if not folder.exists():
+        return None
+    results = []
+    paths = [Path(__file__), root / "src/nfl_trajectory/simplification.py"]
+    for fold in FOLDS:
+        output = folder / fold / "summary.json"
+        report = read(output)
+        provenance = report["provenance"]
+        signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()
+        if (
+            signature != report["source_signature"]
+            or report["source_signatures"] != sources
+            or provenance["bundle_sha256"] != bundle_hash
+            or provenance["removed_families"] != sorted(REMOVED_FAMILIES)
+            or report["fold"] != fold
+            or report["model"] != MODEL
+            or report["parent_raw_parity"] != "passed for every evaluation row"
+        ):
+            raise ValueError("Combined omission does not cover the current parent and protocol.")
+        for relative, expected in provenance["inputs"].items():
+            if sha256(root / relative) != expected:
+                raise ValueError("Combined omission source or inputs changed.")
+        for suffix, outputs in (
+            ("fit", [folder / fold / "model.pkl"]),
+            ("evaluate", [folder / fold / "errors.csv", output]),
+        ):
+            for path in outputs:
+                verified_checkpoint(root, f"simplification-{fold}-{suffix}", signature, path)
+        verify_error_metric(folder / fold / "errors.csv", report["metrics"])
+        verify_error_metric(
+            root / "artifacts/feature_attribution" / fold / "without_metadata.csv",
+            report["reference"],
+        )
+        paths.append(output)
+        results.append(report)
+    provenance = {
+        "inputs": {str(path.relative_to(root)): sha256(path) for path in paths},
+        "source_signatures": sources,
+        "bundle_sha256": bundle_hash,
+    }
+    signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()
+    summary = {
+        "status": "passed",
+        "source_signature": signature,
+        "source_signatures": sources,
+        "provenance": provenance,
+        "parent_model": results[-1]["provenance"]["parent_model"],
+        "model": MODEL,
+        "removed_families": sorted(REMOVED_FAMILIES),
+        "inner_folds": results[:3],
+        "development": results[-1],
+        "decision": decision(results),
+        "holdout_evaluation": "not_run",
+        "final_model": False,
+    }
+    output = folder / "summary.json"
+    with Run(root, "simplification-report") as run:
+        stage(
+            root,
+            "simplification-report",
+            signature,
+            [output],
+            lambda: atomic_json(output, summary),
+            run,
+        )
+    return read(output)
+
+
 def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str]:
     """Recompute metrics from verified errors; do not publish unverified JSON summaries."""
     from nfl_trajectory.research import feature_research_snapshot
@@ -350,6 +427,7 @@ def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str
     bundle = research_bundle(root)
     bundle_hash = hashlib.sha256(json.dumps(bundle, sort_keys=True).encode()).hexdigest()
     wide_group_evidence(root, sources, bundle_hash)
+    simplification_evidence(root, sources, bundle_hash)
     if (
         inference["validator_sha256"] != sha256(root / "scripts/validate_research.py")
         or inference["bundle_sha256"] != bundle_hash
@@ -367,6 +445,7 @@ def extended_evidence(root: Path, *, include_gate: bool = True) -> dict[str, str
         ("research/gateway/summary.json", "official-gateway"),
         ("research/tree/summary.json", "research-tree-bundle"),
         ("wide_ablation/summary.json", "wide-group-report"),
+        ("simplification/summary.json", "simplification-report"),
     ]
     if include_gate:
         optional_reports.append(("research/gate/summary.json", "feature-gate-review"))

@@ -19,6 +19,8 @@ def evidence():
         "family_evidence": True,
         "wide_refits_verified": True,
         "unresolved_wide_removals": [],
+        "simplification_verified": True,
+        "unresolved_simplification": False,
         "raw_verified": True,
         "gateway_verified": True,
         "holdout_unscored": True,
@@ -31,7 +33,14 @@ def test_successful_interface_cannot_hide_remaining_feature_gain(evidence):
 
 
 @pytest.mark.parametrize(
-    "missing", ["complete_pool", "scope_verified", "raw_verified", "gateway_verified"]
+    "missing",
+    [
+        "complete_pool",
+        "scope_verified",
+        "raw_verified",
+        "gateway_verified",
+        "simplification_verified",
+    ],
 )
 def test_missing_research_or_latest_artifact_evidence_keeps_gate_open(evidence, missing):
     evidence[missing] = False
@@ -60,6 +69,11 @@ def test_compact_ablations_cannot_substitute_for_current_wide_refits(evidence):
 
 def test_profitable_wide_removal_keeps_feature_research_open(evidence):
     evidence["unresolved_wide_removals"] = ["role_responses"]
+    assert not all(c["passed"] for c in closure_checks(evidence))
+
+
+def test_profitable_combined_omission_keeps_feature_research_open(evidence):
+    evidence["unresolved_simplification"] = True
     assert not all(c["passed"] for c in closure_checks(evidence))
 
 

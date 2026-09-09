@@ -46,8 +46,8 @@ The first interaction experiment replaced 23 of 64 landing columns. Its worse
 score did not isolate the value of interactions. The expanded study corrects that
 confounding with nested additions and removals without replacement.
 
-The feature gate remains open pending strict group refits on the current wide
-representation and the final handoff review. The complete bank contains 7,999
+The feature gate remains open pending the complete wide-group review and a
+targeted combined omission of two consistently weak direct groups. The complete bank contains 7,999
 candidates; 6,385 survive development-training screening and redundancy removal.
 The selected metadata-free refit uses 6,308 columns. Its trees use **953 active
 inputs**, which are exported without changing any predictions. These are distinct
@@ -73,7 +73,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **228 automated tests** at the current research
+The locked Python 3.11 project has **237 automated tests** at the current research
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,

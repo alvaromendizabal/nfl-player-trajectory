@@ -80,6 +80,8 @@ def closure_checks(evidence: dict[str, Any]) -> list[dict[str, Any]]:
         "family_removals_and_permutations": evidence["family_evidence"],
         "current_profile_group_refits": evidence["wide_refits_verified"],
         "no_unresolved_profitable_group_removal": not evidence["unresolved_wide_removals"],
+        "combined_omission_verified": evidence["simplification_verified"],
+        "no_unresolved_combined_omission": not evidence["unresolved_simplification"],
         "latest_tree_raw_replay_and_input_stress": evidence["raw_verified"],
         "latest_tree_organizer_gateway": evidence["gateway_verified"],
         "reserved_holdout_unscored": evidence["holdout_unscored"],
@@ -105,6 +107,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     }
     attribution = reports["feature_attribution.json"]
     wide = reports.get("feature_wide_ablation.json")
+    simplified = reports.get("feature_simplification.json")
     tree, inference, gateway = (
         reports[name]
         for name in ("feature_tree.json", "feature_inference.json", "feature_gateway.json")
@@ -258,6 +261,10 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         "unresolved_wide_removals": []
         if wide is None
         else wide_removal_candidates(wide["pooled_comparisons"]),
+        "simplification_verified": simplified is not None
+        and simplified["parent_model"] == tree["selected_model"],
+        "unresolved_simplification": simplified is None
+        or simplified["decision"]["requires_smaller_representation_followup"],
         "raw_verified": inference["status"] == "passed"
         and raw_robust
         and inference["selected_stage"] == "fixed_tree"
@@ -280,6 +287,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
     inputs["artifacts/data_inventory.json"] = sha256(inventory_path)
     inputs["artifacts/audit_summary.json"] = sha256(audit_path)
     inputs["docs/WIDE_ABLATION_PROTOCOL.md"] = sha256(root / "docs/WIDE_ABLATION_PROTOCOL.md")
+    inputs["docs/SIMPLIFICATION_PROTOCOL.md"] = sha256(root / "docs/SIMPLIFICATION_PROTOCOL.md")
     inputs["src/nfl_trajectory/wide_ablation.py"] = sha256(
         root / "src/nfl_trajectory/wide_ablation.py"
     )
@@ -329,6 +337,7 @@ def review(root: Path, run: Run) -> dict[str, Any]:
         "bundle_sha256": hashlib.sha256(json.dumps(bundle, sort_keys=True).encode()).hexdigest(),
         "policy_commit": POLICY_COMMIT,
         "additional_refit_protocol_sha256": inputs["docs/WIDE_ABLATION_PROTOCOL.md"],
+        "combined_omission_protocol_sha256": inputs["docs/SIMPLIFICATION_PROTOCOL.md"],
         "tolerances": TOLERANCES,
     }
     signature = hashlib.sha256(json.dumps(provenance, sort_keys=True).encode()).hexdigest()

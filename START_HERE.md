@@ -63,6 +63,8 @@ uv run --locked scripts/prepare_tree.py
 .venv/bin/python scripts/validate_research.py
 # Run this command for each of inner_1, inner_2, inner_3, and development.
 uv run --locked scripts/ablate_wide_features.py --fold inner_1
+# Also run this recorded combined omission for each of the four folds.
+uv run --locked scripts/feature_simplification.py --fold inner_1
 uv run --locked scripts/validate_gateway.py
 .venv/bin/python scripts/review_feature_gate.py
 .venv/bin/python scripts/notebooks.py --publish

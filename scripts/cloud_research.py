@@ -116,11 +116,12 @@ def main() -> None:
     bucket, job = os.environ["NFL_BUCKET"], os.environ["NFL_JOB_NAME"]
     commit, snapshot_key = os.environ["NFL_REPO_REF"], os.environ["NFL_SNAPSHOT"]
     mode = os.environ.get("NFL_MODE", "research")
-    if mode not in {"research", "finalize", "wide_refits"}:
+    if mode not in {"research", "finalize", "wide_refits", "simplification"}:
         raise ValueError("Unknown cloud research mode.")
-    if (mode in {"research", "wide_refits"} or os.environ.get("NFL_EXPAND_FULL_POOL") == "1") and (
-        memory_budget_gib() < 96
-    ):
+    if (
+        mode in {"research", "wide_refits", "simplification"}
+        or os.environ.get("NFL_EXPAND_FULL_POOL") == "1"
+    ) and (memory_budget_gib() < 96):
         raise ValueError(
             "Full-bank feature fits require a processing instance with at least 128 GiB."
         )
@@ -329,6 +330,20 @@ def main() -> None:
             )
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")
+        elif mode == "simplification":
+            for fold in ("inner_1", "inner_2", "inner_3", "development"):
+                command(
+                    [uv, "run", "--locked", "scripts/feature_simplification.py", "--fold", fold],
+                    "feature_simplification-" + fold,
+                    threads=6,
+                )
+                backup("simplification-" + fold)
+            command(
+                [python, "scripts/review_simplification.py"], "simplification-review", threads=2
+            )
+            backup("combined-feature-omission")
+            event("completed", phase="combined_feature_omission", holdout_evaluation="not_run")
+            return
         else:
             folds = ["inner_1", "inner_2", "inner_3", "development"]
             workers = wide_refit_workers(memory_budget_gib())

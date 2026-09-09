@@ -1,6 +1,6 @@
 # Validation record
 
-The final-fitting implementation passes **281 tests** in the locked environment,
+The final-fitting implementation passes **288 tests** in the locked environment,
 including 11 new schema, provenance, raw feature, and recovery tests.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
@@ -177,7 +177,41 @@ verified by download, byte count, and SHA-256 (4,774,589 bytes). The cloud runne
 now supports the final fitting phase and rejects a 64 GiB worker before any AWS
 access. Full-scale fit results are reported only after execution and inspection.
 
-The cloud-runner checkpoint passed all 13 quality checks with **281 tests**,
+The cloud-runner checkpoint passed all 13 quality checks with **288 tests**,
 54 typed source files, and all three canonical notebook executions. Run
 `20260909T035227Z-96a13d58` completed in 183.21 seconds. Snapshot verification
 also matched all 55 private inputs bound by the final protocol.
+
+## Final fitting and inference release
+
+SageMaker job `nfl-final-fit-20260909-040036` completed all four coordinate
+fits and both full-row portable conversions in 683.698 seconds of fitting.
+The worker completed after 991.309 seconds including preparation and backup.
+No replacement job was launched. Both schemas were refitted on all 224 games:
+6,308 and 5,572 input columns; 951 active columns in each exported model; zero
+original/portable difference on each profile’s 463,670 training rows. These
+training predictions establish conversion integrity, not generalization.
+
+All 18 required model files (29,362,995 bytes) were downloaded from the completed
+1,557-file snapshot and independently hash checked. The final loader also checks
+source, protocol, preprocessing, coordinate and export receipts.
+
+The local full suite passed all 13 quality checks, including 288 tests and all
+three canonical notebooks, in 251.636 seconds (run `20260909T041738Z-a16bea69`).
+Subsequent targeted tests verified preserved request order through outer-key
+scoring joins; the final gateway integration separately verifies its named RPC
+endpoint. The exact published revision also runs through GitHub CI.
+
+New tests exercise rejected stale models, final date boundaries, standalone
+parity, partial/nonfinite telemetry, target-coordinate poisoning, holdout
+request construction without outcomes, missing/duplicate scoring keys, a
+controlled prediction-stage interruption, immutable seals, and resuming the
+same evaluation without reopening outcomes.
+
+The actual final-model gateway passed all **5,837 rows across 143 plays**
+(run `20260909T042021Z-7493b516`, 313.948 seconds). Every package and standalone
+prediction matched exactly. Metadata omission, missing telemetry, cold history,
+shuffled request/input rows and ignored target coordinates also passed. The
+initial local integration failure registered the callback under the wrong name;
+using the organizer-required `predict` endpoint resolved it. The organizer
+source was not modified, and no additional AWS job was needed.

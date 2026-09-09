@@ -61,7 +61,7 @@ Removing metadata or clearing player history leaves predictions unchanged.
 The independently fitted positional fallback scores **0.69396**, using 981
 active inputs. The same predictor passes the organizer's unlabelled gateway on
 5,837 requested rows across 143 plays, with exact package/standalone parity.
-There is no final-model or leaderboard claim.
+These are research-phase scores, not final-model accuracy or leaderboard claims.
 
 ## Validation and engineering
 
@@ -76,7 +76,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **281 automated tests** at the final-fitting implementation
+The locked Python 3.11 project has **288 automated tests** at the final-inference implementation
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
@@ -96,15 +96,18 @@ evaluation rules. Its [preparation receipt](docs/results/final_protocol.json)
 records the actual inputs checked. Final preprocessing has now refitted the
 physical baseline, chronological histories, and route encoder on all 224 games;
 the [preprocessing receipt](docs/results/final_preprocessing.json) records their
-coverage and hashes. Next are both residual-tree fits, one reserved-holdout
-evaluation, and validation of the final inference artifact. The scores above
-belong to the completed research phase; no final-model accuracy is reported yet.
+coverage and hashes. Both residual-tree fits have now completed on AWS.
+The [final-fit receipt](docs/results/final_fit.json) verifies 463,670 training rows
+for each profile, 951 active inputs per exported model, and exactly matching
+original/portable predictions. The scores above belong to the research phase;
+the reserved-holdout evaluation remains the next accuracy measurement.
 
 The final fitter is implemented with independent coordinate checkpoints and
 hash-bound portable conversion. Its real sklearn recovery test passes. A
 [raw-input feature check](docs/results/final_feature_validation.json) covers 738
 rows across all 15 training weeks and both complete frozen schemas, with zero
-feature differences. Full-scale final fitting remains pending.
+feature differences. The completed full-scale fit and all four coordinate
+checkpoints are preserved in a verified private S3 snapshot.
 
 ## Owner-controlled export
 

@@ -1,0 +1,21 @@
+{
+  "status": "completed",
+  "job": "nfl-final-fit-20260909-040036",
+  "region": "us-west-2",
+  "code_commit": "6f12c4cef1a7f020a874380624577c131d266921",
+  "instance_type": "ml.r7i.4xlarge",
+  "processing_start_utc": "2026-09-09T04:01:21.295000+00:00",
+  "processing_end_utc": "2026-09-09T04:17:52.604000+00:00",
+  "processing_elapsed_seconds": 991.309,
+  "fitting_elapsed_seconds": 683.698,
+  "snapshot": "snapshots/13f92c39dc5e197cca4e5bb959a5ae1d6ece7dbbca4cd3a37ebef1982e20eafe.json",
+  "snapshot_files": 1557,
+  "download_verified_model_files": 18,
+  "download_verified_model_bytes": 29362995,
+  "verification": "Downloaded and checked byte count and SHA-256; final_bundle verified protocol, preprocessing, source, coordinate and export receipts.",
+  "training_rows": 463670,
+  "profiles": 2,
+  "coordinate_fits": 4,
+  "portable_max_absolute_difference": 0.0,
+  "holdout_evaluation": "not_run"
+}

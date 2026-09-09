@@ -32,9 +32,30 @@
   "submission": {
     "accepted": true,
     "late": true,
-    "observed_status": "Notebook Running (after deadline)",
-    "public_score": null,
-    "private_score": null,
-    "evidence": "Authenticated Kaggle submissions page after pressing Submit for Version 1; hidden-test score pending."
+    "observed_status": "Succeeded (after deadline)",
+    "public_score": 0,
+    "private_score": 0.7009,
+    "evidence": "Authenticated Kaggle Submission Details for Version 1: Succeeded (after deadline), Score: 0.00000, Private score: 0.70090."
+  },
+  "score_checked_at_utc": "2026-09-09T20:39:31.331Z",
+  "metric": {
+    "name": "coordinate_rmse_yards",
+    "formula": "sqrt(sum((x_true - x_pred)^2 + (y_true - y_pred)^2) / (2 * N))",
+    "lower_is_better": true,
+    "evaluation_url": "https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/overview/evaluation",
+    "scorer_url": "https://www.kaggle.com/code/metric/nfl-2025",
+    "scorer_version": 4,
+    "local_implementation": "src/nfl_trajectory/motion.py:trajectory_metrics",
+    "published_example_regression_test": "tests/test_motion.py:test_rmse_matches_published_kaggle_examples"
+  },
+  "score_interpretation": {
+    "reported_test_score": 0.7009,
+    "reported_test_score_field": "private_score",
+    "leaderboard_url": "https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/leaderboard",
+    "private_test_scope": "The official leaderboard states that private scoring uses all test data.",
+    "public_zero": "Observed in the public score field; its internal cause is not established by the published scorer.",
+    "official_competition_rank": null,
+    "rank_note": "Late submission after the competition completed; no official competition rank claimed.",
+    "holdout_comparison": "Kaggle private score and the 0.80467 reserved-holdout RMSE use different datasets."
   }
 }

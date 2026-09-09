@@ -30,8 +30,17 @@ The final notebook was submitted to Kaggle on September 9, 2026 as a late
 submission. Its private, offline CPU run completed all 5,837 organizer sample
 predictions. The [Kaggle submission record](docs/results/kaggle_submission.json)
 identifies Version 1 and the exact source and notebook hashes. The hidden-test
-rerun was accepted and was still running at the recorded observation; no Kaggle
-score is claimed yet. The reproduction commands below document completed work;
+rerun **succeeded**, with **0.70090 private coordinate RMSE in yards**.
+The submissions list's **0.00000 public score** is a separate field. Open the
+[submissions page](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/submissions),
+click the Version 1 submission row, and read **Private score** in Submission
+Details. The [official leaderboard](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/leaderboard)
+states that private scoring uses all test data. The public zero's internal cause
+is not established by the published scorer; it is not evidence of a failed run.
+This after-deadline result does not establish an official competition rank.
+
+Training, reserved evaluation, export, hosted validation, and Kaggle hidden-test
+scoring are complete. The reproduction commands below document completed work;
 they are not instructions to rerun training merely to review the project.
 
 For a public software review, run the following from the repository with Python
@@ -61,12 +70,19 @@ AWS; opening the public notebook reviews their verified results.
 | Final model training | [fit_final.py](scripts/fit_final.py) | Four HistGradientBoostingRegressor fits: x/y for two input-availability profiles |
 | Reserved evaluation | [evaluate_final.py](scripts/evaluate_final.py) | Frozen predictions scored on 48 later games: 0.80467 RMSE |
 | Submission notebook generation | [final_export.py](kaggle/final_export.py) | Embeds the trained parameters and prediction code; no retraining or AWS connection at prediction time |
+| Kaggle hidden-test scoring | [Submission record](docs/results/kaggle_submission.json) | Succeeded after deadline; private coordinate RMSE 0.70090 |
 
 A local organizer-gateway pass checks the callback and output format. A saved
 Kaggle run additionally checks the hosted environment. Only an actual
 competition submission exercises Kaggle's hidden-test rerun and produces its
 score. These are separate checks; a local pass does not establish a hidden-test
 result.
+
+The [published scorer](https://www.kaggle.com/code/metric/nfl-2025) and this
+project both use `sqrt(sum(dx² + dy²) / (2N))`. Lower is better. Regression
+tests reproduce all three numerical examples in the organizer's scorer.
+The 0.80467 reserved score and 0.70090 Kaggle private score evaluate different
+datasets; their difference is not a controlled model-improvement comparison.
 
 ## Reproduce in the existing project
 

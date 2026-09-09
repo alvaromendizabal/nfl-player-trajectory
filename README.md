@@ -16,6 +16,16 @@ The protocol, fitted models, inference code, and all predictions were sealed and
 verified in private S3 before outcomes were opened. This is a temporal holdout
 result, not a Kaggle leaderboard score.
 
+**Kaggle evaluation:** **0.70090 private coordinate RMSE in yards**, verified in
+Submission Details for Version 1 on September 9, 2026. Kaggle reports
+**Succeeded (after deadline)**. The submissions list displays a public score of
+0.00000; the [official leaderboard](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/leaderboard)
+states that the private leaderboard uses all test data. Use the private result
+when reporting this submission's test accuracy. The
+[submission record](docs/results/kaggle_submission.json) preserves both fields
+and the hosted validation evidence. This late submission establishes no official
+competition rank. Its test set differs from the reserved holdout above.
+
 ## Review in five minutes
 
 Start with [02 · Why the features work](notebooks/02_motion_benchmarks.ipynb), then
@@ -78,11 +88,13 @@ scaling, and estimator. Target histories exclude the entire current date, and
 evaluation histories stay frozen. One labelled season does not establish
 across-season generalization.
 
-The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displacement,
+The [official metric](https://www.kaggle.com/code/metric/nfl-2025) is
+`sqrt(sum(dx² + dy²) / (2N))`, with lower values better. The project's metric
+matches all three examples published in the organizer's scorer. ADE, FDE, p95 displacement,
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **296 automated tests** in the final release, including leakage, geometry, missing-input dependencies, artifact
+The locked Python 3.11 project has **299 automated tests** in the final release, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
 locks, source/input hashes, and content-addressed S3 checkpoints make long work

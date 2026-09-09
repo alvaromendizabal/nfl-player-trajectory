@@ -20,6 +20,27 @@ def test_official_rmse_has_two_coordinate_denominator() -> None:
     assert metrics["fde_trajectory_weighted_yards"] == 5
 
 
+@pytest.mark.parametrize(
+    ("predicted_x", "predicted_y", "expected_rmse"),
+    [
+        ([1.1, 2.0, 3.0], [4.0, 2.2, 3.0], 0.0913),
+        ([0.0, 2.0, 3.0], [4.0, 2.2, 3.0], 0.4163),
+        ([1.0, 2.0, 1.0], [4.0, 0.0, 3.0], 1.1547),
+    ],
+)
+def test_rmse_matches_published_kaggle_examples(
+    predicted_x: list[float], predicted_y: list[float], expected_rmse: float
+) -> None:
+    # Independent examples from https://www.kaggle.com/code/metric/nfl-2025 (v4).
+    truth = pd.DataFrame(
+        [[2023090700, 12, 2, frame, x, y] for frame, x, y in [(1, 1, 4), (2, 2, 2), (3, 3, 3)]],
+        columns=KEYS + ["x", "y"],
+    )
+    prediction = truth[KEYS].assign(x=predicted_x, y=predicted_y)
+    score = trajectory_metrics(truth, prediction)["coordinate_rmse_yards"]
+    assert round(score, 4) == expected_rmse
+
+
 def test_row_order_does_not_change_score() -> None:
     _, truth = synthetic_play()
     assert (

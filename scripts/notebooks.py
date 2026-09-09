@@ -98,6 +98,19 @@ def source_hash(notebook: Any) -> str:
     return hashlib.sha256(json.dumps(content, ensure_ascii=False).encode()).hexdigest()
 
 
+def final_results(root: Path) -> dict[str, str]:
+    """Include verified final reports without changing historical research records."""
+    from nfl_trajectory.final_diagnostics import load_diagnostics
+    from nfl_trajectory.final_results import REPORTS, load_final_results
+
+    if load_final_results(root) is None:
+        return {}
+    names = [*REPORTS.values(), "final_results_manifest.json"]
+    if load_diagnostics(root) is not None:
+        names.append("final_diagnostics.json")
+    return {f"final/{name}": sha256(root / "docs/results" / name) for name in names}
+
+
 def local_results(root: Path) -> dict[str, str]:
     """Require a completed local benchmark, not the bundled public snapshot."""
     folder = root / "artifacts/benchmark"
@@ -134,6 +147,7 @@ def local_results(root: Path) -> dict[str, str]:
         | feature_results(root)
         | research_results(root)
         | {f"extended/{k}": v for k, v in extended_evidence(root).items()}
+        | final_results(root)
     )
 
 
@@ -144,6 +158,23 @@ def execution_signature(root: Path, source: Path) -> str:
     helper = root / "src/nfl_trajectory/research_visuals.py"
     if helper.is_file():
         inputs.append(helper)
+    # Final results are published separately from historical development experiments.
+    # Their arrival, replacement, or a changed verifier must invalidate notebook caches.
+    from nfl_trajectory.final_results import REPORTS as FINAL_REPORTS
+
+    final_inputs = [
+        *(root / "docs/results" / name for name in FINAL_REPORTS.values()),
+        root / "docs/results/final_results_manifest.json",
+        root / "docs/results/final_export.json",
+        root / "docs/results/final_diagnostics.json",
+        root / "src/nfl_trajectory/final_diagnostics.py",
+        *(
+            root / "src/nfl_trajectory" / f"{name}.py"
+            for name in ("final_results", "final_evaluation", "final_inference", "final_protocol")
+        ),
+        root / "kaggle/final_export.py",
+    ]
+    inputs.extend(path for path in final_inputs if path.is_file())
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(
@@ -334,6 +365,14 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
                 raise ValueError("A research report changed during publication validation.")
             payloads[root / "docs/results" / published] = payload
     receipt = root / "artifacts/notebooks/publication.json"
+    for key, expected_hash in expected.items():
+        if not key.startswith("final/"):
+            continue
+        path = root / "docs/results" / key.removeprefix("final/")
+        payload = path.read_bytes()
+        if hashlib.sha256(payload).hexdigest() != expected_hash:
+            raise ValueError("Final evidence changed during notebook publication.")
+        payloads[path] = payload
     for published, original in EXTRA_REPORTS.items():
         key = f"extended/{published}"
         if key in expected:
@@ -358,7 +397,9 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
                     if "extended/feature_gateway.json" in expected
                     else "not_run"
                 ),
-                "holdout_evaluation": "not_run",
+                "holdout_evaluation": (
+                    "completed" if "final/final_results_manifest.json" in expected else "not_run"
+                ),
             },
         )
     except BaseException:

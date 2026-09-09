@@ -1,0 +1,261 @@
+{
+  "status": "passed",
+  "seal": "db00fee04f4efaea4168e44079143259b16020850838363454a05bf94dba7691",
+  "fit_source": "edd3d9ac00df4a45450fb95752ccc24454ab1afe079868bbe230e1545dd68b4b",
+  "protocol_source": "c5b431034ad8457f8e70f027a726ec1cf3b8a66ba846ae73caaafbba7e97325f",
+  "holdout_evaluation": "completed",
+  "primary_scenario": "complete",
+  "rows": 99266,
+  "games": 48,
+  "metrics": [
+    {
+      "scenario": "complete",
+      "coordinate_rmse_yards": 0.8046699305544704,
+      "ade_frame_weighted_yards": 0.5902318298694922,
+      "ade_trajectory_weighted_yards": 0.4518705091167458,
+      "fde_trajectory_weighted_yards": 1.040675744576049,
+      "p95_displacement_yards": 2.0711211724919103,
+      "coordinate_mae_yards": 0.37592892862452176,
+      "coordinate_rmse_95_interval": [
+        0.6631315781244284,
+        1.0011263058789186
+      ]
+    },
+    {
+      "scenario": "without_metadata",
+      "coordinate_rmse_yards": 0.8046699305544704,
+      "ade_frame_weighted_yards": 0.5902318298694922,
+      "ade_trajectory_weighted_yards": 0.4518705091167458,
+      "fde_trajectory_weighted_yards": 1.040675744576049,
+      "p95_displacement_yards": 2.0711211724919103,
+      "coordinate_mae_yards": 0.37592892862452176,
+      "coordinate_rmse_95_interval": [
+        0.6631315781244284,
+        1.0011263058789186
+      ]
+    },
+    {
+      "scenario": "without_telemetry",
+      "coordinate_rmse_yards": 0.818210029619653,
+      "ade_frame_weighted_yards": 0.6071170402544197,
+      "ade_trajectory_weighted_yards": 0.4651594064088783,
+      "fde_trajectory_weighted_yards": 1.0613148015486016,
+      "p95_displacement_yards": 2.0967753495766326,
+      "coordinate_mae_yards": 0.38712732999878385,
+      "coordinate_rmse_95_interval": [
+        0.6763718268969405,
+        1.0133695986403668
+      ]
+    },
+    {
+      "scenario": "cold_history",
+      "coordinate_rmse_yards": 0.8046914470387944,
+      "ade_frame_weighted_yards": 0.5902522174507614,
+      "ade_trajectory_weighted_yards": 0.45188027130402486,
+      "fde_trajectory_weighted_yards": 1.0407519730567214,
+      "p95_displacement_yards": 2.0711211724919103,
+      "coordinate_mae_yards": 0.37594079568753236,
+      "coordinate_rmse_95_interval": [
+        0.663131129241557,
+        1.0010972207999866
+      ]
+    },
+    {
+      "scenario": "constant_velocity",
+      "coordinate_rmse_yards": 1.817621125737257,
+      "ade_frame_weighted_yards": 1.5472127744214832,
+      "ade_trajectory_weighted_yards": 1.19944880703795,
+      "fde_trajectory_weighted_yards": 2.8992378771905054,
+      "p95_displacement_yards": 5.569710491912325,
+      "coordinate_mae_yards": 0.9833143271613644,
+      "coordinate_rmse_95_interval": [
+        1.6616177240572783,
+        2.031554763484044
+      ]
+    },
+    {
+      "scenario": "role_ridge",
+      "coordinate_rmse_yards": 1.0725191068644906,
+      "ade_frame_weighted_yards": 0.9011050917132176,
+      "ade_trajectory_weighted_yards": 0.7327441634304737,
+      "fde_trajectory_weighted_yards": 1.544898746628482,
+      "p95_displacement_yards": 3.0083111778132503,
+      "coordinate_mae_yards": 0.5729365449741841,
+      "coordinate_rmse_95_interval": [
+        0.9461311307902251,
+        1.2474640411152618
+      ]
+    }
+  ],
+  "slices": [
+    {
+      "group": "player_role",
+      "value": "Defensive Coverage",
+      "rows": 70988,
+      "coordinate_rmse_yards": 0.8880535526024894,
+      "ade_frame_weighted_yards": 0.6466562203846066,
+      "ade_trajectory_weighted_yards": 0.4904134919654451,
+      "fde_trajectory_weighted_yards": 1.1821985236057624,
+      "p95_displacement_yards": 2.305897256332881,
+      "coordinate_mae_yards": 0.41126539401446094
+    },
+    {
+      "group": "player_role",
+      "value": "Targeted Receiver",
+      "rows": 28278,
+      "coordinate_rmse_yards": 0.5414496223144242,
+      "ade_frame_weighted_yards": 0.44858621724176256,
+      "ade_trajectory_weighted_yards": 0.3653646698107039,
+      "fde_trajectory_weighted_yards": 0.7230421346152661,
+      "p95_displacement_yards": 1.4030424934349588,
+      "coordinate_mae_yards": 0.2872216294838115
+    },
+    {
+      "group": "forecast_second",
+      "value": "1",
+      "rows": 73100,
+      "coordinate_rmse_yards": 0.2884306587958135,
+      "ade_frame_weighted_yards": 0.28918265711090746,
+      "ade_trajectory_weighted_yards": 0.2830511612324131,
+      "fde_trajectory_weighted_yards": 0.5873986894345784,
+      "p95_displacement_yards": 0.839449542882916,
+      "coordinate_mae_yards": 0.18427751444436047
+    },
+    {
+      "group": "forecast_second",
+      "value": "2",
+      "rows": 22100,
+      "coordinate_rmse_yards": 1.0559521693327938,
+      "ade_frame_weighted_yards": 1.1757006168715303,
+      "ade_trajectory_weighted_yards": 1.0545005022636322,
+      "fde_trajectory_weighted_yards": 1.3625071859413596,
+      "p95_displacement_yards": 2.953071777656248,
+      "coordinate_mae_yards": 0.7499090791946222
+    },
+    {
+      "group": "forecast_second",
+      "value": "3",
+      "rows": 3790,
+      "coordinate_rmse_yards": 2.199701783510531,
+      "ade_frame_weighted_yards": 2.4295967592642533,
+      "ade_trajectory_weighted_yards": 2.2832263690724544,
+      "fde_trajectory_weighted_yards": 2.592996114919305,
+      "p95_displacement_yards": 6.206484445066099,
+      "coordinate_mae_yards": 1.5426949625218842
+    },
+    {
+      "group": "forecast_second",
+      "value": "4",
+      "rows": 156,
+      "coordinate_rmse_yards": 5.716319035345253,
+      "ade_frame_weighted_yards": 6.387141932194646,
+      "ade_trajectory_weighted_yards": 5.049672476474939,
+      "fde_trajectory_weighted_yards": 5.289242974477703,
+      "p95_displacement_yards": 18.232272921496815,
+      "coordinate_mae_yards": 3.957446674412637
+    },
+    {
+      "group": "forecast_second",
+      "value": "5",
+      "rows": 80,
+      "coordinate_rmse_yards": 8.649841471298583,
+      "ade_frame_weighted_yards": 9.783111527912377,
+      "ade_trajectory_weighted_yards": 9.783111527912377,
+      "fde_trajectory_weighted_yards": 11.132074357281935,
+      "p95_displacement_yards": 27.425456540768963,
+      "coordinate_mae_yards": 6.296342921506718
+    },
+    {
+      "group": "forecast_second",
+      "value": "6",
+      "rows": 40,
+      "coordinate_rmse_yards": 10.159689828920918,
+      "ade_frame_weighted_yards": 12.01255437224955,
+      "ade_trajectory_weighted_yards": 12.012554372249546,
+      "fde_trajectory_weighted_yards": 12.652773220507093,
+      "p95_displacement_yards": 30.538036348049747,
+      "coordinate_mae_yards": 7.635026246775621
+    },
+    {
+      "group": "week",
+      "value": "16",
+      "rows": 36508,
+      "coordinate_rmse_yards": 0.9617463708129673,
+      "ade_frame_weighted_yards": 0.6335790481238394,
+      "ade_trajectory_weighted_yards": 0.4650918055837185,
+      "fde_trajectory_weighted_yards": 1.0698176353706506,
+      "p95_displacement_yards": 2.193101396610819,
+      "coordinate_mae_yards": 0.403714840661611
+    },
+    {
+      "group": "week",
+      "value": "17",
+      "rows": 33076,
+      "coordinate_rmse_yards": 0.7139730959668682,
+      "ade_frame_weighted_yards": 0.5715179141998964,
+      "ade_trajectory_weighted_yards": 0.448459596340005,
+      "fde_trajectory_weighted_yards": 1.047744963225398,
+      "p95_displacement_yards": 2.0255334003753696,
+      "coordinate_mae_yards": 0.3636011652202847
+    },
+    {
+      "group": "week",
+      "value": "18",
+      "rows": 29682,
+      "coordinate_rmse_yards": 0.678018147988294,
+      "ade_frame_weighted_yards": 0.557769773089553,
+      "ade_trajectory_weighted_yards": 0.43944637631922223,
+      "fde_trajectory_weighted_yards": 0.9970901505269396,
+      "p95_displacement_yards": 1.9733128493719558,
+      "coordinate_mae_yards": 0.3554904482562342
+    }
+  ],
+  "rules": {
+    "primary_metric": "coordinate_rmse_yards",
+    "formula": "sqrt(sum(dx**2 + dy**2) / (2 * forecast_frames))",
+    "aggregation": "Pool coordinate squared errors; never average game or week RMSEs.",
+    "confidence_interval": {
+      "method": "game_cluster_percentile_bootstrap",
+      "resamples": 2000,
+      "seed": 2026,
+      "quantiles": [
+        0.025,
+        0.975
+      ],
+      "scope": "Game sampling uncertainty within this single labelled season."
+    },
+    "secondary_metrics": [
+      "ade_frame_weighted_yards",
+      "ade_trajectory_weighted_yards",
+      "fde_trajectory_weighted_yards",
+      "p95_displacement_yards",
+      "coordinate_mae_yards"
+    ],
+    "descriptive_slices": [
+      "player_role",
+      "forecast_second",
+      "week"
+    ],
+    "reference_models": [
+      "constant_velocity",
+      "role_ridge"
+    ],
+    "availability_checks": [
+      "complete",
+      "without_metadata",
+      "without_telemetry",
+      "cold_history"
+    ],
+    "decision_rule": "Report the frozen model regardless of score; no holdout model selection.",
+    "release_rule": "Seal the protocol, fitted model, inference sources and all keyed predictions before opening holdout outcomes. Resume only the same sealed evaluation. A failed run does not authorize a different model; an error correction must retain its audit trail.",
+    "gateway": "Verify final package/standalone parity using the unchanged organizer gateway.",
+    "submission": "Owner-controlled; never submit automatically."
+  },
+  "outcome_hashes": {
+    "data/raw/train/output_2023_w16.csv": "f121c33addf6b45a5bd39e7c95968200eddebf05a0a818caa3724cff4a149c64",
+    "data/raw/train/output_2023_w17.csv": "7c9e00893a65633f31ea889433da1f0049505ec0aaf1b82d1e3f2351e37fa983",
+    "data/raw/train/output_2023_w18.csv": "f41227db6b7499044619acbc49d4018f81f2fdd3bb26d2f5216f226f84c3825d"
+  },
+  "errors_sha256": "924206ebb5ed95adc24101f36816a884b4ed11791d307ea4a7d7804432504ce5",
+  "limitations": "One labelled 2023 season; the bootstrap measures game sampling uncertainty, not cross-season generalization. Availability scenarios are descriptive, not model selection."
+}

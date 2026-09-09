@@ -1,4 +1,4 @@
-# Research model card
+# Model card
 
 **Task:** post-throw x/y player trajectory prediction for NFL Big Data Bowl 2026
 Prediction. Inputs are pre-throw tracking, player roles, the supplied ball landing
@@ -30,19 +30,50 @@ The selected profile's paired 95% game-bootstrap RMSE difference from the
 
 All development comparisons use 32 games and 67,857 frames; game-level uncertainty
 and paired differences accompany the full reports. Training comprises 192 games.
-Three chronological inner folds select feature variants. The final 48 games remain
-unscored. One labelled season and repeatedly inspected development data limit
+Three chronological inner folds select feature variants. The final model separately refits all 224 games and is evaluated on the reserved
+48 games. One labelled season and repeatedly inspected development data limit
 generalization claims. There is no verified leaderboard rank.
+
+## Sealed final evaluation
+
+The frozen final model scores **0.80466993 coordinate RMSE in yards** on 99,266
+frames, 7,965 player/play trajectories, and 48 later games. Its predeclared
+2,000-resample game-bootstrap 95% interval is **0.66313158–1.00112631**.
+All predictions were sealed and checksum-verified in S3 before label access.
+The official score was recomputed from keyed errors; a repeated evaluation
+reused the same seal and preserved all output hashes and modification times.
+
+Frame-weighted ADE is 0.59023183, trajectory-weighted ADE 0.45187051, trajectory
+FDE 1.04067574, p95 displacement 2.07112117, and coordinate MAE 0.37592893 yards.
+The refitted role baseline scores 1.07251911 and constant velocity 1.81762113;
+the final model beats each baseline in all 48 games. These baseline comparisons
+combine feature and algorithm effects. Feature-only attribution remains the
+controlled development study above.
+
+Metadata omission leaves predictions unchanged. Positional fallback scores
+0.81821003; cold history scores 0.80469145. The latter is a small nonzero change
+in the final refit, unlike the research fit's exact cold-history invariance.
+Weekly RMSE is 0.96174637, 0.71397310, and 0.67801815. Coverage players score
+0.88805355; targeted receivers score 0.54144962.
+
+The higher holdout error must remain visible. Forecasts after three seconds
+comprise 276 rows (0.28%) but 23.67% of total squared error. One play contributes
+24.40%, and one game 28.03%. Sparse long horizons and concentrated game-level
+error help explain the wide confidence interval. These are descriptive
+post-evaluation findings, not evidence of a causal mechanism or permission to
+retune on the holdout. No observations are removed from the official metric.
 
 ## Current inference artifact
 
-Final preprocessing has separately been refitted on 224 games: the physical
-baseline, chronological histories, and route encoder. The new components are
-not yet paired with fully trained final residual trees or an export. The final
-fitter passes synthetic numerical recovery and a 15-week raw feature check;
-full-scale fitting remains pending. The inference artifact
-described below remains the verified 192-game research fit, so its development
-score is not relabelled as a final-model result.
+Final preprocessing and both residual-tree profiles have been refitted on all
+224 games. The final bundle contains the new physical baseline, chronological
+histories, route encoder, and four coordinate models. Both final profiles use
+951 active inputs after lossless pruning; their portable predictions match the
+original fits exactly on all 463,670 training rows. The separate final exporter
+passes the unchanged organizer gateway and verified checkpoint reuse.
+
+The following development comparisons describe the earlier 192-game research
+fit. Their scores and active-column counts retain their original lineage.
 
 The research bundle selects the full-width metadata-free profile using the inner
 validation protocol. Its frozen refit representation contains 6,308 screened
@@ -93,7 +124,7 @@ training histories and does not learn from preceding evaluation plays. Private
 competition data and fitted artifacts are not
 redistributed in the public repository.
 
-## Intended review and next gate
+## Intended review and research limits
 
 Use the notebooks to assess football reasoning, leakage prevention, controlled
 feature gains, engineering, and reproducibility. This is a research artifact,
@@ -103,6 +134,7 @@ omission meeting the predeclared follow-up threshold; the combined removal of
 direct histories and forecast crosses improves pooled inner RMSE by just 0.170%,
 with mixed fold results. The final width gain is 0.071%.
 
-The feature and refit-column manifest is frozen. Final refitting, one-time
-reserved holdout evaluation, and validation of the final inference artifact
-remain the next phase. The measured scores above are research results.
+The feature and refit-column manifest remains frozen. Final refitting, reserved
+evaluation, final inference validation, and error-concentration analysis are
+complete. Independent labelled-season validation would strengthen external
+validity; the present study cannot establish it or a leaderboard ranking.

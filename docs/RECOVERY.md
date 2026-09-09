@@ -59,7 +59,7 @@ Full-scale fitting is complete; prediction sealing is a separate stage. Portable
 conversion checks every training row, and its checkpoint binds both coordinate
 model hashes. A completed fit reuses its verified models without materializing
 the training matrix again. Future evaluation must bind the same model and
-predictions on resume. Holdout outcomes remain unscored. See
+predictions on resume. Holdout scoring is now completed under the immutable seal. See
 [FINAL_PROTOCOL.md](FINAL_PROTOCOL.md).
 
 The preprocessing checkpoint is now verified in the existing private S3 bucket.
@@ -83,3 +83,19 @@ The full training matrix can remain in S3; final inference does not need it.
 The final inference loader checks the fit plan, both coordinate receipts per
 profile, every export receipt, training-prediction hashes, preprocessing and
 source hashes. Never use an unverified pickle to bypass those checks.
+
+The complete pre-outcome prediction snapshot is
+`81d88a849fb64b7b6803e29defadf246f00892879b46ed78a94f00e87751126e`,
+with 1,576 entries. All 16 uploaded objects (11,551,607 bytes) were downloaded
+back and verified. It preserves the fitted snapshot, all three prediction
+arrays, the inference bundle, stage receipts, seal and logs. Its S3 timestamp
+precedes outcome access; [the receipt](results/final_sealed_backup.json) records
+that boundary.
+
+Final evaluation reuses only the identical seal. It preserves the original
+outcome-access receipt and refuses changed prediction or source hashes. The
+final report publisher verifies the actual errors and scored stage before
+creating the public manifest. Notebook checkpoints include these final reports
+and their verifier sources, so a changed final result invalidates old outputs.
+Historical development reports retain their original unscored-holdout status;
+the separate final report records the completed reserved evaluation.

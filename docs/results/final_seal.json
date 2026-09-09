@@ -1,0 +1,126 @@
+{
+  "provenance": {
+    "protocol_sha256": "5adf404c8bec1a04479f956849695edddf214bd4574068af80d1f7fc07273248",
+    "bundle_sha256": "a594656660f779bd8da5f1acbf8aaae9128ebcf4c2b2f274db42783dbe21413f",
+    "inputs": {
+      "data/raw/train/input_2023_w16.csv": "474ded452014b53cf0076c63787977ef1c08e62f065f2b9653e5cb37e3fee1ba",
+      "data/raw/train/input_2023_w17.csv": "c44be941c5072c786cdbdd9f7b1bd66fe3ee64f840ee6f355bc3691dc2def1da",
+      "data/raw/train/input_2023_w18.csv": "ead5883c9d27d4c7e7c2f9162649d23a06f83a0b7b27a70ad117d4dcc99541f2",
+      "src/nfl_trajectory/final_evaluation.py": "9a297f51083b13bf68ea884ba5b1d80fd0ea7b6c51dec0ed81934767ab19f394",
+      "scripts/evaluate_final.py": "fbe9cadb555c179517c2aea606cacca1ccbdc8bb4c1b3b7d931da9a30e70dac9",
+      "artifacts/final/inference/summary.json": "0d3541dc0c496d55a38a12eb0ac7c023f69b0aec401fe2d3a6446fd6f611fca9"
+    },
+    "outcome_hashes": {
+      "data/raw/train/output_2023_w16.csv": "f121c33addf6b45a5bd39e7c95968200eddebf05a0a818caa3724cff4a149c64",
+      "data/raw/train/output_2023_w17.csv": "7c9e00893a65633f31ea889433da1f0049505ec0aaf1b82d1e3f2351e37fa983",
+      "data/raw/train/output_2023_w18.csv": "f41227db6b7499044619acbc49d4018f81f2fdd3bb26d2f5216f226f84c3825d"
+    },
+    "rules": {
+      "primary_metric": "coordinate_rmse_yards",
+      "formula": "sqrt(sum(dx**2 + dy**2) / (2 * forecast_frames))",
+      "aggregation": "Pool coordinate squared errors; never average game or week RMSEs.",
+      "confidence_interval": {
+        "method": "game_cluster_percentile_bootstrap",
+        "resamples": 2000,
+        "seed": 2026,
+        "quantiles": [
+          0.025,
+          0.975
+        ],
+        "scope": "Game sampling uncertainty within this single labelled season."
+      },
+      "secondary_metrics": [
+        "ade_frame_weighted_yards",
+        "ade_trajectory_weighted_yards",
+        "fde_trajectory_weighted_yards",
+        "p95_displacement_yards",
+        "coordinate_mae_yards"
+      ],
+      "descriptive_slices": [
+        "player_role",
+        "forecast_second",
+        "week"
+      ],
+      "reference_models": [
+        "constant_velocity",
+        "role_ridge"
+      ],
+      "availability_checks": [
+        "complete",
+        "without_metadata",
+        "without_telemetry",
+        "cold_history"
+      ],
+      "decision_rule": "Report the frozen model regardless of score; no holdout model selection.",
+      "release_rule": "Seal the protocol, fitted model, inference sources and all keyed predictions before opening holdout outcomes. Resume only the same sealed evaluation. A failed run does not authorize a different model; an error correction must retain its audit trail.",
+      "gateway": "Verify final package/standalone parity using the unchanged organizer gateway.",
+      "submission": "Owner-controlled; never submit automatically."
+    }
+  },
+  "predictions": {
+    "artifacts/final/predictions/week_16.npz": "783dbc433103d2e99d1b830258dd84276472230a4ddbf6657162394efbdc3d27",
+    "artifacts/final/predictions/week_17.npz": "b55edec9419904d727662efceaea4e95e5964bf79a222050a41fec692ef339d5",
+    "artifacts/final/predictions/week_18.npz": "6d715e7af664e68ffa28a0dd582d1f5a8c4497d88134798f20858a2638c659b5"
+  },
+  "rows": 99266,
+  "games": [
+    2023122100,
+    2023122300,
+    2023122301,
+    2023122402,
+    2023122403,
+    2023122404,
+    2023122405,
+    2023122406,
+    2023122407,
+    2023122408,
+    2023122409,
+    2023122410,
+    2023122411,
+    2023122500,
+    2023122501,
+    2023122502,
+    2023122800,
+    2023123000,
+    2023123101,
+    2023123102,
+    2023123103,
+    2023123104,
+    2023123105,
+    2023123106,
+    2023123107,
+    2023123108,
+    2023123109,
+    2023123110,
+    2023123111,
+    2023123112,
+    2023123113,
+    2023123114,
+    2024010600,
+    2024010601,
+    2024010700,
+    2024010701,
+    2024010702,
+    2024010703,
+    2024010704,
+    2024010705,
+    2024010706,
+    2024010707,
+    2024010708,
+    2024010709,
+    2024010710,
+    2024010711,
+    2024010712,
+    2024010713
+  ],
+  "scenarios": [
+    "complete",
+    "without_metadata",
+    "without_telemetry",
+    "cold_history",
+    "constant_velocity",
+    "role_ridge"
+  ],
+  "outcomes_opened": false,
+  "source_signature": "db00fee04f4efaea4168e44079143259b16020850838363454a05bf94dba7691"
+}

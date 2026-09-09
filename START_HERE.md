@@ -98,7 +98,7 @@ This checks the complete feature gate, all 224 refit games, cache row alignment,
 both frozen schemas, and input fingerprints. It preserves an immutable protocol
 and reuses its verified input review on a repeated run. It does not fit or score
 the final model. The [final protocol](docs/FINAL_PROTOCOL.md) records the exact
-refit and reserved-evaluation rules before those steps are implemented.
+refit and reserved-evaluation rules established before fitting and scoring.
 
 Refit and checkpoint the final baseline, chronological histories, and route
 encoder with:
@@ -119,14 +119,38 @@ uv run --locked scripts/fit_final.py --publish
 ```
 
 The numerical self-test and 15-week raw feature check have been executed.
-The full-scale final fit remains pending. Each coordinate fit and portable
+The full-scale final fit completed on the verified AWS worker. Each coordinate fit and portable
 conversion resumes independently; unchanged completed fits skip materialization.
 These commands do not score the reserved holdout or create the owner's export.
+
+## Reproduce the sealed final report
+
+After restoring the final checkpoint with this exact source revision, these
+commands validate and reuse completed stages:
+
+```bash
+.venv/bin/python scripts/evaluate_final.py seal
+.venv/bin/python scripts/evaluate_final.py evaluate --publish
+.venv/bin/python -c "from pathlib import Path; from nfl_trajectory.final_results import publish_final_results; publish_final_results(Path.cwd())"
+.venv/bin/python -m nfl_trajectory.final_diagnostics
+.venv/bin/python scripts/notebooks.py --publish
+```
+
+The first two commands were executed and their repeat verified against unchanged
+artifact hashes and modification times. The result publisher validates fit,
+inference, seal and score lineage. Diagnostics retain every error row; notebook
+publication checks final reports and original research receipts before replacing
+canonical outputs. The standalone final exporter is `kaggle/final_export.py`;
+its organizer gateway and checkpoint reuse are verified.
+
+The final holdout score is 0.80467 coordinate RMSE on 48 games. Development's
+0.68805 remains a separate research result. Review the final notebook's sparse
+long-horizon errors and uncertainty before interpreting either score.
 
 ## Export only when you choose
 
 The final cell in notebook 02 is off by default. Enabling it checks the current
-research bundle and creates `artifacts/kaggle/submission.ipynb` for your download.
+final bundle and creates `artifacts/kaggle/submission.ipynb` for your download.
 The exporter resolves the latest verified inference artifact and checks its source
 lineage. Automated quality exports and sample gateway output live under
 `artifacts/quality/` and cannot replace the owner's generated artifact.

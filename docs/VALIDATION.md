@@ -1,7 +1,7 @@
 # Validation record
 
-The final-preprocessing milestone passes **269 tests** in the locked environment,
-including four new integration tests.
+The final-fitting implementation passes **280 tests** in the locked environment,
+including 11 new schema, provenance, raw feature, and recovery tests.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.
@@ -136,3 +136,38 @@ The complete public quality workflow passed all 13 checks in 146.49 seconds
 files, synthetic recovery, all three canonical notebooks, and isolated export
 validation. It ran in a source archive without private fitted artifacts, and
 the tested code was compared byte-for-byte with the working checkout.
+
+
+## Final fitter implementation and executed checks
+
+The final fitter now consumes the newly fitted preprocessing and both frozen
+ordered schemas. It preserves independent x/y checkpoints, rejects stale
+preprocessing and altered fit plans, verifies every portable training prediction,
+and binds exports to both coordinate-model hashes. A regression test corrupts one
+coordinate checkpoint and verifies that rebuilding it invalidates only its own
+profile's export while preserving the other completed fits.
+
+The complete quality run `20260909T032709Z-87ed12b7` passed all 13 checks in
+194.79 seconds: **280 tests**, Ruff lint/format, mypy on 54 source files,
+synthetic execution and recovery, all three canonical notebook executions,
+and isolated exports. The source and test bytes match the reviewed checkout.
+A report typing issue found by the first run was corrected before this clean run.
+
+The separately locked sklearn 1.8.0 numerical check fitted 1,024 synthetic rows
+and 20 columns, retained 16 active inputs, and achieved exactly zero portable
+prediction difference. It recovered a controlled y-fit interruption while
+preserving x bytes and modification time. A completed repeat needed no training
+matrix. The [numerical receipt](results/final_fit_validation.json) records its
+scope and implementation hashes; CI runs this check in addition to the offline
+suite.
+
+The [real-input feature receipt](results/final_feature_validation.json) verifies
+one complete play per week across all 15 training weeks, totaling 738 forecast
+rows. Both the 6,308-column primary schema and the 5,572-column positional subset
+matched raw-input reconstruction exactly. Run `20260909T032707Z-04157bd8`
+completed in 40.36 seconds without opening reserved outcomes.
+
+Full-scale final-model training has not run. The preprocessing snapshot remains
+verified locally and awaits its separate cloud upload; final raw inference,
+prediction sealing, and reserved scoring remain unfinished. None of these checks
+adds a new accuracy estimate or replaces the completed research predictor.

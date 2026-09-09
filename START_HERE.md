@@ -108,8 +108,20 @@ encoder with:
 ```
 
 This stage has been executed on the full training partition. Repeating it
-reuses each verified component. It does not yet fit the final residual trees
-or score the reserved holdout.
+reuses each verified component. The separately locked final fitter is now
+implemented:
+
+```bash
+uv run --locked scripts/fit_final.py --self-test
+.venv/bin/python scripts/fit_final.py --validate-data --publish
+# Requires verified private preprocessing and a 128 GiB worker.
+uv run --locked scripts/fit_final.py --publish
+```
+
+The numerical self-test and 15-week raw feature check have been executed.
+The full-scale final fit remains pending. Each coordinate fit and portable
+conversion resumes independently; unchanged completed fits skip materialization.
+These commands do not score the reserved holdout or create the owner's export.
 
 ## Export only when you choose
 

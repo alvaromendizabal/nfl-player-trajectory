@@ -74,10 +74,41 @@ the cold-history prior. The [preprocessing receipt](results/final_preprocessing.
 records the frozen protocol, implementation hashes, training games, and output
 hashes. Research-era fitted components remain preserved in their original paths.
 
-These new components are not yet connected to a final residual-tree fit or
-export. The validated research predictor and its development score remain the
-current inference evidence. Fitting both final tree profiles, sealing predictions,
-and reserved scoring are subsequent implementation milestones.
+The final fitter now consumes these components through verified stage receipts.
+The validated research predictor and its development score remain the current
+accuracy evidence. Full-scale final fitting has not yet run.
+
+## Implemented final fitting
+
+`uv run --locked scripts/fit_final.py --publish` preserves both ordered frozen
+schemas and the validated sklearn 1.8.0 settings. It materializes one 6,308-column
+matrix from the new baseline, earlier-date histories, and route encoder; the
+5,572-column fallback uses its exact positional subset. Weekly identifiers,
+complete training coverage, finite values, and coordinate signs are checked.
+The full fit requires a 128 GiB worker; memory and storage checks run before the
+large allocation.
+
+Each profile's x and y estimators has an independent checksum-verified checkpoint.
+Portable conversion checks every training prediction against the original
+estimator before pruning inactive inputs. Export signatures include the actual
+coordinate-model hashes, so recovering a changed model invalidates its export.
+A completed rerun skips materialization. The immutable fit plan binds source,
+locks, preprocessing, and environment; the final seal prohibits refitting.
+
+Two separate executed checks support this implementation:
+
+- `scripts/fit_final.py --self-test`: real sklearn fits on 1,024 synthetic rows;
+  controlled interruption, preserved x checkpoint, recovered y, exact portable
+  parity, and a repeat with no materialization. CI runs this in its locked environment.
+- `scripts/fit_final.py --validate-data --publish`: raw-input reconstruction of
+  both full frozen schemas on one complete play from each of the 15 training
+  weeks: 738 forecast rows, with zero feature differences. The
+  [feature validation receipt](results/final_feature_validation.json) binds this
+  check to the current protocol and preprocessing.
+
+These are software and feature-path checks. They do not constitute a final
+463,670-row model fit or an out-of-time accuracy result. Full fitting, raw final
+inference validation, prediction sealing, and reserved scoring remain.
 
 ## Evaluation rules recorded before fitting
 

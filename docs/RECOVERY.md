@@ -54,8 +54,11 @@ Final preprocessing now checkpoints the baseline, historical encodings, and rout
 encoder independently. Run `scripts/refit_final.py` to reuse valid components or
 finish an interrupted stage. The integration test interrupts route fitting and
 verifies that earlier component bytes and modification times are preserved.
-Final residual-tree fitting and prediction sealing remain to be implemented;
-they must verify portable parity and bind evaluation to the same model and
+Final residual-tree fitting is implemented with separate coordinate checkpoints.
+Its full-scale execution and prediction sealing remain unfinished. Portable
+conversion checks every training row, and its checkpoint binds both coordinate
+model hashes. A completed fit reuses its verified models without materializing
+the training matrix again. Future evaluation must bind the same model and
 predictions on resume. Holdout outcomes remain unscored. See
 [FINAL_PROTOCOL.md](FINAL_PROTOCOL.md).
 

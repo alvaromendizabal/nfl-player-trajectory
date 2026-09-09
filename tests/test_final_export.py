@@ -41,6 +41,7 @@ def test_final_notebook_export_matches_package_and_resumes(inference_project):
     path = root / "artifacts/kaggle/submission.ipynb"
     before = sha256(path), path.stat().st_mtime_ns
     notebook = nbformat.read(path, as_version=4)
+    assert path.stat().st_size < 1_000_000
     assert notebook.metadata.nfl_export.model == "final"
     assert notebook.metadata.nfl_export.automatically_submitted is False
     namespace = {}

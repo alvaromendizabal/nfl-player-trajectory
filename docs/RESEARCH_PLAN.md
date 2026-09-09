@@ -158,5 +158,6 @@ its place under the same validation protocol.
 
 The [final-phase protocol](FINAL_PROTOCOL.md) now implements input verification
 and freezes both ordered refit schemas, the 224 training games, model settings,
-and reporting rules. Preparation has been executed; final fitting and reserved
-scoring remain subsequent milestones.
+and reporting rules. Preparation and the 224-game baseline/history/route refit
+have been executed. Both final residual-tree fits and reserved scoring remain
+subsequent milestones; the research metrics retain their original lineage.

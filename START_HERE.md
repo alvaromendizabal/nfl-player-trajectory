@@ -10,7 +10,8 @@ then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature ration
 Public aggregates support review without private tracking or cloud credentials.
 All 15 feature-research criteria now pass, and the feature/selection manifest is
 frozen. The final-phase input protocol is implemented and verified; final
-refitting and the reserved-holdout evaluation remain unfinished.
+preprocessing has been refitted on all 224 authorized games. Final residual-tree
+fitting and the reserved-holdout evaluation remain unfinished.
 
 For a public software review, run the following from the repository with Python
 3.11 or later and at least 5 GiB free storage:
@@ -98,6 +99,17 @@ both frozen schemas, and input fingerprints. It preserves an immutable protocol
 and reuses its verified input review on a repeated run. It does not fit or score
 the final model. The [final protocol](docs/FINAL_PROTOCOL.md) records the exact
 refit and reserved-evaluation rules before those steps are implemented.
+
+Refit and checkpoint the final baseline, chronological histories, and route
+encoder with:
+
+```bash
+.venv/bin/python scripts/refit_final.py --publish
+```
+
+This stage has been executed on the full training partition. Repeating it
+reuses each verified component. It does not yet fit the final residual trees
+or score the reserved holdout.
 
 ## Export only when you choose
 

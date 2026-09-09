@@ -44,7 +44,21 @@ immutable on ordinary reruns. Preserve it, its source commit, and its input
 review before starting the final fit. The published preparation receipt in
 `docs/results/final_protocol.json` records its signature and verified counts.
 
-Final fitting and prediction sealing are not yet implemented. They must
-checkpoint preprocessing and the independent availability profiles, verify
-portable inference parity, and bind evaluation to the same model and predictions
-on resume. Holdout outcomes remain unscored. See [FINAL_PROTOCOL.md](FINAL_PROTOCOL.md).
+The approved preparation snapshot is
+`91715ecdcb0625899e91c8a80c0481b0cf7bb4d913991353b188aed129183145` in the
+existing private project bucket. All six added files and its manifest were
+downloaded back and verified by SHA-256 and byte count: 844,786 uploaded bytes,
+1,517 manifest entries. It extends the preserved research snapshot.
+
+Final preprocessing now checkpoints the baseline, historical encodings, and route
+encoder independently. Run `scripts/refit_final.py` to reuse valid components or
+finish an interrupted stage. The integration test interrupts route fitting and
+verifies that earlier component bytes and modification times are preserved.
+Final residual-tree fitting and prediction sealing remain to be implemented;
+they must verify portable parity and bind evaluation to the same model and
+predictions on resume. Holdout outcomes remain unscored. See
+[FINAL_PROTOCOL.md](FINAL_PROTOCOL.md).
+
+The new preprocessing fits are verified locally and their compact receipt is
+versioned with the source. They have not yet been added to a verified cloud
+snapshot. Preserve that checkpoint before the expensive residual-tree stage.

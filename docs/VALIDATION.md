@@ -1,6 +1,7 @@
 # Validation record
 
-The final-preparation milestone passes **265 tests** in the locked project environment.
+The final-preprocessing milestone passes **269 tests** in the locked environment,
+including four new integration tests.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.
@@ -102,3 +103,36 @@ lint and formatting, mypy on 49 source files, synthetic execution and recovery,
 all three canonical notebook executions, and isolated export validation. The
 tested source files were compared byte-for-byte with the working checkout.
 Preparation does not constitute a final model fit or a reserved accuracy result.
+
+## Executed final preprocessing
+
+Run `20260909T025200Z-55fc6931` refitted the physical baseline, strictly
+earlier-date historical encodings, and route encoder on the frozen 224-game
+partition in 29.41 seconds. Coverage checks confirm 927,340 coordinates, 38,080
+trajectories, 1,111 historical player records, two roles, 16 route components,
+and eight prototypes. Its source signature is
+`eb6f17e15a1d2548d5738f92932b72ebf0b11b352255991ba6053893bb5592c6`.
+
+Run `20260909T025326Z-ee41a0ef` reused all three completed components in
+3.83 seconds. Their bytes and modification times were unchanged; the summary
+was byte-identical. The integration test additionally interrupts route fitting,
+then verifies that baseline and history checkpoints survive and are reused.
+Other checks cover deterministic route ordering, excluded games, duplicate
+entities, incomplete coordinate coverage, first-date history leakage,
+nonfinite history values, and the prohibition on refitting after model sealing.
+
+The six approved final-preparation files and their manifest were uploaded to
+the private project bucket and downloaded back with exact SHA-256 and size
+verification: 844,786 bytes. Snapshot
+`91715ecdcb0625899e91c8a80c0481b0cf7bb4d913991353b188aed129183145`
+contains 1,517 entries. The newly fitted preprocessing artifacts are verified
+locally; their separate cloud upload has not yet been completed.
+
+Final residual-tree fitting, prediction sealing, and reserved evaluation remain
+unfinished. These preprocessing fits do not produce a new accuracy result.
+
+The complete public quality workflow passed all 13 checks in 146.49 seconds
+(`20260909T025414Z-3fbf3a31`): 269 tests, lint and formatting, mypy on 51 source
+files, synthetic recovery, all three canonical notebooks, and isolated export
+validation. It ran in a source archive without private fitted artifacts, and
+the tested code was compared byte-for-byte with the working checkout.

@@ -4,10 +4,13 @@ from __future__ import annotations
 
 import argparse
 import ast
+import base64
 import hashlib
-import pprint
+import json
 import subprocess
 import sys
+import textwrap
+import zlib
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +21,17 @@ from nfl_trajectory.final_inference import final_bundle, standalone_source
 from nfl_trajectory.final_protocol import digest
 from nfl_trajectory.runtime import Run, atomic_bytes, sha256, stage
 
+KAGGLE_SOURCE_LIMIT = 1_000_000
+
+
+def packed_assignment(name: str, value: Any) -> str:
+    """Embed losslessly compressed JSON without external files or downloads."""
+    # Module insertion order is its dependency order; preserve it through JSON.
+    payload = json.dumps(value, separators=(",", ":")).encode()
+    encoded = base64.b85encode(zlib.compress(payload, level=9)).decode("ascii")
+    chunks = "\n".join("    " + repr(chunk) for chunk in textwrap.wrap(encoded, 76))
+    return f"{name} = json.loads(zlib.decompress(base64.b85decode(\n{chunks}\n)))\n"
+
 
 def final_notebook(root: Path) -> Any:
     """Retain the canonical gateway and recovery code; supply verified final inference."""
@@ -26,7 +40,7 @@ def final_notebook(root: Path) -> Any:
     source = notebook.cells[1].source.partition("INFERENCE_SIGNATURE =")[0]
     source = source.replace(
         "from __future__ import annotations\n",
-        "from __future__ import annotations\nimport types\n",
+        "from __future__ import annotations\nimport base64\nimport types\nimport zlib\n",
         1,
     )
     for node in ast.parse(standalone_source(root, bundle)).body:
@@ -39,13 +53,7 @@ def final_notebook(root: Path) -> Any:
         )
         if isinstance(node, ast.Assign) and name in ("_sources", "FINAL_MODEL"):
             value = bundle if name == "FINAL_MODEL" else ast.literal_eval(node.value)
-            literal = pprint.pformat(value, width=85, sort_dicts=False)
-            if name == "FINAL_MODEL":
-                for checksum in bundle["inference_sources"].values():
-                    literal = literal.replace(
-                        repr(checksum), f"({checksum[:32]!r}\n{checksum[32:]!r})"
-                    )
-            source += name + " = " + literal + "\n"
+            source += packed_assignment(name, value)
         else:
             source += ast.unparse(node) + "\n"
     source += "INFERENCE_SIGNATURE = " + repr(hashlib.sha256(source.encode()).hexdigest()) + "\n"
@@ -97,7 +105,13 @@ def export_final(root: Path, output: Path, run: Run) -> None:
             if args != ("check",):
                 formatted = result.stdout
         nbformat.validate(nbformat.reads(formatted, as_version=4))
-        atomic_bytes(output, formatted.encode())
+        encoded = formatted.encode()
+        if len(encoded) >= KAGGLE_SOURCE_LIMIT:
+            raise ValueError(
+                f"Kaggle notebook exceeds its {KAGGLE_SOURCE_LIMIT:,}-byte source limit: "
+                f"{len(encoded):,} bytes. Keep fitted parameters compressed."
+            )
+        atomic_bytes(output, encoded)
 
     stage(root, "final-notebook-export", source, [output], action, run)
 

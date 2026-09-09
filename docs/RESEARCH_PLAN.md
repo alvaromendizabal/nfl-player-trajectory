@@ -113,8 +113,9 @@ evidence, fixed-estimator feature gains are robust, the latest useful representa
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
 Current status: **closed after all 15 evidence criteria passed**. The source-bound
-selection manifest is frozen for the final phase. Final refitting and the
-48-game reserved holdout have not run.
+selection manifest was frozen for the final phase. That phase subsequently
+completed: reserved RMSE 0.80467 and Kaggle private RMSE 0.70090. The feature gate
+established controlled feature value, not competition-leading model performance.
 
 The [wide ablation protocol](WIDE_ABLATION_PROTOCOL.md) extends strict refits to
 the selected wide availability profile, covers all 20 catalog families in
@@ -161,4 +162,90 @@ and freezes both ordered refit schemas, the 224 training games, model settings,
 and reporting rules. Preparation and the 224-game baseline/history/route refit
 have been executed. The final fitter and its numerical recovery checks are now
 implemented; raw feature parity covers all 15 training weeks. Full-scale
-residual-tree fitting and reserved scoring remain subsequent milestones; the research metrics retain their original lineage.
+residual-tree fitting, reserved scoring, and the late Kaggle submission completed;
+the research metrics retain their original lineage.
+
+## Performance extension after the Kaggle result
+
+The September 9, 2026 private score of **0.70090** leaves a substantial gap to the
+winning **0.46340**. The submitted model remains a frozen reference. Its 100-round,
+depth-4 tree configuration came from the feature-attribution experiment. Carrying
+that configuration into the final release without a stronger architecture study
+left the model search incomplete for a competition-performance goal.
+
+### Evidence from leading solutions
+
+The [first-place writeup](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/writeups/public-3rd-solution)
+reports a play-level network: temporal convolutions encode 20 observed frames,
+attention exchanges information among up to 22 players, and a decoder predicts
+future displacements. Compact inputs describe position, heading, velocity,
+receiver-relative and landing-relative geometry, roles, and horizon. The author
+reports training only on this Prediction competition's supplied data. Rotation,
+reflection, earlier-frame forecasting, Gaussian likelihood and motion-derivative
+losses improve learning; the final ensemble averages more than 100 models.
+
+The [third-place writeup](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction/writeups/3rd-place-solution)
+uses a spatiotemporal Transformer, auxiliary motion/endpoint supervision,
+augmentation, and multiple folds/seeds. It also reports pretraining with the
+2018 tracking data from Big Data Bowl 2021. Adding more geometric features did
+not help that team's final approach. These findings support testing representation
+learning and player interaction; they do not guarantee the same score here.
+
+### Completed bounded capacity diagnostic
+
+Run `uv run --locked scripts/model_capacity.py --publish` to reproduce or reuse
+the [capacity comparison](results/model_capacity.json). It uses the same 122
+core features selected on 192 training games, 395,813 training rows, and all
+67,857 development rows from 32 later games. Both arms share the baseline,
+features, seed, objective, learning rate, bins and regularization.
+
+| Development model | RMSE |
+|---|---:|
+| Core features; 100 rounds, depth 4, 15 leaves | 0.77676 |
+| Same core features; 400 rounds, depth 8, 31 leaves | 0.70239 |
+| Frozen full-feature model, a different representation | 0.68805 |
+
+Capacity reduces the core model's RMSE by 9.6%; the paired game-bootstrap
+difference interval is [-0.08581, -0.06415] yards. This is conditional uncertainty
+on an already-inspected development set. The deeper core model does not surpass
+the frozen full-feature reference and is not promoted. This diagnostic does not
+test deeper boosting on the full feature bank. Its fits, row-level errors,
+input hashes and checkpoints are preserved separately from the submitted model.
+
+### Next experiment and promotion requirements
+
+1. Build a play-level temporal encoder with attention across players and a
+   displacement decoder. Use masks for missing players/history and variable
+   output lengths; cover every requested frame without truncation. Start with
+   the compact numeric feature set supported by the winning approach.
+2. Test consistent spatial augmentation and earlier-frame forecasting. Transform
+   positions, angles, velocities and landing/receiver anchors together. Frames
+   moved into augmentation targets must leave the input tensor. Test invariance,
+   future-coordinate exclusion, masks, frame clocks and row alignment explicitly.
+3. Compare masked coordinate MSE against robust likelihood plus velocity and
+   acceleration auxiliary losses. Rank every candidate using the unchanged,
+   unweighted official coordinate RMSE. Audit anomalous training plays; retain
+   every validation and submitted target row in the reported metric.
+4. First run one bounded training experiment on the established development
+   partition. Then confirm gains on all three chronological inner folds, refitting
+   every learned preprocessing step inside each fold. Supplement with grouped
+   game validation for comparison with published approaches. The previously
+   scored 48-game holdout is no longer an untouched selection resource.
+5. Add folds/seeds and average predictions only when out-of-fold error analysis
+   supports the cost. Fit any ensemble weights on training-side out-of-fold
+   predictions, never on Kaggle private scores. Benchmark complete offline
+   inference before any new submission. Report Kaggle results separately from CV.
+6. Consider permitted older tracking data for pretraining after verifying its
+   license, task reconstruction, event timing, and absence of validation overlap.
+   The winner demonstrates that external data is not required for a strong score.
+
+The current Prediction schema contains names, positions and categorical roles,
+but no play-description text. NLP on player names has no demonstrated benefit.
+Retrospective play descriptions can reveal the outcome. A language model can help
+with literature review, code and error explanation; it is not the planned numeric
+trajectory predictor. The proposed attention model is trained on tracking data.
+
+The objective is to approach 0.46 private RMSE through measured improvements.
+No neural challenger has yet been trained in this extension, and no improved
+Kaggle score is claimed. Full-scale fitting should follow a timed single-run
+benchmark with a compute cap and recoverable epoch checkpoints.

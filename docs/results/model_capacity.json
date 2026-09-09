@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "source_signature": "8c0bf49175c8346962af8fb797267379ddab9fc0c25bc8738e52c6a5af6904ec",
+  "run_id": "20260909T215336Z-13eab42c",
+  "scope": "Two predeclared capacities, identical core features, complete development rows.",
+  "feature_count": 122,
+  "training_games": 192,
+  "training_rows": 395813,
+  "development_games": 32,
+  "development_rows": 67857,
+  "models": [
+    {
+      "model": "core_shallow",
+      "settings": {
+        "loss": "squared_error",
+        "learning_rate": 0.07,
+        "max_iter": 100,
+        "max_leaf_nodes": 15,
+        "max_depth": 4,
+        "min_samples_leaf": 60,
+        "l2_regularization": 1.0,
+        "max_bins": 63,
+        "early_stopping": false,
+        "random_state": 2026
+      },
+      "coordinate_rmse_yards": 0.7767648594313602,
+      "ade_frame_weighted_yards": 0.6633098945351925,
+      "ade_trajectory_weighted_yards": 0.5331397529073546,
+      "fde_trajectory_weighted_yards": 1.2024189014470366,
+      "p95_displacement_yards": 2.3251427353927987,
+      "coordinate_mae_yards": 0.42078426276472636
+    },
+    {
+      "model": "core_deeper",
+      "settings": {
+        "loss": "squared_error",
+        "learning_rate": 0.07,
+        "max_iter": 400,
+        "max_leaf_nodes": 31,
+        "max_depth": 8,
+        "min_samples_leaf": 60,
+        "l2_regularization": 1.0,
+        "max_bins": 63,
+        "early_stopping": false,
+        "random_state": 2026
+      },
+      "coordinate_rmse_yards": 0.7023887405116805,
+      "ade_frame_weighted_yards": 0.58690515550879,
+      "ade_trajectory_weighted_yards": 0.46564893085855213,
+      "fde_trajectory_weighted_yards": 1.0727590269312877,
+      "p95_displacement_yards": 2.088650502544608,
+      "coordinate_mae_yards": 0.37180100719165066
+    }
+  ],
+  "paired_game_bootstrap_delta_ci95": [
+    -0.08580541394880208,
+    -0.06414515416895351
+  ],
+  "frozen_full_feature_development_rmse": 0.6880521879583761,
+  "comparison_note": "The frozen full-feature model uses a different representation; only the two core arms isolate capacity. Development has already been inspected; bootstrap uncertainty is conditional on this experiment.",
+  "holdout_evaluation": "not_run",
+  "kaggle_submission": "not_run",
+  "promotion": "Requires chronological inner-fold confirmation and inference validation.",
+  "artifacts": {
+    "artifacts/model_capacity/development/core_deeper.csv": "dc4342c9997d7be7debc0503fd52227f0cab78f1e797e011f583adaf60cf28a2",
+    "artifacts/model_capacity/development/core_deeper_0.pkl": "f38b92e360eb4dac831b5d0520cf6324ec17b99c80a60b86835c519c863b8101",
+    "artifacts/model_capacity/development/core_deeper_1.pkl": "f3ee42879c99a835f3459ef8bf410915a84d92749f540c8fcba86598088b6a1a",
+    "artifacts/model_capacity/development/core_shallow.csv": "beb0e25b264fada3e79e76f0695d65d3c0654aef2cee4f4d2316198ba5962195",
+    "artifacts/model_capacity/development/core_shallow_0.pkl": "2257cf8a15a0e5fad1f2a68ded63a5c085c3e3e33124a621609e8a5acd27376b",
+    "artifacts/model_capacity/development/core_shallow_1.pkl": "c1e4bed940699b188d6f259932be866aba61080ec68401f072cdb3629b0f2fcb",
+    "artifacts/model_capacity/development/design.npz": "bbe712afd79ecda1af2e9076d33e840f0a88f6ea85364f88b68d30bc8905acde",
+    "artifacts/model_capacity/development/plan.json": "92bd0bb1e7fa4bc43bcd1c979d05e25376a37e7f34875573dd670e5e3d447f86"
+  }
+}

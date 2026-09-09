@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "scope": "synthetic numerical integration; not competition fitting",
+  "rows": 1024,
+  "schema_features": 20,
+  "active_features": 16,
+  "portable_max_absolute_difference": 0.0,
+  "interrupted_axis_recovered": true,
+  "completed_axis_preserved": true,
+  "repeat_without_materialization": true,
+  "stage_reuses": 4,
+  "scikit_learn_version": "1.8.0",
+  "holdout_evaluation": "not_run",
+  "implementation": {
+    "src/nfl_trajectory/final_fit.py": "2750a9acd38aa8217fa9f28da9a0ed9923faca282572c3a1c54baa269a08436f",
+    "scripts/fit_final.py": "614185df3294157bf2f59391c1d21368bdca22df8b363f7bf6fed345abf1f869",
+    "scripts/fit_final.py.lock": "96d930eef57c28dfc49a14fa31959ab6fd4adeebdddff742f9b45b68054d779c",
+    "scripts/prepare_tree.py": "6e121ee8bd0aac8cc71189777713e51e5478be758654b06d60ae140899f3d462",
+    "src/nfl_trajectory/tree_inference.py": "88f7fa3ff04109769854c849d707d6067a0590b82248ba18ac20a4fe6e6dc763"
+  }
+}

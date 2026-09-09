@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "scope": "One complete training play per week; full frozen schemas.",
+  "protocol_source": "c5b431034ad8457f8e70f027a726ec1cf3b8a66ba846ae73caaafbba7e97325f",
+  "preprocessing_source": "eb6f17e15a1d2548d5738f92932b72ebf0b11b352255991ba6053893bb5592c6",
+  "implementation_sha256": "cf85c590e469c274f71f5ea847f59c1ba986edb0d1b3ee98c177a27673368f4e",
+  "profile_columns": {
+    "without_metadata": 6308,
+    "without_optional_inputs": 5572
+  },
+  "weeks": [
+    {
+      "week": "input_2023_w01",
+      "rows": 63,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w02",
+      "rows": 40,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w03",
+      "rows": 36,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w04",
+      "rows": 20,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w05",
+      "rows": 84,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w06",
+      "rows": 27,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w07",
+      "rows": 36,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w08",
+      "rows": 55,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w09",
+      "rows": 30,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w10",
+      "rows": 16,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w11",
+      "rows": 70,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w12",
+      "rows": 155,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w13",
+      "rows": 52,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w14",
+      "rows": 36,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    },
+    {
+      "week": "input_2023_w15",
+      "rows": 18,
+      "max_absolute_feature_difference": {
+        "without_metadata": 0.0,
+        "without_optional_inputs": 0.0
+      }
+    }
+  ],
+  "rows": 738,
+  "holdout_evaluation": "not_run",
+  "full_training_run": false
+}

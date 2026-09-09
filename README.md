@@ -76,7 +76,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **269 automated tests** at the final-preprocessing
+The locked Python 3.11 project has **280 automated tests** at the final-fitting implementation
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
@@ -99,6 +99,12 @@ the [preprocessing receipt](docs/results/final_preprocessing.json) records their
 coverage and hashes. Next are both residual-tree fits, one reserved-holdout
 evaluation, and validation of the final inference artifact. The scores above
 belong to the completed research phase; no final-model accuracy is reported yet.
+
+The final fitter is implemented with independent coordinate checkpoints and
+hash-bound portable conversion. Its real sklearn recovery test passes. A
+[raw-input feature check](docs/results/final_feature_validation.json) covers 738
+rows across all 15 training weeks and both complete frozen schemas, with zero
+feature differences. Full-scale final fitting remains pending.
 
 ## Owner-controlled export
 

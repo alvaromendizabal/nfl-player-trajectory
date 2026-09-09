@@ -38,7 +38,9 @@ generalization claims. There is no verified leaderboard rank.
 
 Final preprocessing has separately been refitted on 224 games: the physical
 baseline, chronological histories, and route encoder. The new components are
-not yet paired with final residual trees or an export. The inference artifact
+not yet paired with fully trained final residual trees or an export. The final
+fitter passes synthetic numerical recovery and a 15-week raw feature check;
+full-scale fitting remains pending. The inference artifact
 described below remains the verified 192-game research fit, so its development
 score is not relabelled as a final-model result.
 

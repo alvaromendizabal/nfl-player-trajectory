@@ -20,14 +20,17 @@ Plotly views, and embedded static figures for GitHub review.
 
 | Controlled comparison | Reference RMSE | Engineered RMSE | Interpretation |
 |---|---:|---:|---|
-| Fixed shallow boosting: landing 64 → engineered union 250 | 0.80120 | **0.72802** | **9.13% improvement from features at identical estimator settings** |
+| Fixed shallow boosting: landing 64 → screened wide representation without metadata | 0.80120 | **0.68805** | **14.12% improvement from features at identical estimator settings** |
+| Same boosting settings: landing 64 → engineered union 250 | 0.80120 | 0.72802 | Earlier compact representation; 9.13% feature gain |
 | Residual ridge: landing 64 → joint representation without metadata 236 | 0.92687 | **0.82226** | Expanded features with the same ridge regularization; joint fit |
 | Sequential linear correction: core 128 → context 186 | 0.90045 | **0.86434** | Context adds useful conditional information |
 
 All values are coordinate RMSE in yards on the same 67,857 development frames
-from 32 games. The tree comparison's paired 95% game-bootstrap difference is
-−0.08342 to −0.06295 yards. The wider 512/1,024/2,048-column search is reported
-separately in notebook 02; its outcome is not inferred from feature count.
+from 32 games. Notebook 02 reports paired game-bootstrap differences and the
+complete width search: 512, 1,024, 2,048, 4,096, and the entire eligible pool.
+The final width increment improves pooled inner-fold RMSE by only **0.071%**,
+with mixed fold results. Increasing width has reached the predeclared stopping
+tolerance; the feature gate also requires group refits and inference checks.
 
 ## What the research demonstrates
 
@@ -42,11 +45,17 @@ The first interaction experiment replaced 23 of 64 landing columns. Its worse
 score did not isolate the value of interactions. The expanded study corrects that
 confounding with nested additions and removals without replacement.
 
-The feature gate remains open pending the final width and robustness review.
-There is no final-model or leaderboard claim. The current inference bundle is a
-236-feature joint linear profile with a 212-feature positional fallback; the
-stronger tree remains an explicitly labelled feature diagnostic until its own
-inference path is validated.
+The feature gate remains open pending strict group refits on the current wide
+representation and the final handoff review. The complete bank contains 7,999
+candidates; 6,385 survive development-training screening and redundancy removal.
+The selected metadata-free refit uses 6,308 columns. Its trees use **953 active
+inputs**, which are exported without changing any predictions. These are distinct
+counts: screening, refitting, and lossless inference pruning serve different purposes.
+
+Raw inference reproduces **0.68805 RMSE on all 67,857 development frames**.
+Removing metadata or clearing player history leaves predictions unchanged.
+The independently fitted positional fallback scores **0.69396**, using 981
+active inputs. There is no final-model or leaderboard claim.
 
 ## Validation and engineering
 

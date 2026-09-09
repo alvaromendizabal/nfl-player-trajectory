@@ -60,8 +60,9 @@ Detect repeated names and redundant columns. Wider budgets preserve the
 remove new columns correlated at 0.9995 on 8,192 deterministic training rows.
 Compare budgets of 512, 1,024, 2,048, 4,096, and 8,192 features at the same
 estimator capacity. The last budget exceeds the 7,999-column catalog and therefore
-tests every eligible column that survives redundancy screening; its actual width
-will be smaller than its budget. Run the full-bank folds sequentially within
+tests every eligible column that survives redundancy screening. Actual retained
+widths are 6,386 / 6,382 / 6,382 on the inner folds and 6,385 on development-training
+rows. Run the full-bank folds sequentially within
 at least 128 GiB and checkpoint each completed fold. A 64 GiB attempt completed
 all three inner folds but exceeded memory on the largest development fit; its
 verified stage checkpoints preserve the completed work.
@@ -85,16 +86,20 @@ coefficients. Every raw development frame must reproduce the selected fit.
 The organizer gateway test uses its unchanged source and unlabelled sample.
 A sample pass is not an accuracy or leaderboard result.
 
-The 236-feature linear bundle and 212-feature positional fallback are the
-current research inference path. The wider tree is a diagnostic until its own
-raw-feature/standalone inference has equivalent validation.
+The current inference path uses the metadata-free wide tree with 6,308 screened
+refit columns and 953 active exported inputs. Its positional fallback uses 5,572
+screened columns and 981 active inputs. Lossless tree conversion reproduces all
+eight inner/development profile predictions exactly. Raw replay covers all 67,857
+development frames in each availability scenario: 0.68805 RMSE for complete,
+metadata-free, and cold-history inputs; 0.69396 without optional telemetry.
 
 ## Remaining avenues and stopping decision
 
 | Avenue | Current decision |
 |---|---|
-| Wider screened representations | Test the complete eligible pool; review incremental fold gains before stopping |
-| Robustness of the strongest wide representation | Refit without body/position metadata and optional telemetry; stress-test cold history |
+| Wider screened representations | Complete pool tested; final pooled inner improvement is 0.071%, with mixed folds |
+| Robustness of the strongest wide representation | Metadata omission, positional refits, lossless conversion, and all-frame raw stress tests verified |
+| Strict group removals on the selected wide profile | Running across all three inner folds and development under the committed protocol |
 | Training-only selection and redundancy | Implemented; preserve family and fold evidence |
 | External team ratings, coaching, organization, strength of schedule | Deferred: no verified as-of join, availability contract, or demonstrated relation to this frame-level task |
 | Player identities and historical outcomes | Earlier-date smoothed residual/count features only; no full-season target means |
@@ -106,7 +111,7 @@ Close feature engineering only when the major realistic families have explicit
 evidence, fixed-estimator feature gains are robust, the latest useful representation
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
-Current status: **open pending wide-profile group refits, robustness, and representation handoff review**.
+Current status: **open pending wide-profile group refits and final representation handoff review**.
 
 The [wide ablation protocol](WIDE_ABLATION_PROTOCOL.md) extends strict refits to
 the selected wide availability profile, covers all 20 catalog families in

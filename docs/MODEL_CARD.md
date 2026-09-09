@@ -16,11 +16,15 @@ ball landing point at release time.
 | Joint linear profile without metadata, 236 features | 0.8222565 |
 | Fixed shallow boosting, landing 64 | 0.8011972 |
 | Same boosting settings, engineered union 250 | 0.7280160 |
+| Same boosting settings, entire screened pool, 6,385 columns | 0.6869492 |
+| Same boosting settings, selected metadata-free profile, 6,308 columns | **0.6880522** |
+| Same boosting settings, positional fallback, 5,572 columns | 0.6939581 |
 
-The controlled tree comparison attributes a 9.13% RMSE reduction to the feature
+The current controlled tree comparison attributes a **14.12% RMSE reduction** to the feature
 representation at fixed estimator settings. It does not attribute the difference
 between role ridge and a tree entirely to feature engineering. Wider-budget
-results and their training-only choice are reported in notebook 02.
+results and their training-only choice are reported in notebook 02. The compact
+250-column union previously provided a 9.13% reduction under the same settings.
 
 All development comparisons use 32 games and 67,857 frames; game-level uncertainty
 and paired differences accompany the full reports. Training comprises 192 games.
@@ -30,15 +34,24 @@ generalization claims. There is no verified leaderboard rank.
 
 ## Current inference artifact
 
-The research bundle selects a 236-feature joint linear profile without metadata
-using pooled inner-fold RMSE. Missing telemetry uses an independently fitted
-212-feature positional profile. The bundle includes its physical baseline,
-frozen historical tables, route representation, selected columns, scaling,
-coefficients, training/evaluation game manifest, and source hashes.
+The research bundle selects the full-width metadata-free profile using the inner
+validation protocol. Its frozen refit representation contains 6,308 screened
+columns. Only 953 enter an actual tree split; the portable JSON bundle removes
+unused columns and remaps split indices without altering predictions. A future
+refit must start from the frozen 6,308 definitions, because a new fit can use
+columns that the research trees did not use.
 
-The stronger fixed-tree experiments are separate diagnostics until their raw
-feature and standalone inference contracts are validated. The exporter must not
-advertise their score while returning linear predictions.
+Missing telemetry selects an independently fitted positional profile with 5,572
+screened columns and 981 active tree inputs. The bundle contains both profiles,
+the physical baseline, frozen history tables, route transform, game manifests,
+and source hashes. Numeric tree arrays support prediction without scikit-learn.
+All eight inner/development profile conversions reproduce the fitted estimator
+exactly, with maximum absolute coordinate difference zero on every evaluation row.
+
+Complete-input raw replay reproduces 0.6880522 RMSE on all 67,857 development
+frames. Missing metadata and cold player history return the same predictions;
+missing telemetry selects the positional profile and scores 0.6939581. The
+exporter resolves this validated tree artifact rather than the earlier linear fit.
 
 ## Robustness and limitations
 
@@ -54,9 +67,17 @@ interface shape, ordering, finiteness, and package/standalone parity; it has no
 labels. Sample-year diversity does not establish multi-season accuracy.
 
 Permutation importance expresses conditional model reliance, not causal football
-effects. Correlated features reduce individual identifiability. Metadata and
-route-only corrections are weak in some comparisons; failed avenues are retained
-in the research record. Private competition data and fitted artifacts are not
+effects. Correlated features reduce individual identifiability. Group refits remove
+the named columns without replacement; derived information in other families can
+remain. Removing direct history summaries, for example, does not remove every
+forecast interaction derived from motion. These are conditional representation
+ablations, not claims about eliminating a physical mechanism.
+
+Metadata and route-only corrections are weak in some comparisons; failed avenues
+are retained in the research record. The organizer follows request-file play order,
+which does not guarantee chronological callbacks. Inference therefore uses frozen
+training histories and does not learn from preceding evaluation plays. Private
+competition data and fitted artifacts are not
 redistributed in the public repository.
 
 ## Intended review and next gate

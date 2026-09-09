@@ -130,6 +130,31 @@ def test_changed_visual_helper_invalidates_notebook_evidence(project: Path) -> N
 
 
 @pytest.mark.parametrize(
+    "relative",
+    [
+        "docs/results/final_evaluation.json",
+        "docs/results/final_results_manifest.json",
+        "src/nfl_trajectory/final_results.py",
+    ],
+)
+def test_final_publication_invalidates_previous_notebook_checkpoint(
+    project: Path, relative: str
+) -> None:
+    source = notebook(project)
+    output = execute(project, source)
+    previous = nbformat.read(output, as_version=4).metadata.execution.signature
+    path = project / relative
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("initial final evidence\n")
+    execute(project, source)
+    first = nbformat.read(output, as_version=4).metadata.execution.signature
+    path.write_text("changed final evidence\n")
+    execute(project, source)
+    second = nbformat.read(output, as_version=4).metadata.execution.signature
+    assert len({previous, first, second}) == 3
+
+
+@pytest.mark.parametrize(
     "code,error",
     [
         ("raise ValueError('deliberate test failure')", ValueError),

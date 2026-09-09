@@ -1,7 +1,7 @@
 # Validation record
 
-The final-fitting implementation passes **288 tests** in the locked environment,
-including 11 new schema, provenance, raw feature, and recovery tests.
+The final release has **296 automated tests**, including final lineage,
+export, immutable evaluation, error concentration, and notebook-cache contracts.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.
@@ -18,7 +18,7 @@ export checks form the canonical quality gate.
 | Strict removals and trajectory permutations | Conditional family contributions, with stated limitations |
 | Full raw-input development replay | The saved inference path reproduces the measured feature pipeline |
 | Organizer unlabelled sample gateway | Interface, row ordering, finite output, and standalone parity |
-| Reserved holdout | Not run; future final evaluation after the feature gate |
+| Reserved holdout | Frozen final model: 0.80466993 RMSE on 48 later games, with game-cluster uncertainty |
 
 Every experiment records source/dependency/input signatures. A reusable checkpoint
 needs completed status and matching output hashes. Publication verifies model and
@@ -177,7 +177,7 @@ verified by download, byte count, and SHA-256 (4,774,589 bytes). The cloud runne
 now supports the final fitting phase and rejects a 64 GiB worker before any AWS
 access. Full-scale fit results are reported only after execution and inspection.
 
-The cloud-runner checkpoint passed all 13 quality checks with **288 tests**,
+The cloud-runner checkpoint passed all 13 quality checks with **281 tests**,
 54 typed source files, and all three canonical notebook executions. Run
 `20260909T035227Z-96a13d58` completed in 183.21 seconds. Snapshot verification
 also matched all 55 private inputs bound by the final protocol.
@@ -215,3 +215,52 @@ shuffled request/input rows and ignored target coordinates also passed. The
 initial local integration failure registered the callback under the wrong name;
 using the organizer-required `predict` endpoint resolved it. The organizer
 source was not modified, and no additional AWS job was needed.
+
+## Sealed evaluation and final publication
+
+The expanded local quality run `20260909T044516Z-4a0dd1dc` passed all 13 checks
+in 219.997 seconds: 294 tests, 60 typed files, three canonical notebook
+executions, and both synthetic recovery runs. Two subsequently added numerical
+diagnostic tests check exact error mass and refuse incomplete reference keys;
+the final release contains 296 tests and 61 typed files. Exact-revision CI is
+required before merge.
+
+The sealed snapshot contains 1,576 entries. All 16 newly uploaded objects,
+including the manifest, were downloaded back and verified (11,551,607 bytes).
+S3 records the manifest at 04:49:14 UTC, before outcome access at 04:51:09 UTC.
+The [backup receipt](results/final_sealed_backup.json) records its hash.
+
+Run `20260909T045104Z-36b7569c` evaluated all 99,266 requested rows with exact
+one-to-one key coverage in 17.651 seconds. The official coordinate RMSE is
+0.8046699305544704. A 2,000-resample game bootstrap gives 0.66313–1.00113.
+Replaying under the same seal reused the completed stage and preserved error,
+summary, outcome-access and seal bytes and modification times. Published
+fit, inference, seal and score reports have a separate verified manifest.
+
+The actual final exported notebook matches all 5,837 organizer sample outputs
+exactly. Its initial gateway run took 181.849 seconds and its immediate rerun
+4.415 seconds using completed per-play checkpoints. After a type-only generator
+correction, the generated notebook hash remained identical and both verified
+reruns reused the same outputs. The public export receipt binds the current
+generator, shared template, model bundle, and notebook hashes.
+
+The final notebook explicitly distinguishes 0.68805 development RMSE from
+0.80467 reserved RMSE. The error-concentration audit retains every observation
+and confirms both the recomputed official score and reference key coverage.
+Long-horizon support, weekly results, role differences, and concentrated error
+are shown beside the headline metrics. These observations cannot trigger new
+holdout-driven model selection.
+
+Strict publication also detected six missing historical frame-error files in the
+recovered local workspace. All six were restored from the existing fitted S3
+snapshot and verified against their original hashes: 714,037,121 bytes. No
+research experiment was refitted. Execution used a canonical source path after
+relocating the workspace to storage with adequate room, preserving provenance
+checks instead of changing the frozen research implementation.
+
+Final publication run `20260909T050014Z-0d532dcd` completed in 84.092 seconds.
+All 41 published file hashes matched. The three canonical notebooks contain
+31 consecutively executed code cells, 11 Plotly figures and 10 embedded PNG
+figures, with no error or stderr output. The two new final-result figures were
+visually inspected for readable axes, legends and complete rendering. The
+[publication receipt](results/final_notebooks.json) binds their exact bytes.

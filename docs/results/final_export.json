@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "rows": 5837,
+  "first_run_seconds": 5.9261031889909646,
+  "resumed_run_seconds": 4.920604707003804,
+  "prediction_parity": "exact against all organizer sample predictions",
+  "verified_resumability": true,
+  "bundle_sha256": "a594656660f779bd8da5f1acbf8aaae9128ebcf4c2b2f274db42783dbe21413f",
+  "notebook_sha256": "bef56f8c677dada4800ad0b03ab95d5f9b9434b5a3a4c636ab80770e9c659f5a",
+  "generator_sha256": "56017c1bcab9e063536ce8c46e8eb9f57a942acdd8a97d3000dee1e2efb2e297",
+  "template_sha256": "72f08d7218c430110969f31a8abb4e16a544169ab559502efd0df837c22d3dc3",
+  "holdout_evaluation": "not_run",
+  "competition_submission": "not_run"
+}

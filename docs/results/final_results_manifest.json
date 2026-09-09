@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "files": {
+    "docs/results/final_fit.json": "856418890ad97ace9d7a66510568f2ce343eefa4d0fd505210ec245948f376d5",
+    "docs/results/final_inference.json": "0d3541dc0c496d55a38a12eb0ac7c023f69b0aec401fe2d3a6446fd6f611fca9",
+    "docs/results/final_seal.json": "bf41b783f3f9f681e669fd61c3f636af66717128b74e5baa3268ab66ddc2e14f",
+    "docs/results/final_evaluation.json": "7e550f1019cb1596a694a234a7a25d5ba96e43059316c40212f65885dc1f0224",
+    "src/nfl_trajectory/final_results.py": "9f4d1be7c9ced5d062ba803944c0f3456abdcde6513cfee066c5e90db9d70e75",
+    "src/nfl_trajectory/final_evaluation.py": "9a297f51083b13bf68ea884ba5b1d80fd0ea7b6c51dec0ed81934767ab19f394",
+    "src/nfl_trajectory/final_inference.py": "81f318c2e095a64f83841e0b08391568cb7878d4b52c325218049efbcb8348c0"
+  },
+  "seal": "db00fee04f4efaea4168e44079143259b16020850838363454a05bf94dba7691",
+  "holdout_evaluation": "completed",
+  "source_signature": "2fd076a14376e03af7ed2cbcf83231a05b58ef91b08f029f8795c46cd712f472"
+}

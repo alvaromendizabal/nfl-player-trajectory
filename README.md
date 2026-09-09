@@ -10,6 +10,12 @@ not this project's entry point.
 families; training-only screening; three chronological inner folds; strict family
 ablations; fixed-estimator comparisons; and explicit input-availability contracts.
 
+**Reserved evaluation:** **0.80467 coordinate RMSE in yards** on 99,266 forecast
+frames from 48 later games (95% game-bootstrap interval: 0.66313–1.00113).
+The protocol, fitted models, inference code, and all predictions were sealed and
+verified in private S3 before outcomes were opened. This is a temporal holdout
+result, not a Kaggle leaderboard score.
+
 ## Review in five minutes
 
 Start with [02 · Why the features work](notebooks/02_motion_benchmarks.ipynb), then
@@ -66,7 +72,7 @@ These are research-phase scores, not final-model accuracy or leaderboard claims.
 ## Validation and engineering
 
 Games remain intact. Training contains 192 games; development contains 32 later
-games; the final 48 games remain unscored. Each chronological inner fold refits
+games; the final model refits all 224 before the reserved 48-game evaluation. Each chronological inner fold refits
 the physical baseline, historical encodings, route representations, screening,
 scaling, and estimator. Target histories exclude the entire current date, and
 evaluation histories stay frozen. One labelled season does not establish
@@ -76,8 +82,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **288 automated tests** at the final-inference implementation
-milestone, including leakage, geometry, missing-input dependencies, artifact
+The locked Python 3.11 project has **296 automated tests** in the final release, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
 locks, source/input hashes, and content-addressed S3 checkpoints make long work
@@ -86,7 +91,7 @@ auditable and resumable. Numerical diagnostics have separate pinned script locks
 See the [research plan](docs/RESEARCH_PLAN.md), [model card](docs/MODEL_CARD.md),
 [validation record](docs/VALIDATION.md), and [reproduction guide](START_HERE.md).
 
-## What remains
+## Final experiment and limitations
 
 Feature definitions and refit columns are frozen in the
 [selection manifest](docs/results/feature_freeze.json).
@@ -100,7 +105,7 @@ coverage and hashes. Both residual-tree fits have now completed on AWS.
 The [final-fit receipt](docs/results/final_fit.json) verifies 463,670 training rows
 for each profile, 951 active inputs per exported model, and exactly matching
 original/portable predictions. The scores above belong to the research phase;
-the reserved-holdout evaluation remains the next accuracy measurement.
+the separate [reserved evaluation](docs/results/final_evaluation.json) is now complete.
 
 The final fitter is implemented with independent coordinate checkpoints and
 hash-bound portable conversion. Its real sklearn recovery test passes. A
@@ -109,10 +114,34 @@ rows across all 15 training weeks and both complete frozen schemas, with zero
 feature differences. The completed full-scale fit and all four coordinate
 checkpoints are preserved in a verified private S3 snapshot.
 
+| Frozen holdout comparison | Coordinate RMSE (yards) |
+|---|---:|
+| Final metadata-free profile | **0.80467** |
+| Metadata omitted | 0.80467 |
+| Telemetry omitted: positional fallback | 0.81821 |
+| Cold player histories | 0.80469 |
+| Refitted role-conditioned baseline | 1.07252 |
+| Constant velocity | 1.81762 |
+
+The final model improves on both reference baselines in all 48 games. The
+24.97% reduction against role ridge combines features and estimator effects;
+the **14.12% controlled development improvement** above isolates feature changes.
+Final frame-weighted ADE is **0.59023 yards**, trajectory FDE **1.04068 yards**,
+and p95 displacement **2.07112 yards**.
+
+The holdout is harder than development: weekly RMSE is 0.96175, 0.71397, and
+0.67802. Coverage players score 0.88805 versus 0.54145 for targeted receivers.
+Only **0.28% of rows** occur beyond three seconds, yet they contribute **23.67%
+of squared error**. One play contributes **24.40%**. Every row remains in the
+headline metric and interval. Notebook 02 shows sample support and error mass
+alongside the horizon curve; these are descriptive findings, not new selection
+criteria. One labelled season does not establish cross-season robustness, and
+there is no verified leaderboard rank.
+
 ## Owner-controlled export
 
 The final cell of notebook 02 defaults to `GENERATE_EXPORT = False`. Enabling it
-exports the current verified local research predictor and provides a download.
+exports the current verified local final predictor and provides a download.
 It never submits to Kaggle. Quality checks use a separate output directory.
 
 The organizer's sample gateway test is reported separately from accuracy and

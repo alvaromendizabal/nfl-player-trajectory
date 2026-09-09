@@ -1,7 +1,7 @@
 # Final refit and reserved evaluation
 
-The feature gate is closed. This protocol records the next experiment before
-fitting a final model or viewing reserved outcomes. The executable preparation
+The feature gate is closed. This protocol recorded the final experiment before
+fitting a model or viewing reserved outcomes. The executable preparation
 is `scripts/prepare_final.py`; its compact, verified receipt is
 [final_protocol.json](results/final_protocol.json).
 
@@ -108,9 +108,9 @@ Two separate executed checks support this implementation:
   [feature validation receipt](results/final_feature_validation.json) binds this
   check to the current protocol and preprocessing.
 
-These are software and feature-path checks. They do not constitute a final
-463,670-row model fit or an out-of-time accuracy result. Full fitting, raw final
-inference validation, prediction sealing, and reserved scoring remain.
+These are software and feature-path checks. The separate completed AWS fit
+covers all 463,670 rows. Final raw inference and prediction sealing are recorded
+independently so conversion integrity is never presented as an accuracy estimate.
 
 ## Evaluation rules recorded before fitting
 
@@ -118,7 +118,7 @@ Seal the final protocol, fitted models, inference source, and complete keyed
 predictions before opening reserved outcomes. Resume a failed evaluation only
 with the same sealed inputs. Preserve any error-correction trail; a software
 failure cannot become permission to select another model using holdout scores.
-The scoring and sealing implementation must enforce this rule before it runs.
+The scoring and sealing implementation enforces this rule before it runs.
 
 Report the official coordinate RMSE, pooling squared x/y errors across every
 forecast frame. Never average per-game or per-week RMSEs. Add frame- and
@@ -154,3 +154,13 @@ Only `scripts/evaluate_final.py evaluate` opens outcome files. It verifies the
 seal first, uses exact key joins, reports all prespecified scenarios, and resumes
 only the identical sealed evaluation. The original outcome-access receipt stays
 in place after interruptions. No result chooses a new model or feature set.
+
+## Executed outcome
+
+The frozen evaluation completed on all 99,266 frames from 48 reserved games:
+**0.80466993 coordinate RMSE**, with a 0.66313–1.00113 game-bootstrap interval.
+The pre-outcome snapshot was verified in S3 before the outcomes were opened.
+Repeating evaluation reused the original stage without changing its artifacts.
+The final notebook reports all availability scenarios, both reference baselines,
+role/week/horizon slices and sparse-tail limitations. Post-evaluation error
+concentration is descriptive and cannot revise the frozen model or selection.

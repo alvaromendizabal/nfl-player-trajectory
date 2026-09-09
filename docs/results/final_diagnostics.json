@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "provenance": {
+    "seal": "db00fee04f4efaea4168e44079143259b16020850838363454a05bf94dba7691",
+    "errors_sha256": "924206ebb5ed95adc24101f36816a884b4ed11791d307ea4a7d7804432504ce5",
+    "evaluation_sha256": "7e550f1019cb1596a694a234a7a25d5ba96e43059316c40212f65885dc1f0224",
+    "implementation_sha256": "ab9c8f415a52382fa546608a4684fee53b3c29be3aad82a3cd2779f364165f44"
+  },
+  "rows": 99266,
+  "games": 48,
+  "plays": 2455,
+  "trajectories": 7965,
+  "coordinate_rmse_yards": 0.8046699305544703,
+  "forecast_bins": [
+    {
+      "forecast_second": 1,
+      "rows": 73100,
+      "games": 48,
+      "trajectories": 7965,
+      "row_share": 0.7364052142727621,
+      "squared_error_share": 0.09461590626556354,
+      "coordinate_rmse_yards": 0.2884306587958134
+    },
+    {
+      "forecast_second": 2,
+      "rows": 22100,
+      "games": 48,
+      "trajectories": 4164,
+      "row_share": 0.22263413454757924,
+      "squared_error_share": 0.3833934596306734,
+      "coordinate_rmse_yards": 1.0559521693327938
+    },
+    {
+      "forecast_second": 3,
+      "rows": 3790,
+      "games": 46,
+      "trajectories": 825,
+      "row_share": 0.03818024298349888,
+      "squared_error_share": 0.28531904163503174,
+      "coordinate_rmse_yards": 2.1997017835105304
+    },
+    {
+      "forecast_second": 4,
+      "rows": 156,
+      "games": 11,
+      "trajectories": 51,
+      "row_share": 0.0015715350673946769,
+      "squared_error_share": 0.07930881297760925,
+      "coordinate_rmse_yards": 5.716319035345253
+    },
+    {
+      "forecast_second": 5,
+      "rows": 80,
+      "games": 1,
+      "trajectories": 8,
+      "row_share": 0.0008059154191767574,
+      "squared_error_share": 0.0931258427341346,
+      "coordinate_rmse_yards": 8.649841471298583
+    },
+    {
+      "forecast_second": 6,
+      "rows": 40,
+      "games": 1,
+      "trajectories": 8,
+      "row_share": 0.0004029577095883787,
+      "squared_error_share": 0.06423693675698748,
+      "coordinate_rmse_yards": 10.159689828920918
+    }
+  ],
+  "top_game_squared_error_share": 0.2802895904591397,
+  "top_three_games_squared_error_share": 0.3614624827381959,
+  "top_play_squared_error_share": 0.24399052148182246,
+  "top_trajectory_squared_error_share": 0.14210076697317672,
+  "reference_comparisons": [
+    {
+      "reference": "constant_velocity",
+      "games_improved": 48,
+      "games_tied": 0,
+      "games": 48,
+      "rmse_reduction_percent": 55.72950164583486
+    },
+    {
+      "reference": "role_ridge",
+      "games_improved": 48,
+      "games_tied": 0,
+      "games": 48,
+      "rmse_reduction_percent": 24.9738372580678
+    },
+    {
+      "reference": "without_telemetry",
+      "games_improved": 37,
+      "games_tied": 0,
+      "games": 48,
+      "rmse_reduction_percent": 1.6548439367672807
+    }
+  ],
+  "scope": "Post-evaluation descriptive analysis, not a model-selection experiment. Every row remains in the official score. Horizon bins contain different trajectory cohorts; high-horizon support is sparse. Baseline improvements combine representation and estimator effects, not isolated feature attribution.",
+  "source_signature": "436155082b5d58fe6522e757e4e3420cc1b8a639634f55b2f6681c7f046eb0df"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "manifest": "snapshots/81d88a849fb64b7b6803e29defadf246f00892879b46ed78a94f00e87751126e.json",
+  "parent_manifest": "snapshots/13f92c39dc5e197cca4e5bb959a5ae1d6ece7dbbca4cd3a37ebef1982e20eafe.json",
+  "manifest_entries": 1576,
+  "added_files": 19,
+  "uploaded_objects": 16,
+  "uploaded_bytes": 11551607,
+  "verified_utc": "2026-09-09T04:49:19.769537+00:00",
+  "s3_manifest_last_modified_utc": "2026-09-09T04:49:14+00:00",
+  "verification": "Every new uploaded object and the manifest were downloaded back and matched by byte count and SHA-256; existing parent artifacts and source input objects were retained.",
+  "encryption": "AES256",
+  "seal": "db00fee04f4efaea4168e44079143259b16020850838363454a05bf94dba7691",
+  "outcomes_opened_at_backup": false
+}

@@ -56,9 +56,28 @@ documented review and retention of the original evidence.
 .venv/bin/python scripts/prepare_final.py --publish
 ```
 
-This command verifies and publishes preparation only. Final fitting, prediction
-sealing, and reserved scoring are subsequent implementation milestones. The
-published status distinguishes `prepared` from a fitted or evaluated model.
+This command verifies and publishes preparation only. The published status
+distinguishes `prepared` from a fitted or evaluated model.
+
+## Executed final preprocessing
+
+`scripts/refit_final.py --publish` refits the physical baseline, strictly
+earlier-date history encodings, and route representation on the frozen 224-game
+partition. Each component has its own source-bound, checksum-verified checkpoint.
+An interruption during route fitting preserves the completed baseline and history.
+The command refuses to refit once `artifacts/final/model_seal.json` exists.
+
+The completed fit covers 927,340 x/y coordinates and 38,080 player/play
+trajectories. History tables contain 1,111 players and two roles. The route
+encoder fits 16 components and eight prototypes. The first training date retains
+the cold-history prior. The [preprocessing receipt](results/final_preprocessing.json)
+records the frozen protocol, implementation hashes, training games, and output
+hashes. Research-era fitted components remain preserved in their original paths.
+
+These new components are not yet connected to a final residual-tree fit or
+export. The validated research predictor and its development score remain the
+current inference evidence. Fitting both final tree profiles, sealing predictions,
+and reserved scoring are subsequent implementation milestones.
 
 ## Evaluation rules recorded before fitting
 

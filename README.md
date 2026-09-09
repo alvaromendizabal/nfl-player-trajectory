@@ -76,7 +76,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **265 automated tests** at the final-preparation
+The locked Python 3.11 project has **269 automated tests** at the final-preprocessing
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
@@ -93,10 +93,12 @@ Feature definitions and refit columns are frozen in the
 The [final protocol](docs/FINAL_PROTOCOL.md) now verifies and freezes the combined
 224-game refit partition, both ordered availability schemas, input hashes, and
 evaluation rules. Its [preparation receipt](docs/results/final_protocol.json)
-records the actual inputs checked. The next milestone is final fitting, followed
-by one reserved-holdout evaluation and validation of its final inference artifact.
-The scores above belong to the completed research phase; final training has
-not yet run.
+records the actual inputs checked. Final preprocessing has now refitted the
+physical baseline, chronological histories, and route encoder on all 224 games;
+the [preprocessing receipt](docs/results/final_preprocessing.json) records their
+coverage and hashes. Next are both residual-tree fits, one reserved-holdout
+evaluation, and validation of the final inference artifact. The scores above
+belong to the completed research phase; no final-model accuracy is reported yet.
 
 ## Owner-controlled export
 

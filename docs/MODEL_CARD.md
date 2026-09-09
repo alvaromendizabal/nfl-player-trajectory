@@ -36,6 +36,12 @@ generalization claims. There is no verified leaderboard rank.
 
 ## Current inference artifact
 
+Final preprocessing has separately been refitted on 224 games: the physical
+baseline, chronological histories, and route encoder. The new components are
+not yet paired with final residual trees or an export. The inference artifact
+described below remains the verified 192-game research fit, so its development
+score is not relabelled as a final-model result.
+
 The research bundle selects the full-width metadata-free profile using the inner
 validation protocol. Its frozen refit representation contains 6,308 screened
 columns. Only 953 enter an actual tree split; the portable JSON bundle removes

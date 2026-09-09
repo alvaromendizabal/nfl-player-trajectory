@@ -116,10 +116,10 @@ def main() -> None:
     bucket, job = os.environ["NFL_BUCKET"], os.environ["NFL_JOB_NAME"]
     commit, snapshot_key = os.environ["NFL_REPO_REF"], os.environ["NFL_SNAPSHOT"]
     mode = os.environ.get("NFL_MODE", "research")
-    if mode not in {"research", "finalize", "wide_refits", "simplification"}:
+    if mode not in {"research", "finalize", "wide_refits", "simplification", "final_fit"}:
         raise ValueError("Unknown cloud research mode.")
     if (
-        mode in {"research", "wide_refits", "simplification"}
+        mode in {"research", "wide_refits", "simplification", "final_fit"}
         or os.environ.get("NFL_EXPAND_FULL_POOL") == "1"
     ) and (memory_budget_gib() < 96):
         raise ValueError(
@@ -330,6 +330,26 @@ def main() -> None:
             )
             command([python, "scripts/validate_research.py"], "raw-tree-inference", threads=2)
             backup("validated-portable-tree")
+        elif mode == "final_fit":
+            command(
+                [uv, "run", "--locked", "scripts/fit_final.py", "--self-test"],
+                "final-fit-self-test",
+                threads=2,
+            )
+            command(
+                [python, "scripts/fit_final.py", "--validate-data", "--publish"],
+                "final-feature-validation",
+                threads=2,
+            )
+            backup("final-feature-validation")
+            command(
+                [uv, "run", "--locked", "scripts/fit_final.py", "--publish"],
+                "final-model-fitting",
+                threads=6,
+            )
+            backup("final-model-fitting")
+            event("completed", phase="final_model_fitting", holdout_evaluation="not_run")
+            return
         elif mode == "simplification":
             for fold in ("inner_1", "inner_2", "inner_3", "development"):
                 command(

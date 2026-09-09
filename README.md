@@ -76,7 +76,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **280 automated tests** at the final-fitting implementation
+The locked Python 3.11 project has **281 automated tests** at the final-fitting implementation
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,

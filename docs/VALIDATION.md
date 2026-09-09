@@ -1,6 +1,6 @@
 # Validation record
 
-The final-fitting implementation passes **280 tests** in the locked environment,
+The final-fitting implementation passes **281 tests** in the locked environment,
 including 11 new schema, provenance, raw feature, and recovery tests.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
@@ -167,7 +167,17 @@ rows. Both the 6,308-column primary schema and the 5,572-column positional subse
 matched raw-input reconstruction exactly. Run `20260909T032707Z-04157bd8`
 completed in 40.36 seconds without opening reserved outcomes.
 
-Full-scale final-model training has not run. The preprocessing snapshot remains
-verified locally and awaits its separate cloud upload; final raw inference,
+Full-scale final-model training has not run. The preprocessing snapshot is now uploaded and download-verified; final raw inference,
 prediction sealing, and reserved scoring remain unfinished. None of these checks
 adds a new accuracy estimate or replaces the completed research predictor.
+
+
+The approved preprocessing backup completed with all 10 files and its manifest
+verified by download, byte count, and SHA-256 (4,774,589 bytes). The cloud runner
+now supports the final fitting phase and rejects a 64 GiB worker before any AWS
+access. Full-scale fit results are reported only after execution and inspection.
+
+The cloud-runner checkpoint passed all 13 quality checks with **281 tests**,
+54 typed source files, and all three canonical notebook executions. Run
+`20260909T035227Z-96a13d58` completed in 183.21 seconds. Snapshot verification
+also matched all 55 private inputs bound by the final protocol.

@@ -62,6 +62,13 @@ the training matrix again. Future evaluation must bind the same model and
 predictions on resume. Holdout outcomes remain unscored. See
 [FINAL_PROTOCOL.md](FINAL_PROTOCOL.md).
 
-The new preprocessing fits are verified locally and their compact receipt is
-versioned with the source. They have not yet been added to a verified cloud
-snapshot. Preserve that checkpoint before the expensive residual-tree stage.
+The preprocessing checkpoint is now verified in the existing private S3 bucket.
+Snapshot `0e1727d24e6293c6c0bb7d88af8fbe192b8bc3969c2cd8a18d18c7ac601b938d`
+contains 1,527 entries. All 10 added files and the manifest were uploaded and
+downloaded back, verifying 4,774,589 bytes by size and SHA-256. The
+[backup receipt](results/preprocessing_backup.json) records this durable boundary.
+
+The cloud runner now supports `NFL_MODE=final_fit`. It restores this exact
+snapshot, checks numerical fitting and raw feature parity, then runs both final
+profiles and checkpoints their outputs. It requires a 128 GiB worker, excludes
+holdout tracking, and preserves completed stages on a caught failure.

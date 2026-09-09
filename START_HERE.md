@@ -45,6 +45,27 @@ that review. The tests use controlled fixtures, and notebooks can read published
 aggregates. Reproducing the fitted numerical results requires the licensed
 competition inputs and the experiment sequence below.
 
+## Where training and evaluation happen
+
+Notebook 02 combines feature research with the final model report. Its **section
+8, “Final refit and reserved evaluation,”** shows the completed fit and the
+48-game holdout results. Its number does not indicate an unfinished training
+stage. The resource-intensive fitting runs through the Python scripts below on
+AWS; opening the public notebook reviews their verified results.
+
+| Stage | Executed implementation | Result |
+|---|---|---|
+| Final preprocessing | [refit_final.py](scripts/refit_final.py) | Baseline, histories and route representation refitted on 224 games |
+| Final model training | [fit_final.py](scripts/fit_final.py) | Four HistGradientBoostingRegressor fits: x/y for two input-availability profiles |
+| Reserved evaluation | [evaluate_final.py](scripts/evaluate_final.py) | Frozen predictions scored on 48 later games: 0.80467 RMSE |
+| Submission notebook generation | [final_export.py](kaggle/final_export.py) | Embeds the trained parameters and prediction code; no retraining or AWS connection at prediction time |
+
+A local organizer-gateway pass checks the callback and output format. A saved
+Kaggle run additionally checks the hosted environment. Only an actual
+competition submission exercises Kaggle's hidden-test rerun and produces its
+score. These are separate checks; a local pass does not establish a hidden-test
+result.
+
 ## Reproduce in the existing project
 
 Use the locked Python 3.11 environment created by `scripts/bootstrap.py`.

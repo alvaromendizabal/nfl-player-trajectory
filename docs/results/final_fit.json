@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "source_signature": "edd3d9ac00df4a45450fb95752ccc24454ab1afe079868bbe230e1545dd68b4b",
+  "provenance": {
+    "protocol_source": "c5b431034ad8457f8e70f027a726ec1cf3b8a66ba846ae73caaafbba7e97325f",
+    "protocol_sha256": "5adf404c8bec1a04479f956849695edddf214bd4574068af80d1f7fc07273248",
+    "preprocessing_source": "eb6f17e15a1d2548d5738f92932b72ebf0b11b352255991ba6053893bb5592c6",
+    "preprocessing_sha256": "608d8bf9a6d0c67670616359e092fd58429284684137476cd070d0bb71d3609e",
+    "implementation": {
+      "src/nfl_trajectory/final_features.py": "cf85c590e469c274f71f5ea847f59c1ba986edb0d1b3ee98c177a27673368f4e",
+      "src/nfl_trajectory/final_fit.py": "2750a9acd38aa8217fa9f28da9a0ed9923faca282572c3a1c54baa269a08436f",
+      "scripts/fit_final.py": "614185df3294157bf2f59391c1d21368bdca22df8b363f7bf6fed345abf1f869",
+      "scripts/fit_final.py.lock": "96d930eef57c28dfc49a14fa31959ab6fd4adeebdddff742f9b45b68054d779c",
+      "scripts/prepare_tree.py": "6e121ee8bd0aac8cc71189777713e51e5478be758654b06d60ae140899f3d462"
+    },
+    "environment": {
+      "scikit-learn": "1.8.0",
+      "numpy": "2.4.6",
+      "pandas": "3.0.5"
+    }
+  },
+  "training_games": 224,
+  "profiles": [
+    {
+      "status": "passed",
+      "profile": "without_metadata",
+      "source_signature": "edd3d9ac00df4a45450fb95752ccc24454ab1afe079868bbe230e1545dd68b4b",
+      "export_signature": "93967a8b535f07d9787a38d14c83c1f60ff8aa648e57dd1abe506e26cdc3cdc0",
+      "training_rows": 463670,
+      "fitted_features": 6308,
+      "active_features": 951,
+      "schema_sha256": "71577f84d47a9d8a56db26c7e5a4edb7833b4c8a1aa2e2440e76d359c38d6716",
+      "portable_max_absolute_difference": 0.0,
+      "training_prediction_scope": "Conversion integrity; no generalization claim.",
+      "holdout_evaluation": "not_run",
+      "axis_sha256": {
+        "x.pkl": "48ce4d48d02f7751f9b21566775a7aa885ff5d5be3dfbe68a84a7d2c43c32685",
+        "y.pkl": "c8f84d2c9d26c488ca2c9cea0653280070cc47b78b13d42da0079b8343db74e4"
+      },
+      "tree_sha256": "5764f162ef712052d2461f1cd986871c153b2b4e55a819b050d9e43eee87399a",
+      "predictions_sha256": "f6e0b298d12728e1d319b80bc78e302f470bb1abc7f4018487b3762485a6e092"
+    },
+    {
+      "status": "passed",
+      "profile": "without_optional_inputs",
+      "source_signature": "edd3d9ac00df4a45450fb95752ccc24454ab1afe079868bbe230e1545dd68b4b",
+      "export_signature": "e444eb5c31b82408e61d40bac8266f0b3071e9c168f265afee34ebb3397f99ff",
+      "training_rows": 463670,
+      "fitted_features": 5572,
+      "active_features": 951,
+      "schema_sha256": "e4da09eee0b78e799162d4abe6d563f5c729ad767f2e21bbe0f9f443634bae5a",
+      "portable_max_absolute_difference": 0.0,
+      "training_prediction_scope": "Conversion integrity; no generalization claim.",
+      "holdout_evaluation": "not_run",
+      "axis_sha256": {
+        "x.pkl": "f3253a13543a4ba540580f4992b50ddb3b5d08281878b18898797d27d37e2bf1",
+        "y.pkl": "24fa4b3525988bbd57911d864dc3f679b1a4497961559b0af8ce3db259d42e85"
+      },
+      "tree_sha256": "7aca22e74704d7a01839cdc943910e881d29a0a04d87a70bc5ec1aacb567c489",
+      "predictions_sha256": "9b5824ff822d31f61e1e26f70da68a10345318b096236f912ec4b8c9d75cfd43"
+    }
+  ],
+  "final_fit": true,
+  "model_sealed": false,
+  "holdout_evaluation": "not_run",
+  "remaining": "Validate inference, seal predictions, evaluate reserved outcomes."
+}

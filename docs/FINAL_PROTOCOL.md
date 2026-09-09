@@ -76,7 +76,9 @@ hashes. Research-era fitted components remain preserved in their original paths.
 
 The final fitter now consumes these components through verified stage receipts.
 The validated research predictor and its development score remain the current
-accuracy evidence. Full-scale final fitting has not yet run.
+accuracy evidence until the reserved evaluation. Full-scale final fitting is complete:
+both profiles cover all 463,670 training rows; each export has 951 active inputs
+and zero original/portable prediction difference.
 
 ## Implemented final fitting
 
@@ -135,3 +137,20 @@ accuracy and retain owner control over Kaggle submission.
 
 Report the frozen model regardless of its reserved score. A disappointing
 holdout result is a result to explain, not a reason to tune on the holdout.
+
+## Sealed inference and evaluation
+
+`scripts/validate_final.py` loads the final coordinate fits only after verifying
+the original protocol, preprocessing, fitting sources, and independent stage
+receipts. It compares package and standalone predictions through the unchanged
+organizer gateway. Missing or nonfinite telemetry switches to the separately
+fitted positional profile. Optional metadata cannot change predictions.
+
+`scripts/evaluate_final.py seal` derives holdout requests exclusively from the
+observed prediction-player flags and forecast horizons. It checkpoints all
+prespecified scenarios and both reference baselines, then seals every keyed
+prediction together with the model, protocol, inference and evaluation sources.
+Only `scripts/evaluate_final.py evaluate` opens outcome files. It verifies the
+seal first, uses exact key joins, reports all prespecified scenarios, and resumes
+only the identical sealed evaluation. The original outcome-access receipt stays
+in place after interruptions. No result chooses a new model or feature set.

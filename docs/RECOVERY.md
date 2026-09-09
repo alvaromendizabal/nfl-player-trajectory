@@ -55,7 +55,7 @@ encoder independently. Run `scripts/refit_final.py` to reuse valid components or
 finish an interrupted stage. The integration test interrupts route fitting and
 verifies that earlier component bytes and modification times are preserved.
 Final residual-tree fitting is implemented with separate coordinate checkpoints.
-Its full-scale execution and prediction sealing remain unfinished. Portable
+Full-scale fitting is complete; prediction sealing is a separate stage. Portable
 conversion checks every training row, and its checkpoint binds both coordinate
 model hashes. A completed fit reuses its verified models without materializing
 the training matrix again. Future evaluation must bind the same model and
@@ -72,3 +72,14 @@ The cloud runner now supports `NFL_MODE=final_fit`. It restores this exact
 snapshot, checks numerical fitting and raw feature parity, then runs both final
 profiles and checkpoints their outputs. It requires a 128 GiB worker, excludes
 holdout tracking, and preserves completed stages on a caught failure.
+
+Final training completed successfully in SageMaker job
+`nfl-final-fit-20260909-040036` from commit `6f12c4c`. Its final snapshot is
+`13f92c39dc5e197cca4e5bb959a5ae1d6ece7dbbca4cd3a37ebef1982e20eafe`,
+containing 1,557 files. All 18 required fitted-model, prediction, plan and stage
+receipt files (29,362,995 bytes) were downloaded back and checksum verified.
+The full training matrix can remain in S3; final inference does not need it.
+
+The final inference loader checks the fit plan, both coordinate receipts per
+profile, every export receipt, training-prediction hashes, preprocessing and
+source hashes. Never use an unverified pickle to bypass those checks.

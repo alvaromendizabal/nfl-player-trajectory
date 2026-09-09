@@ -35,8 +35,16 @@ source and the dependency lock; each completed output is checksum verified befor
 reuse. An interrupted or corrupted stage is recomputed. Unchanged verified stages
 are retained. Reports are regenerated cheaply from these numerical artifacts.
 
-No neural trainer exists in Phase 1. Phase 3 will require epoch/batch progress, model,
-optimizer, scheduler, scaler, random-generator states, data split identity, configuration,
-and code identity in a training checkpoint, with an interrupted-versus-uninterrupted
-equivalence test before expensive runs.
+The feature gate is closed and final input preparation is implemented. The next
+fit uses the frozen shallow-tree estimator; no neural trainer is part of the
+final protocol. Resume preparation with `scripts/prepare_final.py`. It rechecks
+the research evidence, verifies input hashes, and reuses the completed
+`final-input-review` stage. The canonical `artifacts/final/protocol.json` is
+immutable on ordinary reruns. Preserve it, its source commit, and its input
+review before starting the final fit. The published preparation receipt in
+`docs/results/final_protocol.json` records its signature and verified counts.
 
+Final fitting and prediction sealing are not yet implemented. They must
+checkpoint preprocessing and the independent availability profiles, verify
+portable inference parity, and bind evaluation to the same model and predictions
+on resume. Holdout outcomes remain unscored. See [FINAL_PROTOCOL.md](FINAL_PROTOCOL.md).

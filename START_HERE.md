@@ -9,7 +9,8 @@ Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution
 then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature rationale.
 Public aggregates support review without private tracking or cloud credentials.
 All 15 feature-research criteria now pass, and the feature/selection manifest is
-frozen. Final refitting and the reserved-holdout evaluation remain unfinished.
+frozen. The final-phase input protocol is implemented and verified; final
+refitting and the reserved-holdout evaluation remain unfinished.
 
 For a public software review, run the following from the repository with Python
 3.11 or later and at least 5 GiB free storage:
@@ -83,6 +84,20 @@ checkpoint from changed numerical source as if it were current.
 The main dependency lock is unchanged. The nonlinear and gateway scripts use
 separate PEP 723 locks, invoked with `uv run --locked`. Raw model pickle files are
 private, source-verified artifacts from this run, not files to load from strangers.
+
+## Prepare the final experiment
+
+After restoring the verified research artifacts:
+
+```bash
+.venv/bin/python scripts/prepare_final.py --publish
+```
+
+This checks the complete feature gate, all 224 refit games, cache row alignment,
+both frozen schemas, and input fingerprints. It preserves an immutable protocol
+and reuses its verified input review on a repeated run. It does not fit or score
+the final model. The [final protocol](docs/FINAL_PROTOCOL.md) records the exact
+refit and reserved-evaluation rules before those steps are implemented.
 
 ## Export only when you choose
 

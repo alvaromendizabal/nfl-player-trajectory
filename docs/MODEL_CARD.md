@@ -25,6 +25,8 @@ representation at fixed estimator settings. It does not attribute the difference
 between role ridge and a tree entirely to feature engineering. Wider-budget
 results and their training-only choice are reported in notebook 02. The compact
 250-column union previously provided a 9.13% reduction under the same settings.
+The selected profile's paired 95% game-bootstrap RMSE difference from the
+64-column tree reference is −0.12780 to −0.09973 yards on development games.
 
 All development comparisons use 32 games and 67,857 frames; game-level uncertainty
 and paired differences accompany the full reports. Training comprises 192 games.
@@ -52,6 +54,9 @@ Complete-input raw replay reproduces 0.6880522 RMSE on all 67,857 development
 frames. Missing metadata and cold player history return the same predictions;
 missing telemetry selects the positional profile and scores 0.6939581. The
 exporter resolves this validated tree artifact rather than the earlier linear fit.
+An independent local run also passed the organizer's unchanged unlabelled gateway:
+5,837 rows, 143 plays, unique requested identifiers, finite predictions, and exact
+package/standalone parity at every callback.
 
 ## Robustness and limitations
 

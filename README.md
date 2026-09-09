@@ -26,7 +26,8 @@ Plotly views, and embedded static figures for GitHub review.
 | Sequential linear correction: core 128 → context 186 | 0.90045 | **0.86434** | Context adds useful conditional information |
 
 All values are coordinate RMSE in yards on the same 67,857 development frames
-from 32 games. Notebook 02 reports paired game-bootstrap differences and the
+from 32 games. The current tree comparison's paired 95% game-bootstrap RMSE
+difference is **−0.12780 to −0.09973 yards**. Notebook 02 reports the
 complete width search: 512, 1,024, 2,048, 4,096, and the entire eligible pool.
 The final width increment improves pooled inner-fold RMSE by only **0.071%**,
 with mixed fold results. Increasing width has reached the predeclared stopping
@@ -55,7 +56,9 @@ counts: screening, refitting, and lossless inference pruning serve different pur
 Raw inference reproduces **0.68805 RMSE on all 67,857 development frames**.
 Removing metadata or clearing player history leaves predictions unchanged.
 The independently fitted positional fallback scores **0.69396**, using 981
-active inputs. There is no final-model or leaderboard claim.
+active inputs. The same predictor passes the organizer's unlabelled gateway on
+5,837 requested rows across 143 plays, with exact package/standalone parity.
+There is no final-model or leaderboard claim.
 
 ## Validation and engineering
 

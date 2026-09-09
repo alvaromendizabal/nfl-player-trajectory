@@ -10,6 +10,19 @@ then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature ration
 Public aggregates support review without private tracking or cloud credentials.
 Final training is gated on the research evidence, not on a successful pipeline run.
 
+For a public software review, run the following from the repository with Python
+3.11 or later and at least 5 GiB free storage:
+
+```bash
+python scripts/bootstrap.py
+```
+
+Bootstrap creates the locked Python 3.11 environment, registers the notebook
+kernel, and runs the quality suite. No AWS or Kaggle credentials are needed for
+that review. The tests use controlled fixtures, and notebooks can read published
+aggregates. Reproducing the fitted numerical results requires the licensed
+competition inputs and the experiment sequence below.
+
 ## Reproduce in the existing project
 
 Use the locked Python 3.11 environment created by `scripts/bootstrap.py`.

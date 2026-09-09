@@ -12,8 +12,10 @@ from functools import partial
 from pathlib import Path
 
 from nfl_trajectory.benchmark import benchmark
+from nfl_trajectory.context_experiment import context_research
 from nfl_trajectory.data import audit, download
 from nfl_trajectory.feature_experiment import feature_experiment
+from nfl_trajectory.feature_research import feature_research
 from nfl_trajectory.report import demo
 from nfl_trajectory.runtime import Run, atomic_json
 from nfl_trajectory.storage import backup, client, restore
@@ -82,6 +84,10 @@ def main() -> int:
             "restore",
             "benchmark",
             "features",
+            "feature-research",
+            "context-research",
+            "research-report",
+            "representation-research",
         ],
     )
     parser.add_argument("--bucket")
@@ -106,7 +112,15 @@ def main() -> int:
                 demo(root, run)
             elif args.command == "benchmark":
                 benchmark(root, run)
-            elif args.command == "features":
+            elif args.command == "research-report":
+                from nfl_trajectory.research import publish_research_report
+
+                publish_research_report(root, run)
+            elif args.command == "representation-research":
+                from nfl_trajectory.representation_experiment import representation_research
+
+                representation_research(root, run)
+            elif args.command in ("features", "feature-research", "context-research"):
                 checkpoint: Callable[[], object] | None = None
                 if args.checkpoint_s3:
                     config = root / "aws.local.json"
@@ -117,7 +131,12 @@ def main() -> int:
                         raise ValueError("S3 checkpointing requires --bucket or aws.local.json.")
                     feature_client = client(args.region)
                     checkpoint = partial(backup, root, feature_bucket, run, feature_client)
-                feature_experiment(root, run, checkpoint)
+                experiment = {
+                    "features": feature_experiment,
+                    "feature-research": feature_research,
+                    "context-research": context_research,
+                }[args.command]
+                experiment(root, run, checkpoint)
             elif args.command == "status":
                 for name in [
                     "preflight.json",

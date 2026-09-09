@@ -1,11 +1,11 @@
 {
   "model": "role_ridge",
   "plays": 32,
-  "median_ms": 27.086321999377105,
-  "p95_ms": 87.75193179608321,
+  "median_ms": 29.45963300010135,
+  "p95_ms": 31.348829349872176,
   "includes": "feature construction and prediction; one complete play per call",
   "excludes": "CSV loading, networking, server startup",
   "machine": "x86_64",
   "python": "3.11.15",
-  "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+  "platform": "Linux-6.12.100-125.179.amzn2023.x86_64-x86_64-with-glibc2.39"
 }

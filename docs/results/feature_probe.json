@@ -1,0 +1,2546 @@
+{
+  "status": "passed",
+  "split": "validation",
+  "holdout_evaluation": "not_run",
+  "models": [
+    {
+      "model": "all_engineered",
+      "coordinate_rmse_yards": 0.7280159770036049,
+      "ade_frame_weighted_yards": 0.6038230608858501,
+      "ade_trajectory_weighted_yards": 0.4707214891289541,
+      "fde_trajectory_weighted_yards": 1.0843896536761484,
+      "p95_displacement_yards": 2.1899723130262374,
+      "coordinate_mae_yards": 0.3836453555278154,
+      "rmse_ci95_low": 0.6743704471819528,
+      "rmse_ci95_high": 0.7767551131998476,
+      "delta_vs_velocity_ci95_low": -1.052133515591039,
+      "delta_vs_velocity_ci95_high": -0.9399771873271855,
+      "feature_count": 250,
+      "delta_vs_landing_ci95": [
+        -0.08341849134054938,
+        -0.06294552376324578
+      ]
+    },
+    {
+      "model": "core_plus_representation",
+      "coordinate_rmse_yards": 0.7382669145023744,
+      "ade_frame_weighted_yards": 0.6197878222667724,
+      "ade_trajectory_weighted_yards": 0.484641771234388,
+      "fde_trajectory_weighted_yards": 1.1075999964389525,
+      "p95_displacement_yards": 2.2377207497526306,
+      "coordinate_mae_yards": 0.39383818721999647,
+      "rmse_ci95_low": 0.683975358648799,
+      "rmse_ci95_high": 0.7870545733963752,
+      "delta_vs_velocity_ci95_low": -1.0397748796288693,
+      "delta_vs_velocity_ci95_high": -0.9296203736087152,
+      "feature_count": 192,
+      "delta_vs_landing_ci95": [
+        -0.07189206048722872,
+        -0.05423168703958256
+      ]
+    },
+    {
+      "model": "core_plus_context",
+      "coordinate_rmse_yards": 0.7401419524994591,
+      "ade_frame_weighted_yards": 0.6193412834360238,
+      "ade_trajectory_weighted_yards": 0.48706175214994957,
+      "fde_trajectory_weighted_yards": 1.1114500677301653,
+      "p95_displacement_yards": 2.20638320098319,
+      "coordinate_mae_yards": 0.39341722225933884,
+      "rmse_ci95_low": 0.6845094218127626,
+      "rmse_ci95_high": 0.7903623902232553,
+      "delta_vs_velocity_ci95_low": -1.0402870165190645,
+      "delta_vs_velocity_ci95_high": -0.927402320247553,
+      "feature_count": 186,
+      "delta_vs_landing_ci95": [
+        -0.07081852821304872,
+        -0.051081916849841494
+      ]
+    },
+    {
+      "model": "core_plus_noise",
+      "coordinate_rmse_yards": 0.7691505567411498,
+      "ade_frame_weighted_yards": 0.6520864239188205,
+      "ade_trajectory_weighted_yards": 0.5170595937501827,
+      "fde_trajectory_weighted_yards": 1.171716777675328,
+      "p95_displacement_yards": 2.3115344024924114,
+      "coordinate_mae_yards": 0.4144781592548165,
+      "rmse_ci95_low": 0.7144163703243837,
+      "rmse_ci95_high": 0.8184550738192208,
+      "delta_vs_velocity_ci95_low": -1.0104870255372604,
+      "delta_vs_velocity_ci95_high": -0.8967521729598944,
+      "feature_count": 192,
+      "delta_vs_landing_ci95": [
+        -0.04017201163285998,
+        -0.023955115689822414
+      ]
+    },
+    {
+      "model": "engineered_core",
+      "coordinate_rmse_yards": 0.7691505567411498,
+      "ade_frame_weighted_yards": 0.6520864239188205,
+      "ade_trajectory_weighted_yards": 0.5170595937501827,
+      "fde_trajectory_weighted_yards": 1.171716777675328,
+      "p95_displacement_yards": 2.3115344024924114,
+      "coordinate_mae_yards": 0.4144781592548165,
+      "rmse_ci95_low": 0.7144163703243837,
+      "rmse_ci95_high": 0.8184550738192208,
+      "delta_vs_velocity_ci95_low": -1.0104870255372604,
+      "delta_vs_velocity_ci95_high": -0.8967521729598944,
+      "feature_count": 128,
+      "delta_vs_landing_ci95": [
+        -0.04017201163285998,
+        -0.023955115689822414
+      ]
+    },
+    {
+      "model": "landing_features",
+      "coordinate_rmse_yards": 0.8011971852726559,
+      "ade_frame_weighted_yards": 0.6937246549008582,
+      "ade_trajectory_weighted_yards": 0.5593393914759043,
+      "fde_trajectory_weighted_yards": 1.2404201709037903,
+      "p95_displacement_yards": 2.398674685183165,
+      "coordinate_mae_yards": 0.43965242178389796,
+      "rmse_ci95_low": 0.7443276445744927,
+      "rmse_ci95_high": 0.8528175487285222,
+      "delta_vs_velocity_ci95_low": -0.9782264177615813,
+      "delta_vs_velocity_ci95_high": -0.8655826866573676,
+      "feature_count": 64,
+      "delta_vs_landing_ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "model": "constant_velocity",
+      "coordinate_rmse_yards": 1.722516459848302,
+      "ade_frame_weighted_yards": 1.5141787190337654,
+      "ade_trajectory_weighted_yards": 1.1847559117019484,
+      "fde_trajectory_weighted_yards": 2.8696291097654707,
+      "p95_displacement_yards": 5.443052394587203,
+      "coordinate_mae_yards": 0.9638485344179671,
+      "rmse_ci95_low": 1.6285359837058027,
+      "rmse_ci95_high": 1.8061606880326533,
+      "delta_vs_velocity_ci95_low": 0.0,
+      "delta_vs_velocity_ci95_high": 0.0,
+      "feature_count": 0,
+      "delta_vs_landing_ci95": [
+        0.8655826866573676,
+        0.9782264177615811
+      ]
+    }
+  ],
+  "slices": [
+    {
+      "model": "all_engineered",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.8057108875940157
+    },
+    {
+      "model": "all_engineered",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.4758544794217516
+    },
+    {
+      "model": "all_engineered",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.2951127109461499
+    },
+    {
+      "model": "all_engineered",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.078826297395545
+    },
+    {
+      "model": "all_engineered",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.05010381460824
+    },
+    {
+      "model": "all_engineered",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 2.959930861973575
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 1.8400523183376802
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 1.3785282571614397
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.730338871533407
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 2.5862744680251857
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 4.701453701567148
+    },
+    {
+      "model": "constant_velocity",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 6.747435149919001
+    },
+    {
+      "model": "core_plus_context",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.8175014576443153
+    },
+    {
+      "model": "core_plus_context",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.49075194921563786
+    },
+    {
+      "model": "core_plus_context",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.3063333183592246
+    },
+    {
+      "model": "core_plus_context",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.09241174778125
+    },
+    {
+      "model": "core_plus_context",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.0807514562700673
+    },
+    {
+      "model": "core_plus_context",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 3.008781415383963
+    },
+    {
+      "model": "core_plus_noise",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.8485686432925038
+    },
+    {
+      "model": "core_plus_noise",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.5140979785669977
+    },
+    {
+      "model": "core_plus_noise",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.33436031957825185
+    },
+    {
+      "model": "core_plus_noise",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.1332442372518572
+    },
+    {
+      "model": "core_plus_noise",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.1344261799369044
+    },
+    {
+      "model": "core_plus_noise",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 3.0255826106792147
+    },
+    {
+      "model": "core_plus_representation",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.8171960192429863
+    },
+    {
+      "model": "core_plus_representation",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.48194964744731034
+    },
+    {
+      "model": "core_plus_representation",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.3063985516957789
+    },
+    {
+      "model": "core_plus_representation",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.1021973824591076
+    },
+    {
+      "model": "core_plus_representation",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.052501617016999
+    },
+    {
+      "model": "core_plus_representation",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 2.806330566316862
+    },
+    {
+      "model": "engineered_core",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.8485686432925038
+    },
+    {
+      "model": "engineered_core",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.5140979785669977
+    },
+    {
+      "model": "engineered_core",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.33436031957825185
+    },
+    {
+      "model": "engineered_core",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.1332442372518572
+    },
+    {
+      "model": "engineered_core",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.1344261799369044
+    },
+    {
+      "model": "engineered_core",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 3.0255826106792147
+    },
+    {
+      "model": "landing_features",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.8870839385006037
+    },
+    {
+      "model": "landing_features",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.5220380622698085
+    },
+    {
+      "model": "landing_features",
+      "dimension": "forecast_second",
+      "value": "1",
+      "rows": 49613,
+      "coordinate_rmse_yards": 0.36544770199945803
+    },
+    {
+      "model": "landing_features",
+      "dimension": "forecast_second",
+      "value": "2",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.175181117511355
+    },
+    {
+      "model": "landing_features",
+      "dimension": "forecast_second",
+      "value": "3",
+      "rows": 3108,
+      "coordinate_rmse_yards": 2.194748439725633
+    },
+    {
+      "model": "landing_features",
+      "dimension": "forecast_second",
+      "value": "4",
+      "rows": 127,
+      "coordinate_rmse_yards": 3.1164557745760226
+    }
+  ],
+  "selected_model": "all_engineered",
+  "improvement_vs_velocity_percent": 57.73532538158042,
+  "validation_games": 32,
+  "validation_rows_per_model": 67857,
+  "validation_trajectories": 5399,
+  "fold": {
+    "name": "development",
+    "training_games": [
+      2023090700,
+      2023091000,
+      2023091001,
+      2023091002,
+      2023091003,
+      2023091004,
+      2023091005,
+      2023091006,
+      2023091007,
+      2023091008,
+      2023091009,
+      2023091010,
+      2023091011,
+      2023091012,
+      2023091013,
+      2023091100,
+      2023091400,
+      2023091700,
+      2023091701,
+      2023091702,
+      2023091703,
+      2023091704,
+      2023091705,
+      2023091706,
+      2023091707,
+      2023091708,
+      2023091709,
+      2023091710,
+      2023091711,
+      2023091712,
+      2023091800,
+      2023091801,
+      2023092100,
+      2023092400,
+      2023092401,
+      2023092402,
+      2023092403,
+      2023092404,
+      2023092405,
+      2023092406,
+      2023092407,
+      2023092408,
+      2023092409,
+      2023092410,
+      2023092411,
+      2023092412,
+      2023092500,
+      2023092501,
+      2023092800,
+      2023100100,
+      2023100101,
+      2023100102,
+      2023100103,
+      2023100104,
+      2023100105,
+      2023100106,
+      2023100107,
+      2023100108,
+      2023100109,
+      2023100110,
+      2023100111,
+      2023100112,
+      2023100113,
+      2023100200,
+      2023100500,
+      2023100800,
+      2023100801,
+      2023100802,
+      2023100803,
+      2023100804,
+      2023100805,
+      2023100806,
+      2023100807,
+      2023100808,
+      2023100809,
+      2023100810,
+      2023100811,
+      2023100900,
+      2023101200,
+      2023101500,
+      2023101501,
+      2023101502,
+      2023101503,
+      2023101504,
+      2023101505,
+      2023101506,
+      2023101507,
+      2023101508,
+      2023101509,
+      2023101510,
+      2023101511,
+      2023101512,
+      2023101600,
+      2023101900,
+      2023102200,
+      2023102201,
+      2023102202,
+      2023102203,
+      2023102204,
+      2023102205,
+      2023102206,
+      2023102207,
+      2023102208,
+      2023102209,
+      2023102210,
+      2023102300,
+      2023102600,
+      2023102900,
+      2023102901,
+      2023102902,
+      2023102903,
+      2023102904,
+      2023102905,
+      2023102906,
+      2023102907,
+      2023102908,
+      2023102909,
+      2023102910,
+      2023102911,
+      2023102912,
+      2023102913,
+      2023103000,
+      2023110200,
+      2023110500,
+      2023110501,
+      2023110502,
+      2023110503,
+      2023110504,
+      2023110505,
+      2023110506,
+      2023110507,
+      2023110508,
+      2023110509,
+      2023110510,
+      2023110511,
+      2023110600,
+      2023110900,
+      2023111200,
+      2023111201,
+      2023111202,
+      2023111203,
+      2023111204,
+      2023111205,
+      2023111206,
+      2023111207,
+      2023111208,
+      2023111209,
+      2023111210,
+      2023111211,
+      2023111300,
+      2023111600,
+      2023111900,
+      2023111901,
+      2023111902,
+      2023111903,
+      2023111904,
+      2023111905,
+      2023111906,
+      2023111907,
+      2023111908,
+      2023111909,
+      2023111910,
+      2023111911,
+      2023112000,
+      2023112300,
+      2023112301,
+      2023112302,
+      2023112400,
+      2023112600,
+      2023112601,
+      2023112602,
+      2023112603,
+      2023112604,
+      2023112605,
+      2023112606,
+      2023112607,
+      2023112608,
+      2023112609,
+      2023112610,
+      2023112700,
+      2023113000,
+      2023120300,
+      2023120301,
+      2023120302,
+      2023120303,
+      2023120304,
+      2023120305,
+      2023120306,
+      2023120307,
+      2023120308,
+      2023120309,
+      2023120310
+    ],
+    "evaluation_games": [
+      2023120400,
+      2023120700,
+      2023121000,
+      2023121001,
+      2023121002,
+      2023121003,
+      2023121004,
+      2023121005,
+      2023121006,
+      2023121007,
+      2023121008,
+      2023121009,
+      2023121010,
+      2023121011,
+      2023121100,
+      2023121101,
+      2023121400,
+      2023121600,
+      2023121601,
+      2023121602,
+      2023121700,
+      2023121701,
+      2023121702,
+      2023121703,
+      2023121704,
+      2023121705,
+      2023121706,
+      2023121708,
+      2023121709,
+      2023121710,
+      2023121711,
+      2023121801
+    ]
+  },
+  "source_signature": "e1ccbb159635aa3937c4e734e91a53d21392fb0cb64948139da73324adf32e92",
+  "settings": {
+    "loss": "squared_error",
+    "learning_rate": 0.07,
+    "max_iter": 100,
+    "max_leaf_nodes": 15,
+    "max_depth": 4,
+    "min_samples_leaf": 60,
+    "l2_regularization": 1.0,
+    "max_bins": 63,
+    "early_stopping": false,
+    "random_state": 2026
+  },
+  "inner_folds": [
+    {
+      "status": "passed",
+      "split": "validation",
+      "holdout_evaluation": "not_run",
+      "models": [
+        {
+          "model": "all_engineered",
+          "coordinate_rmse_yards": 0.7502170545324276,
+          "ade_frame_weighted_yards": 0.6178514582916113,
+          "ade_trajectory_weighted_yards": 0.49146682901914773,
+          "fde_trajectory_weighted_yards": 1.1431615050806139,
+          "p95_displacement_yards": 2.2002146831178275,
+          "coordinate_mae_yards": 0.39165061483964947,
+          "rmse_ci95_low": 0.7019173453283326,
+          "rmse_ci95_high": 0.7989657781813432,
+          "delta_vs_velocity_ci95_low": -0.9579278424756613,
+          "delta_vs_velocity_ci95_high": -0.8554975289310183,
+          "feature_count": 250,
+          "delta_vs_landing_ci95": [
+            -0.1075365538738923,
+            -0.08250042777061667
+          ]
+        },
+        {
+          "model": "core_plus_context",
+          "coordinate_rmse_yards": 0.763991833443125,
+          "ade_frame_weighted_yards": 0.6288098913555307,
+          "ade_trajectory_weighted_yards": 0.49961805685789423,
+          "fde_trajectory_weighted_yards": 1.1647832990461997,
+          "p95_displacement_yards": 2.2303815692040363,
+          "coordinate_mae_yards": 0.3985759804931306,
+          "rmse_ci95_low": 0.7131755767812089,
+          "rmse_ci95_high": 0.8144426771051673,
+          "delta_vs_velocity_ci95_low": -0.9429404583638906,
+          "delta_vs_velocity_ci95_high": -0.8429894198388018,
+          "feature_count": 186,
+          "delta_vs_landing_ci95": [
+            -0.09479357757368084,
+            -0.06884532713064433
+          ]
+        },
+        {
+          "model": "core_plus_representation",
+          "coordinate_rmse_yards": 0.7656656964464174,
+          "ade_frame_weighted_yards": 0.6338422407379524,
+          "ade_trajectory_weighted_yards": 0.503964031093982,
+          "fde_trajectory_weighted_yards": 1.1611093615139583,
+          "p95_displacement_yards": 2.2402176393778332,
+          "coordinate_mae_yards": 0.4019383023908425,
+          "rmse_ci95_low": 0.716557056539677,
+          "rmse_ci95_high": 0.8159035035896375,
+          "delta_vs_velocity_ci95_low": -0.9441806642224497,
+          "delta_vs_velocity_ci95_high": -0.83956733077939,
+          "feature_count": 192,
+          "delta_vs_landing_ci95": [
+            -0.08950608100463381,
+            -0.07014813165145228
+          ]
+        },
+        {
+          "model": "core_plus_noise",
+          "coordinate_rmse_yards": 0.8024524588146487,
+          "ade_frame_weighted_yards": 0.6712312399706748,
+          "ade_trajectory_weighted_yards": 0.5396570500742096,
+          "fde_trajectory_weighted_yards": 1.2282107184148074,
+          "p95_displacement_yards": 2.3484936263002223,
+          "coordinate_mae_yards": 0.4255928874419758,
+          "rmse_ci95_low": 0.7520154730356657,
+          "rmse_ci95_high": 0.8521498145052614,
+          "delta_vs_velocity_ci95_low": -0.905978863369211,
+          "delta_vs_velocity_ci95_high": -0.803110255002221,
+          "feature_count": 192,
+          "delta_vs_landing_ci95": [
+            -0.051547140136751934,
+            -0.03383206057141803
+          ]
+        },
+        {
+          "model": "engineered_core",
+          "coordinate_rmse_yards": 0.8024524588146487,
+          "ade_frame_weighted_yards": 0.6712312399706748,
+          "ade_trajectory_weighted_yards": 0.5396570500742096,
+          "fde_trajectory_weighted_yards": 1.2282107184148074,
+          "p95_displacement_yards": 2.3484936263002223,
+          "coordinate_mae_yards": 0.4255928874419758,
+          "rmse_ci95_low": 0.7520154730356657,
+          "rmse_ci95_high": 0.8521498145052614,
+          "delta_vs_velocity_ci95_low": -0.905978863369211,
+          "delta_vs_velocity_ci95_high": -0.803110255002221,
+          "feature_count": 128,
+          "delta_vs_landing_ci95": [
+            -0.051547140136751934,
+            -0.03383206057141803
+          ]
+        },
+        {
+          "model": "landing_features",
+          "coordinate_rmse_yards": 0.8453918791155848,
+          "ade_frame_weighted_yards": 0.7250424515947627,
+          "ade_trajectory_weighted_yards": 0.5928393722034293,
+          "fde_trajectory_weighted_yards": 1.2992543301040969,
+          "p95_displacement_yards": 2.466337660529592,
+          "coordinate_mae_yards": 0.4592503040196768,
+          "rmse_ci95_low": 0.7927672425202761,
+          "rmse_ci95_high": 0.8982542306275865,
+          "delta_vs_velocity_ci95_low": -0.8637783788041915,
+          "delta_vs_velocity_ci95_high": -0.7590346979515462,
+          "feature_count": 64,
+          "delta_vs_landing_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "model": "constant_velocity",
+          "coordinate_rmse_yards": 1.6581670422569503,
+          "ade_frame_weighted_yards": 1.4607433300745973,
+          "ade_trajectory_weighted_yards": 1.1563209799647314,
+          "fde_trajectory_weighted_yards": 2.8036733297433,
+          "p95_displacement_yards": 5.26275783209378,
+          "coordinate_mae_yards": 0.9311070671209704,
+          "rmse_ci95_low": 1.5851554729981936,
+          "rmse_ci95_high": 1.7278937447486722,
+          "delta_vs_velocity_ci95_low": 0.0,
+          "delta_vs_velocity_ci95_high": 0.0,
+          "feature_count": 0,
+          "delta_vs_landing_ci95": [
+            0.7590346979515462,
+            0.8637783788041915
+          ]
+        }
+      ],
+      "slices": [
+        {
+          "model": "all_engineered",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 0.8061409084493668
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 0.5866710918315606
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.32547102480286955
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 1.1865656392608894
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 2.24631466867215
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 2.6838640350821756
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 1.7565635561610078
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 1.3803894855435412
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.7386805174977157
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 2.6566113937322964
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 4.793548454644822
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 5.980245866601138
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 0.8225139248069667
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 0.5919887033627693
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.3323928444415205
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 1.2044132700620171
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 2.2980739535348533
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 2.689691876171044
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 0.8620917451245892
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 0.6281346405445629
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.3656292059598296
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 1.2632229841446252
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 2.3669526530409755
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 2.8431870212284203
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 0.8232121769612115
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 0.5971233808507993
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.3370837219520192
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 1.210369003467924
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 2.2820588984107677
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 2.632974690299357
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 0.8620917451245892
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 0.6281346405445629
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.3656292059598296
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 1.2632229841446252
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 2.3669526530409755
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 2.8431870212284203
+        },
+        {
+          "model": "landing_features",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 60038,
+          "coordinate_rmse_yards": 0.9109363238926513
+        },
+        {
+          "model": "landing_features",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 23900,
+          "coordinate_rmse_yards": 0.652308474841021
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 63125,
+          "coordinate_rmse_yards": 0.4050718153818255
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 17758,
+          "coordinate_rmse_yards": 1.320675724448614
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2991,
+          "coordinate_rmse_yards": 2.45478721301366
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 64,
+          "coordinate_rmse_yards": 3.1492806448960464
+        }
+      ],
+      "selected_model": "all_engineered",
+      "improvement_vs_velocity_percent": 54.756243767135885,
+      "validation_games": 41,
+      "validation_rows_per_model": 83938,
+      "validation_trajectories": 6880,
+      "fold": {
+        "name": "inner_1",
+        "training_games": [
+          2023090700,
+          2023091000,
+          2023091001,
+          2023091002,
+          2023091003,
+          2023091004,
+          2023091005,
+          2023091006,
+          2023091007,
+          2023091008,
+          2023091009,
+          2023091010,
+          2023091011,
+          2023091012,
+          2023091013,
+          2023091100,
+          2023091400,
+          2023091700,
+          2023091701,
+          2023091702,
+          2023091703,
+          2023091704,
+          2023091705,
+          2023091706,
+          2023091707,
+          2023091708,
+          2023091709,
+          2023091710,
+          2023091711,
+          2023091712,
+          2023091800,
+          2023091801,
+          2023092100,
+          2023092400,
+          2023092401,
+          2023092402,
+          2023092403,
+          2023092404,
+          2023092405,
+          2023092406,
+          2023092407,
+          2023092408,
+          2023092409,
+          2023092410,
+          2023092411,
+          2023092412,
+          2023092500,
+          2023092501,
+          2023092800,
+          2023100100,
+          2023100101,
+          2023100102,
+          2023100103,
+          2023100104,
+          2023100105,
+          2023100106,
+          2023100107,
+          2023100108,
+          2023100109,
+          2023100110,
+          2023100111,
+          2023100112,
+          2023100113,
+          2023100200,
+          2023100500,
+          2023100800,
+          2023100801,
+          2023100802,
+          2023100803,
+          2023100804,
+          2023100805,
+          2023100806,
+          2023100807,
+          2023100808,
+          2023100809,
+          2023100810,
+          2023100811,
+          2023100900,
+          2023101200,
+          2023101500,
+          2023101501,
+          2023101502,
+          2023101503,
+          2023101504,
+          2023101505,
+          2023101506,
+          2023101507,
+          2023101508,
+          2023101509,
+          2023101510,
+          2023101511,
+          2023101512,
+          2023101600,
+          2023101900
+        ],
+        "evaluation_games": [
+          2023102200,
+          2023102201,
+          2023102202,
+          2023102203,
+          2023102204,
+          2023102205,
+          2023102206,
+          2023102207,
+          2023102208,
+          2023102209,
+          2023102210,
+          2023102300,
+          2023102600,
+          2023102900,
+          2023102901,
+          2023102902,
+          2023102903,
+          2023102904,
+          2023102905,
+          2023102906,
+          2023102907,
+          2023102908,
+          2023102909,
+          2023102910,
+          2023102911,
+          2023102912,
+          2023102913,
+          2023103000,
+          2023110200,
+          2023110500,
+          2023110501,
+          2023110502,
+          2023110503,
+          2023110504,
+          2023110505,
+          2023110506,
+          2023110507,
+          2023110508,
+          2023110509,
+          2023110510,
+          2023110511
+        ]
+      },
+      "source_signature": "e1ccbb159635aa3937c4e734e91a53d21392fb0cb64948139da73324adf32e92",
+      "settings": {
+        "loss": "squared_error",
+        "learning_rate": 0.07,
+        "max_iter": 100,
+        "max_leaf_nodes": 15,
+        "max_depth": 4,
+        "min_samples_leaf": 60,
+        "l2_regularization": 1.0,
+        "max_bins": 63,
+        "early_stopping": false,
+        "random_state": 2026
+      }
+    },
+    {
+      "status": "passed",
+      "split": "validation",
+      "holdout_evaluation": "not_run",
+      "models": [
+        {
+          "model": "all_engineered",
+          "coordinate_rmse_yards": 0.7112391512207569,
+          "ade_frame_weighted_yards": 0.5871745382320815,
+          "ade_trajectory_weighted_yards": 0.4651996595331032,
+          "fde_trajectory_weighted_yards": 1.0658578613445695,
+          "p95_displacement_yards": 2.0717940392593466,
+          "coordinate_mae_yards": 0.3749189135245484,
+          "rmse_ci95_low": 0.6640670504026887,
+          "rmse_ci95_high": 0.7588728353974205,
+          "delta_vs_velocity_ci95_low": -1.0293641826728177,
+          "delta_vs_velocity_ci95_high": -0.8745399656000334,
+          "feature_count": 252,
+          "delta_vs_landing_ci95": [
+            -0.10466138233115903,
+            -0.06849949788096862
+          ]
+        },
+        {
+          "model": "core_plus_representation",
+          "coordinate_rmse_yards": 0.72064533909193,
+          "ade_frame_weighted_yards": 0.600629701638506,
+          "ade_trajectory_weighted_yards": 0.476602717432245,
+          "fde_trajectory_weighted_yards": 1.0855868641871913,
+          "p95_displacement_yards": 2.095227217586761,
+          "coordinate_mae_yards": 0.38283242752891694,
+          "rmse_ci95_low": 0.6745649626911018,
+          "rmse_ci95_high": 0.7658199384895408,
+          "delta_vs_velocity_ci95_low": -1.0202626682187839,
+          "delta_vs_velocity_ci95_high": -0.8660534229549192,
+          "feature_count": 192,
+          "delta_vs_landing_ci95": [
+            -0.09478601469281206,
+            -0.06143339383375661
+          ]
+        },
+        {
+          "model": "core_plus_context",
+          "coordinate_rmse_yards": 0.7235990961075748,
+          "ade_frame_weighted_yards": 0.6058377264866158,
+          "ade_trajectory_weighted_yards": 0.48369549240498894,
+          "fde_trajectory_weighted_yards": 1.098329531767209,
+          "p95_displacement_yards": 2.122845657381875,
+          "coordinate_mae_yards": 0.38655311283728494,
+          "rmse_ci95_low": 0.677941144464818,
+          "rmse_ci95_high": 0.769041374265958,
+          "delta_vs_velocity_ci95_low": -1.0136757034397352,
+          "delta_vs_velocity_ci95_high": -0.8658796970898265,
+          "feature_count": 188,
+          "delta_vs_landing_ci95": [
+            -0.09118879059830493,
+            -0.058211852933923315
+          ]
+        },
+        {
+          "model": "core_plus_noise",
+          "coordinate_rmse_yards": 0.7566393908646515,
+          "ade_frame_weighted_yards": 0.637327864454018,
+          "ade_trajectory_weighted_yards": 0.5100944015110871,
+          "fde_trajectory_weighted_yards": 1.159242320466674,
+          "p95_displacement_yards": 2.2393690330982623,
+          "coordinate_mae_yards": 0.4067277495042137,
+          "rmse_ci95_low": 0.7106751159964403,
+          "rmse_ci95_high": 0.8005142427562243,
+          "delta_vs_velocity_ci95_low": -0.9794251235956549,
+          "delta_vs_velocity_ci95_high": -0.8356229002870262,
+          "feature_count": 192,
+          "delta_vs_landing_ci95": [
+            -0.056499028540176535,
+            -0.030120800933882794
+          ]
+        },
+        {
+          "model": "engineered_core",
+          "coordinate_rmse_yards": 0.7566393908646515,
+          "ade_frame_weighted_yards": 0.637327864454018,
+          "ade_trajectory_weighted_yards": 0.5100944015110871,
+          "fde_trajectory_weighted_yards": 1.159242320466674,
+          "p95_displacement_yards": 2.2393690330982623,
+          "coordinate_mae_yards": 0.4067277495042137,
+          "rmse_ci95_low": 0.7106751159964403,
+          "rmse_ci95_high": 0.8005142427562243,
+          "delta_vs_velocity_ci95_low": -0.9794251235956549,
+          "delta_vs_velocity_ci95_high": -0.8356229002870262,
+          "feature_count": 128,
+          "delta_vs_landing_ci95": [
+            -0.056499028540176535,
+            -0.030120800933882794
+          ]
+        },
+        {
+          "model": "landing_features",
+          "coordinate_rmse_yards": 0.7991956768245159,
+          "ade_frame_weighted_yards": 0.6874942155149353,
+          "ade_trajectory_weighted_yards": 0.5568749122944375,
+          "fde_trajectory_weighted_yards": 1.2297841259817757,
+          "p95_displacement_yards": 2.3635824615005676,
+          "coordinate_mae_yards": 0.4374331561791853,
+          "rmse_ci95_low": 0.7492476857695404,
+          "rmse_ci95_high": 0.846580256565805,
+          "delta_vs_velocity_ci95_low": -0.9350278657204806,
+          "delta_vs_velocity_ci95_high": -0.7983232706475671,
+          "feature_count": 64,
+          "delta_vs_landing_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "model": "constant_velocity",
+          "coordinate_rmse_yards": 1.6654354542541598,
+          "ade_frame_weighted_yards": 1.463895197786206,
+          "ade_trajectory_weighted_yards": 1.1475792060932082,
+          "fde_trajectory_weighted_yards": 2.7677137215396095,
+          "p95_displacement_yards": 5.2559109581153995,
+          "coordinate_mae_yards": 0.9286561029784709,
+          "rmse_ci95_low": 1.5720747200811136,
+          "rmse_ci95_high": 1.7530832608944704,
+          "delta_vs_velocity_ci95_low": 0.0,
+          "delta_vs_velocity_ci95_high": 0.0,
+          "feature_count": 0,
+          "delta_vs_landing_ci95": [
+            0.7983232706475671,
+            0.9350278657204806
+          ]
+        }
+      ],
+      "slices": [
+        {
+          "model": "all_engineered",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 0.7618913374474122
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 0.5654311889160232
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.3088962222397789
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 1.1143822263942007
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 2.0574514441190748
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 3.087842786583226
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 1.772971956422737
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 1.360604411519982
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.7368583359710944
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 2.6284213043836435
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 4.762300187044342
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 5.578614730172025
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 0.7751245518669979
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 0.575280693578171
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.3236516663539722
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 1.1333342644430893
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 2.067721223763954
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 3.1240623209814267
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 0.8102850032271396
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 0.6023296738408873
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.34743376933433073
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 1.1860907561575305
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 2.1334992092004135
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 3.2141801715574614
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 0.7755930011480469
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 0.5605598760685914
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.3170753328368947
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 1.1343560267772204
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 2.0582962460329024
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 3.1158226743324726
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 0.8102850032271396
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 0.6023296738408873
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.34743376933433073
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 1.1860907561575305
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 2.1334992092004135
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 3.2141801715574614
+        },
+        {
+          "model": "landing_features",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 40816,
+          "coordinate_rmse_yards": 0.8619866475027009
+        },
+        {
+          "model": "landing_features",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 16361,
+          "coordinate_rmse_yards": 0.6152211568812446
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 42935,
+          "coordinate_rmse_yards": 0.3824668554929105
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 11924,
+          "coordinate_rmse_yards": 1.2420042644076386
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2279,
+          "coordinate_rmse_yards": 2.2411875325093087
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 39,
+          "coordinate_rmse_yards": 3.195618037351952
+        }
+      ],
+      "selected_model": "all_engineered",
+      "improvement_vs_velocity_percent": 57.294102908402735,
+      "validation_games": 28,
+      "validation_rows_per_model": 57177,
+      "validation_trajectories": 4706,
+      "fold": {
+        "name": "inner_2",
+        "training_games": [
+          2023090700,
+          2023091000,
+          2023091001,
+          2023091002,
+          2023091003,
+          2023091004,
+          2023091005,
+          2023091006,
+          2023091007,
+          2023091008,
+          2023091009,
+          2023091010,
+          2023091011,
+          2023091012,
+          2023091013,
+          2023091100,
+          2023091400,
+          2023091700,
+          2023091701,
+          2023091702,
+          2023091703,
+          2023091704,
+          2023091705,
+          2023091706,
+          2023091707,
+          2023091708,
+          2023091709,
+          2023091710,
+          2023091711,
+          2023091712,
+          2023091800,
+          2023091801,
+          2023092100,
+          2023092400,
+          2023092401,
+          2023092402,
+          2023092403,
+          2023092404,
+          2023092405,
+          2023092406,
+          2023092407,
+          2023092408,
+          2023092409,
+          2023092410,
+          2023092411,
+          2023092412,
+          2023092500,
+          2023092501,
+          2023092800,
+          2023100100,
+          2023100101,
+          2023100102,
+          2023100103,
+          2023100104,
+          2023100105,
+          2023100106,
+          2023100107,
+          2023100108,
+          2023100109,
+          2023100110,
+          2023100111,
+          2023100112,
+          2023100113,
+          2023100200,
+          2023100500,
+          2023100800,
+          2023100801,
+          2023100802,
+          2023100803,
+          2023100804,
+          2023100805,
+          2023100806,
+          2023100807,
+          2023100808,
+          2023100809,
+          2023100810,
+          2023100811,
+          2023100900,
+          2023101200,
+          2023101500,
+          2023101501,
+          2023101502,
+          2023101503,
+          2023101504,
+          2023101505,
+          2023101506,
+          2023101507,
+          2023101508,
+          2023101509,
+          2023101510,
+          2023101511,
+          2023101512,
+          2023101600,
+          2023101900,
+          2023102200,
+          2023102201,
+          2023102202,
+          2023102203,
+          2023102204,
+          2023102205,
+          2023102206,
+          2023102207,
+          2023102208,
+          2023102209,
+          2023102210,
+          2023102300,
+          2023102600,
+          2023102900,
+          2023102901,
+          2023102902,
+          2023102903,
+          2023102904,
+          2023102905,
+          2023102906,
+          2023102907,
+          2023102908,
+          2023102909,
+          2023102910,
+          2023102911,
+          2023102912,
+          2023102913,
+          2023103000,
+          2023110200,
+          2023110500,
+          2023110501,
+          2023110502,
+          2023110503,
+          2023110504,
+          2023110505,
+          2023110506,
+          2023110507,
+          2023110508,
+          2023110509,
+          2023110510,
+          2023110511
+        ],
+        "evaluation_games": [
+          2023110600,
+          2023110900,
+          2023111200,
+          2023111201,
+          2023111202,
+          2023111203,
+          2023111204,
+          2023111205,
+          2023111206,
+          2023111207,
+          2023111208,
+          2023111209,
+          2023111210,
+          2023111211,
+          2023111300,
+          2023111600,
+          2023111900,
+          2023111901,
+          2023111902,
+          2023111903,
+          2023111904,
+          2023111905,
+          2023111906,
+          2023111907,
+          2023111908,
+          2023111909,
+          2023111910,
+          2023111911
+        ]
+      },
+      "source_signature": "e1ccbb159635aa3937c4e734e91a53d21392fb0cb64948139da73324adf32e92",
+      "settings": {
+        "loss": "squared_error",
+        "learning_rate": 0.07,
+        "max_iter": 100,
+        "max_leaf_nodes": 15,
+        "max_depth": 4,
+        "min_samples_leaf": 60,
+        "l2_regularization": 1.0,
+        "max_bins": 63,
+        "early_stopping": false,
+        "random_state": 2026
+      }
+    },
+    {
+      "status": "passed",
+      "split": "validation",
+      "holdout_evaluation": "not_run",
+      "models": [
+        {
+          "model": "all_engineered",
+          "coordinate_rmse_yards": 0.7625751522019784,
+          "ade_frame_weighted_yards": 0.614985391177495,
+          "ade_trajectory_weighted_yards": 0.4779706199412976,
+          "fde_trajectory_weighted_yards": 1.0915938855114218,
+          "p95_displacement_yards": 2.235686077608225,
+          "coordinate_mae_yards": 0.39093590669306355,
+          "rmse_ci95_low": 0.7021320925453632,
+          "rmse_ci95_high": 0.8196181388741949,
+          "delta_vs_velocity_ci95_low": -0.9476327712064831,
+          "delta_vs_velocity_ci95_high": -0.8181750784307511,
+          "feature_count": 250,
+          "delta_vs_landing_ci95": [
+            -0.09338070493463302,
+            -0.06737505137351116
+          ]
+        },
+        {
+          "model": "core_plus_context",
+          "coordinate_rmse_yards": 0.7647532858450917,
+          "ade_frame_weighted_yards": 0.6204037550847475,
+          "ade_trajectory_weighted_yards": 0.48279600252731547,
+          "fde_trajectory_weighted_yards": 1.1053002427877516,
+          "p95_displacement_yards": 2.2491705312122496,
+          "coordinate_mae_yards": 0.39415816189156483,
+          "rmse_ci95_low": 0.7050780671113105,
+          "rmse_ci95_high": 0.8202310660052905,
+          "delta_vs_velocity_ci95_low": -0.9449080789606089,
+          "delta_vs_velocity_ci95_high": -0.8170247806801847,
+          "feature_count": 186,
+          "delta_vs_landing_ci95": [
+            -0.09107813922085281,
+            -0.06544583086402633
+          ]
+        },
+        {
+          "model": "core_plus_representation",
+          "coordinate_rmse_yards": 0.7787860540240694,
+          "ade_frame_weighted_yards": 0.6336761811999215,
+          "ade_trajectory_weighted_yards": 0.49189234797135917,
+          "fde_trajectory_weighted_yards": 1.1252976527392538,
+          "p95_displacement_yards": 2.298050262419876,
+          "coordinate_mae_yards": 0.40287445997503096,
+          "rmse_ci95_low": 0.719294425263805,
+          "rmse_ci95_high": 0.8357651670533072,
+          "delta_vs_velocity_ci95_low": -0.9314172733824039,
+          "delta_vs_velocity_ci95_high": -0.8030635414655971,
+          "feature_count": 192,
+          "delta_vs_landing_ci95": [
+            -0.07510550443734264,
+            -0.052660336285301194
+          ]
+        },
+        {
+          "model": "core_plus_noise",
+          "coordinate_rmse_yards": 0.8071463042247609,
+          "ade_frame_weighted_yards": 0.6681671298489542,
+          "ade_trajectory_weighted_yards": 0.5291032934472417,
+          "fde_trajectory_weighted_yards": 1.192760219199005,
+          "p95_displacement_yards": 2.372232592808092,
+          "coordinate_mae_yards": 0.4243099754229332,
+          "rmse_ci95_low": 0.7451528174972,
+          "rmse_ci95_high": 0.8660851262579705,
+          "delta_vs_velocity_ci95_low": -0.9027040363875625,
+          "delta_vs_velocity_ci95_high": -0.7758003589704328,
+          "feature_count": 192,
+          "delta_vs_landing_ci95": [
+            -0.04430257198790816,
+            -0.025699034163829678
+          ]
+        },
+        {
+          "model": "engineered_core",
+          "coordinate_rmse_yards": 0.8071463042247609,
+          "ade_frame_weighted_yards": 0.6681671298489542,
+          "ade_trajectory_weighted_yards": 0.5291032934472417,
+          "fde_trajectory_weighted_yards": 1.192760219199005,
+          "p95_displacement_yards": 2.372232592808092,
+          "coordinate_mae_yards": 0.4243099754229332,
+          "rmse_ci95_low": 0.7451528174972,
+          "rmse_ci95_high": 0.8660851262579705,
+          "delta_vs_velocity_ci95_low": -0.9027040363875625,
+          "delta_vs_velocity_ci95_high": -0.7758003589704328,
+          "feature_count": 128,
+          "delta_vs_landing_ci95": [
+            -0.04430257198790816,
+            -0.025699034163829678
+          ]
+        },
+        {
+          "model": "landing_features",
+          "coordinate_rmse_yards": 0.8420980857844399,
+          "ade_frame_weighted_yards": 0.7121551422579885,
+          "ade_trajectory_weighted_yards": 0.5728152306047066,
+          "fde_trajectory_weighted_yards": 1.2682341921213425,
+          "p95_displacement_yards": 2.4786398182631815,
+          "coordinate_mae_yards": 0.4515302692871056,
+          "rmse_ci95_low": 0.7793466450150981,
+          "rmse_ci95_high": 0.9024455035588386,
+          "delta_vs_velocity_ci95_low": -0.866543984528366,
+          "delta_vs_velocity_ci95_high": -0.7422202211988586,
+          "feature_count": 64,
+          "delta_vs_landing_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "model": "constant_velocity",
+          "coordinate_rmse_yards": 1.6440214082004612,
+          "ade_frame_weighted_yards": 1.4643140891888908,
+          "ade_trajectory_weighted_yards": 1.158762892778414,
+          "fde_trajectory_weighted_yards": 2.8074749076344316,
+          "p95_displacement_yards": 5.272724627165092,
+          "coordinate_mae_yards": 0.9324354243542435,
+          "rmse_ci95_low": 1.5642130913709156,
+          "rmse_ci95_high": 1.7268471525042726,
+          "delta_vs_velocity_ci95_low": 0.0,
+          "delta_vs_velocity_ci95_high": 0.0,
+          "feature_count": 0,
+          "delta_vs_landing_ci95": [
+            0.7422202211988584,
+            0.866543984528366
+          ]
+        }
+      ],
+      "slices": [
+        {
+          "model": "all_engineered",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 0.8271337360130699
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 0.5675710417612017
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.303161437479005
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 1.1611912998042142
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 2.2200729221134257
+        },
+        {
+          "model": "all_engineered",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 2.724526697370943
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 1.733875674858707
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 1.3912936876605033
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.7279969496902543
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 2.5937231997903223
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 4.348109512253968
+        },
+        {
+          "model": "constant_velocity",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 5.274955653164961
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 0.8273865875267435
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 0.5769005156189613
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.3106713943341658
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 1.1616383953152363
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 2.220431752332284
+        },
+        {
+          "model": "core_plus_context",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 2.6250795523460555
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 0.8695199402317826
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 0.622231250042237
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.35137231792318574
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 1.223136804169775
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 2.29568099337128
+        },
+        {
+          "model": "core_plus_noise",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 2.600590373262107
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 0.8442562469311573
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 0.5813307534197436
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.3143036950387478
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 1.194843475259456
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 2.233949576036138
+        },
+        {
+          "model": "core_plus_representation",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 2.6775922147064177
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 0.8695199402317826
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 0.622231250042237
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.35137231792318574
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 1.223136804169775
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 2.29568099337128
+        },
+        {
+          "model": "engineered_core",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 2.600590373262107
+        },
+        {
+          "model": "landing_features",
+          "dimension": "role",
+          "value": "Defensive Coverage",
+          "rows": 43883,
+          "coordinate_rmse_yards": 0.9140546528014782
+        },
+        {
+          "model": "landing_features",
+          "dimension": "role",
+          "value": "Targeted Receiver",
+          "rows": 17363,
+          "coordinate_rmse_yards": 0.6243009884294497
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "1",
+          "rows": 45100,
+          "coordinate_rmse_yards": 0.38228211207383617
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "2",
+          "rows": 13466,
+          "coordinate_rmse_yards": 1.2720313287597613
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "3",
+          "rows": 2638,
+          "coordinate_rmse_yards": 2.366441122586209
+        },
+        {
+          "model": "landing_features",
+          "dimension": "forecast_second",
+          "value": "4",
+          "rows": 42,
+          "coordinate_rmse_yards": 2.575843786694522
+        }
+      ],
+      "selected_model": "all_engineered",
+      "improvement_vs_velocity_percent": 53.61525413244528,
+      "validation_games": 29,
+      "validation_rows_per_model": 61246,
+      "validation_trajectories": 4922,
+      "fold": {
+        "name": "inner_3",
+        "training_games": [
+          2023090700,
+          2023091000,
+          2023091001,
+          2023091002,
+          2023091003,
+          2023091004,
+          2023091005,
+          2023091006,
+          2023091007,
+          2023091008,
+          2023091009,
+          2023091010,
+          2023091011,
+          2023091012,
+          2023091013,
+          2023091100,
+          2023091400,
+          2023091700,
+          2023091701,
+          2023091702,
+          2023091703,
+          2023091704,
+          2023091705,
+          2023091706,
+          2023091707,
+          2023091708,
+          2023091709,
+          2023091710,
+          2023091711,
+          2023091712,
+          2023091800,
+          2023091801,
+          2023092100,
+          2023092400,
+          2023092401,
+          2023092402,
+          2023092403,
+          2023092404,
+          2023092405,
+          2023092406,
+          2023092407,
+          2023092408,
+          2023092409,
+          2023092410,
+          2023092411,
+          2023092412,
+          2023092500,
+          2023092501,
+          2023092800,
+          2023100100,
+          2023100101,
+          2023100102,
+          2023100103,
+          2023100104,
+          2023100105,
+          2023100106,
+          2023100107,
+          2023100108,
+          2023100109,
+          2023100110,
+          2023100111,
+          2023100112,
+          2023100113,
+          2023100200,
+          2023100500,
+          2023100800,
+          2023100801,
+          2023100802,
+          2023100803,
+          2023100804,
+          2023100805,
+          2023100806,
+          2023100807,
+          2023100808,
+          2023100809,
+          2023100810,
+          2023100811,
+          2023100900,
+          2023101200,
+          2023101500,
+          2023101501,
+          2023101502,
+          2023101503,
+          2023101504,
+          2023101505,
+          2023101506,
+          2023101507,
+          2023101508,
+          2023101509,
+          2023101510,
+          2023101511,
+          2023101512,
+          2023101600,
+          2023101900,
+          2023102200,
+          2023102201,
+          2023102202,
+          2023102203,
+          2023102204,
+          2023102205,
+          2023102206,
+          2023102207,
+          2023102208,
+          2023102209,
+          2023102210,
+          2023102300,
+          2023102600,
+          2023102900,
+          2023102901,
+          2023102902,
+          2023102903,
+          2023102904,
+          2023102905,
+          2023102906,
+          2023102907,
+          2023102908,
+          2023102909,
+          2023102910,
+          2023102911,
+          2023102912,
+          2023102913,
+          2023103000,
+          2023110200,
+          2023110500,
+          2023110501,
+          2023110502,
+          2023110503,
+          2023110504,
+          2023110505,
+          2023110506,
+          2023110507,
+          2023110508,
+          2023110509,
+          2023110510,
+          2023110511,
+          2023110600,
+          2023110900,
+          2023111200,
+          2023111201,
+          2023111202,
+          2023111203,
+          2023111204,
+          2023111205,
+          2023111206,
+          2023111207,
+          2023111208,
+          2023111209,
+          2023111210,
+          2023111211,
+          2023111300,
+          2023111600,
+          2023111900,
+          2023111901,
+          2023111902,
+          2023111903,
+          2023111904,
+          2023111905,
+          2023111906,
+          2023111907,
+          2023111908,
+          2023111909,
+          2023111910,
+          2023111911
+        ],
+        "evaluation_games": [
+          2023112000,
+          2023112300,
+          2023112301,
+          2023112302,
+          2023112400,
+          2023112600,
+          2023112601,
+          2023112602,
+          2023112603,
+          2023112604,
+          2023112605,
+          2023112606,
+          2023112607,
+          2023112608,
+          2023112609,
+          2023112610,
+          2023112700,
+          2023113000,
+          2023120300,
+          2023120301,
+          2023120302,
+          2023120303,
+          2023120304,
+          2023120305,
+          2023120306,
+          2023120307,
+          2023120308,
+          2023120309,
+          2023120310
+        ]
+      },
+      "source_signature": "e1ccbb159635aa3937c4e734e91a53d21392fb0cb64948139da73324adf32e92",
+      "settings": {
+        "loss": "squared_error",
+        "learning_rate": 0.07,
+        "max_iter": 100,
+        "max_leaf_nodes": 15,
+        "max_depth": 4,
+        "min_samples_leaf": 60,
+        "l2_regularization": 1.0,
+        "max_bins": 63,
+        "early_stopping": false,
+        "random_state": 2026
+      }
+    }
+  ],
+  "selection": {
+    "inner_scores": {
+      "landing_features": 0.8315881530583363,
+      "engineered_core": 0.7912237260963149,
+      "core_plus_context": 0.7530325603310176,
+      "core_plus_representation": 0.7572782452768443,
+      "all_engineered": 0.7432284870624926
+    },
+    "selected_model": "all_engineered",
+    "outer_validation_used_for_selection": false,
+    "source_signature": "e1ccbb159635aa3937c4e734e91a53d21392fb0cb64948139da73324adf32e92"
+  },
+  "feature_gate": "open",
+  "purpose": "Fixed-capacity representation diagnostic."
+}

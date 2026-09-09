@@ -117,6 +117,18 @@ def test_changed_source_and_results_invalidate_execution(project: Path) -> None:
     assert nbformat.read(output, as_version=4).metadata.execution.signature != after
 
 
+def test_changed_visual_helper_invalidates_notebook_evidence(project: Path) -> None:
+    source = notebook(project)
+    before = runner.execution_signature(project, source)
+    helper = project / "src/nfl_trajectory/research_visuals.py"
+    helper.parent.mkdir(parents=True)
+    helper.write_text("# initial visual helper\n")
+    added = runner.execution_signature(project, source)
+    helper.write_text("# revised visual helper\n")
+    changed = runner.execution_signature(project, source)
+    assert len({before, added, changed}) == 3
+
+
 @pytest.mark.parametrize(
     "code,error",
     [

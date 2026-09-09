@@ -1,77 +1,100 @@
-# Role-conditioned motion ridge
+# Research model card
 
-A compact, interpretable reference for the NFL Big Data Bowl 2026 Prediction task.
-This is a measured development model, not a claim of frontier leaderboard performance.
+**Task:** post-throw x/y player trajectory prediction for NFL Big Data Bowl 2026
+Prediction. Inputs are pre-throw tracking, player roles, the supplied ball landing
+point, and requested forecast horizon. This is not a system that infers an unknown
+ball landing point at release time.
 
-## Inputs and behavior
+## Measured research comparisons
 
-For each scored player, use only observed x/y history, the supplied player role,
-ball landing coordinates, and number of requested future frames. Output frame 1
-occurs 0.1 seconds after the final observed frame. Identity keys align rows; player
-IDs are not fitted model features. No supplementary post-play outcome is used.
+| Representation and estimator | Development coordinate RMSE |
+|---|---:|
+| Original role-conditioned physical ridge | 0.9895688 |
+| Original landing residual ridge, 64 features | 0.9268684 |
+| Sequential core correction, 128 features | 0.900446 |
+| Sequential context correction, 186 features | 0.8643361 |
+| Joint linear profile without metadata, 236 features | 0.8222565 |
+| Fixed shallow boosting, landing 64 | 0.8011972 |
+| Same boosting settings, engineered union 250 | 0.7280160 |
+| Same boosting settings, entire screened pool, 6,385 columns | 0.6869492 |
+| Same boosting settings, selected metadata-free profile, 6,308 columns | **0.6880522** |
+| Same boosting settings, positional fallback, 5,572 columns | 0.6939581 |
 
-Let `t = output_frame / 10`, `q = output_frame / num_frames_output`, and
-`b = supplied_landing_point - final_observed_position`. The six vector basis terms
-are `v_last*t`, `v_recent*t`, `a_last*t²/2`, `b*q`, `b*q²`, and `b*q³`.
-The prediction is final observed position plus a weighted sum of these vectors.
+The current controlled tree comparison attributes a **14.12% RMSE reduction** to the feature
+representation at fixed estimator settings. It does not attribute the difference
+between role ridge and a tree entirely to feature engineering. Wider-budget
+results and their training-only choice are reported in notebook 02. The compact
+250-column union previously provided a 9.13% reduction under the same settings.
+The selected profile's paired 95% game-bootstrap RMSE difference from the
+64-column tree reference is −0.12780 to −0.09973 yards on development games.
 
-Recent velocity is a least-squares estimate over at most five observed frames.
-Acceleration uses the interval between consecutive velocity midpoints, including
-irregular sampling. A single observation falls back to zero velocity/acceleration.
-Weights are shared across coordinates, preserving translation and rotation
-equivariance. Input coordinates are returned in their original field orientation.
-No arbitrary field clipping is applied.
+All development comparisons use 32 games and 67,857 frames; game-level uncertainty
+and paired differences accompany the full reports. Training comprises 192 games.
+Three chronological inner folds select feature variants. The final 48 games remain
+unscored. One labelled season and repeatedly inspected development data limit
+generalization claims. There is no verified leaderboard rank.
 
-## Training and selection
+## Current inference artifact
 
-- Training: 192 games, 32,681 trajectories, 395,813 target positions.
-- Dates: September 7–December 3, 2023.
-- Objective: mean squared coordinate displacement plus ridge regularization.
-- Scaling: training RMS of each vector feature; no centering or fitted coordinate intercept.
-- Regularization: alpha 0.001, declared before validation.
-- Parameters: six coefficients for each of two scored roles, plus a six-coefficient global fallback.
-- Optimization: additive normal-equation statistics and a small deterministic linear solve.
-- Selection: lowest coordinate RMSE among six predeclared methods on chronological validation.
-- Holdout: 48 games, unscored by this development pipeline.
+The research bundle selects the full-width metadata-free profile using the inner
+validation protocol. Its frozen refit representation contains 6,308 screened
+columns. Only 953 enter an actual tree split; the portable JSON bundle removes
+unused columns and remaps split indices without altering predictions. A future
+refit must start from the frozen 6,308 definitions, because a new fit can use
+columns that the research trees did not use.
 
-Validation contains 32 games, 5,399 player trajectories and 67,857 target positions
-from December 4–18, 2023. All frames and players of each game stay together.
+Missing telemetry selects an independently fitted positional profile with 5,572
+screened columns and 981 active tree inputs. The bundle contains both profiles,
+the physical baseline, frozen history tables, route transform, game manifests,
+and source hashes. Numeric tree arrays support prediction without scikit-learn.
+All eight inner/development profile conversions reproduce the fitted estimator
+exactly, with maximum absolute coordinate difference zero on every evaluation row.
 
-| Measure | Result |
-| --- | ---: |
-| Coordinate RMSE | 0.9895688 yd |
-| RMSE 95% game-cluster interval | 0.9218024–1.0518861 yd |
-| Frame-weighted ADE | 0.8847315 yd |
-| Trajectory-weighted ADE | 0.7217791 yd |
-| Trajectory-weighted FDE | 1.5057010 yd |
-| p95 displacement | 3.0028329 yd |
-| Coordinate MAE | 0.5632612 yd |
-| RMSE reduction vs constant velocity | 42.5510% |
-| Paired RMSE difference 95% interval | −0.7789459 to −0.6888573 yd |
+Complete-input raw replay reproduces 0.6880522 RMSE on all 67,857 development
+frames. Missing metadata and cold player history return the same predictions;
+missing telemetry selects the positional profile and scores 0.6939581. The
+exporter resolves this validated tree artifact rather than the earlier linear fit.
+An independent local run also passed the organizer's unchanged unlabelled gateway:
+5,837 rows, 143 plays, unique requested identifiers, finite predictions, and exact
+package/standalone parity at every callback.
 
-Intervals use 2,000 whole-game bootstrap samples and seed 2026. Each replicate pools
-squared errors and coordinate counts before taking a square root. They are not
-confidence intervals over arbitrary future seasons, nor do they correct repeated
-validation selection.
+## Robustness and limitations
 
-## Latency and operational limits
+Historical target-derived features exclude the complete current date and freeze
+evaluation lookup tables. Route representations are fitted inside each training
+fold. Body age uses game date; observed-frame histories cannot cross the throw.
+Optional-field dependency tests compare actual feature values, not just feature
+names. Future x/y columns in a request are ignored as inputs.
 
-The measured median was 27.09 ms per play and p95 was 87.75 ms on the recorded Linux
-x86_64 environment, over the first 32 validation plays in the first validation week.
-One warmup precedes timing. Timing includes feature construction and prediction,
-excluding CSV loading, server startup and networking. It is a small environment-specific
-measurement, not an AWS serving SLA. The library operates one weekly pair at a time.
+Raw inference validation covers every development frame plus missing metadata,
+missing telemetry, and cold player history. The organizer sample gateway checks
+interface shape, ordering, finiteness, and package/standalone parity; it has no
+labels. Sample-year diversity does not establish multi-season accuracy.
 
-Long-horizon and defensive-coverage errors remain larger. The model lacks explicit
-player interactions and multimodal trajectories. It was trained on one season;
-cross-season performance and the final holdout are unmeasured. Supplied landing
-coordinates are permitted competition inputs but would not be known to every live
-football application. Reusing this model without them changes the task.
+Permutation importance expresses conditional model reliance, not causal football
+effects. Correlated features reduce individual identifiability. Group refits remove
+the named columns without replacement; derived information in other families can
+remain. Removing direct history summaries, for example, does not remove every
+forecast interaction derived from motion. These are conditional representation
+ablations, not claims about eliminating a physical mechanism.
 
-## Reproducibility and provenance
+Metadata and route-only corrections are weak in some comparisons; failed avenues
+are retained in the research record. The organizer follows request-file play order,
+which does not guarantee chronological callbacks. Inference therefore uses frozen
+training histories and does not learn from preceding evaluation plays. Private
+competition data and fitted artifacts are not
+redistributed in the public repository.
 
-`docs/results/model.json` contains fitted coefficients and training-game identifiers.
-`protocol.json` freezes date boundaries and metric settings; `summary.json` records
-input checksums and numerical-code/environment fingerprints. See `docs/VALIDATION.md`
-for test and execution evidence. The standalone Kaggle export embeds the coefficients;
-it requires an official local-gateway test before a submission is attempted.
+## Intended review and next gate
+
+Use the notebooks to assess football reasoning, leakage prevention, controlled
+feature gains, engineering, and reproducibility. This is a research artifact,
+not a certified production or player-evaluation system. Feature research now
+passes all 15 closure criteria. Complete wide-profile group refits identify no
+omission meeting the predeclared follow-up threshold; the combined removal of
+direct histories and forecast crosses improves pooled inner RMSE by just 0.170%,
+with mixed fold results. The final width gain is 0.071%.
+
+The feature and refit-column manifest is frozen. Final refitting, one-time
+reserved holdout evaluation, and validation of the final inference artifact
+remain the next phase. The measured scores above are research results.

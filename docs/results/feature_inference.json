@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "validation_signature": "a3daf34232b3666cefe2a78dae97b5c6464d027d877c071ca264a2adc61238e3",
+  "validator_sha256": "d91fbe48e8569980de1f246df98f07c44e2cc23833b5f8bef6e5c3f1f3d354d3",
+  "bundle_sha256": "2d5c1d55b2a908b90364790ecdba19ee005cb4682faca2e1c035b5bbb5803d40",
+  "weekly_receipts": [
+    "artifacts/research/inference/input_2023_w13.json",
+    "artifacts/research/inference/input_2023_w14.json",
+    "artifacts/research/inference/input_2023_w15.json"
+  ],
+  "selected_stage": "fixed_tree",
+  "selected_model": "budget_8192__without_metadata",
+  "source_signatures": {
+    "research": "5f505c475c192746e2233c55ce6e32fe5a003495a4d9a48bd51df1f817ce6097",
+    "context": "596312f4a04628217cae78f3a22253d54c3dcd3fb5bdde2891aed1826637fccd",
+    "representation": "4c5b8a77dc9ad64f511fb88bccd77c00cff29ba79a089c56507fc0bb70bd5ab3"
+  },
+  "inference_sources": {
+    "runtime": "ecfcf3cd35ad4f692eaaf0aac5606271311a38e29d4203adeb4936302e05d291",
+    "motion": "fc8b60a6ba604b3038671ea6ddf85a7b7630ed0dae01449cc1a7c7356b0a30b2",
+    "models": "893b7bfca10f67386d7af454a5affadd6696b27a3855864ea84ddf5e1f25b7b1",
+    "features": "8faaf09d23d145632f78816c835d6b8958ef7b689a8bf7529102f201a9122e19",
+    "feature_candidates": "53984d98886f7508225a8e910f298e8f6dd4e22b25b6dca364d3e88f519a030b",
+    "context_features": "acb4e431983fe4450a6efcf323906f06a6d4d5c3bafd5567e60a1ea1d19d31e6",
+    "representation_features": "bc3d92785e0cef85733cdd2518753f7d81100a0863c53d643013daf43e57245c",
+    "feature_contracts": "f17344d448eda7e2f01fdc1fda13b16e5f952831a80d046df4dc5af94624cf36",
+    "tree_inference": "88f7fa3ff04109769854c849d707d6067a0590b82248ba18ac20a4fe6e6dc763",
+    "research_inference": "054978bfb9d23141a50fc1daed11d142f8fafb2aec4fc1b2be3a70225a6b1e67"
+  },
+  "retained_features": 953,
+  "scenarios": [
+    {
+      "scenario": "complete_inputs",
+      "variant": "complete_inputs",
+      "coordinate_rmse_yards": 0.6880521879583761,
+      "rows": 67857,
+      "elapsed_seconds": 75.74738654200019
+    },
+    {
+      "scenario": "missing_metadata",
+      "variant": "complete_inputs",
+      "coordinate_rmse_yards": 0.6880521879583761,
+      "rows": 67857,
+      "elapsed_seconds": 75.38031689799982
+    },
+    {
+      "scenario": "missing_telemetry",
+      "variant": "without_telemetry",
+      "coordinate_rmse_yards": 0.6939580590822519,
+      "rows": 67857,
+      "elapsed_seconds": 75.05750811599955
+    },
+    {
+      "scenario": "cold_player_history",
+      "variant": "complete_inputs",
+      "coordinate_rmse_yards": 0.6880521879583761,
+      "rows": 67857,
+      "elapsed_seconds": 75.8460416580001
+    }
+  ],
+  "standalone_export_parity": "passed on one complete development play; source shared with all-frame package test",
+  "single_play_seconds": [
+    0.44440533899998513,
+    0.4282845209999948,
+    0.4423326090000046
+  ],
+  "single_play_rows": 27,
+  "gateway_status": "not_run",
+  "holdout_evaluation": "not_run",
+  "limitations": "Input stress tests on previously inspected development data; cold history is not a player-disjoint refit."
+}

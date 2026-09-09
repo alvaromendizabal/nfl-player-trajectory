@@ -1,70 +1,74 @@
-# Validation evidence
+# Validation record
 
-Validated September 7, 2026, on Linux x86_64 / Python 3.11.15.
+The research milestone passes **239 tests** in the locked project environment.
+The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
+splits and histories, exact-frame joins, optional-input dependencies, source and
+artifact integrity, interrupted-stage recovery, and standalone predictor parity.
+Lint, format, type checks, warnings as errors, notebook execution, and isolated
+export checks form the canonical quality gate.
 
-| Check | Result |
-| --- | --- |
-| Frozen dependency install, compilation, Ruff lint and formatting | Passed |
-| mypy | Passed; 16 source files |
-| Automated tests | 70 passed; warnings treated as errors |
-| Complete offline quality gate | 13 checks passed in 30.084 seconds |
-| Project notebooks | All three executed with captured outputs |
-| Constant-velocity and fitted-model Kaggle exports | Passed schema, lint, formatting and numerical parity tests |
-| Real NFL benchmark | Six models; 32 validation games; 67,857 target positions |
-| Full benchmark / repeat | 33.924 seconds / 5.166 seconds |
-| Repeat computation | All 33 numerical stages reused; no new numerical stage started |
-| Published static figures | Rendered and visually inspected |
-| Offline field animation | Frame/trace alignment, slider and embedded resources tested |
+## Evidence levels
 
-Quality run: `20260907T013100Z-1b8b6e14`.
-Real benchmark run: `20260907T012026Z-03b641f0`.
-Resume run: `20260907T012254Z-4c89d51e`.
-No warnings were emitted by the completed quality run. GitHub Actions repeats the
-quality gate on pushes and pull requests and retains its evidence for 30 days.
+| Evidence | What it establishes |
+|---|---|
+| Synthetic unit/integration checks | Mathematical and software contracts on controlled examples |
+| Completed chronological feature folds | Out-of-time representation comparisons within 2023 |
+| Fixed-estimator comparisons | Gains attributable to feature representation at unchanged estimator settings |
+| Strict removals and trajectory permutations | Conditional family contributions, with stated limitations |
+| Full raw-input development replay | The saved inference path reproduces the measured feature pipeline |
+| Organizer unlabelled sample gateway | Interface, row ordering, finite output, and standalone parity |
+| Reserved holdout | Not run; future final evaluation after the feature gate |
 
-## Scientific evidence
+Every experiment records source/dependency/input signatures. A reusable checkpoint
+needs completed status and matching output hashes. Publication verifies model and
+evaluation receipts, recomputes RMSE from frame errors, checks inner-fold selection,
+and refuses stale inference or report artifacts. Notebook outputs are executed
+before replacing canonical files. Enabled training/export switches block automated
+publication before any cell runs.
 
-The user's completed authenticated download and audit covered 18 weekly pairs:
-4,880,579 observed rows and 562,936 target rows. The existing chronological split
-is unchanged: 192 training, 32 validation, and 48 holdout games. This benchmark
-restored only weeks needed for training and validation; holdout-only weeks were
-not downloaded or evaluated in this analysis workspace.
+The wide search fits deterministic 512/1,024/2,048/4,096/8,192 budgets and preserves the parent
+features. Missingness, variance, duplicate names, schema, finite values, and
+training-only correlation screening are checked. Exact dependency tests confirm
+that declared positional features remain unchanged when telemetry/metadata vanish.
 
-Role-conditioned ridge achieved coordinate RMSE **0.9895688 yards**, compared with
-**1.7225165** for constant velocity: **42.55% lower validation RMSE**. The whole-game
-bootstrap 95% interval is **[0.9218024, 1.0518861]**. This is a local validation score,
-not a Kaggle leaderboard result. All six predictors use exactly the same target rows.
+Private S3 checkpoints preserve expensive work by content hash. SageMaker
+processing jobs have an enforced runtime bound and no persistent endpoint.
+Completed jobs stop their compute. The current run's final quality, publication,
+gateway, and checkpoint receipts supply the exact completion status; a scheduled
+step is never represented as passed.
 
-The split SHA256 is
-`383b3b76cd7dd0085ee5eac9e52ff49bb380fbb55e3e46e2603b570c8bf417e7`.
-The numerical cache signature is
-`affbaca23a9aadfd2beda75b203200566804dd6f7a51a47a9ac7fe8ab3825166`.
-Public aggregate metrics, coefficients, protocol and figures are in `docs/results/`.
+No test or publication step submits to Kaggle. Owner output and quality output
+directories remain separate.
 
-## Failure and correctness coverage
+## Feature-research closure and recovery
 
-Tests cover the exact 2N metric denominator, unequal trajectory lengths, whole-game
-bootstrap pooling, row-order preservation, missing/extra/duplicate/nonfinite
-predictions, player alignment, output-clock reset, irregular input spacing,
-single-frame fallback, horizon validation, grouped temporal splits and sealed holdout,
-translation and rotation equivariance, additive training statistics, unseen-role
-fallback, target-coordinate leakage, export equivalence, interrupted stages, changed
-fingerprints, corrupt caches, process locks, timestamped heartbeats, unsafe archive
-paths, download reuse, backup reuse, corrupt restoration and divergent local files.
+All 15 feature-gate criteria pass after the complete current-profile group refits
+and combined-omission study. The frozen manifest records 6,308 refit columns and
+953 active inputs for the selected research trees; it does not treat lossless
+pruning of an existing fit as feature selection for a future refit.
 
-Notebook execution uses dedicated IPython processes with actual rich output capture.
-The ordinary SageMaker Jupyter kernel and interactive browser playback still need
-user-side acceptance. Static visual inspection and animation structure tests passed;
-a browser rendering check could not be completed in this environment.
+The final AWS review successfully verified the feature gate, raw inference,
+organizer gateway, and all three notebooks. Its subsequent quality command
+failed because Ruff included downloaded organizer Python in a source archive
+without Git metadata. Explicit exclusions now keep raw data and generated
+artifacts outside lint and format discovery. Two regression cases reproduce the
+archive environment, preserve vendor bytes, and still reject invalid project
+source. Recovery restored 215 files with verified hashes, including 106 complete
+wide-ablation and simplification experiment files totaling 677,275,790 bytes,
+from snapshot `30e0ce438b9d9f57a184487a55e0de20e47e59eff82ed4945b612c37c2f367e1`.
 
-## Cloud and submission status
+The fresh feature-gate review passed all 15 criteria and reused its verified
+numerical evidence. Local publication executed notebooks 00, 01, and 02 with
+29 consecutive code-cell outputs, nine Plotly outputs, eight embedded PNG
+figures, and no errors or stderr outputs. All eight figures were inspected.
 
-The user's latest log confirms GitHub push, authenticated Kaggle download, real-data
-audit and a successful private S3 snapshot. The existing SageMaker development space
-is in use. No GPU training job, paid model deployment or Hugging Face publication was
-started for this phase.
+The complete public quality workflow passed in an isolated source archive with
+no Git metadata or private fitted artifacts: 239 tests, lint, formatting, mypy
+on 47 source files, synthetic execution/recovery, three notebook executions,
+and isolated export validation. Run `20260909T020202Z-a62332af` completed all
+13 checks in 115.75 seconds. An earlier attempt correctly stopped at the shared
+workspace's free-space check; the successful review used a directory with more
+than 5 GiB available and retained the original storage requirement.
 
-The standalone trained-model notebook embeds its coefficients and canonical predictor
-code. Its prediction parity is tested, but the official Kaggle local gateway and any
-leaderboard submission remain pending. Late-submission eligibility is unverified.
-This phase establishes an interpretable benchmark; it is not a state-of-the-art claim.
+The recovery reuses completed numerical experiments. It does not refit a final
+model or score the reserved holdout.

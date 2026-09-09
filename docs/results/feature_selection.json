@@ -7,36 +7,115 @@
   "landing_ball_ux_count": 31,
   "overlap_count": 41,
   "removed_from_landing": [
-    "fraction__lateral_speed", "lag07__ball_ux", "lag08__ball_ux", "lag09__ball_ux",
-    "lag10__ball_ux", "lag12__dir_sin", "lag13__dir_sin", "lag14__dir_sin",
-    "lag15__dir_sin", "lag16__dir_sin", "lag17__dir_sin", "time__dir_cos",
-    "time__sideline_distance", "time__velocity_alignment", "w05__ay__change",
-    "w12__ball_ux__max", "w20__ball_ux__ewmean", "w20__ball_ux__mean",
-    "w30__ball_ux__ewmean", "w30__dir_sin__ewmean", "w30__dir_sin__mean",
-    "w40__dir_sin__ewmean", "w40__dir_sin__mean"
+    "fraction__lateral_speed",
+    "lag07__ball_ux",
+    "lag08__ball_ux",
+    "lag09__ball_ux",
+    "lag10__ball_ux",
+    "lag12__dir_sin",
+    "lag13__dir_sin",
+    "lag14__dir_sin",
+    "lag15__dir_sin",
+    "lag16__dir_sin",
+    "lag17__dir_sin",
+    "time__dir_cos",
+    "time__sideline_distance",
+    "time__velocity_alignment",
+    "w05__ay__change",
+    "w12__ball_ux__max",
+    "w20__ball_ux__ewmean",
+    "w20__ball_ux__mean",
+    "w30__ball_ux__ewmean",
+    "w30__dir_sin__ewmean",
+    "w30__dir_sin__mean",
+    "w40__dir_sin__ewmean",
+    "w40__dir_sin__mean"
   ],
   "added_by_interaction": [
-    "fraction__receiver1__dx", "fraction__teammate6__dx", "fraction_squared__receiver1__dx",
-    "passer1__closest_distance", "passer1__distance", "passer1__dx", "receiver1__dx",
-    "teammate5__dx", "teammate6__dx", "time__opponent1__closest_time",
-    "time__opponent3__closest_time", "time__opponent3__distance", "time__opponent4__closest_time",
-    "time__passer1__ball_distance_advantage", "time__receiver1__ball_distance_advantage",
-    "time__receiver1__closest_time", "time__receiver1__closing_speed", "time__receiver1__dx",
-    "time__teammate2__closest_time", "time__teammate2__distance", "time__teammate2__dx",
-    "time__teammate3__closest_time", "time__teammate5__dx"
+    "fraction__receiver1__dx",
+    "fraction__teammate6__dx",
+    "fraction_squared__receiver1__dx",
+    "passer1__closest_distance",
+    "passer1__distance",
+    "passer1__dx",
+    "receiver1__dx",
+    "teammate5__dx",
+    "teammate6__dx",
+    "time__opponent1__closest_time",
+    "time__opponent3__closest_time",
+    "time__opponent3__distance",
+    "time__opponent4__closest_time",
+    "time__passer1__ball_distance_advantage",
+    "time__receiver1__ball_distance_advantage",
+    "time__receiver1__closest_time",
+    "time__receiver1__closing_speed",
+    "time__receiver1__dx",
+    "time__teammate2__closest_time",
+    "time__teammate2__distance",
+    "time__teammate2__dx",
+    "time__teammate3__closest_time",
+    "time__teammate5__dx"
   ],
   "coefficient_rows": [
-    {"feature":"fraction__lateral_speed","x_coefficient":-0.04578486484105099,"y_coefficient":-0.9709292458449436},
-    {"feature":"time__lateral_speed","x_coefficient":0.05232296619963844,"y_coefficient":0.8093947351666131},
-    {"feature":"time_squared","x_coefficient":-0.4454739335524,"y_coefficient":0.5586488202424099},
-    {"feature":"time_seconds","x_coefficient":0.31546532803690525,"y_coefficient":-0.28331511230719064},
-    {"feature":"fraction_squared__lateral_speed","x_coefficient":-0.006859800313118934,"y_coefficient":0.301006374238748},
-    {"feature":"w05__ay__slope","x_coefficient":0.027646292877137962,"y_coefficient":0.25100353511253876},
-    {"feature":"time__ax","x_coefficient":0.13008317031633782,"y_coefficient":-0.14863899640812744},
-    {"feature":"fraction__ax","x_coefficient":-0.14092828618694964,"y_coefficient":0.11971054441833245},
-    {"feature":"fraction_squared__ax","x_coefficient":0.18390367440291042,"y_coefficient":0.015161945253062928},
-    {"feature":"time__ay","x_coefficient":-0.13652304252255482,"y_coefficient":0.11009177677148352},
-    {"feature":"w05__ay__change","x_coefficient":-0.013689616163145723,"y_coefficient":-0.16851777193720618},
-    {"feature":"fraction__ball_ux","x_coefficient":-0.15170897098181835,"y_coefficient":0.07158591486659498}
+    {
+      "feature": "fraction__lateral_speed",
+      "x_coefficient": -0.04578486484105099,
+      "y_coefficient": -0.9709292458449436
+    },
+    {
+      "feature": "time__lateral_speed",
+      "x_coefficient": 0.05232296619963844,
+      "y_coefficient": 0.8093947351666131
+    },
+    {
+      "feature": "time_squared",
+      "x_coefficient": -0.4454739335524,
+      "y_coefficient": 0.5586488202424099
+    },
+    {
+      "feature": "time_seconds",
+      "x_coefficient": 0.31546532803690525,
+      "y_coefficient": -0.28331511230719064
+    },
+    {
+      "feature": "fraction_squared__lateral_speed",
+      "x_coefficient": -0.006859800313118934,
+      "y_coefficient": 0.301006374238748
+    },
+    {
+      "feature": "w05__ay__slope",
+      "x_coefficient": 0.027646292877137962,
+      "y_coefficient": 0.25100353511253876
+    },
+    {
+      "feature": "time__ax",
+      "x_coefficient": 0.13008317031633782,
+      "y_coefficient": -0.14863899640812744
+    },
+    {
+      "feature": "fraction__ax",
+      "x_coefficient": -0.14092828618694964,
+      "y_coefficient": 0.11971054441833245
+    },
+    {
+      "feature": "fraction_squared__ax",
+      "x_coefficient": 0.18390367440291042,
+      "y_coefficient": 0.015161945253062928
+    },
+    {
+      "feature": "time__ay",
+      "x_coefficient": -0.13652304252255482,
+      "y_coefficient": 0.11009177677148352
+    },
+    {
+      "feature": "w05__ay__change",
+      "x_coefficient": -0.013689616163145723,
+      "y_coefficient": -0.16851777193720618
+    },
+    {
+      "feature": "fraction__ball_ux",
+      "x_coefficient": -0.15170897098181835,
+      "y_coefficient": 0.07158591486659498
+    }
   ]
 }

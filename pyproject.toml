@@ -36,6 +36,9 @@ filterwarnings = ["error"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# Source archives have no Git metadata, so .gitignore cannot define lint scope.
+# Preserve organizer code and generated artifacts while checking project sources.
+extend-exclude = ["data", "artifacts", "logs", ".state", ".downloads", "evidence"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]

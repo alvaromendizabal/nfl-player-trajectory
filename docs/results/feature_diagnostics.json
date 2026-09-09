@@ -1,0 +1,121 @@
+{
+  "status": "passed",
+  "holdout_evaluation": "not_run",
+  "source_signature": "12714c2768cfde7d3754db57f629016dcdc5debd28d0eb36096685aaed2c3238",
+  "selected_model": "budget_8192__without_metadata",
+  "rows": 67857,
+  "metrics": {
+    "coordinate_rmse_yards": 0.6880521879583761,
+    "ade_frame_weighted_yards": 0.570730878683523,
+    "ade_trajectory_weighted_yards": 0.4441922336958363,
+    "fde_trajectory_weighted_yards": 1.0286183168693193,
+    "p95_displacement_yards": 2.0610161941888965,
+    "coordinate_mae_yards": 0.36266672123048577
+  },
+  "controlled_comparison": {
+    "estimator_settings": {
+      "loss": "squared_error",
+      "learning_rate": 0.07,
+      "max_iter": 100,
+      "max_leaf_nodes": 15,
+      "max_depth": 4,
+      "min_samples_leaf": 60,
+      "l2_regularization": 1.0,
+      "max_bins": 63,
+      "early_stopping": false,
+      "random_state": 2026
+    },
+    "baseline_model": "landing_features",
+    "baseline_features": 64,
+    "baseline_coordinate_rmse_yards": 0.8011971852726559,
+    "engineered_model": "budget_8192__without_metadata",
+    "engineered_coordinate_rmse_yards": 0.6880521879583761,
+    "feature_gain_percent": 14.121991364182762,
+    "paired_delta_ci95_yards": [
+      -0.12779945378587093,
+      -0.09973310923038486
+    ],
+    "interpretation": "Fixed estimators and baseline; paired game bootstrap."
+  },
+  "slices": [
+    {
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "games": 32,
+      "coordinate_rmse_yards": 0.760525872393988,
+      "ade_frame_weighted_yards": 0.6315819979851784,
+      "ade_trajectory_weighted_yards": 0.49002709410067413,
+      "fde_trajectory_weighted_yards": 1.1833560552318794,
+      "p95_displacement_yards": 2.3280222857272586,
+      "coordinate_mae_yards": 0.40078881327402166,
+      "squared_error_share_percent": 87.7360482243178
+    },
+    {
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "games": 32,
+      "coordinate_rmse_yards": 0.45383620959050947,
+      "ade_frame_weighted_yards": 0.4157113161338383,
+      "ade_trajectory_weighted_yards": 0.3396854104276977,
+      "fde_trajectory_weighted_yards": 0.6758049924011008,
+      "p95_displacement_yards": 1.3425227118306102,
+      "coordinate_mae_yards": 0.2655498546898407,
+      "squared_error_share_percent": 12.263951775682209
+    },
+    {
+      "dimension": "requested_horizon",
+      "value": "up to 1 s",
+      "rows": 21313,
+      "games": 32,
+      "coordinate_rmse_yards": 0.23954704262675433,
+      "ade_frame_weighted_yards": 0.24711559691320328,
+      "ade_trajectory_weighted_yards": 0.24226112989151002,
+      "fde_trajectory_weighted_yards": 0.49994358813324097,
+      "p95_displacement_yards": 0.6986884005890169,
+      "coordinate_mae_yards": 0.1574753375226305,
+      "squared_error_share_percent": 3.8070518904928057
+    },
+    {
+      "dimension": "requested_horizon",
+      "value": "1\u20132 s",
+      "rows": 31749,
+      "games": 32,
+      "coordinate_rmse_yards": 0.5731317610421408,
+      "ade_frame_weighted_yards": 0.5328004993353116,
+      "ade_trajectory_weighted_yards": 0.5063758182340334,
+      "fde_trajectory_weighted_yards": 1.2124636031794278,
+      "p95_displacement_yards": 1.7464510233613888,
+      "coordinate_mae_yards": 0.3394548140943412,
+      "squared_error_share_percent": 32.46396695693264
+    },
+    {
+      "dimension": "requested_horizon",
+      "value": "2\u20133 s",
+      "rows": 12568,
+      "games": 30,
+      "coordinate_rmse_yards": 1.1326328133625176,
+      "ade_frame_weighted_yards": 1.0726460090823589,
+      "ade_trajectory_weighted_yards": 1.0614459898500397,
+      "fde_trajectory_weighted_yards": 2.581254110775087,
+      "p95_displacement_yards": 3.4801357708414877,
+      "coordinate_mae_yards": 0.6801894813950348,
+      "squared_error_share_percent": 50.18882577918421
+    },
+    {
+      "dimension": "requested_horizon",
+      "value": "over 3 s",
+      "rows": 2227,
+      "games": 11,
+      "coordinate_rmse_yards": 1.3975598752446587,
+      "ade_frame_weighted_yards": 1.3760271316896402,
+      "ade_trajectory_weighted_yards": 1.37503030750954,
+      "fde_trajectory_weighted_yards": 3.2487156032763433,
+      "p95_displacement_yards": 4.448493787637768,
+      "coordinate_mae_yards": 0.8653935963463016,
+      "squared_error_share_percent": 13.540155373390341
+    }
+  ],
+  "scope": "Inspected development games; descriptive rather than selection evidence."
+}

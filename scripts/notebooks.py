@@ -18,6 +18,7 @@ from filelock import FileLock
 from IPython.core.interactiveshell import InteractiveShell
 from IPython.utils.capture import capture_output
 
+from nfl_trajectory.research_evidence import EXTRA_REPORTS, extended_evidence
 from nfl_trajectory.runtime import Run, atomic_bytes, atomic_json, fingerprint, sha256, stage
 
 REPORT_FILES = (
@@ -35,6 +36,24 @@ FEATURE_REPORTS = {
     "model.json": "feature_model.json",
     "benchmark.png": "feature_benchmark.png",
 }
+RESEARCH_REPORTS = {
+    "summary.json": "feature_research.json",
+    "permutation.json": "feature_permutation.json",
+    "stability.png": "feature_stability.png",
+    "catalog.csv": "feature_catalog.csv",
+}
+
+
+def research_results(root: Path) -> dict[str, str]:
+    folder = root / "artifacts/research"
+    if not folder.exists():
+        return {}
+    from nfl_trajectory.research import load_research_report
+
+    _, _, label = load_research_report(root)
+    if label != "Verified local feature research":
+        raise ValueError("Finish and report local feature research before publication.")
+    return {f"research/{name}": sha256(folder / "report" / name) for name in RESEARCH_REPORTS}
 
 
 def feature_results(root: Path) -> dict[str, str]:
@@ -110,13 +129,21 @@ def local_results(root: Path) -> dict[str, str]:
     split_hash = sha256(split_path)
     if any(item.get("split_sha256") != split_hash for item in (summary, protocol, model)):
         raise ValueError("Benchmark results do not match the frozen local split manifest.")
-    return {name: sha256(folder / name) for name in REPORT_FILES} | feature_results(root)
+    return (
+        {name: sha256(folder / name) for name in REPORT_FILES}
+        | feature_results(root)
+        | research_results(root)
+        | {f"extended/{k}": v for k, v in extended_evidence(root).items()}
+    )
 
 
 def execution_signature(root: Path, source: Path) -> str:
     local = root / "artifacts/benchmark"
     results = local if (local / "summary.json").is_file() else root / "docs/results"
     inputs = [root / "scripts/notebooks.py"]
+    helper = root / "src/nfl_trajectory/research_visuals.py"
+    if helper.is_file():
+        inputs.append(helper)
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(
@@ -138,6 +165,16 @@ def execution_signature(root: Path, source: Path) -> str:
     selection_path = root / "docs/results/feature_selection.json"
     if selection_path.is_file() and not (feature_local / "summary.json").is_file():
         inputs.append(selection_path)
+    for name, published in RESEARCH_REPORTS.items():
+        local_report = root / "artifacts/research/report" / name
+        path = local_report if local_report.exists() else root / "docs/results" / published
+        if path.exists():
+            inputs.append(path)
+    for name, original in EXTRA_REPORTS.items():
+        local_report = root / "artifacts" / original
+        path = local_report if local_report.exists() else root / "docs/results" / name
+        if path.exists():
+            inputs.append(path)
     return fingerprint(
         root,
         inputs,
@@ -289,7 +326,21 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
         payloads[root / "docs/results/feature_selection.json"] = (
             json.dumps(study, indent=2, allow_nan=False) + "\n"
         ).encode()
+    for name, published in RESEARCH_REPORTS.items():
+        key = f"research/{name}"
+        if key in expected:
+            payload = (root / "artifacts/research/report" / name).read_bytes()
+            if hashlib.sha256(payload).hexdigest() != expected[key]:
+                raise ValueError("A research report changed during publication validation.")
+            payloads[root / "docs/results" / published] = payload
     receipt = root / "artifacts/notebooks/publication.json"
+    for published, original in EXTRA_REPORTS.items():
+        key = f"extended/{published}"
+        if key in expected:
+            payload = (root / "artifacts" / original).read_bytes()
+            if hashlib.sha256(payload).hexdigest() != expected[key]:
+                raise ValueError("An extended experiment changed during publication.")
+            payloads[root / "docs/results" / published] = payload
     atomic_json(receipt, {"status": "running"})
     try:
         for path, payload in payloads.items():
@@ -300,7 +351,13 @@ def publish(root: Path, sources: list[Path], expected: dict[str, str], run: Run)
             {
                 "status": "passed",
                 "files": {str(path.relative_to(root)): sha256(path) for path in payloads},
-                "official_gateway_status": "not_run",
+                "official_gateway_status": (
+                    json.loads((root / "artifacts/research/gateway/summary.json").read_text())[
+                        "official_gateway_status"
+                    ]
+                    if "extended/feature_gateway.json" in expected
+                    else "not_run"
+                ),
                 "holdout_evaluation": "not_run",
             },
         )

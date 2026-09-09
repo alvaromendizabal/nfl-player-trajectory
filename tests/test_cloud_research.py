@@ -88,6 +88,26 @@ def test_wide_refits_refuse_the_known_insufficient_memory_size():
         cloud_module().wide_refit_workers(64)
 
 
+def test_final_fit_rejects_small_worker_before_any_cloud_access(monkeypatch):
+    module = cloud_module()
+    for key, value in {
+        "NFL_BUCKET": "fixture",
+        "NFL_JOB_NAME": "fixture",
+        "NFL_REPO_REF": "a" * 40,
+        "NFL_SNAPSHOT": "fixture",
+        "NFL_MODE": "final_fit",
+    }.items():
+        monkeypatch.setenv(key, value)
+    monkeypatch.setattr(module, "memory_budget_gib", lambda: 64)
+
+    def unexpected(*args, **kwargs):
+        raise AssertionError("Insufficient memory must stop before cloud access")
+
+    monkeypatch.setattr(module.boto3, "client", unexpected)
+    with pytest.raises(ValueError, match="128 GiB"):
+        module.main()
+
+
 @pytest.mark.parametrize("arguments", [["check"], ["format", "--check"]])
 def test_archive_quality_preserves_vendor_code_and_checks_project_sources(tmp_path, arguments):
     root = Path(__file__).resolve().parents[1]

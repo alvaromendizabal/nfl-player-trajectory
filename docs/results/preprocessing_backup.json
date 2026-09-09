@@ -1,0 +1,10 @@
+{
+  "status": "verified",
+  "snapshot": "snapshots/0e1727d24e6293c6c0bb7d88af8fbe192b8bc3969c2cd8a18d18c7ac601b938d.json",
+  "parent_snapshot": "snapshots/91715ecdcb0625899e91c8a80c0481b0cf7bb4d913991353b188aed129183145.json",
+  "manifest_entries": 1527,
+  "added_checkpoint_files": 10,
+  "uploaded_bytes": 4774589,
+  "verification": "Downloaded every added object and manifest; checked byte count and SHA-256.",
+  "preprocessing_source": "eb6f17e15a1d2548d5738f92932b72ebf0b11b352255991ba6053893bb5592c6"
+}

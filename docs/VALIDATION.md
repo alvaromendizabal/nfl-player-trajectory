@@ -1,6 +1,6 @@
 # Validation record
 
-The research milestone passes **239 tests** in the locked project environment.
+The final-preparation milestone passes **265 tests** in the locked project environment.
 The tests cover motion/coordinate geometry, official-metric arithmetic, chronological
 splits and histories, exact-frame joins, optional-input dependencies, source and
 artifact integrity, interrupted-stage recovery, and standalone predictor parity.
@@ -72,3 +72,33 @@ than 5 GiB available and retained the original storage requirement.
 
 The recovery reuses completed numerical experiments. It does not refit a final
 model or score the reserved holdout.
+
+## Final input preparation
+
+The executable [final protocol](FINAL_PROTOCOL.md) has been run against the
+verified research artifacts. Run `20260909T022425Z-2588324b` completed in 43.64
+seconds: 72 input files, 224 games, 463,670 forecast rows, and 38,080 trajectories
+passed the review. The rows comprise 395,813 original training rows and 67,857
+development rows. The metadata-free and positional refit schemas retain 6,308
+and 5,572 ordered columns. The 48 reserved games remain unscored.
+
+The protocol source signature is
+`c5b431034ad8457f8e70f027a726ec1cf3b8a66ba846ae73caaafbba7e97325f`.
+A repeated preparation, `20260909T022624Z-e568bbf3`, completed in 38.25 seconds,
+reused the verified input-review stage, and preserved the protocol bytes and
+modification time exactly. The public preparation receipt matches the local
+summary byte-for-byte.
+
+The 26 added regression cases reject changed feature schemas and lineage,
+unavailable input dependencies, holdout or mislabelled rows, missing frames,
+reordered caches, extra player entities, missing or duplicated games, modified
+source inputs, and silent replacement of the frozen plan. A fixture with no
+outcome arrays or holdout files confirms that preparation needs neither.
+
+The full public quality workflow passed in an isolated source archive with
+11.87 GiB free and no private fitted artifacts. Run
+`20260909T022705Z-1628cad6` completed all 13 checks in 165.62 seconds: 265 tests,
+lint and formatting, mypy on 49 source files, synthetic execution and recovery,
+all three canonical notebook executions, and isolated export validation. The
+tested source files were compared byte-for-byte with the working checkout.
+Preparation does not constitute a final model fit or a reserved accuracy result.

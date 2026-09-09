@@ -76,7 +76,7 @@ The official metric is `sqrt(sum(dx² + dy²) / (2N))`. ADE, FDE, p95 displaceme
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **239 automated tests** at the current research
+The locked Python 3.11 project has **265 automated tests** at the final-preparation
 milestone, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
@@ -90,8 +90,11 @@ See the [research plan](docs/RESEARCH_PLAN.md), [model card](docs/MODEL_CARD.md)
 
 Feature definitions and refit columns are frozen in the
 [selection manifest](docs/results/feature_freeze.json).
-The next milestone is the final training implementation, followed by one
-reserved-holdout evaluation and validation of its final inference artifact.
+The [final protocol](docs/FINAL_PROTOCOL.md) now verifies and freezes the combined
+224-game refit partition, both ordered availability schemas, input hashes, and
+evaluation rules. Its [preparation receipt](docs/results/final_protocol.json)
+records the actual inputs checked. The next milestone is final fitting, followed
+by one reserved-holdout evaluation and validation of its final inference artifact.
 The scores above belong to the completed research phase; final training has
 not yet run.
 

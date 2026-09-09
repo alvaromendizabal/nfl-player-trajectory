@@ -155,3 +155,8 @@ After closure, freeze the feature/selection manifest, refit on authorized traini
 partitions, evaluate the reserved holdout once, finalize model and data cards,
 and verify the final inference artifact. Additional model complexity must earn
 its place under the same validation protocol.
+
+The [final-phase protocol](FINAL_PROTOCOL.md) now implements input verification
+and freezes both ordered refit schemas, the 224 training games, model settings,
+and reporting rules. Preparation has been executed; final fitting and reserved
+scoring remain subsequent milestones.

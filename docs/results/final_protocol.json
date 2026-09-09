@@ -1,0 +1,109 @@
+{
+  "status": "prepared",
+  "source_signature": "c5b431034ad8457f8e70f027a726ec1cf3b8a66ba846ae73caaafbba7e97325f",
+  "feature_gate_source": "12714c2768cfde7d3754db57f629016dcdc5debd28d0eb36096685aaed2c3238",
+  "selected_model": "budget_8192__without_metadata",
+  "partitions": {
+    "final_training": {
+      "games": 224,
+      "first_game": 2023090700,
+      "last_game": 2023121801
+    },
+    "reserved_holdout": {
+      "games": 48,
+      "first_game": 2023122100,
+      "last_game": 2024010713
+    }
+  },
+  "training_rows": 463670,
+  "training_trajectories": 38080,
+  "original_partition_rows": {
+    "train": 395813,
+    "validation": 67857
+  },
+  "input_files_verified": 72,
+  "profile_columns": {
+    "without_metadata": {
+      "count": 6308,
+      "ordered_schema_sha256": "71577f84d47a9d8a56db26c7e5a4edb7833b4c8a1aa2e2440e76d359c38d6716"
+    },
+    "without_optional_inputs": {
+      "count": 5572,
+      "ordered_schema_sha256": "e4da09eee0b78e799162d4abe6d563f5c729ad767f2e21bbe0f9f443634bae5a"
+    }
+  },
+  "research_active_inputs": 953,
+  "estimator": {
+    "class": "sklearn.ensemble.HistGradientBoostingRegressor",
+    "targets": "Independent x/y residuals about the refitted role-conditioned baseline.",
+    "settings": {
+      "loss": "squared_error",
+      "learning_rate": 0.07,
+      "max_iter": 100,
+      "max_leaf_nodes": 15,
+      "max_depth": 4,
+      "min_samples_leaf": 60,
+      "l2_regularization": 1.0,
+      "max_bins": 63,
+      "early_stopping": false,
+      "random_state": 2026
+    },
+    "optimization": "Use the validated fixed capacity; no additional parameter search.",
+    "sklearn_version": "1.8.0"
+  },
+  "preprocessing": {
+    "baseline": "Refit on all training_games; never reuse research fitted coefficients.",
+    "history": "Recompute raw constant-velocity residual encodings, smoothing 20, from strictly earlier training dates; exclude the whole current date. Freeze evaluation lookup.",
+    "routes": "Refit 16 route components and eight prototypes on training_games only.",
+    "columns": "Preserve each frozen ordered schema; no screening or reselection.",
+    "export": "Prune after fitting, with full-row original/portable prediction parity."
+  },
+  "evaluation": {
+    "primary_metric": "coordinate_rmse_yards",
+    "formula": "sqrt(sum(dx**2 + dy**2) / (2 * forecast_frames))",
+    "aggregation": "Pool coordinate squared errors; never average game or week RMSEs.",
+    "confidence_interval": {
+      "method": "game_cluster_percentile_bootstrap",
+      "resamples": 2000,
+      "seed": 2026,
+      "quantiles": [
+        0.025,
+        0.975
+      ],
+      "scope": "Game sampling uncertainty within this single labelled season."
+    },
+    "secondary_metrics": [
+      "ade_frame_weighted_yards",
+      "ade_trajectory_weighted_yards",
+      "fde_trajectory_weighted_yards",
+      "p95_displacement_yards",
+      "coordinate_mae_yards"
+    ],
+    "descriptive_slices": [
+      "player_role",
+      "forecast_second",
+      "week"
+    ],
+    "reference_models": [
+      "constant_velocity",
+      "role_ridge"
+    ],
+    "availability_checks": [
+      "complete",
+      "without_metadata",
+      "without_telemetry",
+      "cold_history"
+    ],
+    "decision_rule": "Report the frozen model regardless of score; no holdout model selection.",
+    "release_rule": "Seal the protocol, fitted model, inference sources and all keyed predictions before opening holdout outcomes. Resume only the same sealed evaluation. A failed run does not authorize a different model; an error correction must retain its audit trail.",
+    "gateway": "Verify final package/standalone parity using the unchanged organizer gateway.",
+    "submission": "Owner-controlled; never submit automatically."
+  },
+  "final_model": false,
+  "holdout_evaluation": "not_run",
+  "remaining": [
+    "Execute and checkpoint the final preprocessing and two availability-profile fits.",
+    "Seal final model and predictions; implement and run the reserved evaluation.",
+    "Verify final raw/standalone/gateway parity and publish final notebook evidence."
+  ]
+}

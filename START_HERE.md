@@ -8,10 +8,29 @@ the repository name describes the player's trajectory prediction target.
 Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution,
 then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature rationale.
 Public aggregates support review without private tracking or cloud credentials.
-All 15 feature-research criteria now pass, and the feature/selection manifest is
-frozen. The final-phase input protocol is implemented and verified; final
-preprocessing has been refitted on all 224 authorized games. Final residual-tree
-fitting and the reserved-holdout evaluation remain unfinished.
+All 15 feature-research criteria pass, and the feature/selection manifest is
+frozen. Final preprocessing and both residual-tree profiles have been fitted
+on all 224 authorized games. The sealed reserved-holdout evaluation is complete:
+**0.80467 coordinate RMSE in yards** on 99,266 forecast frames from 48 later
+games (95% game-bootstrap interval: 0.66313–1.00113).
+
+The [final evaluation](docs/results/final_evaluation.json),
+[completed AWS fit](docs/results/final_training_cloud.json), and
+[notebook publication receipt](docs/results/final_notebooks.json) record the
+completed stages. All three canonical notebooks are executed. The
+[final export check](docs/results/final_export.json) records exact parity on
+5,837 organizer sample predictions and successful checkpoint reuse.
+
+The development score of **0.68805** belongs to feature research; it is not the
+reserved-holdout score. Historical research and training receipts retain their
+original `holdout_evaluation: not_run` values to preserve the sequence of
+evidence. Use the separate final evaluation receipt for the current result.
+
+The remaining delivery step is to generate and download the owner-controlled
+submission notebook from a verified restored final bundle, then run it in
+Kaggle if desired. The repository does not record a Kaggle submission or
+leaderboard score. The reproduction commands below document completed work;
+they are not instructions to rerun training merely to review the project.
 
 For a public software review, run the following from the repository with Python
 3.11 or later and at least 5 GiB free storage:

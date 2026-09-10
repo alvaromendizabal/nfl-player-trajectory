@@ -1,0 +1,279 @@
+{
+  "status": "completed",
+  "source_signature": "0a986c8354c650fe127325c63f807b3cafa11292b4275f591f99b2edb7099bf5",
+  "run_id": "20260909T224357Z-ce9c067a",
+  "settings": {
+    "epochs": 40,
+    "batch_plays": 64,
+    "width": 96,
+    "learning_rate": 0.002,
+    "minimum_learning_rate": 5e-05,
+    "weight_decay": 0.01,
+    "ema_decay": 0.98,
+    "gradient_clip": 1.0,
+    "seed": 2026,
+    "threads": 4,
+    "training_seconds_limit": 850,
+    "reflection_probability": 0.5,
+    "loss": "unweighted_coordinate_mse",
+    "selection": "final_epoch_ema; no best-development checkpoint selection"
+  },
+  "epochs_completed": 40,
+  "training_seconds": 532.9586552340006,
+  "parameters": 289882,
+  "curve": [
+    {
+      "epoch": 1,
+      "training_rmse_augmented": 1.0895787343667762,
+      "learning_rate": 0.0006666666666666666,
+      "development_rmse": 0.9784756898880005
+    },
+    {
+      "epoch": 2,
+      "training_rmse_augmented": 1.0869087131979798,
+      "learning_rate": 0.00133122558362057
+    },
+    {
+      "epoch": 3,
+      "training_rmse_augmented": 1.090695450930863,
+      "learning_rate": 0.001987374006071965
+    },
+    {
+      "epoch": 4,
+      "training_rmse_augmented": 1.088564442787503,
+      "learning_rate": 0.001971668271990401
+    },
+    {
+      "epoch": 5,
+      "training_rmse_augmented": 1.0896309510930653,
+      "learning_rate": 0.0019498230308984668,
+      "development_rmse": 0.9775140285491943
+    },
+    {
+      "epoch": 6,
+      "training_rmse_augmented": 1.0930716693642046,
+      "learning_rate": 0.0019219799575673536
+    },
+    {
+      "epoch": 7,
+      "training_rmse_augmented": 1.0837400151641727,
+      "learning_rate": 0.0018883196250118796
+    },
+    {
+      "epoch": 8,
+      "training_rmse_augmented": 1.0876724205369868,
+      "learning_rate": 0.0018490603334052
+    },
+    {
+      "epoch": 9,
+      "training_rmse_augmented": 1.0671759858651262,
+      "learning_rate": 0.0018044566943184138
+    },
+    {
+      "epoch": 10,
+      "training_rmse_augmented": 1.033329334729841,
+      "learning_rate": 0.0017547979794668236,
+      "development_rmse": 0.8835426568984985
+    },
+    {
+      "epoch": 11,
+      "training_rmse_augmented": 1.0235761297377413,
+      "learning_rate": 0.0017004062446718596
+    },
+    {
+      "epoch": 12,
+      "training_rmse_augmented": 0.9790166249756511,
+      "learning_rate": 0.001641634241205493
+    },
+    {
+      "epoch": 13,
+      "training_rmse_augmented": 0.9899185637259194,
+      "learning_rate": 0.001578863128062877
+    },
+    {
+      "epoch": 14,
+      "training_rmse_augmented": 0.9436306697112423,
+      "learning_rate": 0.0015125
+    },
+    {
+      "epoch": 15,
+      "training_rmse_augmented": 0.9487169971364902,
+      "learning_rate": 0.0014429752473679779,
+      "development_rmse": 0.7515578866004944
+    },
+    {
+      "epoch": 16,
+      "training_rmse_augmented": 0.897847077703182,
+      "learning_rate": 0.0013707397648664724
+    },
+    {
+      "epoch": 17,
+      "training_rmse_augmented": 0.8878338917243068,
+      "learning_rate": 0.0012962620273185414
+    },
+    {
+      "epoch": 18,
+      "training_rmse_augmented": 0.8956640745817479,
+      "learning_rate": 0.0012200250514316435
+    },
+    {
+      "epoch": 19,
+      "training_rmse_augmented": 0.8654695838019705,
+      "learning_rate": 0.00114252326324894
+    },
+    {
+      "epoch": 20,
+      "training_rmse_augmented": 0.8592785309448554,
+      "learning_rate": 0.00106425929160668,
+      "development_rmse": 0.719957709312439
+    },
+    {
+      "epoch": 21,
+      "training_rmse_augmented": 0.8448648516798677,
+      "learning_rate": 0.0009857407083933203
+    },
+    {
+      "epoch": 22,
+      "training_rmse_augmented": 0.8500562202621673,
+      "learning_rate": 0.00090747673675106
+    },
+    {
+      "epoch": 23,
+      "training_rmse_augmented": 0.8202533806216141,
+      "learning_rate": 0.0008299749485683571
+    },
+    {
+      "epoch": 24,
+      "training_rmse_augmented": 0.8416349736715607,
+      "learning_rate": 0.000753737972681459
+    },
+    {
+      "epoch": 25,
+      "training_rmse_augmented": 0.7963724208623768,
+      "learning_rate": 0.000679260235133528,
+      "development_rmse": 0.702555239200592
+    },
+    {
+      "epoch": 26,
+      "training_rmse_augmented": 0.786911593388688,
+      "learning_rate": 0.0006070247526320221
+    },
+    {
+      "epoch": 27,
+      "training_rmse_augmented": 0.780681946793775,
+      "learning_rate": 0.0005374999999999998
+    },
+    {
+      "epoch": 28,
+      "training_rmse_augmented": 0.8098309490020592,
+      "learning_rate": 0.00047113687193712324
+    },
+    {
+      "epoch": 29,
+      "training_rmse_augmented": 0.7672242073632484,
+      "learning_rate": 0.0004083657587945073
+    },
+    {
+      "epoch": 30,
+      "training_rmse_augmented": 0.7996351092184592,
+      "learning_rate": 0.0003495937553281407,
+      "development_rmse": 0.6932101249694824
+    },
+    {
+      "epoch": 31,
+      "training_rmse_augmented": 0.7603719635301412,
+      "learning_rate": 0.0002952020205331767
+    },
+    {
+      "epoch": 32,
+      "training_rmse_augmented": 0.7522298182416635,
+      "learning_rate": 0.0002455433056815866
+    },
+    {
+      "epoch": 33,
+      "training_rmse_augmented": 0.7495461492797748,
+      "learning_rate": 0.00020093966659480027
+    },
+    {
+      "epoch": 34,
+      "training_rmse_augmented": 0.7457059786904385,
+      "learning_rate": 0.00016168037498812045
+    },
+    {
+      "epoch": 35,
+      "training_rmse_augmented": 0.7431226323117874,
+      "learning_rate": 0.00012802004243264638,
+      "development_rmse": 0.691868782043457
+    },
+    {
+      "epoch": 36,
+      "training_rmse_augmented": 0.7801013662747749,
+      "learning_rate": 0.00010017696910153316
+    },
+    {
+      "epoch": 37,
+      "training_rmse_augmented": 0.7401541068552387,
+      "learning_rate": 7.833172800959929e-05
+    },
+    {
+      "epoch": 38,
+      "training_rmse_augmented": 0.7353789126318239,
+      "learning_rate": 6.262599392803497e-05
+    },
+    {
+      "epoch": 39,
+      "training_rmse_augmented": 0.7356823887729019,
+      "learning_rate": 5.316162456914532e-05
+    },
+    {
+      "epoch": 40,
+      "training_rmse_augmented": 0.7342677771995647,
+      "learning_rate": 5e-05,
+      "development_rmse": 0.6905614137649536
+    }
+  ],
+  "training_games": 192,
+  "development_games": 32,
+  "training_plays": 10007,
+  "development_plays": 1646,
+  "training_rows": 395813,
+  "development_rows": 67857,
+  "model": "temporal_player_attention",
+  "coordinate_rmse_yards": 0.6905614137649536,
+  "ade_frame_weighted_yards": 0.566345751285553,
+  "ade_trajectory_weighted_yards": 0.4451637268066406,
+  "fde_trajectory_weighted_yards": 1.0344898700714111,
+  "p95_displacement_yards": 2.0694690704345677,
+  "coordinate_mae_yards": 0.36012721061706543,
+  "frozen_full_feature_development_rmse": 0.6880521879583761,
+  "comparison": "Identical 192 training games and 32 later development games; development already inspected.",
+  "checkpoint_selection": "final_epoch_ema; no best-development checkpoint selection",
+  "target_encoding": "Strictly earlier-date player/role motion residual priors; smoothing=20; frozen at evaluation.",
+  "holdout_evaluation": "not_run",
+  "kaggle_submission": "not_run",
+  "promotion": "Requires chronological inner-fold confirmation and organizer gateway validation.",
+  "artifacts": {
+    "artifacts/temporal/development/checkpoint.json": "469381819660a30cf52027459e33d295173c90abb33a1faf8a3e05b53a58eaf9",
+    "artifacts/temporal/development/checkpoint.pt": "3680d262fda6339be21851b041d217ec14c250a6d62b46a3acd210faa3fa89a9",
+    "artifacts/temporal/development/errors.csv": "5615d31d730549be401c3de17b1b23a76ca44c72293dea8c75b5f15421107d29",
+    "artifacts/temporal/development/history.csv": "141ed198f8830fa2e7e95bcbd2e343d3dbfa1141a509d7114aa1da1a5be24168",
+    "artifacts/temporal/development/history_model.json": "a6f6bce9285dc14ae918a7d4e7a3f60862edbdc19e2a084a0faf85d6f8c6966d",
+    "artifacts/temporal/development/learning_check.json": "939273565fd0ae95b012309d26f08ba029732c46157721d715c5d25040e7db44",
+    "artifacts/temporal/development/plan.json": "3c5d159929b0b189400e057e5430ae0cf39b2c48d4006035a919b85f324d258f",
+    "artifacts/temporal/development/weeks/input_2023_w01.pkl": "8fad521197244aa3e2adfcbfeabce771d0554971278c231bd69c7c8894b0d3f3",
+    "artifacts/temporal/development/weeks/input_2023_w02.pkl": "bbb9a9846bfbed3692cd0113d829108e2e9882516a0eb3f06389799ab2934f3e",
+    "artifacts/temporal/development/weeks/input_2023_w03.pkl": "08f81d8d8e5e08bbb3b659a23a92407324ab557090ca1171c0ae7887025f023f",
+    "artifacts/temporal/development/weeks/input_2023_w04.pkl": "0b0eb886789c8f8d97b5032d5717162373302fd45075c2d4f808f30827db0143",
+    "artifacts/temporal/development/weeks/input_2023_w05.pkl": "c29865054cdf3fb7e45734c084a00bae1d24f600c6b44e227e10b5479b20cf73",
+    "artifacts/temporal/development/weeks/input_2023_w06.pkl": "b57dd8316586a405b6c4daaadd2e6d9d9019dd57cb1db42ba95bd7e5597a1110",
+    "artifacts/temporal/development/weeks/input_2023_w07.pkl": "1cb409ba30713d8e9245e75558a501038f790b23aa9109548993b6965453130b",
+    "artifacts/temporal/development/weeks/input_2023_w08.pkl": "9af440a29bab84fc9195c6bfd1f2ddb8644fba517a589c8ec2b175e997e3cc83",
+    "artifacts/temporal/development/weeks/input_2023_w09.pkl": "243da0592ea886921982ff92035cdc1c3ee7f79dd5744a52f8908a6e85fdf1d4",
+    "artifacts/temporal/development/weeks/input_2023_w10.pkl": "2cba03c444d192d8022f900acd818f2bd729001c8bbbd3fdd996aa849f0a3dd8",
+    "artifacts/temporal/development/weeks/input_2023_w11.pkl": "487adeada9b19d1681e8f71dae2000bb2924b06b4b8f3afce5f39f4a2bfde8cb",
+    "artifacts/temporal/development/weeks/input_2023_w12.pkl": "ad9d01810ca0f8bfda3b1fae01956e873df0b8ccf5b32ac2eeeedbc7f4ecc1a3",
+    "artifacts/temporal/development/weeks/input_2023_w13.pkl": "30df0886bf11e102cffa45b8f1da34cb873b2d79ed0b187a5876401b0a9abfa5",
+    "artifacts/temporal/development/weeks/input_2023_w14.pkl": "0f90fc49faf57a0bc77f78e6e77cab7f03361fcd01cfb72ad63dd91ccfb707b2",
+    "artifacts/temporal/development/weeks/input_2023_w15.pkl": "3803eb6a2fcb2d77ce0a306fced51dc598449e99df7fee992db80fb52f68ce5b"
+  }
+}

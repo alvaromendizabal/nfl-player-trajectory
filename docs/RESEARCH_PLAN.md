@@ -112,10 +112,12 @@ Close feature engineering only when the major realistic families have explicit
 evidence, fixed-estimator feature gains are robust, the latest useful representation
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
-Current status: **closed after all 15 evidence criteria passed**. The source-bound
+Original tree-phase status: **closed after all 15 evidence criteria passed**. The source-bound
 selection manifest was frozen for the final phase. That phase subsequently
 completed: reserved RMSE 0.80467 and Kaggle private RMSE 0.70090. The feature gate
 established controlled feature value, not competition-leading model performance.
+The subsequent neural representation reopens feature attribution: its matched
+feature-family ablations and chronological fold confirmation remain incomplete.
 
 The [wide ablation protocol](WIDE_ABLATION_PROTOCOL.md) extends strict refits to
 the selected wide availability profile, covers all 20 catalog families in
@@ -212,10 +214,29 @@ the frozen full-feature reference and is not promoted. This diagnostic does not
 test deeper boosting on the full feature bank. Its fits, row-level errors,
 input hashes and checkpoints are preserved separately from the submitted model.
 
-### Next experiment and promotion requirements
+### Completed temporal trial and promotion requirements
 
-1. Build a play-level temporal encoder with attention across players and a
-   displacement decoder. Use masks for missing players/history and variable
+The [temporal trial](TEMPORAL_MODEL.md) completed one 40-epoch model on the same
+192/32-game split. Its **0.69056 RMSE** does not improve the **0.68805** tree.
+The individual-model paired 95% interval is **−0.01542 to +0.02176 yards**.
+An exploratory fixed equal blend, declared during training before the final
+score, reaches **0.65567**; its interval is **−0.04167 to −0.02175 yards**.
+No blend weights were fitted on development. These results support investigating
+complementary errors, not a promotion or a claimed leaderboard gain.
+
+A stopped decoder-saturation attempt (24 epochs, 319 seconds) is retained in the
+stability record. Normalization restored learning. The completed fit took
+533 seconds; exact checkpoint/prediction reuse took 7.3 seconds without training.
+Data preparation also recovered from a disk-capacity interruption using verified
+completed stages. Failed attempts and their provenance remain visible.
+
+Next, confirm the equal blend on the chronological inner folds and use matched
+training ablations to establish whether history priors, pair geometry and
+role anchors add value. Further architecture, augmentation and loss experiments
+remain below; they are not completed by this pilot.
+
+1. The first play-level temporal encoder, player-attention blocks and
+   displacement decoder are implemented. Use masks for missing players/history and variable
    output lengths; cover every requested frame without truncation. Start with
    the compact numeric feature set supported by the winning approach.
 2. Test consistent spatial augmentation and earlier-frame forecasting. Transform
@@ -246,6 +267,6 @@ with literature review, code and error explanation; it is not the planned numeri
 trajectory predictor. The proposed attention model is trained on tracking data.
 
 The objective is to approach 0.46 private RMSE through measured improvements.
-No neural challenger has yet been trained in this extension, and no improved
-Kaggle score is claimed. Full-scale fitting should follow a timed single-run
-benchmark with a compute cap and recoverable epoch checkpoints.
+The first neural challenger is complete; no improved Kaggle score is claimed.
+Further fitting must retain timed runs, explicit compute caps, recoverable
+checkpoints, and validation that separates model/feature effects.

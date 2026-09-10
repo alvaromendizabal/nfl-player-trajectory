@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "original_training_run_id": "20260909T223319Z-21732417",
+  "recovery_run_id": "20260909T224357Z-ce9c067a",
+  "elapsed_seconds": 7.3359097140019,
+  "reused_preparation_stages": 16,
+  "additional_training_epochs": 0,
+  "identical_checkpoint_and_predictions": {
+    "checkpoint.pt": "3680d262fda6339be21851b041d217ec14c250a6d62b46a3acd210faa3fa89a9",
+    "errors.csv": "5615d31d730549be401c3de17b1b23a76ca44c72293dea8c75b5f15421107d29"
+  },
+  "epochs_completed": 40
+}

@@ -43,26 +43,23 @@ Training, reserved evaluation, export, hosted validation, and Kaggle hidden-test
 scoring are complete. The reproduction commands below document completed work;
 they are not instructions to rerun training merely to review the project.
 
-**The next goal is higher predictive accuracy.** The submitted model is the
-reference for a new [performance study](docs/RESEARCH_PLAN.md#performance-extension-after-the-kaggle-result).
-Its first [capacity diagnostic](docs/results/model_capacity.json) is complete:
-0.77676 to 0.70239 development RMSE on identical core features, still behind the
-full-feature model's 0.68805. No replacement has been promoted or submitted.
-The next substantive experiment is a temporal neural network that models players
-jointly, with controlled spatial augmentation and motion supervision.
+**The first temporal model has been trained and evaluated.** On the same 67,857
+development rows, it scores **0.69056**, compared with the existing tree's
+**0.68805**. A fixed 50/50 exploratory blend reaches **0.65567** (4.71% lower
+RMSE). The neural model alone has not earned replacement of the tree. The
+[comparison](docs/results/temporal_evaluation.json) and
+[protocol](docs/TEMPORAL_MODEL.md) preserve this distinction. The next bounded
+gate is training-side chronological-fold confirmation of the combination,
+followed by feature ablations and complete inference validation. No new model
+has been submitted; the Kaggle private result remains **0.70090**.
 
-For a public software review, run the following from the repository with Python
-3.11 or later and at least 5 GiB free storage:
-
-```bash
-python scripts/bootstrap.py
-```
-
-Bootstrap creates the locked Python 3.11 environment, registers the notebook
-kernel, and runs the quality suite. No AWS or Kaggle credentials are needed for
-that review. The tests use controlled fixtures, and notebooks can read published
-aggregates. Reproducing the fitted numerical results requires the licensed
-competition inputs and the experiment sequence below.
+Notebook 02 section **9, “Temporal attention challenger,”** presents this new
+experiment separately from section 8's completed historical refit and holdout.
+The run completed 40 epochs in 8.9 minutes. A first attempt was stopped after
+5.3 minutes when its decoder saturated; its diagnostic and checkpoint are
+preserved. Both attempts remained inside the 20-minute training budget.
+Checkpoint reuse reproduced the model and predictions exactly without another
+training epoch.
 
 ## Where training and evaluation happen
 

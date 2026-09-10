@@ -1,0 +1,25 @@
+{
+  "status": "verified",
+  "checked_at_utc": "2026-09-09T23:23:31.949890+00:00",
+  "bucket": "sagemaker-nfl-trajectory-560403859723-us-west-2",
+  "owner_account": "560403859723",
+  "region": "us-west-2",
+  "public_access_blocked": true,
+  "server_side_encryption": "AES256",
+  "manifest_key": "snapshots/f7d5a0fde9c6ecd08a18c5c3d66f908448af3af85da7d53ddebd01cb48fa1503.json",
+  "manifest_sha256": "f7d5a0fde9c6ecd08a18c5c3d66f908448af3af85da7d53ddebd01cb48fa1503",
+  "manifest_paths": 1682,
+  "verified_new_content_objects": 69,
+  "verified_manifest_objects": 1,
+  "verification": "Every new local SHA-256 and byte count checked; remote object size and single-part ETag match local bytes. Existing parent snapshot inherited from the completed capacity experiment.",
+  "parent_manifest_key": "snapshots/d74275bc7be4d00a4c51c1704864bef46d0ae489355794486277176200cf593f.json",
+  "recovered_missing_objects": 4,
+  "includes": [
+    "trained model and optimizer checkpoint",
+    "prepared weekly play tensors",
+    "row-level development errors",
+    "stopped stability diagnostic",
+    "training/evaluation/recovery logs"
+  ],
+  "kaggle_submission": "not_run_for_temporal_model"
+}

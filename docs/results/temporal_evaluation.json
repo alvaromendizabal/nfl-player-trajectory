@@ -1,0 +1,579 @@
+{
+  "status": "passed",
+  "run_id": "20260909T231927Z-4b16019c",
+  "trial_report_sha256": "57abff0852cbc286912aedcd600fbfe0292e08378ffcd5a2bb689fb12325ad85",
+  "trial_source_signature": "0a986c8354c650fe127325c63f807b3cafa11292b4275f591f99b2edb7099bf5",
+  "reference_sha256": "aed587e9de2b3ff1dac2fb36d7d96197710fb6ba249872daa90c078ddbf5cfba",
+  "models": [
+    {
+      "model": "existing_tree",
+      "coordinate_rmse_yards": 0.688052187958376,
+      "ade_frame_weighted_yards": 0.570730878683523,
+      "ade_trajectory_weighted_yards": 0.4441922336958363,
+      "fde_trajectory_weighted_yards": 1.0286183168693193,
+      "p95_displacement_yards": 2.0610161941888965,
+      "coordinate_mae_yards": 0.36266672123048577
+    },
+    {
+      "model": "temporal_attention",
+      "coordinate_rmse_yards": 0.6905614222864153,
+      "ade_frame_weighted_yards": 0.5663457408938659,
+      "ade_trajectory_weighted_yards": 0.44516375153022364,
+      "fde_trajectory_weighted_yards": 1.0344898102837627,
+      "p95_displacement_yards": 2.069469013543222,
+      "coordinate_mae_yards": 0.3601272155407094
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "coordinate_rmse_yards": 0.6556715737622155,
+      "ade_frame_weighted_yards": 0.5360779892141662,
+      "ade_trajectory_weighted_yards": 0.4177022231147104,
+      "fde_trajectory_weighted_yards": 0.9813878473251306,
+      "p95_displacement_yards": 1.976520153804511,
+      "coordinate_mae_yards": 0.34133766821748457
+    }
+  ],
+  "relative_rmse_reduction": -0.0036468662871120827,
+  "paired_game_bootstrap_delta_ci95": [
+    -0.015417587895254103,
+    0.021756319687012575
+  ],
+  "bootstrap": {
+    "resamples": 2000,
+    "seed": 2026,
+    "cluster": "game",
+    "games": 32
+  },
+  "ensemble_probe": {
+    "status": "exploratory_development_only",
+    "weights": {
+      "existing_tree": 0.5,
+      "temporal_attention": 0.5
+    },
+    "declaration": "One equal blend declared during the temporal run, before its final score. No blend weight fitting; not part of the primary single-model hypothesis.",
+    "paired_game_bootstrap_delta_ci95": [
+      -0.04166538070258581,
+      -0.02174844332930167
+    ],
+    "promotion": "Requires training-side out-of-fold confirmation."
+  },
+  "development_rows": 67857,
+  "maximum_requested_frame": 33,
+  "slices": [
+    {
+      "model": "existing_tree",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.760525872393988,
+      "ade_frame_weighted_yards": 0.6315819979851784,
+      "ade_trajectory_weighted_yards": 0.49002709410067413,
+      "fde_trajectory_weighted_yards": 1.1833560552318794,
+      "p95_displacement_yards": 2.3280222857272586,
+      "coordinate_mae_yards": 0.40078881327402166
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.45383620959050947,
+      "ade_frame_weighted_yards": 0.4157113161338383,
+      "ade_trajectory_weighted_yards": 0.3396854104276977,
+      "fde_trajectory_weighted_yards": 0.6758049924011008,
+      "p95_displacement_yards": 1.3425227118306102,
+      "coordinate_mae_yards": 0.2655498546898407
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "forecast_time",
+      "value": "0.5\u20131 s",
+      "rows": 22618,
+      "coordinate_rmse_yards": 0.38158131299678105,
+      "ade_frame_weighted_yards": 0.4382506655164406,
+      "ade_trajectory_weighted_yards": 0.4258661049376275,
+      "fde_trajectory_weighted_yards": 0.5787171423116837,
+      "p95_displacement_yards": 1.0482528729199547,
+      "coordinate_mae_yards": 0.2786452437328703
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "forecast_time",
+      "value": "0\u20130.5 s",
+      "rows": 26995,
+      "coordinate_rmse_yards": 0.13714230981030903,
+      "ade_frame_weighted_yards": 0.15514255772132127,
+      "ade_trajectory_weighted_yards": 0.15514255772132127,
+      "fde_trajectory_weighted_yards": 0.23042619324811514,
+      "p95_displacement_yards": 0.3647253161978556,
+      "coordinate_mae_yards": 0.09874606785077665
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "forecast_time",
+      "value": "1\u20132 s",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.0133268226788004,
+      "ade_frame_weighted_yards": 1.142931765279409,
+      "ade_trajectory_weighted_yards": 1.030923649268283,
+      "fde_trajectory_weighted_yards": 1.3330937637910316,
+      "p95_displacement_yards": 2.8265311470904004,
+      "coordinate_mae_yards": 0.7257517299149292
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "forecast_time",
+      "value": ">2 s",
+      "rows": 3235,
+      "coordinate_rmse_yards": 1.997824650469248,
+      "ade_frame_weighted_yards": 2.310168615583077,
+      "ade_trajectory_weighted_yards": 2.2818556069408618,
+      "fde_trajectory_weighted_yards": 2.662088547583197,
+      "p95_displacement_yards": 5.613057206501482,
+      "coordinate_mae_yards": 1.4678886441613994
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "player_history",
+      "value": "cold",
+      "rows": 1287,
+      "coordinate_rmse_yards": 0.7806806654734,
+      "ade_frame_weighted_yards": 0.5849834436885752,
+      "ade_trajectory_weighted_yards": 0.4478104931110155,
+      "fde_trajectory_weighted_yards": 1.041019883336094,
+      "p95_displacement_yards": 2.2862602654662676,
+      "coordinate_mae_yards": 0.3809694960687157
+    },
+    {
+      "model": "existing_tree",
+      "dimension": "player_history",
+      "value": "known",
+      "rows": 66570,
+      "coordinate_rmse_yards": 0.686138194625874,
+      "ade_frame_weighted_yards": 0.5704553333754037,
+      "ade_trajectory_weighted_yards": 0.4441218634692949,
+      "fde_trajectory_weighted_yards": 1.0283771232616763,
+      "p95_displacement_yards": 2.058643498584571,
+      "coordinate_mae_yards": 0.3623128730824191
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.7680301319405879,
+      "ade_frame_weighted_yards": 0.6362730735828888,
+      "ade_trajectory_weighted_yards": 0.49875535802414545,
+      "fde_trajectory_weighted_yards": 1.1884855029188868,
+      "p95_displacement_yards": 2.3328455090371683,
+      "coordinate_mae_yards": 0.404395686185836
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.4347612109688604,
+      "ade_frame_weighted_yards": 0.3882043254503593,
+      "ade_trajectory_weighted_yards": 0.3229709816810809,
+      "fde_trajectory_weighted_yards": 0.6833684041722061,
+      "p95_displacement_yards": 1.2785444896290057,
+      "coordinate_mae_yards": 0.24735231455438725
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "forecast_time",
+      "value": "0.5\u20131 s",
+      "rows": 22618,
+      "coordinate_rmse_yards": 0.3990230982843583,
+      "ade_frame_weighted_yards": 0.45282728498112734,
+      "ade_trajectory_weighted_yards": 0.44370639196937894,
+      "fde_trajectory_weighted_yards": 0.6175763483200769,
+      "p95_displacement_yards": 1.086737605258832,
+      "coordinate_mae_yards": 0.2878916414356478
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "forecast_time",
+      "value": "0\u20130.5 s",
+      "rows": 26995,
+      "coordinate_rmse_yards": 0.1274211560598153,
+      "ade_frame_weighted_yards": 0.1361292081976385,
+      "ade_trajectory_weighted_yards": 0.13612920819763846,
+      "fde_trajectory_weighted_yards": 0.22011308960208478,
+      "p95_displacement_yards": 0.3348695318570212,
+      "coordinate_mae_yards": 0.08665907498138502
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "forecast_time",
+      "value": "1\u20132 s",
+      "rows": 15009,
+      "coordinate_rmse_yards": 1.0498299559301687,
+      "ade_frame_weighted_yards": 1.1715370177832134,
+      "ade_trajectory_weighted_yards": 1.0743559271456293,
+      "fde_trajectory_weighted_yards": 1.3547767945616902,
+      "p95_displacement_yards": 2.9652699199378305,
+      "coordinate_mae_yards": 0.7450631746824607
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "forecast_time",
+      "value": ">2 s",
+      "rows": 3235,
+      "coordinate_rmse_yards": 1.9080670524678944,
+      "ade_frame_weighted_yards": 2.142215867984054,
+      "ade_trajectory_weighted_yards": 2.13212348474882,
+      "fde_trajectory_weighted_yards": 2.3885348781219022,
+      "p95_displacement_yards": 5.521739549928097,
+      "coordinate_mae_yards": 1.3612378364831206
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "player_history",
+      "value": "cold",
+      "rows": 1287,
+      "coordinate_rmse_yards": 0.8016338263752737,
+      "ade_frame_weighted_yards": 0.6033368053381554,
+      "ade_trajectory_weighted_yards": 0.4673025255037384,
+      "fde_trajectory_weighted_yards": 1.0644222276352209,
+      "p95_displacement_yards": 2.3000292777567832,
+      "coordinate_mae_yards": 0.38337514055845767
+    },
+    {
+      "model": "temporal_attention",
+      "dimension": "player_history",
+      "value": "known",
+      "rows": 66570,
+      "coordinate_rmse_yards": 0.688237450265485,
+      "ade_frame_weighted_yards": 0.5656305914280434,
+      "ade_trajectory_weighted_yards": 0.4447331824744698,
+      "fde_trajectory_weighted_yards": 1.0339076654598955,
+      "p95_displacement_yards": 2.0645049432813583,
+      "coordinate_mae_yards": 0.35967776264153795
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "role",
+      "value": "Defensive Coverage",
+      "rows": 48729,
+      "coordinate_rmse_yards": 0.7280966548417082,
+      "ade_frame_weighted_yards": 0.6002198858488225,
+      "ade_trajectory_weighted_yards": 0.46593742470610133,
+      "fde_trajectory_weighted_yards": 1.1291476237372882,
+      "p95_displacement_yards": 2.234036529550635,
+      "coordinate_mae_yards": 0.38194679394595915
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "role",
+      "value": "Targeted Receiver",
+      "rows": 19128,
+      "coordinate_rmse_yards": 0.41784419250927934,
+      "ade_frame_weighted_yards": 0.37267509915194486,
+      "ade_trajectory_weighted_yards": 0.30772244694673345,
+      "fde_trajectory_weighted_yards": 0.6444847848252356,
+      "p95_displacement_yards": 1.2122666652542562,
+      "coordinate_mae_yards": 0.2378850287558138
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "forecast_time",
+      "value": "0.5\u20131 s",
+      "rows": 22618,
+      "coordinate_rmse_yards": 0.3682153171700842,
+      "ade_frame_weighted_yards": 0.4191508996281638,
+      "ade_trajectory_weighted_yards": 0.40943030385810547,
+      "fde_trajectory_weighted_yards": 0.5671624006876558,
+      "p95_displacement_yards": 1.005436623151671,
+      "coordinate_mae_yards": 0.2664760407615764
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "forecast_time",
+      "value": "0\u20130.5 s",
+      "rows": 26995,
+      "coordinate_rmse_yards": 0.12013949879476729,
+      "ade_frame_weighted_yards": 0.13189009518351963,
+      "ade_trajectory_weighted_yards": 0.13189009518351963,
+      "fde_trajectory_weighted_yards": 0.20764109554471147,
+      "p95_displacement_yards": 0.31654330428874156,
+      "coordinate_mae_yards": 0.08411779880263494
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "forecast_time",
+      "value": "1\u20132 s",
+      "rows": 15009,
+      "coordinate_rmse_yards": 0.9808830322139829,
+      "ade_frame_weighted_yards": 1.0958934694627869,
+      "ade_trajectory_weighted_yards": 0.9969315376368071,
+      "fde_trajectory_weighted_yards": 1.2787695841064675,
+      "p95_displacement_yards": 2.7586898637276973,
+      "coordinate_mae_yards": 0.6975056320556856
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "forecast_time",
+      "value": ">2 s",
+      "rows": 3235,
+      "coordinate_rmse_yards": 1.866917571620717,
+      "ade_frame_weighted_yards": 2.129103821845373,
+      "ade_trajectory_weighted_yards": 2.1093927725112045,
+      "fde_trajectory_weighted_yards": 2.4057551656500147,
+      "p95_displacement_yards": 5.273567159115489,
+      "coordinate_mae_yards": 1.3586933700425348
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "player_history",
+      "value": "cold",
+      "rows": 1287,
+      "coordinate_rmse_yards": 0.7669111781907927,
+      "ade_frame_weighted_yards": 0.5635065936308474,
+      "ade_trajectory_weighted_yards": 0.43059668961079134,
+      "fde_trajectory_weighted_yards": 0.9987072806534728,
+      "p95_displacement_yards": 2.2554414380350805,
+      "coordinate_mae_yards": 0.36337778457343045
+    },
+    {
+      "model": "equal_blend_exploratory",
+      "dimension": "player_history",
+      "value": "known",
+      "rows": 66570,
+      "coordinate_rmse_yards": 0.6533343766348645,
+      "ade_frame_weighted_yards": 0.5355477111026404,
+      "ade_trajectory_weighted_yards": 0.4174514432716031,
+      "fde_trajectory_weighted_yards": 0.9810510078929517,
+      "p95_displacement_yards": 1.9714830206461564,
+      "coordinate_mae_yards": 0.34091156592290595
+    }
+  ],
+  "curve": [
+    {
+      "epoch": 1,
+      "training_rmse_augmented": 1.0895787343667762,
+      "learning_rate": 0.0006666666666666666,
+      "development_rmse": 0.9784756898880005
+    },
+    {
+      "epoch": 2,
+      "training_rmse_augmented": 1.0869087131979798,
+      "learning_rate": 0.00133122558362057
+    },
+    {
+      "epoch": 3,
+      "training_rmse_augmented": 1.090695450930863,
+      "learning_rate": 0.001987374006071965
+    },
+    {
+      "epoch": 4,
+      "training_rmse_augmented": 1.088564442787503,
+      "learning_rate": 0.001971668271990401
+    },
+    {
+      "epoch": 5,
+      "training_rmse_augmented": 1.0896309510930653,
+      "learning_rate": 0.0019498230308984668,
+      "development_rmse": 0.9775140285491943
+    },
+    {
+      "epoch": 6,
+      "training_rmse_augmented": 1.0930716693642046,
+      "learning_rate": 0.0019219799575673536
+    },
+    {
+      "epoch": 7,
+      "training_rmse_augmented": 1.0837400151641727,
+      "learning_rate": 0.0018883196250118796
+    },
+    {
+      "epoch": 8,
+      "training_rmse_augmented": 1.0876724205369868,
+      "learning_rate": 0.0018490603334052
+    },
+    {
+      "epoch": 9,
+      "training_rmse_augmented": 1.0671759858651262,
+      "learning_rate": 0.0018044566943184138
+    },
+    {
+      "epoch": 10,
+      "training_rmse_augmented": 1.033329334729841,
+      "learning_rate": 0.0017547979794668236,
+      "development_rmse": 0.8835426568984985
+    },
+    {
+      "epoch": 11,
+      "training_rmse_augmented": 1.0235761297377413,
+      "learning_rate": 0.0017004062446718596
+    },
+    {
+      "epoch": 12,
+      "training_rmse_augmented": 0.9790166249756511,
+      "learning_rate": 0.001641634241205493
+    },
+    {
+      "epoch": 13,
+      "training_rmse_augmented": 0.9899185637259194,
+      "learning_rate": 0.001578863128062877
+    },
+    {
+      "epoch": 14,
+      "training_rmse_augmented": 0.9436306697112423,
+      "learning_rate": 0.0015125
+    },
+    {
+      "epoch": 15,
+      "training_rmse_augmented": 0.9487169971364902,
+      "learning_rate": 0.0014429752473679779,
+      "development_rmse": 0.7515578866004944
+    },
+    {
+      "epoch": 16,
+      "training_rmse_augmented": 0.897847077703182,
+      "learning_rate": 0.0013707397648664724
+    },
+    {
+      "epoch": 17,
+      "training_rmse_augmented": 0.8878338917243068,
+      "learning_rate": 0.0012962620273185414
+    },
+    {
+      "epoch": 18,
+      "training_rmse_augmented": 0.8956640745817479,
+      "learning_rate": 0.0012200250514316435
+    },
+    {
+      "epoch": 19,
+      "training_rmse_augmented": 0.8654695838019705,
+      "learning_rate": 0.00114252326324894
+    },
+    {
+      "epoch": 20,
+      "training_rmse_augmented": 0.8592785309448554,
+      "learning_rate": 0.00106425929160668,
+      "development_rmse": 0.719957709312439
+    },
+    {
+      "epoch": 21,
+      "training_rmse_augmented": 0.8448648516798677,
+      "learning_rate": 0.0009857407083933203
+    },
+    {
+      "epoch": 22,
+      "training_rmse_augmented": 0.8500562202621673,
+      "learning_rate": 0.00090747673675106
+    },
+    {
+      "epoch": 23,
+      "training_rmse_augmented": 0.8202533806216141,
+      "learning_rate": 0.0008299749485683571
+    },
+    {
+      "epoch": 24,
+      "training_rmse_augmented": 0.8416349736715607,
+      "learning_rate": 0.000753737972681459
+    },
+    {
+      "epoch": 25,
+      "training_rmse_augmented": 0.7963724208623768,
+      "learning_rate": 0.000679260235133528,
+      "development_rmse": 0.702555239200592
+    },
+    {
+      "epoch": 26,
+      "training_rmse_augmented": 0.786911593388688,
+      "learning_rate": 0.0006070247526320221
+    },
+    {
+      "epoch": 27,
+      "training_rmse_augmented": 0.780681946793775,
+      "learning_rate": 0.0005374999999999998
+    },
+    {
+      "epoch": 28,
+      "training_rmse_augmented": 0.8098309490020592,
+      "learning_rate": 0.00047113687193712324
+    },
+    {
+      "epoch": 29,
+      "training_rmse_augmented": 0.7672242073632484,
+      "learning_rate": 0.0004083657587945073
+    },
+    {
+      "epoch": 30,
+      "training_rmse_augmented": 0.7996351092184592,
+      "learning_rate": 0.0003495937553281407,
+      "development_rmse": 0.6932101249694824
+    },
+    {
+      "epoch": 31,
+      "training_rmse_augmented": 0.7603719635301412,
+      "learning_rate": 0.0002952020205331767
+    },
+    {
+      "epoch": 32,
+      "training_rmse_augmented": 0.7522298182416635,
+      "learning_rate": 0.0002455433056815866
+    },
+    {
+      "epoch": 33,
+      "training_rmse_augmented": 0.7495461492797748,
+      "learning_rate": 0.00020093966659480027
+    },
+    {
+      "epoch": 34,
+      "training_rmse_augmented": 0.7457059786904385,
+      "learning_rate": 0.00016168037498812045
+    },
+    {
+      "epoch": 35,
+      "training_rmse_augmented": 0.7431226323117874,
+      "learning_rate": 0.00012802004243264638,
+      "development_rmse": 0.691868782043457
+    },
+    {
+      "epoch": 36,
+      "training_rmse_augmented": 0.7801013662747749,
+      "learning_rate": 0.00010017696910153316
+    },
+    {
+      "epoch": 37,
+      "training_rmse_augmented": 0.7401541068552387,
+      "learning_rate": 7.833172800959929e-05
+    },
+    {
+      "epoch": 38,
+      "training_rmse_augmented": 0.7353789126318239,
+      "learning_rate": 6.262599392803497e-05
+    },
+    {
+      "epoch": 39,
+      "training_rmse_augmented": 0.7356823887729019,
+      "learning_rate": 5.316162456914532e-05
+    },
+    {
+      "epoch": 40,
+      "training_rmse_augmented": 0.7342677771995647,
+      "learning_rate": 5e-05,
+      "development_rmse": 0.6905614137649536
+    }
+  ],
+  "numerical_sources": {
+    "scripts/train_temporal.py": "6065947048cd02377aea7bf6f5f10c8ed6907ad4634f4fc688b0dd906bfa8b09",
+    "scripts/train_temporal.py.lock": "3ff69bc39d2403952151f92613e05a624bdcfbf7de9da73b702f4ff26dfc4c16",
+    "src/nfl_trajectory/temporal_data.py": "fac7b1c3116250c2971a341017be9183f6dff0f9a060de7e9917c39b568fa3e7",
+    "src/nfl_trajectory/temporal_model.py": "87214f31de8ee33e08b14170dc0f5d0be7c3c1ba320a6df8fb5aada3df1d86fe",
+    "src/nfl_trajectory/feature_candidates.py": "53984d98886f7508225a8e910f298e8f6dd4e22b25b6dca364d3e88f519a030b",
+    "src/nfl_trajectory/feature_research.py": "3ad3c78e9310cb1b46974bae7a6e26a4a329374125ea2d4d916f931210490319",
+    "src/nfl_trajectory/runtime.py": "ecfcf3cd35ad4f692eaaf0aac5606271311a38e29d4203adeb4936302e05d291"
+  },
+  "caveats": [
+    "One predeclared model and seed on an already-inspected development set.",
+    "Architecture and representation changed together; feature gains are not isolated.",
+    "Final epoch EMA chosen in advance; no best-development checkpoint selection.",
+    "Chronological inner folds and organizer gateway validation remain required.",
+    "No new holdout evaluation or Kaggle submission; private score remains 0.70090."
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "status": "completed",
+  "run_id": "20260910T034129Z-0a7e7310",
+  "input_hashes": {
+    "data/raw/train/input_2023_w01.csv": "68a13183084adf52eb8bba7980a4b57d4131b4178016fb0eb32d307cbd044dc5",
+    "data/raw/train/input_2023_w02.csv": "140eedd3bedc846918c92c934d47a02a49c5c3984bf325ddb9a607b7b4410d4e",
+    "data/raw/train/input_2023_w03.csv": "57c58758286b82f9a41d240d9bd09bce47417e9bc1a6f467b14d9c2c1ef04dc6",
+    "data/raw/train/input_2023_w04.csv": "915ca6f1524316d8cac84a4a8914b14c1221badb81e0dd1731b4d27106d3cdb5",
+    "data/raw/train/input_2023_w05.csv": "9c4c55b22caaa39657116c8029eba55096fe97b96263829d9e2caec6e9ee29a9",
+    "data/raw/train/input_2023_w06.csv": "87dd1ec5c2def42a1994ba51ffd9292b8b342784d2e2323278d5fe6a0d904f84",
+    "data/raw/train/input_2023_w07.csv": "e4e3f50735501114451c306744f7e0257f17b5b4ebe15b8405573084359ef38b",
+    "data/raw/train/input_2023_w08.csv": "b672e029414ad956cbdf937c58f7d9a3780e451815fd0e34162fd6605118b685",
+    "data/raw/train/input_2023_w09.csv": "bdf9d37757c0dd916abf18c4846c5c8f0642dad6f878ef202efacd96b9ae0044",
+    "data/raw/train/input_2023_w10.csv": "f06e97b348815c7712d49d9a25d3b529096698a4127f0fa6797ef4f257b9f7d6",
+    "data/raw/train/input_2023_w11.csv": "461f0f2cfb57eb58110f522a819c210db6441668a41476c430348d3fdfed8165",
+    "data/raw/train/input_2023_w12.csv": "cc2a6bfc4874b257117cbb54b30fcefca230e74301010d09f639ed40df1f3774",
+    "data/raw/train/input_2023_w13.csv": "494424cbb67da50cc126418fd8a76fc2db9c715f6ea1cd7f216eac02cc742b6a",
+    "data/raw/train/input_2023_w14.csv": "00f0284711f8f3b8a83309ba36622af4b8fa52486f989c615098bd618820a744",
+    "data/raw/train/input_2023_w15.csv": "28b50a8b52341296b58203767e392da33b6f3954c208e6194202f46443477f0e"
+  },
+  "raw_row_counts": {
+    "Defensive Coverage": 2199951,
+    "Other Route Runner": 1176743,
+    "Passer": 327410,
+    "Targeted Receiver": 327559
+  },
+  "missing_roles": 0,
+  "historical_vocabulary": [
+    "Targeted Receiver",
+    "Defensive Coverage",
+    "Pass Route",
+    "Passer",
+    "Unknown"
+  ],
+  "observed_role_slots": {
+    "Defensive Coverage": 1,
+    "Other Route Runner": 4,
+    "Passer": 3,
+    "Targeted Receiver": 0
+  },
+  "observed_mapping_is_injective": true,
+  "sources": {
+    "scripts/audit_roles.py": "afe72df3de2803f6149e74055815a4efcc1d5df5bf4198c9f0184a735651dd2d",
+    "src/nfl_trajectory/features.py": "8faaf09d23d145632f78816c835d6b8958ef7b689a8bf7529102f201a9122e19"
+  },
+  "conclusion": "Other Route Runner uses the historical Unknown slot; Pass Route is absent in the audited inputs. The observed roles still occupy distinct slots, so relabeling alone does not demonstrate added predictive information. Preserve historical checkpoint slots; use actual raw labels to interpret this dataset."
+}

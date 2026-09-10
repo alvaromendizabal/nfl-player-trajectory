@@ -12,7 +12,9 @@ def test_outcomes_and_player_identity_do_not_change_features():
     source = sample(5)
     expected, names, _ = candidates(source)
     source["truth"][:] = 1e9
-    source["ids"] += 9000
+    # Pandas 3 may expose a read-only NumPy view; replace it without weakening
+    # the identity-invariance assertion.
+    source["ids"] = source["ids"] + 9000
     source["keys"][:] = -1
     np.testing.assert_array_equal(candidates(source)[0], expected)
     assert len(names) == len(set(names)) == 83

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "verified_files": 8,
+  "bytes_and_mtimes_unchanged": true,
+  "new_fits": 0,
+  "stage_reuses": 8,
+  "exact_training_and_evaluation_game_membership": "passed",
+  "elapsed_seconds": 6.153
+}

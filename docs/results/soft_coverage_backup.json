@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "bucket": "sagemaker-nfl-trajectory-560403859723-us-west-2",
+  "key": "experiments/soft_coverage/checkpoints/08b4a3fb6b2a85e4f253632e146ea52f67d55164ac823c720629361a386bd998.tar.gz",
+  "sha256": "08b4a3fb6b2a85e4f253632e146ea52f67d55164ac823c720629361a386bd998",
+  "bytes": 211549038,
+  "download_round_trip": "passed",
+  "verified_files": 31,
+  "includes_parent_inputs": true,
+  "elapsed_seconds": 31.3
+}

@@ -1,0 +1,67 @@
+{
+  "status": "completed",
+  "signature": "4042d5766b082184d339c591d5a3ee880a32e5624f68ba316b1650d54b082271",
+  "source_commit": "c3bc276ccbb4110b66ef359451a0f855d1f3a7e5",
+  "training_games": 94,
+  "evaluation_games": 41,
+  "training_rows": 193452,
+  "evaluation_rows": 83938,
+  "candidate_counts": {
+    "control_motion": {
+      "candidates": 190,
+      "retained": 182
+    },
+    "static_affinity": {
+      "candidates": 201,
+      "retained": 192
+    },
+    "temporal_affinity": {
+      "candidates": 273,
+      "retained": 258
+    }
+  },
+  "scores": {
+    "control_motion": 0.6720635610402389,
+    "static_affinity": 0.6709204565041702,
+    "temporal_affinity": 0.668952066777559
+  },
+  "primary": {
+    "coordinate_rmse_yards": 0.668952066777559,
+    "reference_rmse_yards": 0.6720635610402389,
+    "relative_reduction": 0.004629761890175721,
+    "paired_game_delta_interval": [
+      -0.006314041641720183,
+      5.9655789556234396e-05
+    ],
+    "continue_gate": false
+  },
+  "temporal_vs_static": {
+    "coordinate_rmse_yards": 0.668952066777559,
+    "reference_rmse_yards": 0.6709204565041702,
+    "relative_reduction": 0.002933864525263452,
+    "paired_game_delta_interval": [
+      -0.004297657700757953,
+      0.00043832487146264426
+    ],
+    "continue_gate": false
+  },
+  "decision": "stop_this_probe",
+  "fit_count": 3,
+  "elapsed_seconds": 21.841,
+  "artifacts": {
+    "artifacts/soft_coverage/inner_1/features.npz": "a481f6b925812d0e53f69e9d743016590f38edfb8be99d49168cbf9af13fd89a",
+    "artifacts/soft_coverage/inner_1/control_motion_errors.npz": "1ed669c79ec62ede0120d471c08c94867eee0ff86b761c21be995bd6b23603f0",
+    "artifacts/soft_coverage/inner_1/control_motion.npz": "4dc661836f080ba92ddab17d44159650f65bdcdfb578b1ca67a526046ae09ab1",
+    "artifacts/soft_coverage/inner_1/static_affinity_errors.npz": "0b46432398846883a2b724517e4dd61156357161a4c18304d9a4360f054c8895",
+    "artifacts/soft_coverage/inner_1/temporal_affinity.npz": "aa5468f50998228e6413be92d46baaf2c805391a230e5d243c5688138146acc4",
+    "artifacts/soft_coverage/inner_1/temporal_affinity_errors.npz": "9b7eaec441d05e20109d937d4fb9f3cb1fc1d07a8fbf4f60e8d00f5adcd23752",
+    "artifacts/soft_coverage/inner_1/static_affinity.npz": "61baa11a7c47729f1e3c7a067c3759950828509d2699851e883325d5b2bc8929"
+  },
+  "kaggle_private_rmse_unchanged": 0.7009,
+  "limitations": [
+    "one reused chronological fold",
+    "linear correction interface",
+    "in-sample parent training residuals",
+    "no neural feature exhaustion"
+  ]
+}

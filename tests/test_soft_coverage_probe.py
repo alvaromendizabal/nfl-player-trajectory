@@ -4,6 +4,10 @@ import importlib.util
 from pathlib import Path
 
 import numpy as np
+import pytest
+
+pytest.importorskip("scipy")
+pytest.importorskip("threadpoolctl")
 
 
 def module():

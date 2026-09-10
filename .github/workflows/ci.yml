@@ -34,6 +34,8 @@ jobs:
           mkdir -p artifacts
           git ls-files -z | tar --null -czf artifacts/source.tar.gz -T -
       - run: uv run --frozen python scripts/quality.py
+      - name: Validate optional soft-coverage numerical probe
+        run: uv run --frozen --with scipy==1.17.0 --with threadpoolctl==3.6.0 pytest tests/test_soft_coverage.py tests/test_soft_coverage_probe.py -q
       - name: Validate final sklearn fitting and interrupted recovery
         run: uv run --locked scripts/fit_final.py --self-test
       - name: Validate temporal attention and exact interrupted recovery

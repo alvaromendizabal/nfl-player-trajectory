@@ -59,7 +59,8 @@ def execute(source_commit: str, phase: str, run: Run) -> None:
         p: importlib.metadata.version(p)
         for p in ("numpy", "pandas", "scipy", "filelock", "threadpoolctl")
     }
-    if packages != parent_plan["packages"]:
+    numerical = ("numpy", "pandas", "scipy", "threadpoolctl")
+    if any(packages[p] != parent_plan["packages"][p] for p in numerical):
         raise ValueError("Control replay requires the preserved numerical runtime.")
     spec = {
         "source_commit": source_commit,

@@ -98,3 +98,9 @@ The pending velocity-supervised neural comparison remains open. PyTorch is absen
 from the restored workspace and its package download did not complete. This
 separate CPU feature hypothesis uses the available preserved numerical runtime;
 it is not a substitute result for auxiliary neural supervision.
+
+The first preflight stopped before preparation because filelock is 3.32.5 rather
+than 3.32.6. NumPy, Pandas, SciPy and threadpoolctl match exactly. The revised
+preflight preserves strict numerical-library matching and exact saved-control
+prediction replay; the nonnumerical locking patch version is recorded separately.
+No estimator fitting occurred during this preflight failure.

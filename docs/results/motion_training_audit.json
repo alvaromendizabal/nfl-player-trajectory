@@ -1,0 +1,28 @@
+{
+  "game_id": 2023091100,
+  "play_id": 3167,
+  "selection": "Largest frozen attention training-error play; descriptive audit only",
+  "partition": "train",
+  "maximum_seconds": 9.399999618530273,
+  "requested_rows": 752,
+  "scored_players": 8,
+  "input_players": 13,
+  "target_x_range": [
+    90.23999786376953,
+    108.63999938964844
+  ],
+  "target_y_range": [
+    6.49333381652832,
+    36.70333480834961
+  ],
+  "cv_rmse": 14.712851524353027,
+  "ridge_rmse": 10.210224151611328,
+  "maximum_position_step_speed": 7.233957767486572,
+  "landing": [
+    110.27999877929688,
+    7.8733344078063965
+  ],
+  "source_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+  "evaluator_sha256": "f8f83755ada094b89fd1d886894e51a5e988359cd01966801514b299b7195556",
+  "no_training_or_evaluation_row_removed": true
+}

@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "run_id": "20260910T021631Z-b7894c70",
+  "files": {
+    "docs/DOMAIN_EXPERIMENT.md": "e701116fe7ea8cf2795b6c7bbf59c11e69f995defaa056cba9c69817e808c4b4",
+    "docs/DOMAIN_RESEARCH.md": "c0937692142a08387df04567e8e4ab5ea6b4dc40cbe9213115c086ce008f27b1",
+    "docs/MOTION_EXPERIMENT.md": "e0d8c8cd30bc064eae9f812bb27872bb7b26837198d097b31f5c881d1da21b8c",
+    "docs/results/domain_feature_catalog.csv": "67b6b10659bda9bea36a082af912bdb0d6ac742f2e3ffdcc45e700a356de21be",
+    "docs/results/domain_reproduction.json": "58f8d5ca2129b7cc1b043f61ff9e17ad1820efbfa0c458d8ef36367abfb353d1",
+    "docs/results/domain_research.json": "71a8af28806a74bb28c19ef06f0d082b4a139db12c1c1f7762d61c9eca7e874f",
+    "docs/results/domain_research.png": "79bad9455ccea026c77c9d2d7405fdc4067cec3534feb9dd1c3e956140d49999",
+    "docs/results/domain_research_recovery.json": "953c08fa2224be715ddb6171325753b049deaf2040f620637b59d43dae89ee3f",
+    "docs/results/motion_research.json": "06ae6e810ea50794cb77baa5c201d7d79c58ea74080e308cfcdafdec19dc62d0",
+    "docs/results/motion_research_recovery.json": "a52b3ccaf37ac92625bcf8e0ee4e649e419a847b8eefc3fb2b699a18eb900ad2",
+    "docs/results/motion_training_audit.json": "a4de5c12961c84f10c9cfae22680431021bb9a22f2323baf86991df380adffb3",
+    "scripts/audit_motion.py": "f8f83755ada094b89fd1d886894e51a5e988359cd01966801514b299b7195556",
+    "scripts/domain_research.py": "136ac662fbc8c99f36696a029369cdc91f34ceb09bfbc32f1374fc7bf88273e5",
+    "scripts/domain_research.py.lock": "3ff69bc39d2403952151f92613e05a624bdcfbf7de9da73b702f4ff26dfc4c16",
+    "scripts/evaluate_domain_research.py": "7c727ad6eb234f2dd1024852b0298e1389a05cf829481dc486ecddef73efd2d0",
+    "scripts/motion_research.py": "cbb635d5274570de4f1a180f42e5935c7d2c8167e1a70dce2bc495a93f54e482",
+    "scripts/motion_research.py.lock": "3ff69bc39d2403952151f92613e05a624bdcfbf7de9da73b702f4ff26dfc4c16",
+    "scripts/publish_domain_research.py": "e389394c3c607cdda59b674b7a657533bb366d34692ffebf55e713b6718623d9",
+    "src/nfl_trajectory/domain_evidence.py": "aad8b47a31cfd7e4fd0d63ea28367ff494df3b829cbe1b9a76bb1d20690b2a27",
+    "src/nfl_trajectory/domain_features.py": "45d7f9197b98a66371a0213936dd06cf8410b86136ab8467ef36dd1bb6c706ef",
+    "src/nfl_trajectory/domain_probe.py": "064f2344073803b8e055c651680c74b14c1926be451ead6a60d732fea8935727",
+    "src/nfl_trajectory/motion_research.py": "f4158909900c52e320a43224744f868a3b88119ad93ac934347810182a274d01"
+  },
+  "private_artifact_count": 267,
+  "unique_scientific_fits": 60,
+  "reproduction_fits": 30,
+  "feature_completion_gate": "open"
+}

@@ -148,3 +148,6 @@ training-side folds with fold-local preprocessing. A new submission additionally
 requires complete inference packaging and organizer-gateway validation.
 The existing Kaggle private score remains 0.70090 until a new hidden-test run
 establishes otherwise. Approximately 0.46 is the target, not a promised outcome.
+
+The recovered results and their publication checks are recorded in
+[PR #20](https://github.com/alvaromendizabal/nfl-player-trajectory/pull/20).

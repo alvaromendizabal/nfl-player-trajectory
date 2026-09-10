@@ -13,6 +13,14 @@ isolates the signal using the same chronological rows and fixed training budget.
 The feature gate remains open, particularly for end-to-end learned motion,
 auxiliary tasks, older NFL tracking and uncertain coverage assignments.
 
+The [end-to-end smoothed-state continuation](REPRESENTATION_RESEARCH.md) is
+now executed: six equal-budget fits score 0.71631 versus the control's
+0.71745; its declared gate fails. This is one tested motion input path,
+not exhaustion of learned motion representations. Auxiliary motion supervision,
+feature-wise temporal learning, earlier-origin augmentation and historical-data
+alignment remain open. A separate input contract audit confirms that the four
+observed roles still occupy distinct historical slots.
+
 ## Protocol
 
 Keep every game intact. Use 192 training games and 32 later development games;

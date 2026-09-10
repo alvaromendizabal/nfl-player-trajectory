@@ -86,7 +86,16 @@ def test_source_hash_ignores_outputs_but_not_code() -> None:
 
 
 @pytest.mark.parametrize(
-    "name", ["domain_research.json", "motion_research.json", "domain_manifest.json"]
+    "name",
+    [
+        "domain_research.json",
+        "motion_research.json",
+        "domain_manifest.json",
+        "motion_representation.json",
+        "representation_manifest.json",
+        "role_contract_audit.json",
+        "representation_recovery.json",
+    ],
 )
 def test_published_domain_research_invalidates_notebook_cache(project: Path, name: str) -> None:
     source = notebook(project)

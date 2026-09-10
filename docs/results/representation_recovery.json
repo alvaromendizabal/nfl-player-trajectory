@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-09-10T03:52:06.567506+00:00",
+  "files_verified_unchanged": 24,
+  "fits_reused": 6,
+  "additional_training_epochs": 0,
+  "elapsed_seconds": 9.852271461000782,
+  "replay_run_id": "20260910T035158Z-b4c6c67e",
+  "content_and_modification_time_unchanged": true,
+  "artifact_states": {
+    "artifacts/motion_representation/inner_1/control/checkpoint.json": {
+      "sha256": "fe7e7dd4e84411560019e8be48d2ee326fecf7cc73c1e2ce990b72b25fd3e5f4",
+      "mtime_ns": 1789011638527852902
+    },
+    "artifacts/motion_representation/inner_1/control/checkpoint.pt": {
+      "sha256": "af8fbfb0591c8510691eee247f9a22e7b4e0f5acffc6050e0cba0e1d59450b17",
+      "mtime_ns": 1789011638522491533
+    },
+    "artifacts/motion_representation/inner_1/control/errors.csv": {
+      "sha256": "b3dbbcdb0745d522c0b8a7603747f2b29dfe9d373c9068a885c3d0032d38fc63",
+      "mtime_ns": 1789011640048313033
+    },
+    "artifacts/motion_representation/inner_1/control/summary.json": {
+      "sha256": "7f7dfec7de5a464e7d61f5a6bac5bfa268872f516cb542ee3d01edfdc830bfde",
+      "mtime_ns": 1789011640078133370
+    },
+    "artifacts/motion_representation/inner_1/smoothed_state/checkpoint.json": {
+      "sha256": "5eebfff29485b56ed7e43cb107eda9f9973287ffa2a4e4e4bc9f92a7608750f9",
+      "mtime_ns": 1789011719404801104
+    },
+    "artifacts/motion_representation/inner_1/smoothed_state/checkpoint.pt": {
+      "sha256": "f9171d70ec9b118ba3430b904eeb4d86de010529fb88b937018b855a29497b8a",
+      "mtime_ns": 1789011719399408705
+    },
+    "artifacts/motion_representation/inner_1/smoothed_state/errors.csv": {
+      "sha256": "6b975c4a1fde1d6b237b232bfa586777a4a4d3442467714ba960c280ca9a632e",
+      "mtime_ns": 1789011721321557591
+    },
+    "artifacts/motion_representation/inner_1/smoothed_state/summary.json": {
+      "sha256": "d510a35dee14deba54949037e5c2aa454a0658b9e9d9386c1f63b6f9779830f8",
+      "mtime_ns": 1789011721352677312
+    },
+    "artifacts/motion_representation/inner_2/control/checkpoint.json": {
+      "sha256": "076bf59e80b35e71e6e67eb5b3c43c7b67e11d81486d3f4f220866b9038cb25f",
+      "mtime_ns": 1789011861349174887
+    },
+    "artifacts/motion_representation/inner_2/control/checkpoint.pt": {
+      "sha256": "1b11ddba03dc203a0d28f56ea52deae497b960e7d6ae87954c84d505deab83f4",
+      "mtime_ns": 1789011861344063439
+    },
+    "artifacts/motion_representation/inner_2/control/errors.csv": {
+      "sha256": "9395b63994b600328c5ee61d03b211a1cef912993e7b7001cee043ac57bf835f",
+      "mtime_ns": 1789011862470988108
+    },
+    "artifacts/motion_representation/inner_2/control/summary.json": {
+      "sha256": "ed5481b884405311b4fafdb16f868a79d6290b5b42caa521ef1c01ff6dd811bb",
+      "mtime_ns": 1789011862495042354
+    },
+    "artifacts/motion_representation/inner_2/smoothed_state/checkpoint.json": {
+      "sha256": "58c187e1f681f3c6dd98923d2b097689bfe9c01c78d56eda871bbd208e993fa2",
+      "mtime_ns": 1789011995281807709
+    },
+    "artifacts/motion_representation/inner_2/smoothed_state/checkpoint.pt": {
+      "sha256": "b04b97a895510c4d54d25ef688faeedb616b3bdc2031337074139caf86a82061",
+      "mtime_ns": 1789011995276650015
+    },
+    "artifacts/motion_representation/inner_2/smoothed_state/errors.csv": {
+      "sha256": "2a94bf6fd3b9ec0c7e7afb76ba920add343430115b035cab0ef56b6a69c7786d",
+      "mtime_ns": 1789011996647458758
+    },
+    "artifacts/motion_representation/inner_2/smoothed_state/summary.json": {
+      "sha256": "0b3aedc731dea74ebe53a7e330144010e12c460ef42ce93b7c762e6dac7403f3",
+      "mtime_ns": 1789011996668963940
+    },
+    "artifacts/motion_representation/inner_3/control/checkpoint.json": {
+      "sha256": "162a4032ca34fd414c9ebe896e50519f935784cd9e243d77ee4ffc167eef75ac",
+      "mtime_ns": 1789012167912206903
+    },
+    "artifacts/motion_representation/inner_3/control/checkpoint.pt": {
+      "sha256": "507d5544daa5527430bcb1cfe09d0b38472e028ea6e1c2a617aef1602183a72f",
+      "mtime_ns": 1789012167906969735
+    },
+    "artifacts/motion_representation/inner_3/control/errors.csv": {
+      "sha256": "1e212af59db766ba680732c4add20f0cddb2e63430d7ca4ef2a1015dda778e9f",
+      "mtime_ns": 1789012169210392336
+    },
+    "artifacts/motion_representation/inner_3/control/summary.json": {
+      "sha256": "1f8b45a94bc4180a1a78b533234c9c376fd9f6cd0124bdfcde546d13a6aec072",
+      "mtime_ns": 1789012169236894970
+    },
+    "artifacts/motion_representation/inner_3/smoothed_state/checkpoint.json": {
+      "sha256": "0faa7636e0d9fe18a6e789b8de117ce14df83c49adda82af8dcb0a3542820ce2",
+      "mtime_ns": 1789012304331796099
+    },
+    "artifacts/motion_representation/inner_3/smoothed_state/checkpoint.pt": {
+      "sha256": "48ea39d310bd3c8a9eee272015b4bae3f6484fb38206b606721617e9cccebf89",
+      "mtime_ns": 1789012304327289291
+    },
+    "artifacts/motion_representation/inner_3/smoothed_state/errors.csv": {
+      "sha256": "7c2c56d5a4373a9edc94b5a3149398f5dcc5ce0d8d14efee2ac9039447845f4a",
+      "mtime_ns": 1789012305735616157
+    },
+    "artifacts/motion_representation/inner_3/smoothed_state/summary.json": {
+      "sha256": "505ed49ece8dc6f0a77035f5a323e55b4aa684438df1f20ebe6be73d5a29af5b",
+      "mtime_ns": 1789012305759477238
+    }
+  }
+}

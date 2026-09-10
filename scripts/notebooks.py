@@ -188,12 +188,20 @@ def execution_signature(root: Path, source: Path) -> str:
             "domain_feature_catalog.csv",
             "motion_research.json",
             "domain_manifest.json",
+            "motion_representation.json",
+            "motion_representation.png",
+            "role_contract_audit.json",
+            "representation_manifest.json",
+            "representation_recovery.json",
         )
         if (path := root / "docs/results" / name).is_file()
     )
     domain_verifier = root / "src/nfl_trajectory/domain_evidence.py"
     if domain_verifier.is_file():
         inputs.append(domain_verifier)
+    representation_verifier = root / "src/nfl_trajectory/representation_evidence.py"
+    if representation_verifier.is_file():
+        inputs.append(representation_verifier)
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(

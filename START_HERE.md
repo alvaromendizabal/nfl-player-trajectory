@@ -6,7 +6,16 @@ the repository name describes the player's trajectory prediction target.
 **Current objective: approach 0.46 private RMSE.** The recorded Kaggle result is
 **0.70090**. The new temporal research has not been submitted to the hidden test.
 
-**Latest research checkpoint:** the new 330-candidate domain screen tests motion,
+**Latest matched motion experiment:** six end-to-end continuation fits are
+complete. Smoothed-state inputs score **0.71631**, versus **0.71745**
+for the equally trained control on the same three internal folds. The declared
+feature gate **fails**. This experiment separates extra training from feature
+effects; it does not replace the stronger prior correction result. Read the
+[measured result](docs/REPRESENTATION_RESEARCH.md) and notebook 02 section **13**.
+The role audit preserves four distinct observed categories despite an outdated
+slot name. **Feature research remains open; no new Kaggle submission was made.**
+
+**Previous domain checkpoint:** the new 330-candidate domain screen tests motion,
 arrival feasibility, coverage dynamics and field geometry under identical model
 capacity. Explicit motion helps across all three chronological folds; coverage
 summaries hurt this frozen representation. The predeclared all-feature/tree
@@ -264,3 +273,27 @@ No public model-hosting service is required to review the project.
 
 The [data card](docs/DATA_CARD.md) explains the exact Prediction inventory,
 season boundaries, supplied task information, and limits of the evidence.
+
+## Reproduce the matched motion continuation
+
+The [protocol](docs/REPRESENTATION_EXPERIMENT.md),
+[result](docs/results/motion_representation.json), and
+[recovery receipt](docs/results/representation_recovery.json) identify the exact
+sources, inputs, six fitted models and completed-run replay. The following
+commands are for reproduction after restoring the private artifacts. Reading
+the executed notebook requires no raw tracking data or retraining.
+
+```bash
+uv run --locked scripts/motion_representation.py --self-test
+uv run --locked scripts/motion_representation.py
+uv run --frozen python scripts/audit_roles.py
+```
+
+The second command reuses completed fits whose signatures and output hashes
+match. It trains missing work only and refuses changed inputs or source lineage.
+The feature/checkpoint archive contains content-addressed private objects and a
+manifest mapping their hashes to relative paths. Verify each object before
+restoring it beside the declared source commit; reject unsafe paths or an
+existing destination with different bytes. The preceding verified S3 input
+snapshot supplies raw input data and the original frozen attention references.
+Maintained source and public reports remain in Git.

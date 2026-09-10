@@ -40,6 +40,8 @@ jobs:
         run: uv run --locked scripts/train_temporal.py --self-test
       - name: Validate domain feature attribution and exact interrupted recovery
         run: uv run --locked scripts/motion_research.py --self-test
+      - name: Validate end-to-end motion inputs and exact interrupted recovery
+        run: uv run --locked scripts/motion_representation.py --self-test
       - name: Retain formatting diagnostics on failure
         if: failure()
         run: |

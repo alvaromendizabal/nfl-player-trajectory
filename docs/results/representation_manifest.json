@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "run_id": "20260910T035220Z-8a456271",
+  "files": {
+    "docs/REPRESENTATION_EXPERIMENT.md": "bf56a59fe4083d9dcdd0d34971f3c1af58b6536a60026ea8c0448471c9ac0f9e",
+    "docs/REPRESENTATION_RESEARCH.md": "25a4bda7df3ca1452f572d55b70b6b491992ddb1f3cacd4ae8faba08e8f372b6",
+    "docs/results/motion_representation.json": "d38680245aa5fc1a0e4e0e0cf8960627e4b2ee6f2b9c90bf56c48ff211e30a3f",
+    "docs/results/motion_representation.png": "a69ba6bae76e6ee61cd8e59ea8db0eec6fd9adb2d037210fafbefefd5665fb3d",
+    "docs/results/representation_recovery.json": "23f3b19b99b7e603f04f6430de1840324b72182ef3e9cee4b9ff7e6021364aff",
+    "docs/results/role_contract_audit.json": "727f2c08b5ac8008cf6c828c3d55b41d978e9a7392002c31602662aba2c026f0",
+    "scripts/audit_roles.py": "afe72df3de2803f6149e74055815a4efcc1d5df5bf4198c9f0184a735651dd2d",
+    "scripts/evaluate_domain_research.py": "7c727ad6eb234f2dd1024852b0298e1389a05cf829481dc486ecddef73efd2d0",
+    "scripts/evaluate_temporal.py": "63376caa354a4a2837adbe94840626f9e9b103205f383aff63d43d5a07b09286",
+    "scripts/motion_representation.py": "19d54e6b5774eb3157d4ae9678045375a3bd15b31d290ad2a8eb61a681ca7ca9",
+    "scripts/motion_representation.py.lock": "3ff69bc39d2403952151f92613e05a624bdcfbf7de9da73b702f4ff26dfc4c16",
+    "scripts/publish_representation.py": "72ca3fa147b66410dcf0802ca578d315fb464821833fa56723d8ab9100f7968e",
+    "src/nfl_trajectory/benchmark.py": "610f501e6806bcc627c58266181593644a36a8e0343d93f80a6df1e74a3b6a37",
+    "src/nfl_trajectory/features.py": "8faaf09d23d145632f78816c835d6b8958ef7b689a8bf7529102f201a9122e19",
+    "src/nfl_trajectory/motion_representation.py": "c8fe576f8f4dbc179b65385d7c9c37d3186d79b4beaaf38469405479b1b795e1",
+    "src/nfl_trajectory/motion_research.py": "f4158909900c52e320a43224744f868a3b88119ad93ac934347810182a274d01",
+    "src/nfl_trajectory/representation_evidence.py": "1d9bfb9c894188ddcb8a3057038498b041d34eec7fa5fb1e0d3f09ad3137c52d"
+  },
+  "private_artifacts_verified": 36,
+  "feature_completion_gate": "open"
+}

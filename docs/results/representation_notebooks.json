@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "quality": {
+    "status": "passed",
+    "run_id": "20260910T035227Z-a58da0c3",
+    "scope": "offline tests, synthetic integration, notebook; no live Kaggle score",
+    "checks": 13
+  },
+  "base_test_result": "339 passed, 3 skipped in 109.27s (0:01:49)",
+  "torch_feature_tests": "3 passed; observed-only features, initial parity, actual exact interrupted and completed recovery",
+  "notebooks": [
+    {
+      "notebook": "notebooks/00_project_readiness.ipynb",
+      "sha256": "b7d8bd7d27432a19f7da9be96f1263f44cc7d4938e815f76f8ab69a429372fcd",
+      "cells": 4,
+      "source_sha256": "b36f6bd7cc8dfecd6925856b3c239cb04de03c666e10d244d87afcec52551a82",
+      "execution_signature": "f4449d90e0d6351bbf37f01b76fb21de7ce7e8582a6732600859b23606108ac3"
+    },
+    {
+      "notebook": "notebooks/01_data_analysis.ipynb",
+      "sha256": "f86ebeabc5073658a6cf85b13cdb2c47a5344176e200a7377d4e3f4373d62c8d",
+      "cells": 9,
+      "source_sha256": "6f58d8e61af847f7297512bea1a130d0c6a685e23aad2c1c6771165efd642ed3",
+      "execution_signature": "d91c0ddb6f5ed6c194d429a65d20b428a3093d2ea891d6fee3e5ef3df7b9eefa"
+    },
+    {
+      "notebook": "notebooks/02_motion_benchmarks.ipynb",
+      "sha256": "02244ceae14d255dc2655f6aad5e8ac03f5905852a13a452c9f90288b53b9894",
+      "cells": 25,
+      "source_sha256": "03484f1a2d0b0a6b1068fca6c9c69043cb0c6c6a85f4d81fafe131c8e55be9e8",
+      "execution_signature": "4c70be2abc2eaa3c05cf0097a2b96dd841bed4c8cb04aed32775b7c4edbfd4ca"
+    }
+  ]
+}

@@ -10,7 +10,16 @@ not this project's entry point.
 The recorded Kaggle private result remains **0.70090**; the temporal experiments
 below have not produced a new submission score.
 
-**Latest domain research:** 330 explicit candidates, 313 surviving train-only
+**Latest matched motion experiment:** six end-to-end continuation fits are
+complete. Smoothed-state inputs score **0.71631**, versus **0.71745**
+for the equally trained control on the same three internal folds. The declared
+feature gate **fails**. This experiment separates extra training from feature
+effects; it does not replace the stronger prior correction result. Read the
+[measured result](docs/REPRESENTATION_RESEARCH.md) and notebook 02 section **13**.
+The role audit preserves four distinct observed categories despite an outdated
+slot name. **Feature research remains open; no new Kaggle submission was made.**
+
+**Domain feature evidence:** 330 explicit candidates, 313 surviving train-only
 screening per fold, and 30 matched feature fits. Motion features improve all
 three chronological folds; additional coverage summaries hurt. The declared
 all-feature/tree blend reaches **0.64160**, versus the earlier blend's
@@ -135,7 +144,7 @@ matches all three examples published in the organizer's scorer. ADE, FDE, p95 di
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **327 automated tests**, including leakage, geometry, missing-input dependencies, artifact
+The locked Python 3.11 project has automated tests covering leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
 locks, source/input hashes, and content-addressed S3 checkpoints make long work

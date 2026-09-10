@@ -36,6 +36,8 @@ jobs:
       - run: uv run --frozen python scripts/quality.py
       - name: Validate final sklearn fitting and interrupted recovery
         run: uv run --locked scripts/fit_final.py --self-test
+      - name: Validate temporal attention and exact interrupted recovery
+        run: uv run --locked scripts/train_temporal.py --self-test
       - name: Retain formatting diagnostics on failure
         if: failure()
         run: |

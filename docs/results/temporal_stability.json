@@ -1,0 +1,155 @@
+{
+  "status": "stopped_for_training_stability",
+  "run_id": "20260909T221945Z-c9d5b1c0",
+  "epochs_completed": 24,
+  "training_seconds_at_checkpoint": 318.78439436699773,
+  "curve": [
+    {
+      "epoch": 1,
+      "training_rmse_augmented": 1.0845344932059295,
+      "learning_rate": 0.0006666666666666666,
+      "development_rmse": 0.9716519713401794
+    },
+    {
+      "epoch": 2,
+      "training_rmse_augmented": 1.0798054689518821,
+      "learning_rate": 0.00133122558362057
+    },
+    {
+      "epoch": 3,
+      "training_rmse_augmented": 1.0853300699068347,
+      "learning_rate": 0.001987374006071965
+    },
+    {
+      "epoch": 4,
+      "training_rmse_augmented": 1.0842438862376644,
+      "learning_rate": 0.001971668271990401
+    },
+    {
+      "epoch": 5,
+      "training_rmse_augmented": 1.0904160809911678,
+      "learning_rate": 0.0019498230308984668,
+      "development_rmse": 0.952575147151947
+    },
+    {
+      "epoch": 6,
+      "training_rmse_augmented": 1.0890136200188858,
+      "learning_rate": 0.0019219799575673536
+    },
+    {
+      "epoch": 7,
+      "training_rmse_augmented": 1.0868693675355678,
+      "learning_rate": 0.0018883196250118796
+    },
+    {
+      "epoch": 8,
+      "training_rmse_augmented": 1.0873575807852525,
+      "learning_rate": 0.0018490603334052
+    },
+    {
+      "epoch": 9,
+      "training_rmse_augmented": 1.088086179726437,
+      "learning_rate": 0.0018044566943184138
+    },
+    {
+      "epoch": 10,
+      "training_rmse_augmented": 1.087051597777185,
+      "learning_rate": 0.0017547979794668236,
+      "development_rmse": 0.9801750779151917
+    },
+    {
+      "epoch": 11,
+      "training_rmse_augmented": 1.0880357970189785,
+      "learning_rate": 0.0017004062446718596
+    },
+    {
+      "epoch": 12,
+      "training_rmse_augmented": 1.087617748327553,
+      "learning_rate": 0.001641634241205493
+    },
+    {
+      "epoch": 13,
+      "training_rmse_augmented": 1.0869880832063203,
+      "learning_rate": 0.001578863128062877
+    },
+    {
+      "epoch": 14,
+      "training_rmse_augmented": 1.0879937353737716,
+      "learning_rate": 0.0015125
+    },
+    {
+      "epoch": 15,
+      "training_rmse_augmented": 1.087982390590281,
+      "learning_rate": 0.0014429752473679779,
+      "development_rmse": 0.9796479344367981
+    },
+    {
+      "epoch": 16,
+      "training_rmse_augmented": 1.0876084378997077,
+      "learning_rate": 0.0013707397648664724
+    },
+    {
+      "epoch": 17,
+      "training_rmse_augmented": 1.0879311789186772,
+      "learning_rate": 0.0012962620273185414
+    },
+    {
+      "epoch": 18,
+      "training_rmse_augmented": 1.0875894562259267,
+      "learning_rate": 0.0012200250514316435
+    },
+    {
+      "epoch": 19,
+      "training_rmse_augmented": 1.0876051021633477,
+      "learning_rate": 0.00114252326324894
+    },
+    {
+      "epoch": 20,
+      "training_rmse_augmented": 1.0876064562798908,
+      "learning_rate": 0.00106425929160668,
+      "development_rmse": 0.9796056747436523
+    },
+    {
+      "epoch": 21,
+      "training_rmse_augmented": 1.0873785271527134,
+      "learning_rate": 0.0009857407083933203
+    },
+    {
+      "epoch": 22,
+      "training_rmse_augmented": 1.0876436982423563,
+      "learning_rate": 0.00090747673675106
+    },
+    {
+      "epoch": 23,
+      "training_rmse_augmented": 1.0874787658757525,
+      "learning_rate": 0.0008299749485683571
+    },
+    {
+      "epoch": 24,
+      "training_rmse_augmented": 1.0878925858025583,
+      "learning_rate": 0.000753737972681459
+    }
+  ],
+  "source_signature": "403926373ec55db951559c7827eff95295230e60022acf09053e0583697287d0",
+  "checkpoint_sha256": "ad53615260ceeb80f2ea1d6baf366720dfa69c7a3ffe5b25c2ae3cfbb4d64c99",
+  "diagnostic_training_plays": 64,
+  "training_week": "2023_w01",
+  "activations": {
+    "decode.3": {
+      "minimum": -18.304157257080078,
+      "maximum": -4.444595813751221,
+      "mean_absolute": 8.568337440490723
+    },
+    "decode.4": {
+      "minimum": -1.9603972759796306e-05,
+      "maximum": -0.0,
+      "mean_absolute": 1.7643661465172045e-07
+    }
+  },
+  "first_convolution_gradient_norm": 3.5278970855756597e-09,
+  "batch_coordinate_mse": 0.7549601197242737,
+  "reason": "Decoder GELU units saturated; temporal gradients nearly vanished and the fit collapsed toward a constant velocity correction.",
+  "action": "Stop initial attempt; add final and decoder LayerNorm before one bounded corrected run.",
+  "kaggle_submission": "not_run",
+  "holdout_evaluation": "not_run"
+}

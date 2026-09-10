@@ -3,13 +3,17 @@
 This is the [Prediction project](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction). The canonical notebooks are 00, 01, and 02;
 the repository name describes the player's trajectory prediction target.
 
+**Current objective: approach 0.46 private RMSE.** The recorded Kaggle result is
+**0.70090**. The new temporal research has not been submitted to the hidden test.
+
 ## Review the evidence
 
 Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution,
 then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature rationale.
 Public aggregates support review without private tracking or cloud credentials.
-All 15 feature-research criteria pass, and the feature/selection manifest is
-frozen. Final preprocessing and both residual-tree profiles have been fitted
+All 15 original tree feature-research criteria pass, and that feature/selection
+manifest is frozen. The temporal model has its own open feature gate. Final
+preprocessing and both residual-tree profiles have been fitted
 on all 224 authorized games. The sealed reserved-holdout evaluation is complete:
 **0.80467 coordinate RMSE in yards** on 99,266 forecast frames from 48 later
 games (95% game-bootstrap interval: 0.66313–1.00113).
@@ -43,26 +47,42 @@ Training, reserved evaluation, export, hosted validation, and Kaggle hidden-test
 scoring are complete. The reproduction commands below document completed work;
 they are not instructions to rerun training merely to review the project.
 
-**The next goal is higher predictive accuracy.** The submitted model is the
-reference for a new [performance study](docs/RESEARCH_PLAN.md#performance-extension-after-the-kaggle-result).
-Its first [capacity diagnostic](docs/results/model_capacity.json) is complete:
-0.77676 to 0.70239 development RMSE on identical core features, still behind the
-full-feature model's 0.68805. No replacement has been promoted or submitted.
-The next substantive experiment is a temporal neural network that models players
-jointly, with controlled spatial augmentation and motion supervision.
+**The first temporal model has been trained and evaluated.** On the same 67,857
+development rows, it scores **0.69056**, compared with the existing tree's
+**0.68805**. A fixed 50/50 exploratory blend reaches **0.65567** (4.71% lower
+RMSE). The neural model alone has not earned replacement of the tree. The
+[comparison](docs/results/temporal_evaluation.json) and
+[protocol](docs/TEMPORAL_MODEL.md) preserve this distinction. No new model has
+been submitted; the Kaggle private result remains **0.70090**.
 
-For a public software review, run the following from the repository with Python
-3.11 or later and at least 5 GiB free storage:
+**The next six-fit study is complete.** Notebook 02 section **10** reports all
+three chronological training-side folds, with fold-local baselines and encodings.
+Across 98 evaluation games and 202,361 forecast rows:
 
-```bash
-python scripts/bootstrap.py
-```
+| Model | Pooled coordinate RMSE |
+|---|---:|
+| Attention without the six target-derived statistics | 0.77414 |
+| Attention with the statistics | 0.72063 |
+| Preserved tree | 0.70260 |
+| Fixed equal tree/attention blend | **0.67866** |
 
-Bootstrap creates the locked Python 3.11 environment, registers the notebook
-kernel, and runs the quality suite. No AWS or Kaggle credentials are needed for
-that review. The tests use controlled fixtures, and notebooks can read published
-aggregates. Reproducing the fitted numerical results requires the licensed
-competition inputs and the experiment sequence below.
+The statistics help every fold and reduce pooled attention RMSE by **6.91%**.
+The blend reduces pooled tree RMSE by **3.41%**, with a paired 95% difference
+interval of **−0.03141 to −0.01610 yards**. The later third fold is weaker:
+attention scores 0.79213 versus the tree's 0.73530, and the blend's 0.73019 has
+an interval crossing zero. Attention alone does not earn replacement of the tree.
+The [declared study gates](docs/TEMPORAL_RESEARCH.md) pass for target-statistic
+retention and further blend inference research; those gates do not establish
+deployment readiness. Other feature ablations, seed replication and inference validation
+remain open. These reused folds and one seed establish conditional evidence.
+
+Notebook 02 section **9, “Temporal attention challenger,”** presents this new
+experiment separately from section 8's completed historical refit and holdout.
+The run completed 40 epochs in 8.9 minutes. A first attempt was stopped after
+5.3 minutes when its decoder saturated; its diagnostic and checkpoint are
+preserved. Both attempts remained inside the 20-minute training budget.
+Checkpoint reuse reproduced the model and predictions exactly without another
+training epoch.
 
 ## Where training and evaluation happen
 

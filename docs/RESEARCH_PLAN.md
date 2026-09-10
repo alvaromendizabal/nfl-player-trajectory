@@ -112,10 +112,12 @@ Close feature engineering only when the major realistic families have explicit
 evidence, fixed-estimator feature gains are robust, the latest useful representation
 has a validated inference path, and remaining plausible feature gains are small.
 There is no claim that a finite search proves every possible feature exhausted.
-Current status: **closed after all 15 evidence criteria passed**. The source-bound
+Original tree-phase status: **closed after all 15 evidence criteria passed**. The source-bound
 selection manifest was frozen for the final phase. That phase subsequently
 completed: reserved RMSE 0.80467 and Kaggle private RMSE 0.70090. The feature gate
 established controlled feature value, not competition-leading model performance.
+The subsequent neural representation reopens feature attribution: its matched
+feature-family ablations and chronological fold confirmation remain incomplete.
 
 The [wide ablation protocol](WIDE_ABLATION_PROTOCOL.md) extends strict refits to
 the selected wide availability profile, covers all 20 catalog families in
@@ -212,10 +214,62 @@ the frozen full-feature reference and is not promoted. This diagnostic does not
 test deeper boosting on the full feature bank. Its fits, row-level errors,
 input hashes and checkpoints are preserved separately from the submitted model.
 
-### Next experiment and promotion requirements
+### Completed temporal trial and promotion requirements
 
-1. Build a play-level temporal encoder with attention across players and a
-   displacement decoder. Use masks for missing players/history and variable
+The [temporal trial](TEMPORAL_MODEL.md) completed one 40-epoch model on the same
+192/32-game split. Its **0.69056 RMSE** does not improve the **0.68805** tree.
+The individual-model paired 95% interval is **−0.01542 to +0.02176 yards**.
+An exploratory fixed equal blend, declared during training before the final
+score, reaches **0.65567**; its interval is **−0.04167 to −0.02175 yards**.
+No blend weights were fitted on development. These results support investigating
+complementary errors, not a promotion or a claimed leaderboard gain.
+
+A stopped decoder-saturation attempt (24 epochs, 319 seconds) is retained in the
+stability record. Normalization restored learning. The completed fit took
+533 seconds; exact checkpoint/prediction reuse took 7.3 seconds without training.
+Data preparation also recovered from a disk-capacity interruption using verified
+completed stages. Failed attempts and their provenance remain visible.
+
+### Completed chronological confirmation and historical-statistic ablation
+
+The [declared protocol](TEMPORAL_RESEARCH.md) was fixed before the first completed
+fit. All six 40-epoch models completed, using 39.1 minutes of training time and
+42.0 minutes including fold preprocessing and evaluation. Each fold refits the
+baseline and historical encoder inside its earlier training dates. Counts and
+cold-start flags remain in both arms; only six target-derived mean/dispersion
+channels differ. The complete [result](results/temporal_research.json) records
+predictions' hashes, learning curves, horizon/role/cold-start slices, and gates.
+
+| Chronological fold | Training/evaluation games | Tree | Attention, full | Attention, no target statistics | Equal blend |
+|---|---|---:|---:|---:|---:|
+| 1 | 94 / 41 | 0.69851 | 0.69855 | 0.76579 | 0.66669 |
+| 2 | 135 / 28 | 0.67209 | 0.67041 | 0.74461 | 0.63754 |
+| 3 | 163 / 29 | 0.73530 | 0.79213 | 0.81165 | 0.73019 |
+| Pooled requested rows | 98 evaluation games | 0.70260 | 0.72063 | 0.77414 | 0.67866 |
+
+Across all 202,361 forecast rows, target statistics reduce attention RMSE by
+**6.91%**, with paired game-bootstrap difference **−0.06905 to −0.03838 yards**.
+They help all three folds under this fixed training budget. This does not
+separate player from role statistics or prove equal convergence across arms.
+The unchanged equal blend reduces pooled tree RMSE by **3.41%**, with interval
+**−0.03141 to −0.01610 yards**, and improves each fold's point estimate.
+Both predeclared study gates pass.
+
+The full attention model is **2.57% worse** than the pooled tree, with difference
+interval **+0.00351 to +0.03233 yards**. The third-fold blend gain is just 0.69%,
+with interval **−0.01698 to +0.00561 yards**. The later-fold weakness is visible
+after one second and affects receivers and defenders. These descriptive slices
+guide candidate features; they do not identify a causal explanation for the loss.
+The blend is eligible for further inference research, not deployment. One seed
+and reused historical folds limit uncertainty claims. No new reserved-set
+evaluation or Kaggle submission was performed.
+
+Next, isolate pair geometry and role anchors, test explicit arrival feasibility,
+replicate seeds, and validate complete inference. The neural feature gate stays
+open. Further architecture, augmentation and loss experiments remain below.
+
+1. The first play-level temporal encoder, player-attention blocks and
+   displacement decoder are implemented. Use masks for missing players/history and variable
    output lengths; cover every requested frame without truncation. Start with
    the compact numeric feature set supported by the winning approach.
 2. Test consistent spatial augmentation and earlier-frame forecasting. Transform
@@ -226,9 +280,9 @@ input hashes and checkpoints are preserved separately from the submitted model.
    acceleration auxiliary losses. Rank every candidate using the unchanged,
    unweighted official coordinate RMSE. Audit anomalous training plays; retain
    every validation and submitted target row in the reported metric.
-4. First run one bounded training experiment on the established development
-   partition. Then confirm gains on all three chronological inner folds, refitting
-   every learned preprocessing step inside each fold. Supplement with grouped
+4. The first bounded development experiment and three-fold confirmation are
+   complete. Apply the same protocol to further candidates, refitting every
+   learned preprocessing step inside each fold. Supplement with grouped
    game validation for comparison with published approaches. The previously
    scored 48-game holdout is no longer an untouched selection resource.
 5. Add folds/seeds and average predictions only when out-of-fold error analysis
@@ -239,6 +293,44 @@ input hashes and checkpoints are preserved separately from the submitted model.
    license, task reconstruction, event timing, and absence of validation overlap.
    The winner demonstrates that external data is not required for a strong score.
 
+### September 2026 research refresh and remaining feature tests
+
+The literature was checked again on September 10, 2026. These arXiv reports
+inform candidate representations; their benchmarks do not establish NFL
+competition gains or replace our chronological validation.
+
+| Research | Relevant evidence | Transfer decision for this project |
+|---|---|---|
+| [PlayGen-MoG, April 2026](https://arxiv.org/html/2604.02447v1) | Encodes pairwise positions and distances as attention biases, and couples players with shared mixture components. Its task generates offensive plays from one formation frame. | Geometry-biased attention is already implemented here. More mixture components mainly improve diversity in that paper; this is insufficient evidence to prioritize them for our single-trajectory RMSE objective. |
+| [Hidden Context in Dynamic Movement Forecasting, May 2026](https://arxiv.org/html/2605.14855v1) | Its NBA experiments use player velocities, teammate/opponent relationships and distances to fixed landmarks. A contextual CNN-LSTM outperforms its tested Transformers. | Test explicit arrival and relational context under fixed model capacity. A newer or larger architecture is not itself evidence of a better predictor. |
+| [AdaSports-Traj, September 2025](https://arxiv.org/html/2509.16095v1) | Uses role/domain-conditioned latent adaptation and hierarchical contrastive learning for multi-sport trajectory completion. | A role-conditioned representation is a candidate, not an implemented result. Its player/ball roles and multi-domain setting differ from our football roles and observed-only forecasting task. |
+
+The next feature experiments follow this code-level gap audit. These are our
+proposed transfers, not claims that a cited paper has validated these exact NFL
+features:
+
+1. **Arrival feasibility:** the tree's context bank already contains required
+   arrival velocity/acceleration and gaps from observed motion. The temporal
+   model has landing geometry, radial motion and horizon, but does not expose
+   those explicit feasibility channels. Test this compact family as one addition,
+   with unchanged training settings and a matched removal. Do not relabel existing
+   distance or closing-speed channels as new features.
+2. **Changing coverage relationships:** the attention edges contain terminal
+   pair geometry, closest approach and arrival distance. They do not contain a
+   sequence of pairwise coverage changes. First ablate the existing edge family;
+   then test observed-only short/long changes in separation and closing speed.
+   Respect player identity and masks throughout the observed window.
+3. **Role and destination structure:** preserve the role embeddings and
+   historical-statistic comparison, then isolate receiver/passer anchors before
+   testing a role-conditioned adapter. Do not change the feature family and
+   model capacity in the same attribution claim.
+
+All additions must use information available at prediction time, retain every
+requested forecast row, pass reflection/permutation and leakage checks, and
+earn their place on all declared training-side folds. Seed replication and
+complete raw-input/gateway inference remain required before a new release.
+The neural feature gate remains open.
+
 The current Prediction schema contains names, positions and categorical roles,
 but no play-description text. NLP on player names has no demonstrated benefit.
 Retrospective play descriptions can reveal the outcome. A language model can help
@@ -246,6 +338,6 @@ with literature review, code and error explanation; it is not the planned numeri
 trajectory predictor. The proposed attention model is trained on tracking data.
 
 The objective is to approach 0.46 private RMSE through measured improvements.
-No neural challenger has yet been trained in this extension, and no improved
-Kaggle score is claimed. Full-scale fitting should follow a timed single-run
-benchmark with a compute cap and recoverable epoch checkpoints.
+The first neural challenger is complete; no improved Kaggle score is claimed.
+Further fitting must retain timed runs, explicit compute caps, recoverable
+checkpoints, and validation that separates model/feature effects.

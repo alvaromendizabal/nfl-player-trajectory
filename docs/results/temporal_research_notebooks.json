@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "timestamp": "2026-09-10T00:59:31.787623+00:00",
+  "quality": {
+    "status": "passed",
+    "run_id": "20260910T005614Z-f7159664",
+    "scope": "offline tests, synthetic integration, notebook; no live Kaggle score",
+    "checks": 13
+  },
+  "quality_sha256": "23d95ae1c5f12b82e81b184e75e8ca64230f701396025d349e960c1f924a0bfa",
+  "study_sha256": "7d57e59876fa9d6f51e4cb422cb5aa02ee90988a97046cd62e206317f3579757",
+  "notebooks": [
+    {
+      "path": "notebooks/00_project_readiness.ipynb",
+      "sha256": "c8f3f1c221bdaf41b9b1363bd4be854824321cb7b32f3051ac14c3bbba36cf79",
+      "code_cells": 4,
+      "execution_signature": "708172b13c2b995e8a4bdf9304c64075195f3d949e3e04dbcf06b0c3d301d657",
+      "errors": 0,
+      "stderr_outputs": 0
+    },
+    {
+      "path": "notebooks/01_data_analysis.ipynb",
+      "sha256": "225ac5c850c7965a9773d59c46205250b8d97f3e7d62e4538c78c76bb6469550",
+      "code_cells": 9,
+      "execution_signature": "718484bcabcf7862026836129c0ef984556addd7b6c845516269bd4b9741f5c8",
+      "errors": 0,
+      "stderr_outputs": 0
+    },
+    {
+      "path": "notebooks/02_motion_benchmarks.ipynb",
+      "sha256": "f1ea58afa937eebbd5fd89a78a505dda34ca16323e34cb32e14c5c76ed573f80",
+      "code_cells": 20,
+      "execution_signature": "92c9740eaea83b2822333fe00cd8b2db26d4470ecc0a8354ec447bcd85d007fd",
+      "errors": 0,
+      "stderr_outputs": 0
+    }
+  ],
+  "total_code_cells": 33,
+  "publication_method": "Validate the completed quality outputs, source signatures and stage hashes, then copy to canonical notebooks, as in repository CI.",
+  "environment_retry": {
+    "failed_run_id": "20260910T005512Z-c098f3a3",
+    "reason": "System temporary directory exhausted (ENOSPC).",
+    "resolution": "Same quality gates passed using an available dedicated temporary directory."
+  }
+}

@@ -177,7 +177,13 @@ def execution_signature(root: Path, source: Path) -> str:
     inputs.extend(path for path in final_inputs if path.is_file())
     inputs.extend(
         path
-        for name in ("temporal_model.json", "temporal_evaluation.json", "temporal_diagnostics.png")
+        for name in (
+            "temporal_model.json",
+            "temporal_evaluation.json",
+            "temporal_diagnostics.png",
+            "temporal_research.json",
+            "temporal_research.png",
+        )
         if (path := root / "docs/results" / name).is_file()
     )
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())

@@ -1,0 +1,64 @@
+{
+  "status": "verified",
+  "bucket": "sagemaker-nfl-trajectory-560403859723-us-west-2",
+  "region": "us-west-2",
+  "manifest_key": "snapshots/d7992e30f488b53dcd0027883dd2e5bf0404d166de3c2f86f64c31be1ac3a4a9.json",
+  "manifest_sha256": "d7992e30f488b53dcd0027883dd2e5bf0404d166de3c2f86f64c31be1ac3a4a9",
+  "parent_manifest_sha256": "f7d5a0fde9c6ecd08a18c5c3d66f908448af3af85da7d53ddebd01cb48fa1503",
+  "manifest_paths": 1748,
+  "referenced_unique_objects": 1655,
+  "inventory_prefixes_checked": 16,
+  "missing_or_size_mismatched_objects": 0,
+  "checkpoint_objects": [
+    {
+      "encryption": "AES256",
+      "etag": "35c83cd60a72fd9418f2d9a9bb75a49e",
+      "key": "objects/d2fc6364718b9c7168c4f0b101f2736523550fbaf26befaf2695959b212ba55c",
+      "last_modified": "2026-09-10T00:18:46+00:00",
+      "size": 4727181
+    },
+    {
+      "encryption": "AES256",
+      "etag": "ecc5a3e0cb2e27c3d4c2b24625424b37",
+      "key": "objects/8ee88a49dad872cc78b3e21d213e5613912defac245e9c35bc5c9cde7c299205",
+      "last_modified": "2026-09-10T00:22:40+00:00",
+      "size": 4727181
+    },
+    {
+      "encryption": "AES256",
+      "etag": "c8f8bba90a6ab6f47e0767847aee5949",
+      "key": "objects/d521499c4f821c62dfd829de916443864de0a67b01c288a39a88edd896aea81d",
+      "last_modified": "2026-09-10T00:29:59+00:00",
+      "size": 4727181
+    },
+    {
+      "encryption": "AES256",
+      "etag": "d2975bf21ed37eca9fec9db5d0f772b9",
+      "key": "objects/820c686da17879f366d951fd5f90dafdd0fe8494c4ca933209d885206183165c",
+      "last_modified": "2026-09-10T00:35:57+00:00",
+      "size": 4727181
+    },
+    {
+      "encryption": "AES256",
+      "etag": "278c547d9c575b429e15dd15439f25d0",
+      "key": "objects/b395a2cc7ff6c592800cc0a07b121988df0317f25157cd591f30dd6738d00804",
+      "last_modified": "2026-09-10T00:47:04+00:00",
+      "size": 4727181
+    },
+    {
+      "encryption": "AES256",
+      "etag": "7270af2144126cd722fa5826fb3e19f3",
+      "key": "objects/e4aab6c4f48ca4ba59c4e72fe0c417c71e3c51e06101f52abc7b411cd4574be4",
+      "last_modified": "2026-09-10T00:57:31+00:00",
+      "size": 4727181
+    }
+  ],
+  "manifest_object": {
+    "encryption": "AES256",
+    "etag": "f821dd3d9f1c199fb703ea4c624420a0",
+    "key": "snapshots/d7992e30f488b53dcd0027883dd2e5bf0404d166de3c2f86f64c31be1ac3a4a9.json",
+    "last_modified": "2026-09-10T01:13:02+00:00",
+    "size": 272680
+  },
+  "verification": "All referenced object keys and sizes verified inside the AWS script across hexadecimal content prefixes. All six checkpoints and the final manifest also match local ETags, lengths and AES256 encryption. Each new upload checked SHA-256 before PUT and ETag afterward."
+}

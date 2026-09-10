@@ -6,6 +6,10 @@ This implements the [Prediction competition](https://www.kaggle.com/competitions
 The repository name describes its target; the separate Analytics competition is
 not this project's entry point.
 
+**Performance objective: approach 0.46 private RMSE.** This has not been reached.
+The recorded Kaggle private result remains **0.70090**; the temporal experiments
+below have not produced a new submission score.
+
 **Feature research, with measurable attribution:** 7,999 candidates across 20
 families; training-only screening; three chronological inner folds; strict family
 ablations; fixed-estimator comparisons; and explicit input-availability contracts.
@@ -33,8 +37,17 @@ RMSE difference is **−0.04167 to −0.02175 yards**. The individual neural mod
 not improve the reference. This one-seed development result is not a new Kaggle
 score and has not been promoted. See the [model protocol](docs/TEMPORAL_MODEL.md),
 [exact comparison](docs/results/temporal_evaluation.json), and notebook 02 section 9.
-The next gate is chronological inner-fold confirmation of the complementary
-errors, followed by matched feature ablations and inference validation.
+**Six matched chronological fits are also complete:** across 98 evaluation games
+and 202,361 forecast rows inside the original training partition, historical
+target statistics reduce attention RMSE from **0.77414 to 0.72063** (**6.91%**).
+They help every fold under the fixed 40-epoch budget. The equal blend scores
+**0.67866**, versus the tree's **0.70260** (**3.41%** lower); its paired pooled
+difference interval is **−0.03141 to −0.01610 yards**. Attention alone is worse
+than the pooled tree, and the third fold's blend gain is only 0.69%, with an
+interval crossing zero. These are conditional results from one seed on reused
+folds, not a new leaderboard result. See [the complete study](docs/results/temporal_research.json),
+[its declared protocol](docs/TEMPORAL_RESEARCH.md), and notebook 02 section 10.
+The blend passes the declared gate for further inference research, not deployment.
 
 ## Review in five minutes
 
@@ -81,8 +94,10 @@ candidates; 6,385 survive development-training screening and redundancy removal.
 The selected metadata-free refit uses 6,308 columns. Its trees use **953 active
 inputs**, which are exported without changing any predictions. These are distinct
 counts: screening, refitting, and lossless inference pruning serve different purposes.
-The new neural representation has an open feature gate: matched history, pair-geometry,
-and role-anchor ablations and chronological fold confirmation are still required.
+The new neural representation has an open feature gate. Its matched historical
+target-statistic ablation and chronological blend comparison are complete;
+pair-geometry and role-anchor ablations, seed replication, and complete inference
+validation remain required.
 
 Raw inference reproduces **0.68805 RMSE on all 67,857 development frames**.
 Removing metadata or clearing player history leaves predictions unchanged.
@@ -106,7 +121,7 @@ matches all three examples published in the organizer's scorer. ADE, FDE, p95 di
 role/horizon slices, and paired game-cluster intervals supply additional context.
 Inference replay checks fresh raw features against saved experiment predictions.
 
-The locked Python 3.11 project has **317 automated tests**, including leakage, geometry, missing-input dependencies, artifact
+The locked Python 3.11 project has **327 automated tests**, including leakage, geometry, missing-input dependencies, artifact
 integrity, recovery, and standalone parity. CI checks lint, formatting, types,
 warnings as errors, and notebook execution. Structured UTC logs, atomic writes,
 locks, source/input hashes, and content-addressed S3 checkpoints make long work

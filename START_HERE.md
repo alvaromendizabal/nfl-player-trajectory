@@ -3,13 +3,17 @@
 This is the [Prediction project](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction). The canonical notebooks are 00, 01, and 02;
 the repository name describes the player's trajectory prediction target.
 
+**Current objective: approach 0.46 private RMSE.** The recorded Kaggle result is
+**0.70090**. The new temporal research has not been submitted to the hidden test.
+
 ## Review the evidence
 
 Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution,
 then [notebook 01](notebooks/01_data_analysis.ipynb) for data and feature rationale.
 Public aggregates support review without private tracking or cloud credentials.
-All 15 feature-research criteria pass, and the feature/selection manifest is
-frozen. Final preprocessing and both residual-tree profiles have been fitted
+All 15 original tree feature-research criteria pass, and that feature/selection
+manifest is frozen. The temporal model has its own open feature gate. Final
+preprocessing and both residual-tree profiles have been fitted
 on all 224 authorized games. The sealed reserved-holdout evaluation is complete:
 **0.80467 coordinate RMSE in yards** on 99,266 forecast frames from 48 later
 games (95% game-bootstrap interval: 0.66313–1.00113).
@@ -48,10 +52,29 @@ development rows, it scores **0.69056**, compared with the existing tree's
 **0.68805**. A fixed 50/50 exploratory blend reaches **0.65567** (4.71% lower
 RMSE). The neural model alone has not earned replacement of the tree. The
 [comparison](docs/results/temporal_evaluation.json) and
-[protocol](docs/TEMPORAL_MODEL.md) preserve this distinction. The next bounded
-gate is training-side chronological-fold confirmation of the combination,
-followed by feature ablations and complete inference validation. No new model
-has been submitted; the Kaggle private result remains **0.70090**.
+[protocol](docs/TEMPORAL_MODEL.md) preserve this distinction. No new model has
+been submitted; the Kaggle private result remains **0.70090**.
+
+**The next six-fit study is complete.** Notebook 02 section **10** reports all
+three chronological training-side folds, with fold-local baselines and encodings.
+Across 98 evaluation games and 202,361 forecast rows:
+
+| Model | Pooled coordinate RMSE |
+|---|---:|
+| Attention without the six target-derived statistics | 0.77414 |
+| Attention with the statistics | 0.72063 |
+| Preserved tree | 0.70260 |
+| Fixed equal tree/attention blend | **0.67866** |
+
+The statistics help every fold and reduce pooled attention RMSE by **6.91%**.
+The blend reduces pooled tree RMSE by **3.41%**, with a paired 95% difference
+interval of **−0.03141 to −0.01610 yards**. The later third fold is weaker:
+attention scores 0.79213 versus the tree's 0.73530, and the blend's 0.73019 has
+an interval crossing zero. Attention alone does not earn replacement of the tree.
+The [declared study gates](docs/TEMPORAL_RESEARCH.md) pass for target-statistic
+retention and further blend inference research; those gates do not establish
+deployment readiness. Other feature ablations, seed replication and inference validation
+remain open. These reused folds and one seed establish conditional evidence.
 
 Notebook 02 section **9, “Temporal attention challenger,”** presents this new
 experiment separately from section 8's completed historical refit and holdout.

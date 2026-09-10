@@ -183,9 +183,17 @@ def execution_signature(root: Path, source: Path) -> str:
             "temporal_diagnostics.png",
             "temporal_research.json",
             "temporal_research.png",
+            "domain_research.json",
+            "domain_research.png",
+            "domain_feature_catalog.csv",
+            "motion_research.json",
+            "domain_manifest.json",
         )
         if (path := root / "docs/results" / name).is_file()
     )
+    domain_verifier = root / "src/nfl_trajectory/domain_evidence.py"
+    if domain_verifier.is_file():
+        inputs.append(domain_verifier)
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(

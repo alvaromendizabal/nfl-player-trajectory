@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "study": "motion_research",
+  "verified_files": 120,
+  "fits_reused": 30,
+  "new_training_epochs": 0,
+  "checkpoint_and_prediction_hashes_and_mtimes_unchanged": true,
+  "elapsed_seconds": 22.92140314700373
+}

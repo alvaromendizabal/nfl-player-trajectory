@@ -1,0 +1,168 @@
+{
+  "status": "passed",
+  "reason": "Quality-gate typing correction; numerical AST equality verified before replay.",
+  "original_fits": 30,
+  "reproduction_fits": 30,
+  "new_scientific_comparisons": 0,
+  "identical_feature_caches": 3,
+  "identical_prediction_files": 30,
+  "comparisons": [
+    {
+      "prediction": "inner_1/all/errors.csv",
+      "sha256": "85df9bfdfaa29cdef0b8727359be47e9657de41e02a62ec3770b6a028f861ed5",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/arrival_constraints/errors.csv",
+      "sha256": "4468d3aeb7f0055d72c95823e9312790c48c8f9be4651623f4c3d5878668c0fa",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/control/errors.csv",
+      "sha256": "d43e6cd765263217f119b8a8f5f13b9e04c499564d287da9c43c7fd9312a3ae2",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/coverage_dynamics/errors.csv",
+      "sha256": "2c87c100c99fb9aecb96d35e65899988dd259fe8acf430177aaca58ffed32eb1",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/field_geometry/errors.csv",
+      "sha256": "a753a3b8a8df05454954d98d790f3525f2203f3082e1befd58dc91fd75e43340",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/motion_state/errors.csv",
+      "sha256": "f667519dbd52ad94aae30d2a71cadce9b7c810f295a5a31cfaad227f3cd5458e",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/without_arrival_constraints/errors.csv",
+      "sha256": "2afd83868bf25bde68d9407aef9e5804c9785f3468c0bb2352d857426a4c9d8f",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/without_coverage_dynamics/errors.csv",
+      "sha256": "4bc9bc21160326109a64490a49ef672cb096f41212e41be779cad01a182bf30a",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/without_field_geometry/errors.csv",
+      "sha256": "ef72a0b6a846015aa000b6a9913f68408e4bce73f7307057a314e2c5381379b2",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_1/without_motion_state/errors.csv",
+      "sha256": "c919afb893e364f7a1530aa90f2f46e655427081bf6054ffdc206c825a526513",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/all/errors.csv",
+      "sha256": "3d845f8fee45cb46ed87eb33a1d27e08958fc4c7d8985c310fb95205fbd6fae3",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/arrival_constraints/errors.csv",
+      "sha256": "fb1c553eda106c0a4ff576c7ba97bfa8bbfb6bfb5cf45185015b0b7d9546e77c",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/control/errors.csv",
+      "sha256": "04f94f0a2275f5d207838a1021f2f7f962da69dce00d85cfc3ccde5f3e475b44",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/coverage_dynamics/errors.csv",
+      "sha256": "49b4948e5e0161c869d9a337beeb43e6168ad089b385696756c095e2318cb810",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/field_geometry/errors.csv",
+      "sha256": "184aaea50839b864259f4279cd66b890b8282b4c5da9f1df0397abd4f2659a94",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/motion_state/errors.csv",
+      "sha256": "6e89c4044dce12b76b6397eba2436c050736f95ed70d93cd51ede408448c8bf9",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/without_arrival_constraints/errors.csv",
+      "sha256": "7043d6c9747460555a2b349e01387081d2c709203f4577ad1d82d57ee071804d",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/without_coverage_dynamics/errors.csv",
+      "sha256": "7f6b732c8514dd7384f5d9ad0afd40e539897d1edc157d5050f2aea04c738436",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/without_field_geometry/errors.csv",
+      "sha256": "6b876d3c1a2d24bcefe0b54d5acf904c71dbb1def4bac76748e5bf36254d8a03",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_2/without_motion_state/errors.csv",
+      "sha256": "c3338650fb7aadd5947f2d39bc47639e0c09efd87a65240f982498e9bcbb1442",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/all/errors.csv",
+      "sha256": "05a81584088cf41a78e7903963abd8441ed64a5aa30aa017eabb73ed9309840d",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/arrival_constraints/errors.csv",
+      "sha256": "eff8d0efed143128f4fb65fc8e20f193e0adfb506f03ef12236b76cbd4504395",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/control/errors.csv",
+      "sha256": "366e411676764fff59666272c4a90219e5971d5846300c1169e6c43d2162156b",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/coverage_dynamics/errors.csv",
+      "sha256": "431a7966ef7674b0b2061c7cdea8c8db9e558616669f1f9192ce1e06ba054239",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/field_geometry/errors.csv",
+      "sha256": "f88d1a3d0a4570d2ff963c2aeafee17dbda892b1e7d8fde15c758fcb252e7481",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/motion_state/errors.csv",
+      "sha256": "e15cd0e367db3eb4bd7f2c20bc94d356ce7bb6a236bceaacd877bc787dc5858b",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/without_arrival_constraints/errors.csv",
+      "sha256": "745a305f37658feb2a712a465a6da5541bb1d72c41d949e689eecfadbcbd1272",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/without_coverage_dynamics/errors.csv",
+      "sha256": "9acbf32eb4ef99f0b7c768dbd525a9595e3efafb0ad1c562a4917b1ec6a29abf",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/without_field_geometry/errors.csv",
+      "sha256": "53897960cdeb6f4fbe93939f971be4a4858fe7ddaf48b9510772f04c38fae731",
+      "exactly_reproduced": true
+    },
+    {
+      "prediction": "inner_3/without_motion_state/errors.csv",
+      "sha256": "3a489f2ec9eb16c1bf93220e2f3414fe8016476cf6b5f3c4878ec68e36510541",
+      "exactly_reproduced": true
+    }
+  ],
+  "source_equivalence": {
+    "reason": "Add explicit local type required by the quality gate; verify preserved numerical behavior.",
+    "before_sha256": "dedf6f220b678211e4e792b0eab960fa382eea483b310138e182004da1e93062",
+    "after_sha256": "136ac662fbc8c99f36696a029369cdc91f34ceb09bfbc32f1374fc7bf88273e5",
+    "ast_equal_after_removing_annotations": true,
+    "reference_plan_sha256": "3572c89962d5a4957f5a830f9ee9a9a05e778a0ee9e66cce00bebb5092c8c2ca"
+  }
+}

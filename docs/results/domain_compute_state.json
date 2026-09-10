@@ -1,0 +1,47 @@
+{
+  "checked_at_utc": "2026-09-10T02:14:17.044Z",
+  "region": "us-west-2",
+  "scope": "NFL-named SageMaker training/processing jobs, endpoints, and apps",
+  "api_calls": [
+    {
+      "n_items": {
+        "TrainingJobSummaries": 0
+      },
+      "operation": "ListTrainingJobs",
+      "service": "sagemaker",
+      "status": "success"
+    },
+    {
+      "n_items": {
+        "ProcessingJobSummaries": 0
+      },
+      "operation": "ListProcessingJobs",
+      "service": "sagemaker",
+      "status": "success"
+    },
+    {
+      "n_items": {
+        "Endpoints": 0
+      },
+      "operation": "ListEndpoints",
+      "service": "sagemaker",
+      "status": "success"
+    },
+    {
+      "n_items": {
+        "Apps": 3
+      },
+      "operation": "ListApps",
+      "service": "sagemaker",
+      "status": "success"
+    }
+  ],
+  "return_value": {
+    "apps": [],
+    "endpoints": [],
+    "processing": [],
+    "training": []
+  },
+  "status": "success",
+  "stdout": ""
+}

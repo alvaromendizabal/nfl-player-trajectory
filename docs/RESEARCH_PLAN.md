@@ -4,6 +4,15 @@ Feature engineering is an explicit research phase. Notebook 02 is not complete
 because features can be computed or a model can fit. Final refitting and the
 reserved holdout require an evidence-based closure decision.
 
+**September 10 domain update:** the [extended NFL evidence review](DOMAIN_RESEARCH.md)
+and [controlled domain experiment](DOMAIN_EXPERIMENT.md) now distinguish
+football mechanisms from their implemented representations. Thirty matched
+fits test 330 explicit candidates. Motion is useful in both addition and removal;
+the new coverage summaries hurt. The [motion subfamily protocol](MOTION_EXPERIMENT.md)
+isolates the signal using the same chronological rows and fixed training budget.
+The feature gate remains open, particularly for end-to-end learned motion,
+auxiliary tasks, older NFL tracking and uncertain coverage assignments.
+
 ## Protocol
 
 Keep every game intact. Use 192 training games and 32 later development games;

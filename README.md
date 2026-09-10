@@ -10,6 +10,20 @@ not this project's entry point.
 The recorded Kaggle private result remains **0.70090**; the temporal experiments
 below have not produced a new submission score.
 
+**Latest domain research:** 330 explicit candidates, 313 surviving train-only
+screening per fold, and 30 matched feature fits. Motion features improve all
+three chronological folds; additional coverage summaries hurt. The declared
+all-feature/tree blend reaches **0.64160**, versus the earlier blend's
+**0.67866** on the same 202,361 internal evaluation rows. The all-feature model
+alone fails its all-fold consistency gate. These are reused development-fold
+results, not hidden-test accuracy. Read the
+[NFL domain review and coverage ledger](docs/DOMAIN_RESEARCH.md) and notebook 02
+sections 11–12. **Feature engineering remains open.**
+The 30-fit motion follow-up identifies **smoothed observed state** as the
+subfamily that helps across all three folds in both addition and removal.
+Its complete-motion/tree blend scores **0.64409**; all 60 feature comparisons
+remain visible rather than selecting the smallest observed arm.
+
 **Feature research, with measurable attribution:** 7,999 candidates across 20
 families; training-only screening; three chronological inner folds; strict family
 ablations; fixed-estimator comparisons; and explicit input-availability contracts.

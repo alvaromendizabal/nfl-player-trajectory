@@ -85,6 +85,21 @@ def test_source_hash_ignores_outputs_but_not_code() -> None:
     assert runner.source_hash(value) != initial
 
 
+@pytest.mark.parametrize(
+    "name", ["domain_research.json", "motion_research.json", "domain_manifest.json"]
+)
+def test_published_domain_research_invalidates_notebook_cache(project: Path, name: str) -> None:
+    source = notebook(project)
+    before = runner.execution_signature(project, source)
+    path = project / "docs/results" / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text('{"version": 1}')
+    added = runner.execution_signature(project, source)
+    path.write_text('{"version": 2}')
+    assert added != before
+    assert runner.execution_signature(project, source) != added
+
+
 def test_execute_reuses_verified_output_and_recovers_corruption(project: Path) -> None:
     source = notebook(project)
     output = execute(project, source)

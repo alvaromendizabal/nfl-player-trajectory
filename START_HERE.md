@@ -6,6 +6,21 @@ the repository name describes the player's trajectory prediction target.
 **Current objective: approach 0.46 private RMSE.** The recorded Kaggle result is
 **0.70090**. The new temporal research has not been submitted to the hidden test.
 
+**Latest research checkpoint:** the new 330-candidate domain screen tests motion,
+arrival feasibility, coverage dynamics and field geometry under identical model
+capacity. Explicit motion helps across all three chronological folds; coverage
+summaries hurt this frozen representation. The predeclared all-feature/tree
+blend scores **0.64160**, compared with the previous blend's **0.67866** on the
+same internal rows. The standalone all-feature model fails its consistency gate.
+Open [the domain review](docs/DOMAIN_RESEARCH.md) for the sources, attribution,
+and unfinished feature avenues, then notebook 02 sections **11–12** for the
+executed evidence. This is progress within feature research, not completion or
+a new Kaggle result.
+The 30-fit motion follow-up identifies **smoothed observed state** as the
+subfamily that helps across all three folds in both addition and removal.
+Its complete-motion/tree blend scores **0.64409**; all 60 feature comparisons
+remain visible rather than selecting the smallest observed arm.
+
 ## Review the evidence
 
 Open [notebook 02](notebooks/02_motion_benchmarks.ipynb) for feature attribution,

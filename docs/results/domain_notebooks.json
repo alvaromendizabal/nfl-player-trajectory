@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-09-10T02:21:40.027536+00:00",
+  "quality": {
+    "status": "passed",
+    "run_id": "20260910T021636Z-06277c89",
+    "scope": "offline tests, synthetic integration, notebook; no live Kaggle score",
+    "checks": 13
+  },
+  "tests": {
+    "base_passed": 335,
+    "base_skipped": 2,
+    "domain_motion_torch_passed": 10,
+    "note": "Torch-dependent tests run separately in the locked Torch 2.8.0+cpu environment."
+  },
+  "notebooks": [
+    {
+      "path": "notebooks/00_project_readiness.ipynb",
+      "sha256": "84e238b113f9226c34160745476a0654b8365f4a6104f99d9b384f224b71767d",
+      "execution": {
+        "cells": 4,
+        "method": "isolated_process_ipython",
+        "signature": "db68699f0ad67fd8b0dd8e12c2bb69ed25dba90e654a42fe5321f5986141e147",
+        "source_sha256": "660a218be53c911b1cb5246d2f079f5bff1073830dbf6b0c76cb20a55257e750"
+      }
+    },
+    {
+      "path": "notebooks/01_data_analysis.ipynb",
+      "sha256": "16cdeb16ae8cbdfae152f436e42d1e9626f758e6671445010587452a06fe3f57",
+      "execution": {
+        "cells": 9,
+        "method": "isolated_process_ipython",
+        "signature": "dcd7bbb9aec44ff8fe9d11c59db338073cd16c90a22f04eadb6e38371523fb7f",
+        "source_sha256": "458f931bc9643bed934ae39e58c77b1c362fa70a4f480dc8c06acb82380b8eed"
+      }
+    },
+    {
+      "path": "notebooks/02_motion_benchmarks.ipynb",
+      "sha256": "20aba861e184c8addb2fe55907cfa58038e6a84f7518fcdad93fb1334e04f180",
+      "execution": {
+        "cells": 23,
+        "method": "isolated_process_ipython",
+        "signature": "2b0310ebdb2a9b1a2e3c87cd3946e63df47fa780ab56c586378ea5c6376ccf7d",
+        "source_sha256": "4c6dba1fd782743d48b9d7fbef7b337c0b609aee29d6b6776d9aceea51623e42"
+      }
+    }
+  ]
+}

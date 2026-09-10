@@ -10,12 +10,15 @@ from nfl_trajectory.temporal_data import CHANNELS, reflect
 
 def test_outcomes_and_player_identity_do_not_change_features():
     source = sample(5)
+    # Exercise read-only views under every supported pandas version.
+    for name in ("truth", "ids", "keys"):
+        source[name].setflags(write=False)
     expected, names, _ = candidates(source)
-    source["truth"][:] = 1e9
+    source["truth"] = np.full_like(source["truth"], 1e9)
     # Pandas 3 may expose a read-only NumPy view; replace it without weakening
     # the identity-invariance assertion.
     source["ids"] = source["ids"] + 9000
-    source["keys"][:] = -1
+    source["keys"] = np.full_like(source["keys"], -1)
     np.testing.assert_array_equal(candidates(source)[0], expected)
     assert len(names) == len(set(names)) == 83
 

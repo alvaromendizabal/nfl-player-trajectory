@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "signature": "37a45c67147de6a684b5ea6688494ca14a9d0e62a69d11ac0b9dddb1fb53ac7e",
+  "specification": {
+    "input": {
+      "artifacts/temporal/research/inner_1/samples.pkl": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d"
+    },
+    "sources": {
+      "scripts/audit_motion_targets.py": "85ebd878bd4b43f9bfd4fd6f888a68d742d63fdc9d6ce9319f92c18e1d8af413",
+      "src/nfl_trajectory/motion_targets.py": "99331cdee6aad0a5f4c53740b7b7f10c5b0e7ed21911ad40087255a317ba0131",
+      "src/nfl_trajectory/temporal_data.py": "fac7b1c3116250c2971a341017be9183f6dff0f9a060de7e9917c39b568fa3e7",
+      "src/nfl_trajectory/runtime.py": "ecfcf3cd35ad4f692eaaf0aac5606271311a38e29d4203adeb4936302e05d291",
+      "tests/test_motion_targets.py": "144ded43392503dd9f51a500068b84cdea5c266fd0b53da67090a8010c1aea0c",
+      "docs/MOTION_TARGET_AUDIT.md": "50251d7015391a7c53d9283d41bca49639080342a3eef7de5dbbe3fc176521f0"
+    },
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "max_seconds": 300
+  },
+  "training_only_rms_scales": {
+    "velocity": 4.028778077695476,
+    "acceleration": 3.059116167511896
+  },
+  "support": {
+    "train": {
+      "plays": 4951,
+      "rows": 193452,
+      "velocity_labels": 193452,
+      "acceleration_labels": 177279,
+      "velocity_vector_magnitude": {
+        "p50": 5.336664688245391,
+        "p95": 8.81191995247195,
+        "p99": 9.631715496246274,
+        "max": 14.173566592178148
+      },
+      "velocity_coverage": 1.0,
+      "acceleration_vector_magnitude": {
+        "p50": 3.162308336440218,
+        "p95": 7.2799353851161905,
+        "p99": 9.219543503701031,
+        "max": 117.613776051265
+      },
+      "acceleration_coverage": 0.9163978661373364,
+      "games": 94
+    },
+    "validation": {
+      "plays": 2103,
+      "rows": 83938,
+      "velocity_labels": 83938,
+      "acceleration_labels": 77058,
+      "velocity_vector_magnitude": {
+        "p50": 5.38516680634713,
+        "p95": 8.811924939920905,
+        "p99": 9.687617825715538,
+        "max": 11.905041751780375
+      },
+      "velocity_coverage": 1.0,
+      "acceleration_vector_magnitude": {
+        "p50": 3.162287602829008,
+        "p95": 7.211104352845636,
+        "p99": 9.000002253242771,
+        "max": 100.90093721194587
+      },
+      "acceleration_coverage": 0.9180347399270891,
+      "games": 41
+    }
+  },
+  "elapsed_seconds": 5.754,
+  "new_model_fits": 0,
+  "new_rmse": null,
+  "feature_completion_gate": "open",
+  "decision": "Label construction verified; predictive utility still requires matched model fits.",
+  "private_parent_backup": "docs/results/soft_coverage_backup.json"
+}

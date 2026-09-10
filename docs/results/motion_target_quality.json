@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "targeted_tests": 17,
+  "ruff": "passed",
+  "local_python": "3.12.14",
+  "scope": "8 coverage tests plus 9 motion-target tests; full pinned CI separate",
+  "recovery": {
+    "before": {
+      "sha256": "1eeff2a134ad52e8b08f207078a3f9f6426a31d4b5e74864621f65f18c8d3cbe",
+      "mtime_ns": 1789068720835134749
+    },
+    "after": {
+      "sha256": "1eeff2a134ad52e8b08f207078a3f9f6426a31d4b5e74864621f65f18c8d3cbe",
+      "mtime_ns": 1789068720835134749
+    },
+    "new_model_fits": 0,
+    "stdout": "{\"timestamp\": \"2026-09-10T19:32:05.327+00:00\", \"run_id\": \"20260910T193205Z-589062a9\", \"event\": \"started\", \"elapsed_seconds\": 0.0, \"command\": \"motion-target-audit\"}\n{\"timestamp\": \"2026-09-10T19:32:05.496+00:00\", \"run_id\": \"20260910T193205Z-589062a9\", \"event\": \"audit_reused\", \"elapsed_seconds\": 0.17, \"report_sha256\": \"1eeff2a134ad52e8b08f207078a3f9f6426a31d4b5e74864621f65f18c8d3cbe\", \"new_fits\": 0}\n{\"timestamp\": \"2026-09-10T19:32:05.497+00:00\", \"run_id\": \"20260910T193205Z-589062a9\", \"event\": \"completed\", \"elapsed_seconds\": 0.17, \"error_type\": null}\n"
+  },
+  "mypy": "2 files passed under available Python 3.12; pinned Python 3.11 CI remains separate"
+}

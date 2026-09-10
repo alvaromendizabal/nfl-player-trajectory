@@ -111,6 +111,32 @@ preserve the measured evidence. This is a single reused fold and an inexpensive
 linear correction of parent in-sample training residuals. It does not exclude
 end-to-end learned temporal assignment representations.
 
+## Verified motion-label prerequisite
+
+The interrupted label-construction work is now executed as new source, not as
+recovery of the missing neural model. All 7,054 cached plays passed: 193,452
+training rows from 94 games and 83,938 validation rows from 41 later games.
+Velocity labels cover 100% of rows; acceleration support is 91.64% in training
+and 91.80% in validation. Differences respect player identity, actual consecutive
+frames and observation age. Scales are fitted on training labels only.
+
+The audit completed in 5.95 seconds including input verification and shutdown.
+A formatting correction required a second audit (no model fits); the initial
+5.52-second audit is not counted as another experiment. Replay reuses the final
+report in 0.17 seconds with identical bytes and modification time. Seventeen
+targeted tests pass, including forced read-only arrays in the coverage fixture.
+Local Ruff passes; two new files pass mypy in the available Python 3.12 runtime.
+The locked Python 3.11 GitHub gate is reported separately.
+
+Training acceleration magnitude reaches 117.61 yards/second², versus a 99th
+percentile of 9.22. This is a diagnostic flag, not proof of corrupted labels.
+No targets are clipped or rows dropped. Velocity-only supervision remains the
+next matched experiment; acceleration needs separate investigation before use.
+There is no new model, new RMSE, or Kaggle submission from this prerequisite.
+See [the audited support](results/motion_target_audit.json),
+[replay/test receipt](results/motion_target_quality.json), and
+[construction contract](MOTION_TARGET_AUDIT.md).
+
 ## Next high-value bounded milestone
 
 Reconstruct a compact motion-learning model as a **new, separately versioned

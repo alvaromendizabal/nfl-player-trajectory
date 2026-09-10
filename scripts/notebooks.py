@@ -193,6 +193,12 @@ def execution_signature(root: Path, source: Path) -> str:
             "role_contract_audit.json",
             "representation_manifest.json",
             "representation_recovery.json",
+            "motion_supervision.json",
+            "motion_supervision.png",
+            "motion_conditioning.json",
+            "supervision_manifest.json",
+            "supervision_recovery.json",
+            "supervision_roles.json",
         )
         if (path := root / "docs/results" / name).is_file()
     )
@@ -202,6 +208,9 @@ def execution_signature(root: Path, source: Path) -> str:
     representation_verifier = root / "src/nfl_trajectory/representation_evidence.py"
     if representation_verifier.is_file():
         inputs.append(representation_verifier)
+    supervision_verifier = root / "src/nfl_trajectory/supervision_evidence.py"
+    if supervision_verifier.is_file():
+        inputs.append(supervision_verifier)
     inputs.extend(results / name for name in REPORT_FILES if (results / name).is_file())
     feature_local = root / "artifacts/features"
     inputs.extend(

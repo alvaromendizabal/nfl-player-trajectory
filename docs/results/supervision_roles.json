@@ -1,0 +1,72 @@
+{
+  "status": "completed",
+  "scope": "Descriptive after-fit slices; not a new selection test or feature ranking",
+  "input_hashes": {
+    "docs/results/role_contract_audit.json": "727f2c08b5ac8008cf6c828c3d55b41d978e9a7392002c31602662aba2c026f0",
+    "artifacts/temporal/research/inner_1/samples.pkl": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "artifacts/motion_supervision/inner_1/coordinate/errors.csv": "f7ff0cf5bd362ce24bf317983bc4b44e597817aa1c4e4f427465540b8deac9ab",
+    "artifacts/motion_supervision/inner_1/motion_supervised/errors.csv": "0c3ec5b45c816265ee12d9461dc2134472ddab5c23e1f9261d3d8fbe2332a666",
+    "artifacts/temporal/research/inner_2/samples.pkl": "e2a8fc937048a062fe83a8cfd1b81c8d4af47df7d3cf4a00e7c12b80c21a9c94",
+    "artifacts/motion_supervision/inner_2/coordinate/errors.csv": "c4cb3d310b5b74b3675ddf45512778faf2631ce978ba9d8bf31cd59af45a1835",
+    "artifacts/motion_supervision/inner_2/motion_supervised/errors.csv": "e18391ac6ae595f233dfb48e25589e6b5e0cebc83de179a9bc803453f7dfd948",
+    "artifacts/temporal/research/inner_3/samples.pkl": "4cbd1e779328db3b53d1e3b86a06963142afb3f6116d28d21ecf8a52a2546275",
+    "artifacts/motion_supervision/inner_3/coordinate/errors.csv": "230e90f84769afafff331a6b4f94eb80b33591941eed4fadc8336f2f3e55fb34",
+    "artifacts/motion_supervision/inner_3/motion_supervised/errors.csv": "5f47a4db155c438f947431389a6572ba40f2b9acba65fdbb0f1130a42fef6f4f"
+  },
+  "observed_role_mapping": {
+    "1": "Defensive Coverage",
+    "4": "Other Route Runner",
+    "3": "Passer",
+    "0": "Targeted Receiver"
+  },
+  "scores": [
+    {
+      "arm": "coordinate",
+      "role": "Defensive Coverage",
+      "rows": 144737,
+      "squared_error_share": 0.8445329852098314,
+      "coordinate_rmse_yards": 0.7566727731935766,
+      "ade_frame_weighted_yards": 0.6002929157589924,
+      "ade_trajectory_weighted_yards": 0.4711751653286291,
+      "fde_trajectory_weighted_yards": 1.1086798066459298,
+      "p95_displacement_yards": 2.158527690207502,
+      "coordinate_mae_yards": 0.38090920742085194
+    },
+    {
+      "arm": "coordinate",
+      "role": "Targeted Receiver",
+      "rows": 57624,
+      "squared_error_share": 0.15546701479016867,
+      "coordinate_rmse_yards": 0.5145256277933742,
+      "ade_frame_weighted_yards": 0.4108138656120868,
+      "ade_trajectory_weighted_yards": 0.33513824127730146,
+      "fde_trajectory_weighted_yards": 0.6819225567215638,
+      "p95_displacement_yards": 1.3280353469238253,
+      "coordinate_mae_yards": 0.26104253280766887
+    },
+    {
+      "arm": "motion_supervised",
+      "role": "Defensive Coverage",
+      "rows": 144737,
+      "squared_error_share": 0.8456923248272574,
+      "coordinate_rmse_yards": 0.7179869621886615,
+      "ade_frame_weighted_yards": 0.5515582463742829,
+      "ade_trajectory_weighted_yards": 0.42653454482566366,
+      "fde_trajectory_weighted_yards": 1.018040176751623,
+      "p95_displacement_yards": 1.9906959677505487,
+      "coordinate_mae_yards": 0.3505121009226834
+    },
+    {
+      "arm": "motion_supervised",
+      "role": "Targeted Receiver",
+      "rows": 57624,
+      "squared_error_share": 0.15430767517274246,
+      "coordinate_rmse_yards": 0.48606260485452035,
+      "ade_frame_weighted_yards": 0.37113142371758717,
+      "ade_trajectory_weighted_yards": 0.2985184742546078,
+      "fde_trajectory_weighted_yards": 0.6356210371641428,
+      "p95_displacement_yards": 1.2120770129555107,
+      "coordinate_mae_yards": 0.23526452250784893
+    }
+  ]
+}

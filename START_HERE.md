@@ -6,7 +6,15 @@ the repository name describes the player's trajectory prediction target.
 **Current objective: approach 0.46 private RMSE.** The recorded Kaggle result is
 **0.70090**. The new temporal research has not been submitted to the hidden test.
 
-**Latest matched motion experiment:** six end-to-end continuation fits are
+**Latest learned-motion experiment:** all six matched fits completed. Motion
+supervision scores **0.66029**, versus **0.69635** for the equally
+trained position-only control on three chronological internal folds: a
+**5.18% reduction**. The declared primary gate **passes**.
+Read the [executed results](docs/MOTION_SUPERVISION_RESULTS.md),
+[extended domain research](docs/MOTION_LEARNING_RESEARCH.md), and notebook 02
+section **14**. **The feature gate remains open and 0.46 is not reached.**
+
+**Previous matched motion experiment:** six end-to-end continuation fits are
 complete. Smoothed-state inputs score **0.71631**, versus **0.71745**
 for the equally trained control on the same three internal folds. The declared
 feature gate **fails**. This experiment separates extra training from feature
@@ -273,6 +281,25 @@ No public model-hosting service is required to review the project.
 
 The [data card](docs/DATA_CARD.md) explains the exact Prediction inventory,
 season boundaries, supplied task information, and limits of the evidence.
+
+## Reproduce learned motion supervision
+
+Notebook 02 section **14** reads the verified public
+[motion-supervision results](docs/MOTION_SUPERVISION_RESULTS.md). Reviewing the
+notebook does not train these models. With the private parent inputs and
+checkpoints restored, the locked numerical entry point is:
+
+```bash
+uv run --locked scripts/motion_supervision.py --self-test
+uv run --locked scripts/motion_supervision.py
+```
+
+The second command verifies and reuses completed fits. A changed numerical
+signature is rejected instead of overwriting them. The
+[completed-fit recovery receipt](docs/results/supervision_recovery.json)
+records an actual replay, including unchanged hashes and modification times.
+The public [research extension](docs/MOTION_LEARNING_RESEARCH.md) distinguishes
+available observations, auxiliary training labels and unresolved feature work.
 
 ## Reproduce the matched motion continuation
 

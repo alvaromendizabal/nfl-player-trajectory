@@ -1,0 +1,93 @@
+{
+  "status": "completed",
+  "run_id": "20260910T044821Z-cda507e0",
+  "scope": "training targets only; no fit or change to any scientific arm",
+  "input_hashes": {
+    "artifacts/temporal/research/inner_1/samples.pkl": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "artifacts/temporal/research/inner_2/samples.pkl": "e2a8fc937048a062fe83a8cfd1b81c8d4af47df7d3cf4a00e7c12b80c21a9c94",
+    "artifacts/temporal/research/inner_3/samples.pkl": "4cbd1e779328db3b53d1e3b86a06963142afb3f6116d28d21ecf8a52a2546275"
+  },
+  "sources": {
+    "scripts/audit_motion_conditioning.py": "a5892e45e29a2c1c84f1351b3bb194a215dfc0d384fff70bdc788252535c04ad"
+  },
+  "folds": [
+    {
+      "fold": "inner_1",
+      "training_plays": 4951,
+      "training_rows": 193452,
+      "maximum_horizon_seconds": 9.399999618530273,
+      "ridge_residual_rmse": 1.1813283646346688,
+      "raw_displacement_rms": 4.151212779149234,
+      "maximum_abs_ridge_displacement": 48.76611328125,
+      "maximum_abs_observed_future_displacement": 30.590001463890076,
+      "after_two_seconds_row_share": 0.03805078262307963,
+      "after_two_seconds_ridge_error_share": 0.5248912276387234,
+      "largest_ridge_displacement_request": [
+        2023091100,
+        3167,
+        54650,
+        94
+      ],
+      "ridge_displacement_at_request": [
+        48.76611328125,
+        -22.885156631469727
+      ],
+      "truth_displacement_at_request": [
+        11.810001373291016,
+        5.14000129699707
+      ]
+    },
+    {
+      "fold": "inner_2",
+      "training_plays": 7054,
+      "training_rows": 277390,
+      "maximum_horizon_seconds": 9.399999618530273,
+      "ridge_residual_rmse": 1.126396509499077,
+      "raw_displacement_rms": 4.158551324746262,
+      "maximum_abs_ridge_displacement": 52.76976776123047,
+      "maximum_abs_observed_future_displacement": 30.590002417564392,
+      "after_two_seconds_row_share": 0.03755001982767944,
+      "after_two_seconds_ridge_error_share": 0.4972143643736001,
+      "largest_ridge_displacement_request": [
+        2023091100,
+        3167,
+        54650,
+        94
+      ],
+      "ridge_displacement_at_request": [
+        52.76976776123047,
+        -21.939363479614258
+      ],
+      "truth_displacement_at_request": [
+        11.810001373291016,
+        5.1399993896484375
+      ]
+    },
+    {
+      "fold": "inner_3",
+      "training_plays": 8500,
+      "training_rows": 334567,
+      "maximum_horizon_seconds": 9.399999618530273,
+      "ridge_residual_rmse": 1.1023026121014945,
+      "raw_displacement_rms": 4.176384002315435,
+      "maximum_abs_ridge_displacement": 55.367889404296875,
+      "maximum_abs_observed_future_displacement": 30.590001225471497,
+      "after_two_seconds_row_share": 0.0380611357366387,
+      "after_two_seconds_ridge_error_share": 0.4878204817886261,
+      "largest_ridge_displacement_request": [
+        2023091100,
+        3167,
+        54650,
+        94
+      ],
+      "ridge_displacement_at_request": [
+        55.367889404296875,
+        -21.102582931518555
+      ],
+      "truth_displacement_at_request": [
+        11.810001373291016,
+        5.1399993896484375
+      ]
+    }
+  ]
+}

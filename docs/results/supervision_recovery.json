@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-09-10T05:25:32.249771+00:00",
+  "files_verified_unchanged": 24,
+  "fits_reused": 6,
+  "additional_training_epochs": 0,
+  "elapsed_seconds": 11.167630582000129,
+  "replay_run_id": "20260910T052522Z-a52853c3",
+  "content_and_modification_time_unchanged": true,
+  "artifact_states": {
+    "artifacts/motion_supervision/inner_1/coordinate/checkpoint.json": {
+      "sha256": "e01f88a2b04c68128d47f8c59cece6994998d1de3a8b520670ae34e6f6e01b38",
+      "mtime_ns": 1789016178909808590
+    },
+    "artifacts/motion_supervision/inner_1/coordinate/checkpoint.pt": {
+      "sha256": "99668e2c3f3d1949e4f2d790a17cf5c025e5d6722820087bef8a7b9295264208",
+      "mtime_ns": 1789016178905177924
+    },
+    "artifacts/motion_supervision/inner_1/coordinate/errors.csv": {
+      "sha256": "f7ff0cf5bd362ce24bf317983bc4b44e597817aa1c4e4f427465540b8deac9ab",
+      "mtime_ns": 1789016181655920373
+    },
+    "artifacts/motion_supervision/inner_1/coordinate/summary.json": {
+      "sha256": "1b7ded7bb2e419c7f5933c2fd0aa4e6439b1dc290d921a3273bc28346fbdfde1",
+      "mtime_ns": 1789016181688329555
+    },
+    "artifacts/motion_supervision/inner_1/motion_supervised/checkpoint.json": {
+      "sha256": "caff779f557b44180f62005dea189e5392af0a73cdc29a5a1e90b34a215d9f7f",
+      "mtime_ns": 1789016880034508833
+    },
+    "artifacts/motion_supervision/inner_1/motion_supervised/checkpoint.pt": {
+      "sha256": "4a22d5a046882767c349a338a82049d0a8be896738dec901b17a0f4e6733e80c",
+      "mtime_ns": 1789016880027030408
+    },
+    "artifacts/motion_supervision/inner_1/motion_supervised/errors.csv": {
+      "sha256": "0c3ec5b45c816265ee12d9461dc2134472ddab5c23e1f9261d3d8fbe2332a666",
+      "mtime_ns": 1789016882328778885
+    },
+    "artifacts/motion_supervision/inner_1/motion_supervised/summary.json": {
+      "sha256": "c00c79f6fe4e3fdf1162d05c5745290c9f143834acc25d27ac0b8640ecbc8709",
+      "mtime_ns": 1789016882364479818
+    },
+    "artifacts/motion_supervision/inner_2/coordinate/checkpoint.json": {
+      "sha256": "74e9b5b32f77e35d419328816933041eb2ead0e303a4cba133e36d43651795c0",
+      "mtime_ns": 1789016614470042581
+    },
+    "artifacts/motion_supervision/inner_2/coordinate/checkpoint.pt": {
+      "sha256": "d6359a9cb9b02e82adac98fbfd2488fae1ced1321644c066fc50bd9192668285",
+      "mtime_ns": 1789016614464513500
+    },
+    "artifacts/motion_supervision/inner_2/coordinate/errors.csv": {
+      "sha256": "c4cb3d310b5b74b3675ddf45512778faf2631ce978ba9d8bf31cd59af45a1835",
+      "mtime_ns": 1789016616506038383
+    },
+    "artifacts/motion_supervision/inner_2/coordinate/summary.json": {
+      "sha256": "e2db917b63b4e7705bf00632d8bf038695ddf4fd14b82810d1e1ee3cb4c1d8cb",
+      "mtime_ns": 1789016616530334556
+    },
+    "artifacts/motion_supervision/inner_2/motion_supervised/checkpoint.json": {
+      "sha256": "b3631d88b94493aa1850360850d741906422c66f07d6c1080966a132d7965bae",
+      "mtime_ns": 1789017549153648682
+    },
+    "artifacts/motion_supervision/inner_2/motion_supervised/checkpoint.pt": {
+      "sha256": "eb160e3ae3aecc1dc35b97c14665d32b79bb016d33ab93b41622b66a3e447a1e",
+      "mtime_ns": 1789017549145953014
+    },
+    "artifacts/motion_supervision/inner_2/motion_supervised/errors.csv": {
+      "sha256": "e18391ac6ae595f233dfb48e25589e6b5e0cebc83de179a9bc803453f7dfd948",
+      "mtime_ns": 1789017550860537204
+    },
+    "artifacts/motion_supervision/inner_2/motion_supervised/summary.json": {
+      "sha256": "df37b6ab5644f9c4d148081f498efe0409f18d88dc8d376a34640c08ab6b48f6",
+      "mtime_ns": 1789017550883316998
+    },
+    "artifacts/motion_supervision/inner_3/coordinate/checkpoint.json": {
+      "sha256": "0789cbc24e42bd974aad6079ec89c0f64daa622ba3ac90acca380c70a53149f3",
+      "mtime_ns": 1789016786871143918
+    },
+    "artifacts/motion_supervision/inner_3/coordinate/checkpoint.pt": {
+      "sha256": "b144748b4073b5f82788be1c3bcb2b972fdc53099adae5cd3fbc466135ea0551",
+      "mtime_ns": 1789016786865434024
+    },
+    "artifacts/motion_supervision/inner_3/coordinate/errors.csv": {
+      "sha256": "230e90f84769afafff331a6b4f94eb80b33591941eed4fadc8336f2f3e55fb34",
+      "mtime_ns": 1789016788567859690
+    },
+    "artifacts/motion_supervision/inner_3/coordinate/summary.json": {
+      "sha256": "e76c3a3e959f06f94097b0a97f27c7635bdebc1c066da10027aa1f7dbdb95c0d",
+      "mtime_ns": 1789016788614142641
+    },
+    "artifacts/motion_supervision/inner_3/motion_supervised/checkpoint.json": {
+      "sha256": "7f1ade10183ce11c2d6e270f21fed204a797d8694589decd52bd586c2d580ad1",
+      "mtime_ns": 1789017881337070528
+    },
+    "artifacts/motion_supervision/inner_3/motion_supervised/checkpoint.pt": {
+      "sha256": "a2fdf26b45eed5395660b9019fb852dce260a29588c9ceaca822fcd885679614",
+      "mtime_ns": 1789017881332520530
+    },
+    "artifacts/motion_supervision/inner_3/motion_supervised/errors.csv": {
+      "sha256": "5f47a4db155c438f947431389a6572ba40f2b9acba65fdbb0f1130a42fef6f4f",
+      "mtime_ns": 1789017883640572300
+    },
+    "artifacts/motion_supervision/inner_3/motion_supervised/summary.json": {
+      "sha256": "8ea3dd6cedf111d1c6d773e4e29641c5af82e95afbac4734b294c98b09f8e4cb",
+      "mtime_ns": 1789017883668109340
+    }
+  }
+}

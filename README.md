@@ -10,7 +10,15 @@ not this project's entry point.
 The recorded Kaggle private result remains **0.70090**; the temporal experiments
 below have not produced a new submission score.
 
-**Latest matched motion experiment:** six end-to-end continuation fits are
+**Latest learned-motion experiment:** all six matched fits completed. Motion
+supervision scores **0.66029**, versus **0.69635** for the equally
+trained position-only control on three chronological internal folds: a
+**5.18% reduction**. The declared primary gate **passes**.
+Read the [executed results](docs/MOTION_SUPERVISION_RESULTS.md),
+[extended domain research](docs/MOTION_LEARNING_RESEARCH.md), and notebook 02
+section **14**. **The feature gate remains open and 0.46 is not reached.**
+
+**Previous matched motion experiment:** six end-to-end continuation fits are
 complete. Smoothed-state inputs score **0.71631**, versus **0.71745**
 for the equally trained control on the same three internal folds. The declared
 feature gate **fails**. This experiment separates extra training from feature

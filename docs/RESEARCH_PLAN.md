@@ -21,6 +21,13 @@ feature-wise temporal learning, earlier-origin augmentation and historical-data
 alignment remain open. A separate input contract audit confirms that the four
 observed roles still occupy distinct historical slots.
 
+The [matched learned-motion supervision study](MOTION_SUPERVISION_RESULTS.md)
+is also complete: six fits score 0.66029 versus 0.69635, a
+5.18% reduction; its primary gate passes. Its control holds capacity,
+initialization and exposure constant. The [new source review](MOTION_LEARNING_RESEARCH.md)
+also measures target conditioning and identifies concrete route/coverage-label
+sources. The 0.46 target and overall feature-completion gate remain open.
+
 ## Protocol
 
 Keep every game intact. Use 192 training games and 32 later development games;

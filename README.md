@@ -10,6 +10,14 @@ not this project's entry point.
 The recorded Kaggle private result remains **0.70090**; the temporal experiments
 below have not produced a new submission score.
 
+**Latest bounded feature test:** 83 observed soft-matchup candidates were tested
+on one predefined chronological fold. RMSE moved from **0.67206 to 0.66895**
+in **21.8 seconds** across three fixed ridge probes. The 0.463% gain misses the
+declared 0.5% threshold and its paired game interval crosses zero, so this
+correction interface is stopped. All models and predictions replay without new
+fits. See the [current feature inventory and decision](docs/FEATURE_STATUS.md).
+This single-fold result is separate from the three-fold studies below.
+
 **Latest recorded study; recovery incomplete:** the new fixed motion/tree blend
 scores **0.62708**, versus the prior **0.64160** on the same internal rows.
 Its results and executed notebooks have been recovered, but the six newest

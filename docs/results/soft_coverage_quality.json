@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "targeted_tests": 10,
+  "test_output": "..........                                                               [100%]\n10 passed in 0.66s",
+  "ruff": "passed",
+  "mypy": "2 source files passed",
+  "scope": "new feature/probe tests and source checks; full CI separate"
+}

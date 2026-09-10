@@ -1,0 +1,42 @@
+{
+  "role_0": {
+    "rows": 23900,
+    "rmse": {
+      "control_motion": 0.5310860153049357,
+      "static_affinity": 0.5384676091146314,
+      "temporal_affinity": 0.5411193792421143
+    }
+  },
+  "role_1": {
+    "rows": 60038,
+    "rmse": {
+      "control_motion": 0.7205489582181438,
+      "static_affinity": 0.7168693409132828,
+      "temporal_affinity": 0.713494731033423
+    }
+  },
+  "time_le_1": {
+    "rows": 63125,
+    "rmse": {
+      "control_motion": 0.3003814889932714,
+      "static_affinity": 0.3021100112922256,
+      "temporal_affinity": 0.3033642613813124
+    }
+  },
+  "time_1_to_2": {
+    "rows": 17758,
+    "rmse": {
+      "control_motion": 1.0327662570425282,
+      "static_affinity": 1.0298050343730931,
+      "temporal_affinity": 1.0237402034181435
+    }
+  },
+  "time_gt_2": {
+    "rows": 3055,
+    "rmse": {
+      "control_motion": 2.084604047415156,
+      "static_affinity": 2.0778302107194206,
+      "temporal_affinity": 2.0740340592488384
+    }
+  }
+}

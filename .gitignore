@@ -22,3 +22,6 @@ aws.local.json
 dist/
 build/
 evidence/
+
+# Local lock for the bounded soft-coverage probe.
+.soft-coverage.lock

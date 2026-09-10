@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "scope": "executed only the added soft-coverage result cell; preserved existing cells",
+  "python": "3.12.14",
+  "output_rows": 3,
+  "report_sha256": "ac5493d385a41e67ea243f7e1ab087a2c43586acfd66c515b38c2b5cafddc266",
+  "notebook_sha256": "1d36de1b65542823bbe12e0352ecfa045609ae986bf55d2a4969c0be1f79d28c"
+}

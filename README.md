@@ -1,3 +1,5 @@
+> **Incomplete historical recovery checkpoint.** The six newest trained checkpoint sets and five source/test changes are missing. The saved 0.62708 result cannot currently be replayed from this branch. Historical passing test and notebook receipts below describe the original run, not this incomplete checkout. Read the [verified recovery status](https://github.com/alvaromendizabal/nfl-player-trajectory/blob/docs/motion-study-recovery/docs/RECOVERY_STATUS.md). Do not merge this branch as a runnable model release.
+
 # NFL Big Data Bowl 2026 - Prediction
 
 Predict each selected player's post-throw x/y trajectory from observed tracking,

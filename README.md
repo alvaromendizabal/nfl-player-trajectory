@@ -10,7 +10,14 @@ not this project's entry point.
 The recorded Kaggle private result remains **0.70090**; the temporal experiments
 below have not produced a new submission score.
 
-**Latest matched motion experiment:** six end-to-end continuation fits are
+**Latest recorded study; recovery incomplete:** the new fixed motion/tree blend
+scores **0.62708**, versus the prior **0.64160** on the same internal rows.
+Its results and executed notebooks have been recovered, but the six newest
+trained checkpoint sets and five source/test changes have not. This is not a
+currently replayable model release. Read the [verified recovery status](docs/RECOVERY_STATUS.md)
+for the evidence, missing artifacts and remaining feature research.
+
+**Previous matched motion experiment:** six end-to-end continuation fits are
 complete. Smoothed-state inputs score **0.71631**, versus **0.71745**
 for the equally trained control on the same three internal folds. The declared
 feature gate **fails**. This experiment separates extra training from feature

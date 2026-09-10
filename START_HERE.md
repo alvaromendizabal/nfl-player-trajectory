@@ -6,7 +6,14 @@ the repository name describes the player's trajectory prediction target.
 **Current objective: approach 0.46 private RMSE.** The recorded Kaggle result is
 **0.70090**. The new temporal research has not been submitted to the hidden test.
 
-**Latest matched motion experiment:** six end-to-end continuation fits are
+**Latest recorded study; recovery incomplete:** the new fixed motion/tree blend
+scores **0.62708**, versus the prior **0.64160** on the same internal rows.
+The results and three executed notebooks are preserved; the six newest trained
+checkpoint sets and five source/test changes have not been recovered. Read the
+[verified recovery status](docs/RECOVERY_STATUS.md) before treating this score
+as an available model. **Feature research stays open and 0.46 remains unmet.**
+
+**Previous matched motion experiment:** six end-to-end continuation fits are
 complete. Smoothed-state inputs score **0.71631**, versus **0.71745**
 for the equally trained control on the same three internal folds. The declared
 feature gate **fails**. This experiment separates extra training from feature

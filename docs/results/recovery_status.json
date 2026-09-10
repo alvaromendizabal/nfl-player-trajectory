@@ -1,0 +1,312 @@
+{
+  "status": "partial_recovery",
+  "checked_at_utc": "2026-09-10T17:38:42.275866+00:00",
+  "verification_scope": "Git blob bytes, sealed public files, saved notebook execution evidence, report arithmetic, earlier archive contents, scoped cloud reads; no model inference or training",
+  "base_commit": "9a19f1975d1eef1257aea81bdb54d4159d1ca40d",
+  "recovered_commit": "8d7078f4874e8d8fd4c51581eb0d4e9baed7b125",
+  "recovered_files": [
+    {
+      "mode": "100644",
+      "path": ".github/workflows/ci.yml",
+      "sha": "0d9290786f1797cb655b225cb4f462b4b2fe71bb",
+      "type": "blob",
+      "sha256": "f4b7aa13026f053673ba62cb17e78137b2dca8906c7fd26e84dc15d8199107da",
+      "bytes": 4552
+    },
+    {
+      "mode": "100644",
+      "path": "README.md",
+      "sha": "6b13a5495d686b59a6b1a1fb8a1a45aa57a6863d",
+      "type": "blob",
+      "sha256": "89b4036a16199eb515943eed1afa81a2bea5c22977d326806317420e3dc40e2e",
+      "bytes": 14120
+    },
+    {
+      "mode": "100644",
+      "path": "START_HERE.md",
+      "sha": "618676f96b3d555b5ff16061a80b40500c95b901",
+      "type": "blob",
+      "sha256": "26ff5b446b4476c5af9fefcde840114bed626914f3e1ed8c2aa47a4534765822",
+      "bytes": 17607
+    },
+    {
+      "mode": "100644",
+      "path": "docs/MOTION_LEARNING_RESEARCH.md",
+      "sha": "b2081d859d9b24ca695483103d5e6ca4f15080b4",
+      "type": "blob",
+      "sha256": "e720126cae7c239b872e1d6be9eb09113a024d74ca9936004f19d50969a36c04",
+      "bytes": 15682
+    },
+    {
+      "mode": "100644",
+      "path": "docs/MOTION_SUPERVISION_EXPERIMENT.md",
+      "sha": "b44f3ac83af116fd9fef9b87946d577b2a135162",
+      "type": "blob",
+      "sha256": "577bcdd511a80bbdb2a33699a572342317ea6bf71333f51239ae751886dc0e0c",
+      "bytes": 6047
+    },
+    {
+      "mode": "100644",
+      "path": "docs/MOTION_SUPERVISION_RESULTS.md",
+      "sha": "898a65b820d74994acbf8283a040007e612bdd1a",
+      "type": "blob",
+      "sha256": "3d2a1d0912cc80edc6d8443c0ee1b2c785329c2d88372a38f7f04a4411bff30b",
+      "bytes": 7046
+    },
+    {
+      "mode": "100644",
+      "path": "docs/RESEARCH_PLAN.md",
+      "sha": "f8346ee5cf3490e1dc8be264c8a393aeb9d5474a",
+      "type": "blob",
+      "sha256": "f51d64af8e557d38b12cb8cb7a97acb9e12a20bd98997a441e7b5f4b5f3be7b8",
+      "bytes": 24568
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/motion_conditioning.json",
+      "sha": "a9101214a3e3df48cf75090830c38bd4016e1a5e",
+      "type": "blob",
+      "sha256": "2f01fdeba9c03d799c098fa5a8956f55fb9cdf64707443915e0bc8043e99eed1",
+      "bytes": 3153
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/motion_supervision.json",
+      "sha": "a20f1900b1158b236e3c83d194c318609c338595",
+      "type": "blob",
+      "sha256": "14b4f5fb00227b660c30431faff0bf99a41f25c3e39fe9e1d7e1f10f6a0ffdd9",
+      "bytes": 88778
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/motion_supervision.png",
+      "sha": "670c36ea0627dabdb23abd69860322b2ca0d845a",
+      "type": "blob",
+      "sha256": "0301f79b5ef3d4551686621914e5fd12aae3ad66e16ec09603c8bdd1d11e9d6f",
+      "bytes": 99595
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/supervision_manifest.json",
+      "sha": "688a4a372eebd0342ea6e27d0909a9c670c1055b",
+      "type": "blob",
+      "sha256": "b0e55aed48ce7915c3f9a86ed2c33e51f57177db0c46efaf533330cd834d415c",
+      "bytes": 2650
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/supervision_notebooks.json",
+      "sha": "e2c830305e2af27d1a041e66e05f8f3e3ad7cb7f",
+      "type": "blob",
+      "sha256": "777da47b60f44cbf8fb7fdbeee3f1804797c1d408c03c0eb9461164041c0d8d7",
+      "bytes": 2294
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/supervision_recovery.json",
+      "sha": "b7648c2823639d0c6e519dec091439e1e77dc13e",
+      "type": "blob",
+      "sha256": "e34cbe12d6ce1eabfe66510747b2d4bdcc4ffed6a04d9b9dfae2a6316bc89890",
+      "bytes": 5209
+    },
+    {
+      "mode": "100644",
+      "path": "docs/results/supervision_roles.json",
+      "sha": "cc0b93100a5292ae3336705453fc9034edd8ee06",
+      "type": "blob",
+      "sha256": "6f9d80624f2f644ef9ab46045418a57e0d44a9dff136e6e8a1c8e54d90f8f824",
+      "bytes": 3510
+    },
+    {
+      "mode": "100644",
+      "path": "notebooks/00_project_readiness.ipynb",
+      "sha": "0186b5a667143086eb87903a29f63473f94f671a",
+      "type": "blob",
+      "sha256": "e2cfb5d4edd56295f5a20dbe5775525912180f04679c2bc711d9d95aacb21b4b",
+      "bytes": 32463
+    },
+    {
+      "mode": "100644",
+      "path": "notebooks/01_data_analysis.ipynb",
+      "sha": "4ede32c40dc52292b73ec33431c8cf1c14be3442",
+      "type": "blob",
+      "sha256": "ecfc27f70e79fa0c8fd387da01565c764441d525bcdc4734d2c789092e55ed7e",
+      "bytes": 339402
+    },
+    {
+      "mode": "100644",
+      "path": "notebooks/02_motion_benchmarks.ipynb",
+      "sha": "fece0a38003f55c4fcac6c6db498daead5395670",
+      "type": "blob",
+      "sha256": "7309696deb104f164ff1ab9cc7893579430d72b6759960ed138d058cded6f6e9",
+      "bytes": 6523726
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/audit_motion_conditioning.py",
+      "sha": "76b467b2d9d8c0cb346a87a2e8e97ce3a2e67517",
+      "type": "blob",
+      "sha256": "a5892e45e29a2c1c84f1351b3bb194a215dfc0d384fff70bdc788252535c04ad",
+      "bytes": 2917
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/motion_supervision.py",
+      "sha": "7ebf139a5a4663bdb9545e43c08b59502d4c4e09",
+      "type": "blob",
+      "sha256": "c234d2ee1d5a7bec98bf212b2081daebc0edf8988ee87a275d368dcf3def9c2c",
+      "bytes": 9811
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/motion_supervision.py.lock",
+      "sha": "c68091f1687b9680dbc51eb1ea68a6d3f6db9061",
+      "type": "blob",
+      "sha256": "3ff69bc39d2403952151f92613e05a624bdcfbf7de9da73b702f4ff26dfc4c16",
+      "bytes": 55025
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/notebooks.py",
+      "sha": "79e1e1484b97bd1101dbb070de5b3d322287a972",
+      "type": "blob",
+      "sha256": "b7ffb79ec3aa9b15ba46e407d39efecac7a22bb547e40318ca8e0c8433fa5f06",
+      "bytes": 21359
+    },
+    {
+      "mode": "100644",
+      "path": "scripts/parallel_motion_supervision.py",
+      "sha": "d94a2deecd9dc29124d1f44604147d97eccfd454",
+      "type": "blob",
+      "sha256": "77f90b64f09af7eef112a0db4737c4f76c3a105a5e90c31b2a203a4fc85facc7",
+      "bytes": 3201
+    }
+  ],
+  "public_manifest_verified": 16,
+  "public_manifest_missing": [
+    {
+      "path": "scripts/publish_supervision.py",
+      "sha256": "cac3a3dd075f401ff616d170161428a6abe7d9ae37e471d29c75cf7b3c5d0f22"
+    },
+    {
+      "path": "src/nfl_trajectory/motion_supervision.py",
+      "sha256": "98619623471bbd01964a0f6a4ef1fdf15d32ddfdbf93258f79f9bac82bb42dbd"
+    },
+    {
+      "path": "src/nfl_trajectory/supervision_evidence.py",
+      "sha256": "30cfe4083565339f60755fccea257b97f6d0e50044d0098545c7384b7e0e6bc4"
+    }
+  ],
+  "additional_unrecovered_changes": [
+    "tests/test_motion_supervision.py",
+    "tests/test_notebooks.py"
+  ],
+  "archive": {
+    "sha256": "ef73a55e88678985a7c1b7bc1ed67ce98babc202f12b62e8d90da785e6582175",
+    "bytes": 350421099,
+    "created_at_utc": "2026-09-10T04:10:41.423642+00:00",
+    "source_commit": "b8f34ad24151662e9861893cb9bf1d047a00063f",
+    "unique_objects_verified": 412,
+    "logical_files_verified": 450,
+    "historical_files_verified": 1,
+    "checkpoint_paths": 96,
+    "unique_scientific_fits": 66,
+    "historical_reproduction_fits": 30,
+    "new_supervision_artifacts_present": false
+  },
+  "cloud": {
+    "region": "us-west-2",
+    "running_nfl_training_jobs": 0,
+    "running_nfl_processing_jobs": 0,
+    "snapshots_checked": 67,
+    "latest_snapshot": {
+      "key": "snapshots/d7992e30f488b53dcd0027883dd2e5bf0404d166de3c2f86f64c31be1ac3a4a9.json",
+      "modified": "2026-09-10T01:13:02+00:00",
+      "size": 272680
+    },
+    "exact_content_address_checks": [
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "artifacts/motion_supervision/inner_1/motion_supervised/checkpoint.pt",
+        "sha256": "4a22d5a046882767c349a338a82049d0a8be896738dec901b17a0f4e6733e80c"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "artifacts/motion_supervision/inner_1/coordinate/checkpoint.pt",
+        "sha256": "99668e2c3f3d1949e4f2d790a17cf5c025e5d6722820087bef8a7b9295264208"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "artifacts/motion_supervision/inner_2/motion_supervised/checkpoint.pt",
+        "sha256": "eb160e3ae3aecc1dc35b97c14665d32b79bb016d33ab93b41622b66a3e447a1e"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "artifacts/motion_supervision/inner_2/coordinate/checkpoint.pt",
+        "sha256": "d6359a9cb9b02e82adac98fbfd2488fae1ced1321644c066fc50bd9192668285"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "artifacts/motion_supervision/inner_3/motion_supervised/checkpoint.pt",
+        "sha256": "a2fdf26b45eed5395660b9019fb852dce260a29588c9ceaca822fcd885679614"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "artifacts/motion_supervision/inner_3/coordinate/checkpoint.pt",
+        "sha256": "b144748b4073b5f82788be1c3bcb2b972fdc53099adae5cd3fbc466135ea0551"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "scripts/publish_supervision.py",
+        "sha256": "cac3a3dd075f401ff616d170161428a6abe7d9ae37e471d29c75cf7b3c5d0f22"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "src/nfl_trajectory/motion_supervision.py",
+        "sha256": "98619623471bbd01964a0f6a4ef1fdf15d32ddfdbf93258f79f9bac82bb42dbd"
+      },
+      {
+        "error": "An error occurred (404) when calling the HeadObject operation: Not Found",
+        "path": "src/nfl_trajectory/supervision_evidence.py",
+        "sha256": "30cfe4083565339f60755fccea257b97f6d0e50044d0098545c7384b7e0e6bc4"
+      }
+    ]
+  },
+  "recorded_experiment": {
+    "rows": 202361,
+    "fits": 6,
+    "aggregate_training_seconds": 5620.022497960992,
+    "pooled_coordinate_rmse": {
+      "attention": 0.7206312351550921,
+      "tree": 0.7026010319248073,
+      "coordinate": 0.6963477456012338,
+      "motion_supervised": 0.6602930686715417,
+      "attention_equal_blend": 0.6786606124026398,
+      "coordinate_equal_blend": 0.6478707827427609,
+      "motion_supervised_equal_blend": 0.6270819924449808
+    },
+    "primary_relative_reduction": 0.05177682724966981,
+    "primary_interval_from_saved_report": [
+      -0.05586603522619052,
+      -0.016357683420249104
+    ],
+    "all_folds_improve": true,
+    "original_quality_receipt": {
+      "status": "passed",
+      "run_id": "20260910T053040Z-e78d8fdd",
+      "scope": "offline tests, synthetic integration, notebook; no live Kaggle score",
+      "checks": 13
+    },
+    "original_test_result": "344 passed, 4 skipped in 115.54s (0:01:55)",
+    "notebook_bytes_verified": 3,
+    "current_checkpoint_replay": "unavailable; six checkpoint sets and exact model source not recovered"
+  },
+  "new_training_epochs": 0,
+  "target_rmse": 0.46,
+  "target_met": false,
+  "feature_completion_gate": "open",
+  "model_promotion": false,
+  "kaggle_submission": false,
+  "kaggle_recorded_private_rmse": 0.7009,
+  "credit_charges_attributable_to_failures": "not established; training counters are not billing records"
+}

@@ -1,8 +1,8 @@
 {
-  "status": "verified_in_aws_studio",
-  "observed_utc": "2026-09-11T03:18:56.058639+00:00",
-  "source_commit": "1ad9e9cee2400baeafe94fc5464bdbbffc88434c",
-  "execution_location": "nfl-trajectory-dev / us-west-2",
+  "status": "verified_in_aws_studio_and_processing",
+  "observed_utc": "2026-09-11T05:40:46.048000+00:00",
+  "source_commit": "e186f00f4fc2a636c96d019dcc465e53656407d6",
+  "execution_location": "nfl-trajectory-dev and SageMaker Processing / us-west-2",
   "training_plan": {
     "training_plays": 4951,
     "training_games": 94,
@@ -108,14 +108,51 @@
     "all_readback_verified": true,
     "prefix": "experiments/velocity_isolation/recovery/9d2cf7b09061d612179dbd574a18493e78f004cf1ad8805433bb19d3ed8e3880/"
   },
+  "processing_recovery_gate": {
+    "status": "private_fresh_process_recovery_verified",
+    "processing_job": "nfl-motion-recovery-20260911-0520-c33c610",
+    "processing_status": "Completed",
+    "source_commit": "c33c61039c99aea41d0706d5de4bf5f99da56a96",
+    "sample_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "result_s3_key": "cloud-runs/nfl-motion-recovery-20260911-0520-c33c610/engineering_recovery.json",
+    "elapsed_runner_seconds": 142.002,
+    "processing_started_utc": "2026-09-11T05:36:22.271000+00:00",
+    "processing_ended_utc": "2026-09-11T05:40:16.390000+00:00",
+    "arms": {
+      "coordinate": {
+        "checkpoint_bytes": 4591025,
+        "interrupted_step": 3,
+        "resumed_final_step": 6,
+        "resume_initial_step": 3,
+        "clean_initial_step": 0,
+        "checkpoint_sha256": "e169e9374137827a0da85fe6fd9c2fa4283045bc1de3759d7d702ea28521fa7b",
+        "exact_remote_checkpoint_match": true,
+        "remote_readback_verified": true
+      },
+      "velocity": {
+        "checkpoint_bytes": 4593637,
+        "interrupted_step": 3,
+        "resumed_final_step": 6,
+        "resume_initial_step": 3,
+        "clean_initial_step": 0,
+        "checkpoint_sha256": "332dec6e5d3defc80accc88d71469a5f26d0df6aca13cb17366e52b67f611aa5",
+        "exact_remote_checkpoint_match": true,
+        "remote_readback_verified": true
+      }
+    },
+    "scientific_fits": 0,
+    "validation_scored": false,
+    "new_rmse": null,
+    "purpose": "Prove independent private S3 checkpoint save/read-back and exact fresh-process continuation before scientific training."
+  },
   "scientific_fits": 0,
   "new_rmse": null,
   "feature_completion_gate": "open",
   "scientific_training_ready": false,
   "remaining_gates": [
-    "real-data training/evaluation loop",
-    "training-only throughput and fixed common exposure",
-    "matched one-fold experiment and official-metric ablation"
+    "real-data training/evaluation loop integration",
+    "training-only throughput measurement and fixed common exposure",
+    "matched one-fold coordinate-only versus velocity-only experiment and official-metric ablation"
   ],
   "data_redownloaded": false,
   "historical_models_retrained": false

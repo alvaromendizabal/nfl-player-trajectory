@@ -19,7 +19,9 @@ def publisher_factory(store: Mock, event: Mock) -> Any:
         node for node in module.body if isinstance(node, ast.FunctionDef) and node.name == "main"
     )
     publisher = next(
-        node for node in main.body if isinstance(node, ast.FunctionDef) and node.name == "publisher_for"
+        node
+        for node in main.body
+        if isinstance(node, ast.FunctionDef) and node.name == "publisher_for"
     )
     isolated = ast.Module(body=[publisher], type_ignores=[])
     namespace = {"store": store, "event": event, "Path": Path, "Any": Any}

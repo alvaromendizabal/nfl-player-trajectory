@@ -36,7 +36,7 @@ def dataset(train_count=5):
 
 
 def settings(epochs=3):
-    return TrainingSettings(epochs=epochs, batch_plays=2, warmup_steps=2, width=32)
+    return TrainingSettings(epochs=epochs, batch_plays=2, warmup_steps=1, width=32)
 
 
 def signature(arm="coordinate"):

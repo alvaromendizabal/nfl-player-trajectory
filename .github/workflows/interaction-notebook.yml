@@ -1,0 +1,97 @@
+name: Interaction notebook publication
+on:
+  push:
+    branches: [research/temporal-interaction]
+permissions:
+  contents: read
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: true
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d
+        with:
+          version: '0.11.33'
+      - run: uv sync --frozen --group dev
+      - name: Integrate notebook provenance and front-page navigation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/notebooks.py')
+          text = p.read_text()
+          anchor = '    inputs = [root / "scripts/notebooks.py"]\n'
+          lines = [
+              '    if source.name == "03_interaction_research.ipynb":',
+              '        for name in (',
+              '            "src/nfl_trajectory/temporal_edges.py",',
+              '            "scripts/inspect_motion_run.py",',
+              '            "scripts/audit_temporal_edges.py",',
+              '            "artifacts/interaction_milestone/inspection.json",',
+              '            "artifacts/interaction_milestone/feature_smoke.json",',
+              '            "artifacts/interaction_milestone/edges_example.npz",',
+              '        ):',
+              '            candidate = root / name',
+              '            if candidate.is_file():',
+              '                inputs.append(candidate)',
+          ]
+          if lines[0] not in text:
+              assert text.count(anchor) == 1
+              p.write_text(text.replace(anchor, anchor + '\n'.join(lines) + '\n'))
+          p = Path('scripts/build_interaction_notebook.py')
+          text = p.read_text()
+          text = text.replace('\nc=[]\n', '\nc: list[nbf.NotebookNode] = []\n')
+          text = text.replace('\nc = []\n', '\nc: list[nbf.NotebookNode] = []\n')
+          text = text.replace('payload = figure.to_plotly_json()', 'payload = json.loads(pio.to_json(figure))')
+          p.write_text(text)
+          p = Path('README.md')
+          text = p.read_text()
+          banner = ('**New research notebook:** [Temporal interaction diagnostics](notebooks/03_interaction_research.ipynb). '
+                    'Observed-only prototype, executed synthetic visualizations, and saved-run verification; '
+                    '**no new predictive gain is claimed**. [Protocol](docs/TEMPORAL_EDGE_PROTOCOL.md).\n\n')
+          if banner not in text:
+              first, rest = text.split('\n\n', 1)
+              p.write_text(first + '\n\n' + banner + rest)
+          PY
+      - name: Build, format and test the bounded notebook milestone
+        run: |
+          set -euo pipefail
+          uv run --frozen python scripts/build_interaction_notebook.py
+          paths=(src/nfl_trajectory/temporal_edges.py scripts/inspect_motion_run.py scripts/audit_temporal_edges.py scripts/build_interaction_notebook.py scripts/notebooks.py tests/test_temporal_edges.py tests/test_motion_run_inspection.py notebooks/03_interaction_research.ipynb)
+          uv run --frozen ruff format "${paths[@]}"
+          uv run --frozen ruff check --fix "${paths[@]}"
+          uv run --frozen python -m pytest tests/test_temporal_edges.py tests/test_motion_run_inspection.py -q
+          uv run --frozen mypy src/nfl_trajectory/temporal_edges.py scripts/inspect_motion_run.py scripts/audit_temporal_edges.py scripts/build_interaction_notebook.py
+          uv run --frozen python scripts/notebooks.py --notebook 03_interaction_research.ipynb
+          cp artifacts/notebooks/03_interaction_research.ipynb notebooks/03_interaction_research.ipynb
+          uv run --frozen ruff format --check "${paths[@]}"
+          uv run --frozen ruff check "${paths[@]}"
+          git add -- "${paths[@]}" README.md
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Publish formatted tested temporal interaction code and executed notebook'
+            git push origin HEAD:research/temporal-interaction
+          fi
+      - name: Preserve review evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: interaction-milestone
+          path: |
+            src/nfl_trajectory/temporal_edges.py
+            scripts/inspect_motion_run.py
+            scripts/audit_temporal_edges.py
+            scripts/build_interaction_notebook.py
+            scripts/notebooks.py
+            tests/test_temporal_edges.py
+            tests/test_motion_run_inspection.py
+            notebooks/03_interaction_research.ipynb
+            docs/TEMPORAL_EDGE_PROTOCOL.md
+            README.md
+            artifacts/interaction_milestone/interaction_report.html
+          retention-days: 30

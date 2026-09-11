@@ -1,5 +1,7 @@
 # NFL Big Data Bowl 2026 - Prediction
 
+**New research notebook:** [Temporal interaction diagnostics](notebooks/03_interaction_research.ipynb). Observed-only prototype, executed synthetic visualizations, and saved-run verification; **no new predictive gain is claimed**. [Protocol](docs/TEMPORAL_EDGE_PROTOCOL.md).
+
 Predict selected players' post-throw x/y trajectories from observed tracking,
 the organizer-supplied landing point, player roles, and forecast horizon.
 This project implements the [Prediction competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction),

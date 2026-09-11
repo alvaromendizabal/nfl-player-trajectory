@@ -155,6 +155,18 @@ def execution_signature(root: Path, source: Path) -> str:
     local = root / "artifacts/benchmark"
     results = local if (local / "summary.json").is_file() else root / "docs/results"
     inputs = [root / "scripts/notebooks.py"]
+    if source.name == "03_interaction_research.ipynb":
+        for name in (
+            "src/nfl_trajectory/temporal_edges.py",
+            "scripts/inspect_motion_run.py",
+            "scripts/audit_temporal_edges.py",
+            "artifacts/interaction_milestone/inspection.json",
+            "artifacts/interaction_milestone/feature_smoke.json",
+            "artifacts/interaction_milestone/edges_example.npz",
+        ):
+            candidate = root / name
+            if candidate.is_file():
+                inputs.append(candidate)
     helper = root / "src/nfl_trajectory/research_visuals.py"
     if helper.is_file():
         inputs.append(helper)

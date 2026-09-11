@@ -11,7 +11,7 @@
 # url = "https://download.pytorch.org/whl/cpu"
 # explicit = true
 # ///
-"""Bounded synthetic checks only. This milestone cannot launch scientific fits."""
+"""Bounded synthetic checks and training-only profiling; no scientific fits."""
 
 from __future__ import annotations
 
@@ -36,12 +36,16 @@ from nfl_trajectory.runtime import atomic_json, sha256  # noqa: E402
 
 TESTS = [
     "tests/test_motion_supervision.py",
+    "tests/test_supervision_batches.py",
+    "tests/test_supervision_execution.py",
     "tests/test_motion_targets.py",
     "tests/test_temporal_data.py",
     "tests/test_temporal_model.py",
 ]
 SOURCES = [
     "src/nfl_trajectory/motion_supervision.py",
+    "src/nfl_trajectory/supervision_batches.py",
+    "src/nfl_trajectory/supervision_profile.py",
     "src/nfl_trajectory/supervision_evidence.py",
     "src/nfl_trajectory/motion_targets.py",
     "src/nfl_trajectory/temporal_data.py",
@@ -185,9 +189,16 @@ def run_tests() -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--self-test", action="store_true", required=True)
-    parser.parse_args()
-    return run_tests()
+    modes = parser.add_mutually_exclusive_group(required=True)
+    modes.add_argument("--self-test", action="store_true")
+    modes.add_argument("--profile-training", action="store_true")
+    args = parser.parse_args()
+    if args.self_test:
+        return run_tests()
+    from nfl_trajectory.supervision_profile import profile_training
+
+    print(json.dumps(profile_training(ROOT), sort_keys=True), flush=True)
+    return 0
 
 
 if __name__ == "__main__":

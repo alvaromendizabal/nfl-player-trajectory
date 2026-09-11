@@ -42,7 +42,7 @@ from nfl_trajectory.supervision_experiment import (  # noqa: E402
     experiment_signature,
     train_arm,
 )
-from scripts.run_motion_experiment import RemoteStore, source_signature  # noqa: E402
+from run_motion_experiment import RemoteStore, source_signature  # noqa: E402
 
 SAMPLE_SHA256 = "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d"
 SAMPLE_PATH = "artifacts/temporal/research/inner_1/samples.pkl"

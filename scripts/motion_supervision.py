@@ -1,8 +1,8 @@
 # /// script
 # requires-python = ">=3.11,<3.12"
 # dependencies = [
-#   "numpy==2.4.6", "pandas==3.0.5", "plotly==7.0.0", "matplotlib==3.10.8",
-#   "filelock==3.32.5", "torch==2.8.0", "pytest==9.1.1",
+#   "boto3==1.43.89", "numpy==2.4.6", "pandas==3.0.5", "plotly==7.0.0",
+#   "matplotlib==3.10.8", "filelock==3.32.5", "torch==2.8.0", "pytest==9.1.1",
 # ]
 # [tool.uv.sources]
 # torch = { index = "pytorch-cpu" }

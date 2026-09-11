@@ -84,7 +84,8 @@
     "heartbeat_seconds": 20,
     "throughput_profile_seconds": 900,
     "per_arm_training_seconds": 600,
-    "matched_job_seconds": 1500
+    "per_arm_wall_seconds": 720,
+    "matched_job_seconds": 1800
   },
   "evaluation": {
     "metric": "coordinate_rmse_yards",

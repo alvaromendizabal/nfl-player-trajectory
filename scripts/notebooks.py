@@ -189,6 +189,7 @@ def execution_signature(root: Path, source: Path) -> str:
             "motion_research.json",
             "domain_manifest.json",
             "motion_representation.json",
+            "supervision_aws_readiness.json",
             "motion_representation.png",
             "role_contract_audit.json",
             "representation_manifest.json",

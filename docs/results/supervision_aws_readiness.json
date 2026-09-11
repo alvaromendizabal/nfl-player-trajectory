@@ -1,0 +1,122 @@
+{
+  "status": "verified_in_aws_studio",
+  "observed_utc": "2026-09-11T03:18:56.058639+00:00",
+  "source_commit": "1ad9e9cee2400baeafe94fc5464bdbbffc88434c",
+  "execution_location": "nfl-trajectory-dev / us-west-2",
+  "training_plan": {
+    "training_plays": 4951,
+    "training_games": 94,
+    "training_rows": 193452,
+    "training_rows_after_frame_48": 368,
+    "velocity_coordinates": 386904,
+    "velocity_support_fraction": 1.0,
+    "training_only_velocity_rms": 4.028778077695476,
+    "batch_plays": 64,
+    "batches_per_epoch": 78,
+    "coordinate_loss_denominator": 4960.307692307692,
+    "velocity_loss_denominator": 4960.307692307692,
+    "permutation_sha256": "fd8cc779584a955b421241bf406a5aac5c66266f6ce27c38bca01d2190426ba0",
+    "seed": 2026,
+    "epoch": 0,
+    "scientific_fits": 0,
+    "validation_statistics_used": false,
+    "feature_completion_gate": "open",
+    "epochs_and_lr_schedule_frozen": false,
+    "training_ready": false,
+    "status": "private_training_plan_verified",
+    "source_commit": "d2f2f903ffa38e98509244e8642c35042bdcb704",
+    "sample_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "python": "3.11.16",
+    "numpy": "2.4.6",
+    "private_plan_sha256": "a84c337e61f4529fc31bee5e6e607536eec2617ca43b2b1eb2381e00c59d665d",
+    "private_plan_s3_key": "experiments/velocity_isolation/preflight/a84c337e61f4529fc31bee5e6e607536eec2617ca43b2b1eb2381e00c59d665d.json",
+    "private_plan_s3_bytes": 307165,
+    "private_plan_s3_version": "Vq8K6JN_sAHgIunrKMBHi0TJWYSHX.oG",
+    "private_plan_uploaded": true,
+    "independent_s3_readback_verified": true,
+    "model_checkpoint_recovery_verified": false,
+    "validation_labels_used": false,
+    "elapsed_seconds": 7.74,
+    "observed_utc": "2026-09-11T03:08:16.796801+00:00",
+    "new_rmse": null
+  },
+  "locked_runtime_checks": {
+    "run_id": "20260911T030917Z-446e1e3d",
+    "runtime": {
+      "python": "3.11.16",
+      "numpy": "2.4.6",
+      "torch": "2.8.0+cpu",
+      "machine": "x86_64",
+      "threads": 1,
+      "deterministic": false,
+      "device": "cpu"
+    },
+    "test_counts": {
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "elapsed_seconds": 30.668,
+    "source_signature": "6189ee1f3ddec41ce2d34e88e1409befce5f8ef6c135ee68e27409eb324a0137"
+  },
+  "independent_checkpoint_recovery": {
+    "status": "independent_s3_model_recovery_verified",
+    "backend": "s3",
+    "signature": "9d2cf7b09061d612179dbd574a18493e78f004cf1ad8805433bb19d3ed8e3880",
+    "runtime": {
+      "python": "3.11.16",
+      "numpy": "2.4.6",
+      "torch": "2.8.0+cpu",
+      "machine": "x86_64",
+      "threads": 2,
+      "deterministic": true,
+      "device": "cpu"
+    },
+    "arms": {
+      "coordinate": {
+        "exact_state_match": true,
+        "restored_step": 2,
+        "final_step": 6
+      },
+      "velocity": {
+        "exact_state_match": true,
+        "restored_step": 2,
+        "final_step": 6
+      }
+    },
+    "matched_state": [
+      "model",
+      "ema",
+      "optimizer",
+      "rng",
+      "steps",
+      "loss_counters"
+    ],
+    "independent_download": true,
+    "fresh_verification_process": true,
+    "scientific_fits": 0,
+    "synthetic_optimizer_steps": 20,
+    "new_rmse": null,
+    "feature_completion_gate": "open",
+    "training_ready": false,
+    "limitation": "Synthetic recovery proof, not a completed scientific experiment."
+  },
+  "private_checkpoint_transfer": {
+    "backend": "s3",
+    "bytes": 9185502,
+    "all_readback_verified": true,
+    "prefix": "experiments/velocity_isolation/recovery/9d2cf7b09061d612179dbd574a18493e78f004cf1ad8805433bb19d3ed8e3880/"
+  },
+  "scientific_fits": 0,
+  "new_rmse": null,
+  "feature_completion_gate": "open",
+  "scientific_training_ready": false,
+  "remaining_gates": [
+    "real-data training/evaluation loop",
+    "training-only throughput and fixed common exposure",
+    "matched one-fold experiment and official-metric ablation"
+  ],
+  "data_redownloaded": false,
+  "historical_models_retrained": false
+}

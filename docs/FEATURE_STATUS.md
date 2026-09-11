@@ -167,3 +167,22 @@ The saved plan rejects environment, source or input drift and reuses completed
 stages. The parent plan retains all three chronological folds; this milestone
 restored and evaluated only the first. The private backup includes every parent
 input required by this probe, so it does not depend on the old transient checkout.
+
+
+## Current reconstruction readiness — 11 September 2026
+
+The new coordinate/velocity implementation now passes all 55 numerical and
+recovery checks in the actual Studio research runtime. The training-only plan
+retains every declared row, and both synthetic arm states passed independent S3
+upload/download and fresh-process exact continuation. See
+[the measured AWS receipt](results/supervision_aws_readiness.json) and
+[the prerequisite protocol](SUPERVISION_PREFLIGHT.md).
+
+Feature engineering remains open. These checks remove execution and preservation
+blockers; they do not measure velocity supervision's RMSE contribution. The next
+scientific comparison remains identical coordinate-only versus velocity-only
+models with training-only scales, common ordering/reflections/exposure, fixed
+final EMA, all requested rows, and the predeclared one-fold improvement and
+uncertainty gate. Real-data loop integration and a training-only throughput
+measurement remain required. No unchanged soft-coverage or smoothing rerun is
+authorized by this readiness result.

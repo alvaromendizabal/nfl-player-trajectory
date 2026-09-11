@@ -25,3 +25,36 @@ The complete real-data training/evaluation loop, training-only throughput select
 ## Research remains open
 
 After the prerequisite passes, the immediate comparison remains coordinate-only versus velocity-only auxiliary supervision. Additional folds depend on the predeclared metric/uncertainty gate. Acceleration tails, long-horizon displacement parameterization, learned defender-receiver relationships, role-conditioned arrival, and eligible historical-season alignment remain independent avenues. Do not repeat the rejected fixed soft-coverage ridge interface or call these mechanisms exhausted because one encoding underperformed.
+
+
+## Executed AWS prerequisite — 11 September 2026
+
+The actual `nfl-trajectory-dev` notebook and locked CPU research runtime were
+verified. All **55 supervision/data/model/recovery tests passed** in Python
+3.11.16, NumPy 2.4.6 and Torch 2.8.0+cpu.
+
+The private training-only plan retains 4,951 plays, 94 games and 193,452 rows,
+including all 368 rows beyond frame 48. Velocity support is 100%; the shared-axis
+training RMS is 4.0287780777 yards/second. The candidate 64-play batch plan has
+78 batches, with a fixed coordinate denominator of 4,960.3076923 per batch.
+Batch size is still a candidate, not a throughput-approved scientific schedule.
+
+Both width-96 synthetic arms were interrupted after two updates, uploaded to the
+existing private S3 project bucket, downloaded to an independent directory and
+resumed in a fresh process through update six. Model, EMA, optimizer, RNG, cursor
+and loss counters matched the uninterrupted state exactly. The four input
+checkpoint files totaled 9,185,502 bytes. This is a real S3 model-state recovery
+proof, but uses synthetic data and does not establish scientific predictive value.
+
+The proof runner is `scripts/check_supervision_recovery.py`. Run `--stage prepare`
+and `--stage verify` in separate processes under the locked motion-supervision
+runtime, with `--directory` inside `artifacts/quality`. Between stages, upload
+the two `upload/<arm>/` generations, independently download them to
+`download/<arm>/`, and record their exact bytes, SHA256, S3 key and version in
+`transfer.json`. The runner validates that receipt and the downloaded generations
+before continuing either model. No credentials or tensors are published in Git.
+
+[Measured acceptance evidence](results/supervision_aws_readiness.json) records
+provenance and remaining gates. **No new scientific fit, RMSE, or feature-maturity
+claim** follows from these checks. The real-data training/evaluation loop and
+training-only throughput selection must precede the fixed matched one-fold study.

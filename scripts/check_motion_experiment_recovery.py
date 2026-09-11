@@ -176,6 +176,9 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     }
     output = folder / "engineering_result.json"
     atomic_json(output, result)
+    receipts = ROOT / "artifacts/motion_supervision/engineering_receipts"
+    receipts.mkdir(parents=True, exist_ok=True)
+    atomic_json(receipts / f"{args.variant}-{args.arm}.json", result)
     print(json.dumps(result, sort_keys=True), flush=True)
     return result
 

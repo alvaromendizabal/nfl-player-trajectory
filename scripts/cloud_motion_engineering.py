@@ -272,10 +272,7 @@ def main() -> None:
                 120,
             )
             clean = pointer(clean_prefix, arm)
-            if (
-                resumed["step"] != clean["step"]
-                or resumed["sha256"] != clean["sha256"]
-            ):
+            if resumed["step"] != clean["step"] or resumed["sha256"] != clean["sha256"]:
                 raise ValueError(
                     "Fresh-process resumed checkpoint differs from clean execution: " + arm
                 )

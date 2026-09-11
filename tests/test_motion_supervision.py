@@ -47,7 +47,8 @@ def deterministic_cpu():
 
 
 def fixture(players=3, frames=(1, 2, 3, 51, 52, 94), split="train"):
-    s = sample(players)
+    # Pandas Copy-on-Write may expose read-only views; fixtures own their mutations.
+    s = {name: value.copy() for name, value in sample(players).items()}
     frames = np.asarray(frames, dtype=np.int64)
     n = len(frames)
     s["horizon"][:] = max(94, int(frames.max()))
@@ -62,6 +63,25 @@ def fixture(players=3, frames=(1, 2, 3, 51, 52, 94), split="train"):
     s["truth"] = (0.3 * displacement).astype(np.float32)
     s["split"] = np.array(split)
     return s
+
+
+@pytest.mark.parametrize("read_only", [False, True])
+def test_fixture_owns_arrays_and_preserves_parent_sample(monkeypatch, read_only):
+    parent = sample(3)
+    before = {name: value.copy() for name, value in parent.items()}
+    if read_only:
+        for value in parent.values():
+            value.setflags(write=False)
+    monkeypatch.setattr(sys.modules[__name__], "sample", lambda players: parent)
+    result = fixture(3)
+    for name, value in parent.items():
+        np.testing.assert_array_equal(value, before[name])
+        assert not np.shares_memory(result[name], value)
+        assert result[name].flags.writeable
+        if read_only:
+            assert not value.flags.writeable
+    np.testing.assert_array_equal(result["horizon"], [94, 94, 94])
+    np.testing.assert_allclose(result["static"][:, 6], 9.4)
 
 
 def test_same_initialization_and_parameter_count_across_arms():

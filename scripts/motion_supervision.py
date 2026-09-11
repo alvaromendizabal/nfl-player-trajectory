@@ -11,7 +11,7 @@
 # url = "https://download.pytorch.org/whl/cpu"
 # explicit = true
 # ///
-"""Bounded synthetic checks and training-only profiling; no scientific fits."""
+"""Bounded motion-supervision engineering checks and training-only preparation."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ import argparse
 import hashlib
 import json
 import os
+import pickle
 import signal
 import subprocess
 import sys
@@ -34,6 +35,13 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from nfl_trajectory.runtime import atomic_json, sha256  # noqa: E402
 
+SAMPLE_SHA256 = "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d"
+PLAN_SOURCES = [
+    "src/nfl_trajectory/supervision_plan.py",
+    "src/nfl_trajectory/motion_targets.py",
+    "src/nfl_trajectory/temporal_data.py",
+    "configs/motion_supervision.json",
+]
 TESTS = [
     "tests/test_motion_supervision.py",
     "tests/test_supervision_batches.py",
@@ -56,6 +64,49 @@ SOURCES = [
     "configs/motion_supervision.json",
     *TESTS,
 ]
+
+
+def prepare_training_plan() -> dict[str, Any]:
+    """Create the private training-only plan from the already verified inner_1 cache."""
+    from nfl_trajectory.supervision_plan import training_plan
+
+    started = time.monotonic()
+    cache = ROOT / "artifacts/temporal/research/inner_1/samples.pkl"
+    if not cache.is_file() or cache.is_symlink() or sha256(cache) != SAMPLE_SHA256:
+        raise ValueError("Existing private sample is missing or has the wrong checksum.")
+    source_hashes = {name: sha256(ROOT / name) for name in PLAN_SOURCES}
+    destination = ROOT / "artifacts/motion_supervision/preflight/training_plan.json"
+    if destination.is_file():
+        old = json.loads(destination.read_text())
+        if old.get("sample_sha256") != SAMPLE_SHA256 or old.get("source_hashes") != source_hashes:
+            raise ValueError("Existing training plan uses different source/input; preserve and review.")
+        return {**old, "reused": True}
+    with cache.open("rb") as stream:
+        samples = pickle.load(stream)
+    training = [sample for sample in samples if str(sample["split"]) == "train"]
+    plan = training_plan(training, 64, 2026, 0)
+    expected = (4951, 94, 193452, 368)
+    observed = (
+        plan["training_plays"],
+        plan["training_games"],
+        plan["training_rows"],
+        plan["training_rows_after_frame_48"],
+    )
+    if observed != expected:
+        raise ValueError(f"Private training population differs: {observed!r} != {expected!r}")
+    result = {
+        "status": "private_training_plan_verified",
+        "sample_sha256": SAMPLE_SHA256,
+        "source_hashes": source_hashes,
+        "plan": plan,
+        "validation_labels_used": False,
+        "scientific_fits": 0,
+        "new_rmse": None,
+        "feature_completion_gate": "open",
+        "elapsed_seconds": round(time.monotonic() - started, 3),
+    }
+    atomic_json(destination, result)
+    return result
 
 
 def stop_process(process: subprocess.Popen[bytes]) -> None:
@@ -191,10 +242,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     modes = parser.add_mutually_exclusive_group(required=True)
     modes.add_argument("--self-test", action="store_true")
+    modes.add_argument("--prepare-training-plan", action="store_true")
     modes.add_argument("--profile-training", action="store_true")
     args = parser.parse_args()
     if args.self_test:
         return run_tests()
+    if args.prepare_training_plan:
+        print(json.dumps(prepare_training_plan(), sort_keys=True), flush=True)
+        return 0
     from nfl_trajectory.supervision_profile import profile_training
 
     print(json.dumps(profile_training(ROOT), sort_keys=True), flush=True)

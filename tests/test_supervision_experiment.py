@@ -53,9 +53,11 @@ def publisher_receipts():
 
 def denominators(values, batch=2):
     plan = training_plan([s for s in values if str(s["split"]) == "train"], batch)
-    return plan["training_only_velocity_rms"], plan["coordinate_loss_denominator"], plan[
-        "velocity_loss_denominator"
-    ]
+    return (
+        plan["training_only_velocity_rms"],
+        plan["coordinate_loss_denominator"],
+        plan["velocity_loss_denominator"],
+    )
 
 
 def test_signature_binds_named_arm_and_full_hashes():

@@ -45,17 +45,40 @@ def audit(cache: Path, output: Path) -> dict[str, Any]:
         support += int(edges["pair_valid"].sum())
         maximum_bytes = max(maximum_bytes, sum(x.nbytes for x in edges.values()))
         if index == 0:
-            np.savez_compressed(output / "edges_example.npz", **edges)
+            np.savez_compressed(
+                output / "edges_example.npz",
+                allow_pickle=False,
+                values=edges["values"],
+                valid=edges["valid"],
+                pair_valid=edges["pair_valid"],
+                adjacent=edges["adjacent"],
+            )
         if (index + 1) % 8 == 0:
-            print(json.dumps({"event": "feature_smoke", "plays": index + 1,
-                              "elapsed_seconds": round(time.monotonic() - started, 3)}), flush=True)
-    result = {"status": "training_only_feature_smoke_passed", "plays": 32,
-              "sample_sha256": SAMPLE_SHA, "channel_names": list(NAMES),
-              "example_sha256": hashlib.sha256((output / "edges_example.npz").read_bytes()).hexdigest(),
-              "channel_valid_counts": valid.tolist(), "valid_pair_frames": support,
-              "max_tensor_bytes": maximum_bytes, "validation_scored": False,
-              "scientific_fits": 0, "new_rmse": None, "feature_research": "open",
-              "elapsed_seconds": round(time.monotonic() - started, 3)}
+            print(
+                json.dumps(
+                    {
+                        "event": "feature_smoke",
+                        "plays": index + 1,
+                        "elapsed_seconds": round(time.monotonic() - started, 3),
+                    }
+                ),
+                flush=True,
+            )
+    result = {
+        "status": "training_only_feature_smoke_passed",
+        "plays": 32,
+        "sample_sha256": SAMPLE_SHA,
+        "channel_names": list(NAMES),
+        "example_sha256": hashlib.sha256((output / "edges_example.npz").read_bytes()).hexdigest(),
+        "channel_valid_counts": valid.tolist(),
+        "valid_pair_frames": support,
+        "max_tensor_bytes": maximum_bytes,
+        "validation_scored": False,
+        "scientific_fits": 0,
+        "new_rmse": None,
+        "feature_research": "open",
+        "elapsed_seconds": round(time.monotonic() - started, 3),
+    }
     (output / "feature_smoke.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
 

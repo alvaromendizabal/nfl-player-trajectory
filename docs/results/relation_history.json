@@ -1,0 +1,45 @@
+{
+  "status": "synthetic_feature_contract_verified",
+  "observed_utc": "2026-09-11T19:35:10.411202+00:00",
+  "base_main_commit": "f6a8bfafe047372ac307289791be490b0b764d9e",
+  "module_sha256": "ebe435617b21c37ec72f87d859fdcda5c2b146cbd9b9f5dd0e62c4a150319681",
+  "test_scope": "28 new relation cases plus 5 maintained temporal-input tests",
+  "test_counts": {
+    "tests": 33,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "local_runtime": {
+    "python": "3.13.5",
+    "numpy": "2.3.5"
+  },
+  "locked_github_ci": "reported separately; not inferred from local runtime",
+  "synthetic_profile": {
+    "players": 22,
+    "observed_frames": 20,
+    "channels": 12,
+    "repetitions": 32,
+    "median_construction_seconds": 0.0006428694999840445,
+    "maximum_construction_seconds": 0.0032950680000567445,
+    "returned_array_bytes": 474400,
+    "supported_directed_edge_frames": 9240,
+    "repeat_outputs_byte_identical": true,
+    "output_sha256": "6ef6112f043e2f2ec7268bdc6b1ab86041ac9392d1526c36326c00226252e7b2",
+    "not_total_process_or_training_memory": true
+  },
+  "notebook": {
+    "path": "notebooks/03_player_relationships.ipynb",
+    "executed_code_cells": 3,
+    "error_outputs": 0,
+    "data": "analytic synthetic only"
+  },
+  "scientific_fits": 0,
+  "new_rmse": null,
+  "validation_labels_read": false,
+  "private_data_support_audit": "not run",
+  "model_integration": "not implemented",
+  "feature_completion_gate": "open",
+  "aws_deployed": false,
+  "blocked_existing_run": "nfl-motion-scientific-20260911-055510-d265d9d terminal result unverified"
+}

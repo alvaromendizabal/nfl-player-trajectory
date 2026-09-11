@@ -199,11 +199,7 @@ def main() -> None:
             shutil.rmtree(base / name, ignore_errors=True)
 
     def receipt(variant: str, arm: str) -> dict[str, Any]:
-        path = (
-            root
-            / "artifacts/motion_supervision/engineering_receipts"
-            / f"{variant}-{arm}.json"
-        )
+        path = root / "artifacts/motion_supervision/engineering_receipts" / f"{variant}-{arm}.json"
         if not path.is_file():
             raise ValueError("Expected engineering recovery receipt was not written.")
         return json.loads(path.read_text())

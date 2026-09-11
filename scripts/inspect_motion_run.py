@@ -83,10 +83,26 @@ class Reader:
             stream.write(payload)
         temporary.replace(destination)
         self.total += len(payload)
-        self.receipts.append({"key": key, "file": name, "sha256": actual,
-                              "bytes": len(payload), "version": response.get("VersionId")})
-        print(json.dumps({"utc": datetime.now(UTC).isoformat(), "event": "object_verified",
-                          "file": name, "bytes": len(payload)}), flush=True)
+        self.receipts.append(
+            {
+                "key": key,
+                "file": name,
+                "sha256": actual,
+                "bytes": len(payload),
+                "version": response.get("VersionId"),
+            }
+        )
+        print(
+            json.dumps(
+                {
+                    "utc": datetime.now(UTC).isoformat(),
+                    "event": "object_verified",
+                    "file": name,
+                    "bytes": len(payload),
+                }
+            ),
+            flush=True,
+        )
         return payload
 
 
@@ -109,17 +125,23 @@ def pair_totals(control: bytes, treatment: bytes) -> dict[str, Any]:
         raise ValueError("Arms contain different forecast keys")
     groups: dict[int, dict[str, Any]] = {}
     for key in sorted(a):
-        group = groups.setdefault(key[0], {"game_id": key[0], "rows": 0,
-                                          "control_sse": 0.0, "velocity_sse": 0.0})
+        group = groups.setdefault(
+            key[0], {"game_id": key[0], "rows": 0, "control_sse": 0.0, "velocity_sse": 0.0}
+        )
         group["rows"] += 1
         group["control_sse"] += sum(x * x for x in a[key])
         group["velocity_sse"] += sum(x * x for x in b[key])
     games = list(groups.values())
     ca = math.sqrt(math.fsum(g["control_sse"] for g in games) / (2 * len(a)))
     cb = math.sqrt(math.fsum(g["velocity_sse"] for g in games) / (2 * len(a)))
-    return {"rows": len(a), "games": len(games), "control_rmse": ca,
-            "velocity_rmse": cb, "relative_gain": 1 - cb / ca if ca else None,
-            "per_game": games}
+    return {
+        "rows": len(a),
+        "games": len(games),
+        "control_rmse": ca,
+        "velocity_rmse": cb,
+        "relative_gain": 1 - cb / ca if ca else None,
+        "per_game": games,
+    }
 
 
 def inspect(output: Path, session: Any | None = None) -> dict[str, Any]:
@@ -130,14 +152,20 @@ def inspect(output: Path, session: Any | None = None) -> dict[str, Any]:
     config = Config(connect_timeout=5, read_timeout=15, retries={"total_max_attempts": 2})
     session = session or boto3.Session(region_name="us-west-2")
     reader = Reader(session.client("s3", config=config), output)
-    result: dict[str, Any] = {"job": JOB, "observed_utc": datetime.now(UTC).isoformat(),
-                              "new_training_jobs": 0, "numerical_model_replay": False,
-                              "feature_research": "open"}
+    result: dict[str, Any] = {
+        "job": JOB,
+        "observed_utc": datetime.now(UTC).isoformat(),
+        "new_training_jobs": 0,
+        "numerical_model_replay": False,
+        "feature_research": "open",
+    }
     try:
         identity = session.client("sts", config=config).get_caller_identity()
         if identity["Account"] != ACCOUNT:
             raise ValueError("Unexpected AWS account; no project artifacts were read")
-        job = session.client("sagemaker", config=config).describe_processing_job(ProcessingJobName=JOB)
+        job = session.client("sagemaker", config=config).describe_processing_job(
+            ProcessingJobName=JOB
+        )
         result["job_status"] = job["ProcessingJobStatus"]
         result["failure_reason"] = job.get("FailureReason")
         result["job_source"] = job.get("Environment", {}).get("NFL_REPO_REF")
@@ -157,8 +185,11 @@ def inspect(output: Path, session: Any | None = None) -> dict[str, Any]:
         if not key:
             result["status"] = "existing_run_requires_diagnosis_or_completion"
             try:
-                reader.get(f"cloud-runs/{JOB}/logs/matched-scientific-experiment.log",
-                           "scientific.log", 2 * 1024**2)
+                reader.get(
+                    f"cloud-runs/{JOB}/logs/matched-scientific-experiment.log",
+                    "scientific.log",
+                    2 * 1024**2,
+                )
             except FileNotFoundError:
                 pass
             return result
@@ -188,8 +219,9 @@ def inspect(output: Path, session: Any | None = None) -> dict[str, Any]:
             receipt = record["private_errors"]
             if not receipt["key"].startswith(prefix + "errors/" + arm + "-"):
                 raise ValueError("Error artifact belongs to another study")
-            errors[arm] = reader.get(receipt["key"], arm + "_errors.csv", 12 * 1024**2,
-                                     receipt["sha256"])
+            errors[arm] = reader.get(
+                receipt["key"], arm + "_errors.csv", 12 * 1024**2, receipt["sha256"]
+            )
         totals = pair_totals(errors["coordinate"], errors["velocity"])
         if (totals["rows"], totals["games"]) != (83938, 41):
             raise ValueError("Evaluation row/game population differs from the frozen study")

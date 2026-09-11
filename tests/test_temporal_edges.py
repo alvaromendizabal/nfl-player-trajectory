@@ -98,9 +98,11 @@ def test_adapter_does_not_read_labels_or_queries():
     xy, v, seen, side = fixture()
     history = np.zeros((4, 20, len(CHANNELS)))
     anchor = xy[:, -1]
-    for name, data in zip(("relative_x", "relative_y", "vx", "vy"),
-                          (xy[..., 0] - anchor[:, None, 0], xy[..., 1] - anchor[:, None, 1],
-                           v[..., 0], v[..., 1]), strict=True):
+    for name, data in zip(
+        ("relative_x", "relative_y", "vx", "vy"),
+        (xy[..., 0] - anchor[:, None, 0], xy[..., 1] - anchor[:, None, 1], v[..., 0], v[..., 1]),
+        strict=True,
+    ):
         history[..., list(CHANNELS).index(name)] = data / CHANNELS[name]
 
     class InputsOnly(dict):

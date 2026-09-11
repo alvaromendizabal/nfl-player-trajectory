@@ -1,12 +1,26 @@
 from pathlib import Path
+
 import nbformat as nbf
+
 root = Path(__file__).resolve().parents[1]
-nb=nbf.v4.new_notebook()
-nb.metadata={'kernelspec':{'display_name':'Python 3 (ipykernel)','language':'python','name':'python3'},'language_info':{'name':'python'},'nfl_evidence_mode':'synthetic demonstration unless verified local receipts are present'}
-c=[]
-def md(s: str) -> None: c.append(nbf.v4.new_markdown_cell(s))
-def code(s: str) -> None: c.append(nbf.v4.new_code_cell(s))
-md('''# Temporal interaction research
+nb = nbf.v4.new_notebook()
+nb.metadata = {
+    "kernelspec": {"display_name": "Python 3 (ipykernel)", "language": "python", "name": "python3"},
+    "language_info": {"name": "python"},
+    "nfl_evidence_mode": "synthetic demonstration unless verified local receipts are present",
+}
+c: list[nbf.NotebookNode] = []
+
+
+def md(s: str) -> None:
+    c.append(nbf.v4.new_markdown_cell(s))
+
+
+def code(s: str) -> None:
+    c.append(nbf.v4.new_code_cell(s))
+
+
+md("""# Temporal interaction research
 ## Preserve *when* player relationships change
 
 **Feature engineering is open. Predictive benefit of this prototype is not measured.**
@@ -19,8 +33,8 @@ The objective remains approximately **0.46**, not yet achieved.
 
 The existing coordinate-versus-velocity experiment must be inspected before another fit.
 See [the bounded protocol](../docs/TEMPORAL_EDGE_PROTOCOL.md).
-''')
-code('''import hashlib
+""")
+code("""import hashlib
 import json
 import sys
 from pathlib import Path
@@ -40,14 +54,14 @@ FIGURES = []
 
 def show(figure):
     FIGURES.append(figure)
-    payload = figure.to_plotly_json()
+    payload = json.loads(pio.to_json(figure))
     payload.get("layout", {}).pop("template", None)
     display({"application/vnd.plotly.v1+json": payload}, raw=True)
 
 
 print("No training or cloud mutation is performed by this notebook.")
-print("Private inputs and saved errors stay under the ignored artifacts directory.")''')
-md('''### 1 · The question being tested
+print("Private inputs and saved errors stay under the ignored artifacts directory.")""")
+md("""### 1 · The question being tested
 
 Terminal pair geometry and fixed pooled affinities can lose the order of movement changes.
 The new representation keeps **source player × destination player × observed frame × channel**.
@@ -62,8 +76,8 @@ Primary evidence: [Song et al. (2026), §§3.1–3.3](https://arxiv.org/html/260
 and [Dutta, Yurko & Ventura](https://arxiv.org/abs/1906.11373) motivate temporal player
 relationships. Their coverage labels, contextual inputs, and classification accuracy
 are **not** our inference inputs or trajectory-RMSE evidence.
-''')
-code('''from nfl_trajectory.temporal_edges import NAMES, SCALES, build_edges
+""")
+code("""from nfl_trajectory.temporal_edges import NAMES, SCALES, build_edges
 
 example_file = OUT / "edges_example.npz"
 smoke_file = OUT / "feature_smoke.json"
@@ -97,14 +111,14 @@ physical = edges["values"] * SCALES
 print(MODE)
 print("Tensor:", edges["values"].shape)
 print("Total tensor/mask bytes:", sum(x.nbytes for x in edges.values()))
-display(pd.DataFrame({"channel": NAMES, "physical_scale": SCALES.tolist()}))''')
-md('''### 2 · Observed relationship diagnostics
+display(pd.DataFrame({"channel": NAMES, "physical_scale": SCALES.tolist()}))""")
+md("""### 2 · Observed relationship diagnostics
 
 These charts show the selected evidence mode in every title. Blank entries mean
 unavailable measurements, not zero separation or zero motion. Player slots are
 identifiers within a play, not numerical player-ID features. **No true coverage
-assignment is inferred by these charts.**''')
-code('''distance = np.where(edges["valid"][..., 4], physical[..., 4], np.nan)
+assignment is inferred by these charts.**""")
+code("""distance = np.where(edges["valid"][..., 4], physical[..., 4], np.nan)
 show(go.Figure(go.Heatmap(z=distance[:, :, -1].tolist())).update_layout(
     title=MODE + " — final observed pair distances", xaxis_title="Destination slot",
     yaxis_title="Source slot", height=450))
@@ -116,8 +130,8 @@ for peer in range(1, min(distance.shape[0], 7)):
                        mode="lines+markers", connectgaps=False, name=f"Slot 0 to {peer}")
 show(series.update_layout(title=MODE + " — spacing through the observed window",
                           xaxis_title="Seconds before observed cutoff",
-                          yaxis_title="Separation (yards)", height=450))''')
-code('''validity = edges["valid"].sum(axis=(0, 1, 2))
+                          yaxis_title="Separation (yards)", height=450))""")
+code("""validity = edges["valid"].sum(axis=(0, 1, 2))
 count = max(int(edges["pair_valid"].sum()), 1)
 show(go.Figure(go.Bar(x=list(NAMES), y=(validity / count).tolist())).update_layout(
     title=MODE + " — channel support on jointly observed pair-frames",
@@ -126,8 +140,8 @@ show(go.Figure(go.Bar(x=list(NAMES), y=(validity / count).tolist())).update_layo
 mask = edges["valid"][0, 1].T.astype(int)
 show(go.Figure(go.Heatmap(x=clock.tolist(), y=list(NAMES), z=mask.tolist())).update_layout(
     title=MODE + " — explicit validity for pair 0 → 1",
-    xaxis_title="Seconds before observed cutoff", height=430))''')
-md('''### 3 · Existing scientific run: verify, do not rerun
+    xaxis_title="Seconds before observed cutoff", height=430))""")
+md("""### 3 · Existing scientific run: verify, do not rerun
 
 The AWS helper reads `nfl-motion-scientific-20260911-055510-d265d9d` only. It verifies
 account and source identity, immutable hashes, all requested error rows, and the
@@ -138,8 +152,8 @@ When the local inspection receipt exists, the next cell recomputes the paired
 whole-game bootstrap using the existing experiment's NumPy generator, seed,
 10,000 resamples, and pooled-coordinate definition. Passing this statistical
 check still does not establish a leaderboard score or certify inference replay.
-''')
-code('''inspection_path = OUT / "inspection.json"
+""")
+code("""inspection_path = OUT / "inspection.json"
 if inspection_path.exists():
     inspection = json.loads(inspection_path.read_text())
     print("AWS observation:", inspection.get("observed_utc"))
@@ -171,8 +185,8 @@ if inspection_path.exists():
         print("No accepted comparison. Inspect the saved failure/status before any new training.")
 else:
     print("No local AWS inspection receipt. Live result and new RMSE are UNKNOWN.")
-    print("Run the supplied bounded helper in AWS, then rerun this notebook.")''')
-md('''### 4 · Decision and the next experiment
+    print("Run the supplied bounded helper in AWS, then rerun this notebook.")""")
+md("""### 4 · Decision and the next experiment
 
 **Do not alter the old run.** Close its result first: all 83,938 rows, both final
 1,248-step arm states, independent restoration, and the frozen >=1% improvement
@@ -190,8 +204,8 @@ This prototype has not undergone real-data input screening, model integration,
 feature-value ablation, or chronological replication. These remain explicit gates.
 The notebook may show a 32-play observed-only smoke after the helper is run;
 that smoke is not a scientific experiment or evidence of improved RMSE.
-''')
-code('''html_path = OUT / "interaction_report.html"
+""")
+code("""html_path = OUT / "interaction_report.html"
 sections = ["<h1>NFL temporal interaction research</h1>",
             "<p>" + MODE + "</p>",
             "<p>Feature research remains open. No training was performed by this notebook.</p>"]
@@ -200,6 +214,6 @@ for index, figure in enumerate(FIGURES):
 html_path.write_text("<!doctype html><html><meta charset='utf-8'><body>" +
                      "\\n".join(sections) + "</body></html>", encoding="utf-8")
 print("Saved offline interactive report:", html_path)
-display(FileLink(str(html_path)))''')
-nb.cells=c
-nbf.write(nb,root/'notebooks/03_interaction_research.ipynb')
+display(FileLink(str(html_path)))""")
+nb.cells = c
+nbf.write(nb, root / "notebooks/03_interaction_research.ipynb")

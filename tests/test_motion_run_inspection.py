@@ -25,7 +25,9 @@ def test_unrelated_object_keys_rejected(key):
 def test_verified_read_and_corruption_rejection(tmp_path):
     payload = b'{"status":"complete"}'
     reader = Reader(FakeS3(payload), tmp_path)
-    assert reader.get(f"cloud-runs/{JOB}/status.json", "status.json", 100, digest(payload)) == payload
+    assert (
+        reader.get(f"cloud-runs/{JOB}/status.json", "status.json", 100, digest(payload)) == payload
+    )
     assert reader.receipts[0]["sha256"] == digest(payload)
     with pytest.raises(ValueError, match="SHA256"):
         reader.get(f"cloud-runs/{JOB}/status.json", "other.json", 100, "0" * 64)

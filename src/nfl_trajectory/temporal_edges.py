@@ -12,8 +12,17 @@ from typing import Any
 import numpy as np
 
 NAMES = (
-    "dx", "dy", "dvx", "dvy", "distance", "closing_speed", "lateral_speed",
-    "velocity_alignment", "bearing_rate", "separation_rate", "same_side",
+    "dx",
+    "dy",
+    "dvx",
+    "dvy",
+    "distance",
+    "closing_speed",
+    "lateral_speed",
+    "velocity_alignment",
+    "bearing_rate",
+    "separation_rate",
+    "same_side",
 )
 SCALES = np.array([20, 20, 10, 10, 20, 10, 10, 1, 10, 10, 1], dtype=np.float64)
 ODD_LATERAL = (1, 3, 6, 8)
@@ -71,9 +80,20 @@ def build_edges(
     distance_rate[..., 1:] = np.diff(distance, axis=-1) / seconds_per_frame
     same = np.broadcast_to((teams[:, None] == teams[None, :])[..., None], pair.shape)
     values = np.stack(
-        [delta[..., 0], delta[..., 1], dv[..., 0], dv[..., 1], distance,
-         -radial / np.maximum(distance, 0.1), cross / np.maximum(distance, 0.1),
-         np.clip(alignment, -1, 1), angle_rate, distance_rate, same], axis=-1,
+        [
+            delta[..., 0],
+            delta[..., 1],
+            dv[..., 0],
+            dv[..., 1],
+            distance,
+            -radial / np.maximum(distance, 0.1),
+            cross / np.maximum(distance, 0.1),
+            np.clip(alignment, -1, 1),
+            angle_rate,
+            distance_rate,
+            same,
+        ],
+        axis=-1,
     )
     valid = np.repeat(pair[..., None], len(NAMES), axis=-1)
     valid[..., 5] &= distance >= 0.1
@@ -104,4 +124,6 @@ def from_sample(sample: Mapping[str, Any]) -> dict[str, np.ndarray]:
     safe = np.where(seen[..., None], history[..., indices], 0).astype(np.float64)
     scales = [CHANNELS[name] for name in ("relative_x", "relative_y", "vx", "vy")]
     physical = safe * np.asarray(scales)
-    return build_edges(physical[..., :2] + anchors[:, None], physical[..., 2:], seen, sample["side"])
+    return build_edges(
+        physical[..., :2] + anchors[:, None], physical[..., 2:], seen, sample["side"]
+    )

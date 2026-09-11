@@ -162,13 +162,13 @@ def main() -> None:
             )
             try:
                 process.wait(timeout=timeout)
-            except subprocess.TimeoutExpired:
+            except subprocess.TimeoutExpired as error:
                 process.terminate()
                 try:
                     process.wait(timeout=5)
                 except subprocess.TimeoutExpired:
                     process.kill()
-                raise TimeoutError(label + " exceeded its stage budget.")
+                raise TimeoutError(label + " exceeded its stage budget.") from error
         s3.upload_file(
             str(log),
             bucket,
@@ -272,8 +272,13 @@ def main() -> None:
                 120,
             )
             clean = pointer(clean_prefix, arm)
-            if resumed["step"] != clean["step"] or resumed["sha256"] != clean["sha256"]:
-                raise ValueError("Fresh-process resumed checkpoint differs from clean execution: " + arm)
+            if (
+                resumed["step"] != clean["step"]
+                or resumed["sha256"] != clean["sha256"]
+            ):
+                raise ValueError(
+                    "Fresh-process resumed checkpoint differs from clean execution: " + arm
+                )
             receipts[arm] = {
                 "step": resumed["step"],
                 "sha256": resumed["sha256"],

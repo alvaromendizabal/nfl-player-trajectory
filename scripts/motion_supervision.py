@@ -78,8 +78,13 @@ def prepare_training_plan() -> dict[str, Any]:
     destination = ROOT / "artifacts/motion_supervision/preflight/training_plan.json"
     if destination.is_file():
         old = json.loads(destination.read_text())
-        if old.get("sample_sha256") != SAMPLE_SHA256 or old.get("source_hashes") != source_hashes:
-            raise ValueError("Existing training plan uses different source/input; preserve and review.")
+        if (
+            old.get("sample_sha256") != SAMPLE_SHA256
+            or old.get("source_hashes") != source_hashes
+        ):
+            raise ValueError(
+                "Existing training plan uses different source/input; preserve and review."
+            )
         return {**old, "reused": True}
     with cache.open("rb") as stream:
         samples = pickle.load(stream)

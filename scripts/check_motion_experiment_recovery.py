@@ -35,7 +35,6 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from scripts.run_motion_experiment import RemoteStore, source_signature  # noqa: E402
 from nfl_trajectory.motion_supervision import MatchedState  # noqa: E402
 from nfl_trajectory.runtime import atomic_bytes, atomic_json, sha256  # noqa: E402
 from nfl_trajectory.supervision_experiment import (  # noqa: E402
@@ -43,6 +42,7 @@ from nfl_trajectory.supervision_experiment import (  # noqa: E402
     experiment_signature,
     train_arm,
 )
+from scripts.run_motion_experiment import RemoteStore, source_signature  # noqa: E402
 
 SAMPLE_SHA256 = "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d"
 SAMPLE_PATH = "artifacts/temporal/research/inner_1/samples.pkl"
@@ -102,7 +102,9 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     store = RemoteStore(args.bucket, prefix)
     local_tag = hashlib.sha256(prefix.encode()).hexdigest()[:16]
     folder = ROOT / "artifacts/motion_supervision/engineering" / local_tag / args.arm
-    restore_folder = ROOT / "artifacts/motion_supervision/engineering_readback" / local_tag / args.arm
+    restore_folder = (
+        ROOT / "artifacts/motion_supervision/engineering_readback" / local_tag / args.arm
+    )
     restored = store.restore(args.arm, restore_folder, signature)
     if restored is not None:
         receipt = restored["receipt"]

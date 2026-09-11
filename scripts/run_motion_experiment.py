@@ -277,7 +277,7 @@ def main() -> None:
         def publisher(folder: Path, receipt: dict[str, Any]) -> None:
             remote = store.publish(arm_name, folder, receipt)
             published_rows.append(remote)
-            event("epoch_checkpoint_verified", arm=arm_name, **remote)
+            event("epoch_checkpoint_verified", **remote)
 
         return publisher
 

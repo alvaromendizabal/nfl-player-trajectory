@@ -93,12 +93,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     config_sha = sha256(ROOT / CONFIG_PATH)
     source_sha = recovery_source_signature()
     signature = experiment_signature(source_sha, SAMPLE_SHA256, config_sha, args.arm)
-    prefix = (
-        "experiments/velocity_isolation/engineering/"
-        + source_sha
-        + "/"
-        + args.variant
-    )
+    prefix = "experiments/velocity_isolation/engineering/" + source_sha + "/" + args.variant
     store = RemoteStore(args.bucket, prefix)
     local_tag = hashlib.sha256(prefix.encode()).hexdigest()[:16]
     folder = ROOT / "artifacts/motion_supervision/engineering" / local_tag / args.arm

@@ -17,7 +17,7 @@ import sys
 import tarfile
 import time
 import urllib.request
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -122,7 +122,7 @@ def main() -> None:
         if elapsed > MAX_RUNNER_SECONDS:
             raise TimeoutError("Cloud scientific runner exceeded its 30-minute budget.")
         row = {
-            "utc": datetime.now(UTC).isoformat(),
+            "utc": datetime.now(timezone.utc).isoformat(),
             "elapsed_seconds": round(elapsed, 3),
             "status": status,
             "job": job,

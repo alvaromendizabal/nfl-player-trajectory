@@ -46,6 +46,7 @@ TESTS = [
     "tests/test_motion_supervision.py",
     "tests/test_supervision_batches.py",
     "tests/test_supervision_execution.py",
+    "tests/test_supervision_experiment.py",
     "tests/test_motion_targets.py",
     "tests/test_temporal_data.py",
     "tests/test_temporal_model.py",
@@ -54,6 +55,7 @@ SOURCES = [
     "src/nfl_trajectory/motion_supervision.py",
     "src/nfl_trajectory/supervision_batches.py",
     "src/nfl_trajectory/supervision_profile.py",
+    "src/nfl_trajectory/supervision_experiment.py",
     "src/nfl_trajectory/supervision_evidence.py",
     "src/nfl_trajectory/motion_targets.py",
     "src/nfl_trajectory/temporal_data.py",
@@ -217,7 +219,7 @@ def run_tests() -> int:
             for name in ("tests", "failures", "errors", "skipped")
         }
         result["test_counts"] = counts
-        if counts["tests"] < 49 or any(counts[name] for name in ("failures", "errors", "skipped")):
+        if counts["tests"] < 55 or any(counts[name] for name in ("failures", "errors", "skipped")):
             raise RuntimeError("Required tests did not all execute successfully.")
         result["status"] = "synthetic_implementation_verified_no_scientific_fit"
     except (Exception, KeyboardInterrupt) as exc:

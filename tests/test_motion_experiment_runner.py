@@ -10,9 +10,9 @@ from botocore.exceptions import ClientError
 
 torch = pytest.importorskip("torch")
 
-from scripts.run_motion_experiment import RemoteStore, write_errors  # noqa: E402
 from nfl_trajectory.motion_supervision import MatchedState  # noqa: E402
 from nfl_trajectory.supervision_evidence import save_generation  # noqa: E402
+from scripts.run_motion_experiment import RemoteStore, write_errors  # noqa: E402
 
 
 class FakeS3:

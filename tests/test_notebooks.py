@@ -92,6 +92,7 @@ def test_source_hash_ignores_outputs_but_not_code() -> None:
         "motion_research.json",
         "domain_manifest.json",
         "motion_representation.json",
+        "supervision_aws_readiness.json",
         "representation_manifest.json",
         "role_contract_audit.json",
         "representation_recovery.json",

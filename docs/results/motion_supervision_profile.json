@@ -1,0 +1,57 @@
+{
+  "status": "training_only_throughput_measured",
+  "observed_utc": "2026-09-11T03:58:51.131548+00:00",
+  "source_commit": "86cc5ecf435c17ea067bd9d291c20badc5300916",
+  "aws_job": "nfl-motion-profile-20260911-035617-86cc5ecf",
+  "aws_region": "us-west-2",
+  "instance_type": "ml.m5.2xlarge",
+  "max_runtime_seconds": 900,
+  "runtime": {
+    "python": "3.11.15",
+    "numpy": "2.4.6",
+    "torch": "2.8.0+cpu",
+    "threads": 2,
+    "deterministic": true
+  },
+  "input": {
+    "sample_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "training_games": 94,
+    "training_plays": 4951,
+    "training_rows": 193452,
+    "rows_after_frame_48": 368,
+    "batch_plays": 64,
+    "batches_per_epoch": 78,
+    "validation_labels_used": false
+  },
+  "measurements": [
+    {"arm": "coordinate", "batch": "first", "rows": 2023, "seconds": 0.31738124699998593},
+    {"arm": "coordinate", "batch": "middle", "rows": 2330, "seconds": 0.24097590099998456},
+    {"arm": "coordinate", "batch": "short_final", "rows": 801, "seconds": 0.09460170700000958},
+    {"arm": "coordinate", "batch": "largest_requested_rows", "rows": 10671, "max_requested_frame": 94, "rows_after_frame_48": 368, "seconds": 0.50679603399999},
+    {"arm": "velocity", "batch": "first", "rows": 2023, "seconds": 0.20660039700001676},
+    {"arm": "velocity", "batch": "middle", "rows": 2330, "seconds": 0.2280272019999927},
+    {"arm": "velocity", "batch": "short_final", "rows": 801, "seconds": 0.08905309900001157},
+    {"arm": "velocity", "batch": "largest_requested_rows", "rows": 10671, "max_requested_frame": 94, "rows_after_frame_48": 368, "seconds": 0.5046773199999848}
+  ],
+  "conservative_epoch_seconds": 37.133605898998354,
+  "worst_stress_batch_seconds": 0.50679603399999,
+  "peak_rss_mib": 996.109375,
+  "profile_elapsed_seconds": 6.464277194000005,
+  "processing_wall_seconds": 134.373,
+  "training_only_optimizer_steps": 8,
+  "profile_signature": "e159dd9364f8b055c1ea7bbda00ee479d95aab07090628ef3e4f73a4a77be777",
+  "s3_readback_verified": true,
+  "scientific_fits": 0,
+  "new_rmse": null,
+  "feature_completion_gate": "open",
+  "exposure_decision": {
+    "scientific_epochs": 16,
+    "steps_per_epoch": 78,
+    "scientific_total_steps": 1248,
+    "warmup_epochs": 2,
+    "warmup_steps": 156,
+    "conservative_seconds_per_arm": 594.1376943839737,
+    "selection_basis": "largest whole-epoch exposure fitting the predeclared 600-second per-arm training budget; validation outcomes were not consulted"
+  },
+  "interpretation": "Engineering throughput and finite-gradient evidence only. It does not measure predictive benefit."
+}

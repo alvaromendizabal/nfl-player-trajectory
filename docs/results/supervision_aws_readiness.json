@@ -1,0 +1,159 @@
+{
+  "status": "verified_in_aws_studio_and_processing",
+  "observed_utc": "2026-09-11T05:40:46.048000+00:00",
+  "source_commit": "e186f00f4fc2a636c96d019dcc465e53656407d6",
+  "execution_location": "nfl-trajectory-dev and SageMaker Processing / us-west-2",
+  "training_plan": {
+    "training_plays": 4951,
+    "training_games": 94,
+    "training_rows": 193452,
+    "training_rows_after_frame_48": 368,
+    "velocity_coordinates": 386904,
+    "velocity_support_fraction": 1.0,
+    "training_only_velocity_rms": 4.028778077695476,
+    "batch_plays": 64,
+    "batches_per_epoch": 78,
+    "coordinate_loss_denominator": 4960.307692307692,
+    "velocity_loss_denominator": 4960.307692307692,
+    "permutation_sha256": "fd8cc779584a955b421241bf406a5aac5c66266f6ce27c38bca01d2190426ba0",
+    "seed": 2026,
+    "epoch": 0,
+    "scientific_fits": 0,
+    "validation_statistics_used": false,
+    "feature_completion_gate": "open",
+    "epochs_and_lr_schedule_frozen": false,
+    "training_ready": false,
+    "status": "private_training_plan_verified",
+    "source_commit": "d2f2f903ffa38e98509244e8642c35042bdcb704",
+    "sample_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "python": "3.11.16",
+    "numpy": "2.4.6",
+    "private_plan_sha256": "a84c337e61f4529fc31bee5e6e607536eec2617ca43b2b1eb2381e00c59d665d",
+    "private_plan_s3_key": "experiments/velocity_isolation/preflight/a84c337e61f4529fc31bee5e6e607536eec2617ca43b2b1eb2381e00c59d665d.json",
+    "private_plan_s3_bytes": 307165,
+    "private_plan_s3_version": "Vq8K6JN_sAHgIunrKMBHi0TJWYSHX.oG",
+    "private_plan_uploaded": true,
+    "independent_s3_readback_verified": true,
+    "model_checkpoint_recovery_verified": false,
+    "validation_labels_used": false,
+    "elapsed_seconds": 7.74,
+    "observed_utc": "2026-09-11T03:08:16.796801+00:00",
+    "new_rmse": null
+  },
+  "locked_runtime_checks": {
+    "run_id": "20260911T030917Z-446e1e3d",
+    "runtime": {
+      "python": "3.11.16",
+      "numpy": "2.4.6",
+      "torch": "2.8.0+cpu",
+      "machine": "x86_64",
+      "threads": 1,
+      "deterministic": false,
+      "device": "cpu"
+    },
+    "test_counts": {
+      "tests": 55,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "elapsed_seconds": 30.668,
+    "source_signature": "6189ee1f3ddec41ce2d34e88e1409befce5f8ef6c135ee68e27409eb324a0137"
+  },
+  "independent_checkpoint_recovery": {
+    "status": "independent_s3_model_recovery_verified",
+    "backend": "s3",
+    "signature": "9d2cf7b09061d612179dbd574a18493e78f004cf1ad8805433bb19d3ed8e3880",
+    "runtime": {
+      "python": "3.11.16",
+      "numpy": "2.4.6",
+      "torch": "2.8.0+cpu",
+      "machine": "x86_64",
+      "threads": 2,
+      "deterministic": true,
+      "device": "cpu"
+    },
+    "arms": {
+      "coordinate": {
+        "exact_state_match": true,
+        "restored_step": 2,
+        "final_step": 6
+      },
+      "velocity": {
+        "exact_state_match": true,
+        "restored_step": 2,
+        "final_step": 6
+      }
+    },
+    "matched_state": [
+      "model",
+      "ema",
+      "optimizer",
+      "rng",
+      "steps",
+      "loss_counters"
+    ],
+    "independent_download": true,
+    "fresh_verification_process": true,
+    "scientific_fits": 0,
+    "synthetic_optimizer_steps": 20,
+    "new_rmse": null,
+    "feature_completion_gate": "open",
+    "training_ready": false,
+    "limitation": "Synthetic recovery proof, not a completed scientific experiment."
+  },
+  "private_checkpoint_transfer": {
+    "backend": "s3",
+    "bytes": 9185502,
+    "all_readback_verified": true,
+    "prefix": "experiments/velocity_isolation/recovery/9d2cf7b09061d612179dbd574a18493e78f004cf1ad8805433bb19d3ed8e3880/"
+  },
+  "processing_recovery_gate": {
+    "status": "private_fresh_process_recovery_verified",
+    "processing_job": "nfl-motion-recovery-20260911-0520-c33c610",
+    "processing_status": "Completed",
+    "source_commit": "c33c61039c99aea41d0706d5de4bf5f99da56a96",
+    "sample_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+    "result_s3_key": "cloud-runs/nfl-motion-recovery-20260911-0520-c33c610/engineering_recovery.json",
+    "elapsed_runner_seconds": 142.002,
+    "processing_started_utc": "2026-09-11T05:36:22.271000+00:00",
+    "processing_ended_utc": "2026-09-11T05:40:16.390000+00:00",
+    "arms": {
+      "coordinate": {
+        "checkpoint_bytes": 4591025,
+        "interrupted_step": 3,
+        "resumed_final_step": 6,
+        "resume_initial_step": 3,
+        "clean_initial_step": 0,
+        "checkpoint_sha256": "e169e9374137827a0da85fe6fd9c2fa4283045bc1de3759d7d702ea28521fa7b",
+        "exact_remote_checkpoint_match": true,
+        "remote_readback_verified": true
+      },
+      "velocity": {
+        "checkpoint_bytes": 4593637,
+        "interrupted_step": 3,
+        "resumed_final_step": 6,
+        "resume_initial_step": 3,
+        "clean_initial_step": 0,
+        "checkpoint_sha256": "332dec6e5d3defc80accc88d71469a5f26d0df6aca13cb17366e52b67f611aa5",
+        "exact_remote_checkpoint_match": true,
+        "remote_readback_verified": true
+      }
+    },
+    "scientific_fits": 0,
+    "validation_scored": false,
+    "new_rmse": null,
+    "purpose": "Prove independent private S3 checkpoint save/read-back and exact fresh-process continuation before scientific training."
+  },
+  "scientific_fits": 0,
+  "new_rmse": null,
+  "feature_completion_gate": "open",
+  "scientific_training_ready": false,
+  "remaining_gates": [
+    "real-data training/evaluation loop integration",
+    "training-only throughput measurement and fixed common exposure",
+    "matched one-fold coordinate-only versus velocity-only experiment and official-metric ablation"
+  ],
+  "data_redownloaded": false,
+  "historical_models_retrained": false
+}

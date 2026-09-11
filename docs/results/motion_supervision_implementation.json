@@ -1,0 +1,81 @@
+{
+  "milestone": "B1: reconstructed model/loss/checkpoint primitives and synthetic test runner",
+  "experiment_id": "velocity-isolation-20260910-v1",
+  "status": "targeted_synthetic_tests_passed_full_quality_pending",
+  "source_parent": "95c8f03ed0c3311834071f00add8f794792629ae",
+  "input_preflight_status": "sample_contract_verified_no_training",
+  "private_samples_loaded_here": false,
+  "scientific_model_fits": 0,
+  "new_rmse": null,
+  "feature_completion_gate": "open",
+  "tests": {
+    "tests": 53,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "test_runner_elapsed_seconds": 31.851,
+  "test_runtime": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "torch": "2.10.0+cpu",
+    "machine": "x86_64",
+    "threads": 2,
+    "deterministic": false,
+    "device": "cpu"
+  },
+  "test_determinism": "Recovery tests explicitly enable deterministic algorithms and two threads; outer runner runtime reports its own process settings.",
+  "maintained_runtime": {
+    "python": ">=3.11,<3.12",
+    "torch": "2.8.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "locked_runtime_executed_here": false,
+  "dependency_declaration_and_lock_parity": true,
+  "python_compile_and_line_length_checks": "passed",
+  "exact_ruff_and_mypy_checks": "not executed locally; unavailable in this runtime; repository CI remains the gate",
+  "existing_ci_checks_preserved": true,
+  "post_test_changes": [
+    {
+      "path": "scripts/motion_supervision.py",
+      "tested_sha256": "8cf2ab263c8d3a39f5dca373f826e41fb03d6f316def3b6fae8b541bc917bd40",
+      "delivered_sha256": "17284a5a472950a7e43e85d45b33a901fec8c7ed262409cd8a0e9a55d74775ff",
+      "ast_identical": true,
+      "change": "line wrapping only"
+    },
+    {
+      "path": "tests/test_motion_supervision.py",
+      "tested_sha256": "8a1a00c25feeaebe482048c2461be21307e32a63d4ba909a98f9fc5dd08acea1",
+      "delivered_sha256": "a2c18351cdd3af3c40b673f3bd509da56758b6d044c8e1827952438593e273a6",
+      "ast_identical": true,
+      "change": "line wrapping only"
+    }
+  ],
+  "delivered_source_hashes": {
+    ".github/workflows/ci.yml": "54067f0dbf2f0fe0a583ecd5f2e58035710f22b93823a5f6b6652f560e89528b",
+    "configs/motion_supervision.json": "22248d5f0518e1346537e5690072662b1c51007aa0f0dadf93b552c6cfe10d4c",
+    "docs/MOTION_SUPERVISION_EXPERIMENT.md": "ceb8d43e41b3bc82c400c535a3f07b4b03375e269367fc96a8e66deb08246ac5",
+    "scripts/motion_supervision.py": "17284a5a472950a7e43e85d45b33a901fec8c7ed262409cd8a0e9a55d74775ff",
+    "scripts/motion_supervision.py.lock": "3ff69bc39d2403952151f92613e05a624bdcfbf7de9da73b702f4ff26dfc4c16",
+    "src/nfl_trajectory/motion_supervision.py": "4402459272c842cc850dde4b40170452dd1db078f59ebfd53ebad967b4b1906c",
+    "src/nfl_trajectory/supervision_evidence.py": "14df8a6d59fa7e1508c5f057c27bafbb99b0e72dd16e5eaab1af8312fe8be672",
+    "tests/test_motion_supervision.py": "a2c18351cdd3af3c40b673f3bd509da56758b6d044c8e1827952438593e273a6"
+  },
+  "independent_local_fresh_process_restore": "passed for both arms; entire model/EMA/optimizer/RNG/cursor/counters identical",
+  "remote_durability_verified": false,
+  "github_updated": false,
+  "aws_mutations": 0,
+  "not_complete": [
+    "full repository CI under its pinned runtime",
+    "complete real-data data-order/scheduler/evaluation runner",
+    "training-only throughput and fixed exposure",
+    "independent private S3 write/read-back and actual-runtime resume"
+  ],
+  "engineering_overhead": [
+    "Initial three-suite targeted run: 49 passed.",
+    "Two outer tool deadlines interrupted wrapper collection; child logs reached 53 passed in one case.",
+    "After diagnosing the outer deadline, the bounded runner was launched and inspected within the same response; final result: 53 passed.",
+    "No scientific fits were repeated and no private data were used."
+  ],
+  "created_utc": "2026-09-10T22:23:31.015131+00:00"
+}

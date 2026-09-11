@@ -1,0 +1,42 @@
+{
+  "status": "private_fresh_process_recovery_verified",
+  "source_commit": "51ae8726d5be641b731b359d4203c7c8497e2b52",
+  "processing_job": "nfl-motion-recovery-20260911-053326",
+  "processing_status": "Completed",
+  "region": "us-west-2",
+  "instance_type": "ml.m5.large",
+  "instance_count": 1,
+  "runtime_cap_seconds": 900,
+  "processing_start_utc": "2026-09-11T05:34:07.180000+00:00",
+  "processing_end_utc": "2026-09-11T05:38:26.195000+00:00",
+  "runner_elapsed_seconds": 154.074,
+  "private_receipt_key": "cloud-runs/nfl-motion-recovery-20260911-053326/engineering_recovery.json",
+  "sample_sha256": "d84874f879e3d54d6f4ef66caefd965a9af9407c677c3c37ebc0245d3a9bb61d",
+  "arms": {
+    "coordinate": {
+      "interrupted_step": 3,
+      "resume_initial_step": 3,
+      "final_step": 6,
+      "clean_initial_step": 0,
+      "checkpoint_bytes": 4591025,
+      "checkpoint_sha256": "cb6ee7ccfc96df937152b4bbd6b6601380e957097704c1f7b76538c5c915dd84",
+      "exact_remote_checkpoint_match": true,
+      "remote_readback_verified": true
+    },
+    "velocity": {
+      "interrupted_step": 3,
+      "resume_initial_step": 3,
+      "final_step": 6,
+      "clean_initial_step": 0,
+      "checkpoint_bytes": 4593637,
+      "checkpoint_sha256": "cc4661c7d3a6e9f0aa68faea5faba8c7410ac7dac6017a2df2b8eb2690fd050c",
+      "exact_remote_checkpoint_match": true,
+      "remote_readback_verified": true
+    }
+  },
+  "scientific_fits": 0,
+  "validation_scored": false,
+  "new_rmse": null,
+  "feature_completion_gate": "open",
+  "limitation": "Real training-data engineering recovery proof, not a completed predictive experiment or feature-value result."
+}

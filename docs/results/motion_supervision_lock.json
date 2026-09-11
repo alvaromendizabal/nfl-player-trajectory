@@ -1,0 +1,35 @@
+{
+  "status": "lock_parity_verified",
+  "feature_completion_gate": "open",
+  "scientific_fits": 0,
+  "validation_scored": false,
+  "new_rmse": null,
+  "resolver": {
+    "tool": "uv",
+    "version": "0.11.33"
+  },
+  "aws": {
+    "account": "560403859723",
+    "region": "us-west-2",
+    "job": "nfl-lock-regen-20260911-043857",
+    "s3_key": "cloud-runs/nfl-lock-regen-20260911-043857/motion_supervision.py.lock",
+    "bytes": 58813,
+    "sha256": "afb36480491171b78ade7d3a67efe30235a6ee2709d235aaae7a3731bfcb47cd",
+    "source_commit": "b7056e4aacfb09b77949d11c07f8de65c4f00da9"
+  },
+  "github": {
+    "publication_parent": "c52f86f1e2aeab7f165bbad8897e06c4b53616d2",
+    "lock_commit": "a366de877f386ac791be4c59d5efb365a786c743",
+    "workflow_run": 34563794542,
+    "workflow_job": 103151670522,
+    "bytes": 58813,
+    "sha256": "afb36480491171b78ade7d3a67efe30235a6ee2709d235aaae7a3731bfcb47cd"
+  },
+  "acceptance": {
+    "same_sha256": true,
+    "same_byte_count": true,
+    "generated_independently": true,
+    "scientific_execution_enabled": false
+  },
+  "next_gate": "Full CI on this user-authored provenance commit, then private fresh-process 3-to-6-step S3 recovery for both matched arms."
+}

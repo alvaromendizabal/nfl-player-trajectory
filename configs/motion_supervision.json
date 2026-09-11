@@ -1,7 +1,7 @@
 {
   "experiment_id": "velocity-isolation-20260910-v1",
-  "phase": "real_data_runner_validation",
-  "scientific_execution_enabled": false,
+  "phase": "matched_one_fold_experiment",
+  "scientific_execution_enabled": true,
   "source_parent": "95c8f03ed0c3311834071f00add8f794792629ae",
   "input": {
     "fold": "inner_1",
@@ -102,9 +102,7 @@
     "both_arms_complete_and_independently_restored": true
   },
   "remaining_gates": [
-    "real-data train/evaluate runner tests",
-    "per-epoch private S3 checkpoint write/read-back integration",
-    "exact private-runtime resume test for the real-data runner",
-    "full repository CI at the runner revision"
+    "full repository CI at the scientific execution revision",
+    "matched one-fold coordinate-only versus velocity-only experiment and continuation decision"
   ]
 }

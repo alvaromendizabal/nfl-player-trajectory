@@ -281,9 +281,7 @@ def summarize_pair(
         raise ValueError("Control RMSE must be positive.")
     relative_gain = 1 - treatment_rmse / control_rmse
     paired = paired_game_bootstrap(control, treatment, repeats, seed)
-    continue_gate = (
-        relative_gain >= minimum_relative_gain and paired["delta_ci95_high"] < 0
-    )
+    continue_gate = relative_gain >= minimum_relative_gain and paired["delta_ci95_high"] < 0
     return {
         "control": control_metrics,
         "velocity": treatment_metrics,

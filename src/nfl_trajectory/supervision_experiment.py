@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -19,6 +20,7 @@ from nfl_trajectory.supervision_batches import TrainingBatches, scheduled_learni
 from nfl_trajectory.supervision_evidence import load_generation, save_generation
 
 CheckpointPublisher = Callable[[Path, dict[str, Any]], None]
+ProgressCallback = Callable[[dict[str, float | int]], None]
 
 
 @dataclass(frozen=True)
@@ -111,10 +113,14 @@ def train_arm(
     signature: str,
     publisher: CheckpointPublisher,
     stop_after_steps: int | None = None,
+    progress: ProgressCallback | None = None,
+    max_seconds: float | None = None,
 ) -> tuple[MatchedState, list[dict[str, float | int]]]:
     """Train one fixed arm and require remote checkpoint verification every epoch."""
     training, _ = _split_samples(samples)
     settings.validate(len(training))
+    if max_seconds is not None and (not math.isfinite(max_seconds) or max_seconds <= 0):
+        raise ValueError("Training time budget must be finite and positive.")
     batches = TrainingBatches(training, settings.batch_plays, settings.seed)
     total_steps = settings.total_steps(len(training))
     if total_steps != settings.epochs * batches.batches_per_epoch:
@@ -133,6 +139,7 @@ def train_arm(
     limit = total_steps if stop_after_steps is None else min(total_steps, stop_after_steps)
     if limit < state.steps:
         raise ValueError("Stop cursor precedes the durable checkpoint.")
+    started = time.monotonic()
     while state.steps < limit:
         cursor = state.steps
         for group in state.optimizer.param_groups:
@@ -150,22 +157,29 @@ def train_arm(
             coordinate_denominator,
             velocity_denominator,
         )
-        curve.append(
-            {
-                "step": state.steps,
-                "epoch": (state.steps - 1) // batches.batches_per_epoch + 1,
-                "learning_rate": float(state.optimizer.param_groups[0]["lr"]),
-                "loss": float(stats["loss"]),
-                "coordinate_sse": float(stats["coordinate_sse"]),
-                "coordinates": int(stats["coordinates"]),
-                "velocity_sse_normalized": float(stats["velocity_sse_normalized"]),
-                "velocity_coordinates": int(stats["velocity_coordinates"]),
-            }
-        )
+        row = {
+            "step": state.steps,
+            "epoch": (state.steps - 1) // batches.batches_per_epoch + 1,
+            "learning_rate": float(state.optimizer.param_groups[0]["lr"]),
+            "loss": float(stats["loss"]),
+            "coordinate_sse": float(stats["coordinate_sse"]),
+            "coordinates": int(stats["coordinates"]),
+            "velocity_sse_normalized": float(stats["velocity_sse_normalized"]),
+            "velocity_coordinates": int(stats["velocity_coordinates"]),
+            "elapsed_seconds": float(time.monotonic() - started),
+        }
+        curve.append(row)
+        if progress is not None:
+            progress(row)
         epoch_complete = state.steps % batches.batches_per_epoch == 0
         final_partial = state.steps == limit
-        if epoch_complete or final_partial:
+        checkpointed = epoch_complete or final_partial
+        if checkpointed:
             _checkpoint_epoch(state, folder, signature, publisher)
+        if max_seconds is not None and time.monotonic() - started >= max_seconds:
+            if not checkpointed:
+                _checkpoint_epoch(state, folder, signature, publisher)
+            raise TimeoutError("Arm exceeded its fixed training-time budget after checkpointing.")
     return state, curve
 
 

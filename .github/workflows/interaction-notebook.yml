@@ -27,27 +27,28 @@ jobs:
           p = Path('scripts/notebooks.py')
           text = p.read_text()
           anchor = '    inputs = [root / "scripts/notebooks.py"]\n'
-          extra = '''    if source.name == "03_interaction_research.ipynb":
-                  for name in (
-                      "src/nfl_trajectory/temporal_edges.py",
-                      "scripts/inspect_motion_run.py",
-                      "scripts/audit_temporal_edges.py",
-                      "artifacts/interaction_milestone/inspection.json",
-                      "artifacts/interaction_milestone/feature_smoke.json",
-                      "artifacts/interaction_milestone/edges_example.npz",
-                  ):
-                      candidate = root / name
-                      if candidate.is_file():
-                          inputs.append(candidate)
-          '''
-          import textwrap
-          extra = extra.splitlines()
-          extra = extra[0] + '\n' + textwrap.dedent('\n'.join(extra[1:]))
-          extra = extra.splitlines()
-          extra = extra[0] + '\n' + '\n'.join('        ' + line if line else '' for line in extra[1:]) + '\n'
-          if 'if source.name == "03_interaction_research.ipynb":' not in text:
+          lines = [
+              '    if source.name == "03_interaction_research.ipynb":',
+              '        for name in (',
+              '            "src/nfl_trajectory/temporal_edges.py",',
+              '            "scripts/inspect_motion_run.py",',
+              '            "scripts/audit_temporal_edges.py",',
+              '            "artifacts/interaction_milestone/inspection.json",',
+              '            "artifacts/interaction_milestone/feature_smoke.json",',
+              '            "artifacts/interaction_milestone/edges_example.npz",',
+              '        ):',
+              '            candidate = root / name',
+              '            if candidate.is_file():',
+              '                inputs.append(candidate)',
+          ]
+          if lines[0] not in text:
               assert text.count(anchor) == 1
-              p.write_text(text.replace(anchor, anchor + extra))
+              p.write_text(text.replace(anchor, anchor + '\n'.join(lines) + '\n'))
+          p = Path('scripts/build_interaction_notebook.py')
+          text = p.read_text()
+          text = text.replace('\nc=[]\n', '\nc: list[nbf.NotebookNode] = []\n')
+          text = text.replace('\nc = []\n', '\nc: list[nbf.NotebookNode] = []\n')
+          p.write_text(text)
           p = Path('README.md')
           text = p.read_text()
           banner = ('**New research notebook:** [Temporal interaction diagnostics](notebooks/03_interaction_research.ipynb). '
@@ -64,7 +65,7 @@ jobs:
           paths=(src/nfl_trajectory/temporal_edges.py scripts/inspect_motion_run.py scripts/audit_temporal_edges.py scripts/build_interaction_notebook.py scripts/notebooks.py tests/test_temporal_edges.py tests/test_motion_run_inspection.py notebooks/03_interaction_research.ipynb)
           uv run --frozen ruff format "${paths[@]}"
           uv run --frozen ruff check --fix "${paths[@]}"
-          uv run --frozen pytest tests/test_temporal_edges.py tests/test_motion_run_inspection.py -q
+          uv run --frozen python -m pytest tests/test_temporal_edges.py tests/test_motion_run_inspection.py -q
           uv run --frozen mypy src/nfl_trajectory/temporal_edges.py scripts/inspect_motion_run.py scripts/audit_temporal_edges.py scripts/build_interaction_notebook.py
           uv run --frozen python scripts/notebooks.py --notebook 03_interaction_research.ipynb
           cp artifacts/notebooks/03_interaction_research.ipynb notebooks/03_interaction_research.ipynb

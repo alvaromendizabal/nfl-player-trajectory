@@ -110,7 +110,11 @@ def main() -> None:
     s3 = boto3.client(
         "s3",
         region_name=REGION,
-        config=Config(connect_timeout=5, read_timeout=30, retries={"mode": "standard", "max_attempts": 4}),
+        config=Config(
+            connect_timeout=5,
+            read_timeout=30,
+            retries={"mode": "standard", "max_attempts": 4},
+        ),
     )
     prefix = "cloud-runs/" + job
 
@@ -119,7 +123,7 @@ def main() -> None:
         if elapsed > MAX_RUNNER_SECONDS:
             raise TimeoutError("Cloud motion profile exceeded its 12-minute runner budget.")
         row = {
-            "utc": datetime.now(timezone.utc).isoformat(),
+            "utc": datetime.now(timezone.utc).isoformat(),  # noqa: UP017 - base image may be <3.11
             "elapsed_seconds": round(elapsed, 3),
             "status": status,
             "job": job,
@@ -135,13 +139,32 @@ def main() -> None:
             ServerSideEncryption="AES256",
         )
 
+    def upload_log(log: Path) -> None:
+        s3.upload_file(
+            str(log),
+            bucket,
+            prefix + "/logs/" + log.name,
+            ExtraArgs={"ServerSideEncryption": "AES256"},
+        )
+
     def command(args: list[str], label: str, timeout: int) -> None:
         event("running", stage=label, timeout_seconds=timeout)
         log = root.parent / "logs" / (label + ".log")
         log.parent.mkdir(parents=True, exist_ok=True)
-        env = dict(os.environ, OMP_NUM_THREADS="2", MKL_NUM_THREADS="2", OPENBLAS_NUM_THREADS="2")
+        env = dict(
+            os.environ,
+            OMP_NUM_THREADS="2",
+            MKL_NUM_THREADS="2",
+            OPENBLAS_NUM_THREADS="2",
+        )
         with log.open("wb") as stream:
-            process = subprocess.Popen(args, cwd=root, env=env, stdout=stream, stderr=subprocess.STDOUT)
+            process = subprocess.Popen(
+                args,
+                cwd=root,
+                env=env,
+                stdout=stream,
+                stderr=subprocess.STDOUT,
+            )
             deadline = time.monotonic() + timeout
             heartbeat = time.monotonic() + 20
             while process.poll() is None:
@@ -153,11 +176,11 @@ def main() -> None:
                         process.kill()
                     raise TimeoutError(label + " exceeded its stage budget.")
                 if time.monotonic() >= heartbeat:
-                    s3.upload_file(str(log), bucket, prefix + "/logs/" + log.name, ExtraArgs={"ServerSideEncryption": "AES256"})
+                    upload_log(log)
                     event("heartbeat", stage=label, log_bytes=log.stat().st_size)
                     heartbeat = time.monotonic() + 20
                 time.sleep(0.25)
-        s3.upload_file(str(log), bucket, prefix + "/logs/" + log.name, ExtraArgs={"ServerSideEncryption": "AES256"})
+        upload_log(log)
         if process.returncode:
             raise subprocess.CalledProcessError(process.returncode, args)
         event("stage_completed", stage=label, log_bytes=log.stat().st_size)
@@ -181,22 +204,52 @@ def main() -> None:
 
         uv_target = root.parent / "uv-tools"
         command(
-            [sys.executable, "-m", "pip", "install", "--target", str(uv_target), "uv==0.12.5"],
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "--target",
+                str(uv_target),
+                "uv==0.12.5",
+            ],
             "install-uv",
             90,
         )
         uv = str(uv_target / "bin/uv")
-        command([uv, "run", "--script", "scripts/motion_supervision.py", "--prepare-training-plan"], "prepare-plan", 180)
-        command([uv, "run", "--script", "scripts/motion_supervision.py", "--profile-training"], "profile-training", 120)
+        command(
+            [
+                uv,
+                "run",
+                "--script",
+                "scripts/motion_supervision.py",
+                "--prepare-training-plan",
+            ],
+            "prepare-plan",
+            180,
+        )
+        command(
+            [uv, "run", "--script", "scripts/motion_supervision.py", "--profile-training"],
+            "profile-training",
+            120,
+        )
         profile = root / "artifacts/motion_supervision/profile/result.json"
         plan = root / "artifacts/motion_supervision/preflight/training_plan.json"
         if not profile.is_file() or not plan.is_file():
             raise ValueError("Profile did not produce the required receipts.")
         result = json.loads(profile.read_text())
-        if result.get("status") != "training_only_throughput_measured" or result.get("scientific_fits") != 0:
+        if (
+            result.get("status") != "training_only_throughput_measured"
+            or result.get("scientific_fits") != 0
+        ):
             raise ValueError("Unexpected profile result.")
         for path, key in ((profile, "profile.json"), (plan, "training_plan.json")):
-            s3.upload_file(str(path), bucket, prefix + "/artifacts/" + key, ExtraArgs={"ServerSideEncryption": "AES256"})
+            s3.upload_file(
+                str(path),
+                bucket,
+                prefix + "/artifacts/" + key,
+                ExtraArgs={"ServerSideEncryption": "AES256"},
+            )
             remote = s3.get_object(Bucket=bucket, Key=prefix + "/artifacts/" + key)
             with remote["Body"] as body:
                 payload = body.read()

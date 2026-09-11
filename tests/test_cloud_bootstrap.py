@@ -39,9 +39,7 @@ def test_bootstrap_avoids_python311_only_datetime_utc(relative_path: str) -> Non
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             datetime_modules.update(
-                alias.asname or alias.name
-                for alias in node.names
-                if alias.name == "datetime"
+                alias.asname or alias.name for alias in node.names if alias.name == "datetime"
             )
         if isinstance(node, ast.ImportFrom) and node.module == "datetime":
             assert all(alias.name not in {"UTC", "*"} for alias in node.names), (
@@ -49,6 +47,6 @@ def test_bootstrap_avoids_python311_only_datetime_utc(relative_path: str) -> Non
             )
     for node in ast.walk(tree):
         if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
-            assert not (
-                node.value.id in datetime_modules and node.attr == "UTC"
-            ), "datetime.UTC is unavailable in the Python 3.9 bootstrap image."
+            assert not (node.value.id in datetime_modules and node.attr == "UTC"), (
+                "datetime.UTC is unavailable in the Python 3.9 bootstrap image."
+            )

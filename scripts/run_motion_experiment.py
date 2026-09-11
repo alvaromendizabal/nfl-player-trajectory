@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import hashlib
-import io
 import json
 import os
 import pickle
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -91,6 +91,30 @@ class RemoteStore:
     def _fresh_client(self) -> Any:
         return boto3.session.Session().client("s3", region_name="us-west-2", config=self.config)
 
+    def put_immutable(self, key: str, payload: bytes) -> dict[str, Any]:
+        """Create a content object once, then verify exact bytes with a fresh S3 client."""
+        try:
+            self.client.put_object(
+                Bucket=self.bucket,
+                Key=key,
+                Body=payload,
+                ServerSideEncryption="AES256",
+                IfNoneMatch="*",
+                ExpectedBucketOwner="560403859723",
+            )
+        except ClientError as exc:
+            if exc.response.get("Error", {}).get("Code") not in {"PreconditionFailed", "412"}:
+                raise
+        downloaded = self._read(key, self._fresh_client())
+        if downloaded != payload:
+            raise ValueError("Independent immutable S3 read-back differs: " + key)
+        return {
+            "key": key,
+            "bytes": len(payload),
+            "sha256": hashlib.sha256(payload).hexdigest(),
+            "readback_verified": True,
+        }
+
     def publish(self, arm: str, folder: Path, receipt: dict[str, Any]) -> dict[str, Any]:
         """Upload blob before pointer, then independently download and verify exact bytes."""
         pointer = folder / "checkpoint.json"
@@ -108,18 +132,7 @@ class RemoteStore:
             if int(current.get("step", -1)) > int(receipt["step"]):
                 raise ValueError("Refusing to replace a newer remote checkpoint.")
         blob_key = self._key(arm, str(receipt["sha256"]) + ".pt")
-        try:
-            self.client.put_object(
-                Bucket=self.bucket,
-                Key=blob_key,
-                Body=blob_bytes,
-                ServerSideEncryption="AES256",
-                IfNoneMatch="*",
-                ExpectedBucketOwner="560403859723",
-            )
-        except ClientError as exc:
-            if exc.response.get("Error", {}).get("Code") not in {"PreconditionFailed", "412"}:
-                raise
+        self.put_immutable(blob_key, blob_bytes)
         self.client.put_object(
             Bucket=self.bucket,
             Key=remote_pointer_key,
@@ -178,22 +191,12 @@ def source_signature() -> tuple[str, dict[str, str]]:
 
 
 def write_errors(store: RemoteStore, name: str, frame: pd.DataFrame) -> dict[str, Any]:
+    if name not in {"coordinate", "velocity"}:
+        raise ValueError("Unknown validation-error arm.")
     payload = frame.to_csv(index=False).encode()
     digest = hashlib.sha256(payload).hexdigest()
     key = f"{store.prefix}/errors/{name}-{digest}.csv"
-    store.client.put_object(
-        Bucket=store.bucket,
-        Key=key,
-        Body=payload,
-        ServerSideEncryption="AES256",
-        IfNoneMatch="*",
-        ExpectedBucketOwner="560403859723",
-    )
-    fresh = store._fresh_client()
-    downloaded = store._read(key, fresh)
-    if downloaded != payload:
-        raise ValueError("Private validation-error S3 read-back differs.")
-    return {"key": key, "bytes": len(payload), "sha256": digest, "readback_verified": True}
+    return store.put_immutable(key, payload)
 
 
 def main() -> None:
@@ -249,7 +252,7 @@ def main() -> None:
 
     def event(status: str, **fields: Any) -> None:
         row = {
-            "utc": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+            "utc": datetime.now(UTC).isoformat(),
             "elapsed_seconds": round(time.monotonic() - started, 3),
             "status": status,
             "job": job,
@@ -267,6 +270,33 @@ def main() -> None:
             ExpectedBucketOwner="560403859723",
         )
 
+    def publisher_for(
+        arm_name: str,
+        published_rows: list[dict[str, Any]],
+    ) -> Any:
+        def publisher(folder: Path, receipt: dict[str, Any]) -> None:
+            remote = store.publish(arm_name, folder, receipt)
+            published_rows.append(remote)
+            event("epoch_checkpoint_verified", arm=arm_name, **remote)
+
+        return publisher
+
+    def progress_for(arm_name: str) -> Any:
+        def progress(row: dict[str, float | int]) -> None:
+            nonlocal last_heartbeat
+            now = time.monotonic()
+            if now - last_heartbeat >= float(config["budgets"]["heartbeat_seconds"]):
+                event(
+                    "training_heartbeat",
+                    arm=arm_name,
+                    step=int(row["step"]),
+                    epoch=int(row["epoch"]),
+                    loss=float(row["loss"]),
+                )
+                last_heartbeat = now
+
+        return progress
+
     results: dict[str, Any] = {}
     errors: dict[str, pd.DataFrame] = {}
     for arm in ("coordinate", "velocity"):
@@ -276,29 +306,13 @@ def main() -> None:
         restored = store.restore(arm, remote_seed, signature)
         if restored is not None:
             receipt = restored["receipt"]
-            atomic_bytes(work / "checkpoint.json", (json.dumps(receipt, indent=2, sort_keys=True) + "\n").encode())
+            work.mkdir(parents=True, exist_ok=True)
+            pointer = (json.dumps(receipt, indent=2, sort_keys=True) + "\n").encode()
+            atomic_bytes(work / "checkpoint.json", pointer)
             digest = str(receipt["sha256"])
-            atomic_bytes(work / (digest + ".pt"), (remote_seed / (digest + ".pt")).read_bytes())
+            remote_blob = (remote_seed / (digest + ".pt")).read_bytes()
+            atomic_bytes(work / (digest + ".pt"), remote_blob)
         published: list[dict[str, Any]] = []
-
-        def publisher(folder: Path, receipt: dict[str, Any]) -> None:
-            remote = store.publish(arm, folder, receipt)
-            published.append(remote)
-            event("epoch_checkpoint_verified", arm=arm, **remote)
-
-        def progress(row: dict[str, float | int]) -> None:
-            nonlocal last_heartbeat
-            now = time.monotonic()
-            if now - last_heartbeat >= float(config["budgets"]["heartbeat_seconds"]):
-                event(
-                    "training_heartbeat",
-                    arm=arm,
-                    step=int(row["step"]),
-                    epoch=int(row["epoch"]),
-                    loss=float(row["loss"]),
-                )
-                last_heartbeat = now
-
         before_steps = int(restored["state"]["steps"]) if restored is not None else 0
         event("arm_started", arm=arm, restored_step=before_steps)
         state, curve = train_arm(
@@ -310,8 +324,8 @@ def main() -> None:
             settings,
             work,
             signature,
-            publisher,
-            progress=progress,
+            publisher_for(arm, published),
+            progress=progress_for(arm),
             max_seconds=float(config["budgets"]["per_arm_wall_seconds"]),
         )
         if state.steps != int(config["scientific_total_steps"]):
@@ -370,20 +384,16 @@ def main() -> None:
         "feature_completion_gate": "open",
         "elapsed_seconds": round(time.monotonic() - started, 3),
         "private_data_published_to_github": False,
+        "scientific_fits_new": sum(
+            int(result["new_optimizer_steps"] > 0) for result in results.values()
+        ),
     }
     destination = ROOT / "artifacts/motion_supervision/scientific" / study_digest / "summary.json"
     atomic_json(destination, report)
     payload = destination.read_bytes()
-    summary_key = f"{prefix}/summary.json"
-    store.client.put_object(
-        Bucket=bucket,
-        Key=summary_key,
-        Body=payload,
-        ServerSideEncryption="AES256",
-        ExpectedBucketOwner="560403859723",
-    )
-    if store._read(summary_key, store._fresh_client()) != payload:
-        raise ValueError("Scientific summary S3 read-back differs.")
+    digest = hashlib.sha256(payload).hexdigest()
+    summary_key = f"{prefix}/summaries/{digest}.json"
+    store.put_immutable(summary_key, payload)
     event(
         "completed",
         coordinate_rmse=summary["control"]["coordinate_rmse_yards"],

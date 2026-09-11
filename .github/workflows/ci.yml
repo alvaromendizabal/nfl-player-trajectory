@@ -71,6 +71,38 @@ jobs:
           retention-days: 30
           if-no-files-found: error
 
+  publish-motion-lock:
+    if: >-
+      github.event_name == 'push' &&
+      startsWith(github.ref, 'refs/heads/feat/') &&
+      contains(github.event.head_commit.message, '[publish motion lock]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: true
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: '0.11.33'
+          enable-cache: true
+          download-from-astral-mirror: false
+      - name: Regenerate and commit the motion-supervision script lock
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          uv lock --script scripts/motion_supervision.py
+          sha256sum scripts/motion_supervision.py.lock
+          git add -- scripts/motion_supervision.py.lock
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: refresh motion supervision lock'
+            git push origin "HEAD:$BRANCH"
+          fi
+
   publish-notebooks:
     needs: quality
     if: >-

@@ -180,9 +180,7 @@ def run_tests() -> int:
             log_path.read_text()[-12000:] if log_path.exists() else "No test log created.",
             flush=True,
         )
-    return (
-        0 if result["status"] == "synthetic_implementation_verified_no_scientific_fit" else 1
-    )
+    return 0 if result["status"] == "synthetic_implementation_verified_no_scientific_fit" else 1
 
 
 def main() -> int:

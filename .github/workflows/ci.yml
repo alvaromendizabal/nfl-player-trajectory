@@ -44,6 +44,9 @@ jobs:
         run: uv run --locked scripts/motion_research.py --self-test
       - name: Validate end-to-end motion inputs and exact interrupted recovery
         run: uv run --locked scripts/motion_representation.py --self-test
+      - name: Validate reconstructed velocity supervision and fresh-process recovery
+        timeout-minutes: 5
+        run: uv run --locked scripts/motion_supervision.py --self-test
       - name: Retain formatting diagnostics on failure
         if: failure()
         run: |
@@ -59,6 +62,8 @@ jobs:
             artifacts/source.tar.gz
             artifacts/quality.json
             artifacts/quality/final_fit.json
+            artifacts/quality/motion_supervision.json
+            artifacts/quality/motion_supervision/
             artifacts/quality/exports/
             artifacts/demo/
             artifacts/notebooks/

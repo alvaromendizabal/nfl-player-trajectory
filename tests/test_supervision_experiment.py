@@ -6,12 +6,15 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import pytest
-from test_motion_supervision import assert_tree_equal
-from test_supervision_batches import samples
 
-from nfl_trajectory.motion import KEYS
-from nfl_trajectory.supervision_evidence import load_generation
-from nfl_trajectory.supervision_experiment import (
+torch = pytest.importorskip("torch")
+
+from test_motion_supervision import assert_tree_equal  # noqa: E402
+from test_supervision_batches import samples  # noqa: E402
+
+from nfl_trajectory.motion import KEYS  # noqa: E402
+from nfl_trajectory.supervision_evidence import load_generation  # noqa: E402
+from nfl_trajectory.supervision_experiment import (  # noqa: E402
     TrainingSettings,
     evaluate_ema,
     experiment_signature,
@@ -19,7 +22,7 @@ from nfl_trajectory.supervision_experiment import (
     summarize_pair,
     train_arm,
 )
-from nfl_trajectory.supervision_plan import training_plan
+from nfl_trajectory.supervision_plan import training_plan  # noqa: E402
 
 
 def dataset(train_count=5):
@@ -217,4 +220,38 @@ def test_mismatched_keys_and_invalid_exposure_rejected(tmp_path):
             tmp_path / "bad",
             signature(),
             publish,
+        )
+
+
+def test_progress_callback_and_invalid_time_budget(tmp_path):
+    values = dataset()
+    scale, cdenom, vdenom = denominators(values)
+    _, publish = publisher_receipts()
+    rows = []
+    state, _ = train_arm(
+        values,
+        "coordinate",
+        scale,
+        cdenom,
+        vdenom,
+        settings(1),
+        tmp_path / "progress",
+        signature(),
+        publish,
+        progress=rows.append,
+    )
+    assert [int(row["step"]) for row in rows] == list(range(1, state.steps + 1))
+    assert all(float(row["elapsed_seconds"]) >= 0 for row in rows)
+    with pytest.raises(ValueError, match="time budget"):
+        train_arm(
+            values,
+            "coordinate",
+            scale,
+            cdenom,
+            vdenom,
+            settings(1),
+            tmp_path / "invalid-budget",
+            signature(),
+            publish,
+            max_seconds=0,
         )

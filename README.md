@@ -1,4 +1,4 @@
-# NFL Player Trajectory Forecasting
+# NFL Big Data Bowl 2026 - Prediction
 
 **Forecasting player motion after a pass with domain-informed features, temporal models, and reproducible experiment evidence.**
 

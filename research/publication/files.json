@@ -1,8 +1,8 @@
 {
   ".github/workflows/publication.yml": "50682daa310e65ec5616ebba1054bf2b431a093bd2d6db1a15e5ad6e3206ba12",
   ".gitignore": "ee5e7aade0b200ef118590732cd3f2e36f53170b6d18584b8afade2261bf81cc",
-  "README.md": "571010ee2d94e08ce06d333ad38c4bb93a1508d7e285b0258543dcfbf529df21",
-  "START_HERE.md": "51d5c16fc6f5e3c76b0719c58ec6ef56d969522fe370414227173227c8963c5a",
+  "README.md": "b0755379c75bb3d54cd23963e82beb7c7e92a9c0c79401f3892fb6eab14737bb",
+  "START_HERE.md": "2aec0088ff55c5f4367a00f6b4273d0c4ca46773198fb0b91a07de7280b9720d",
   "pyproject.toml": "1ca233da14ab8a4f2836fe7c8b64b981fa65ccd1cff157a4dfd93ad62d6b51aa",
   "research/README.md": "2ac22d0df71f02776a458a3cbb086b30fe08e9afc85e9047d1f206ec8a49ac00",
   "research/RESEARCH_REVIEW.html": "e5e7a5cf0fc325d76f6a0603e2c67f3c33cbcd09a87ecdcfc90f2003aa40d8aa",

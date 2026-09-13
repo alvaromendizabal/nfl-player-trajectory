@@ -1,0 +1,25 @@
+# Feature-research continuation ledger
+
+This is a queue of attributable hypotheses, not a claim that each family will help. Do not run all rounds at once. A feature family remains open until implementation, information-time tests, train-only screening and appropriate matched validation/ablation establish its status.
+
+| Round | Expert information / representation question | Current evidence | Next controlled comparison |
+|---|---|---|---|
+| 1A | What motion would be required to approach the ball or follow the receiver, conditional on role and available time? | Prior arrival families exist; this kit provides a narrowly defined 24-column conditional-response variant. No new NFL score yet. | Same rows/solver: control vs control+arrival response. |
+| 1B | Can correctly truncated training examples teach longer-horizon behavior? | Winner explicitly reported gains; the uploaded old errors concentrate after the first second. This kit reconstructs 0/5/10/20-frame-earlier views. | Same feature schema and row budget, original-only vs 50/50 origin mixture; all evaluation stays at true origin. |
+| 2 | Does a learned model preserve evolving pair relationships that terminal summaries lose? | Merged `relation_history.py` and `temporal_edges.py`; 32-play raw-input smoke passed. Predictive benefit remains unmeasured. | Established-model baseline vs parameter-matched terminal-edge and temporal-edge encoders; identical masks, seeds, exposure, loss and train splits. Training-side throughput/recovery preflight first. |
+| 3 | When is the landing point relevant to each defender? | Fourth-place author's ball-node approach; old heuristic soft-affinity correction failed its declared gate. | Same encoder with task ball point as a separate masked context node versus uniform repeated coordinates; don't call attention a calibrated responsibility label. |
+| 4 | Is the player turning, decelerating, watching the receiver, or redirecting toward the catch? | Existing motion, orientation and smoothing families overlap. Simple smoothing continuation failed its prior feature gate. | Raw/reported versus position-derived vectors with explicit validity; test turning/orientation discrepancy channels without changing capacity/exposure. No unchanged smoothing rerun. |
+| 5 | Is the representation stable for delayed observations and long horizons? | Old late-horizon errors dominate. Current kit accounts for observation age, but does not solve extrapolation generally. | Same forecast model and data, compare origin-relative displacement, incremental displacement and stable time conditioning; retain every requested frame. |
+| 6 | Do formation and collective player structure explain reactions not captured by nearest-neighbor summaries? | Existing graph/peer/matched histories; broader evidence still representation-dependent. | Learned team-relative geometry, target-specific relational pooling and route-shape structure versus existing matched control; don't rerun failed fixed affinity interface. |
+| 7 | Does permitted prior history convey skill/role context beyond immediate motion? | Chronological player/role encodings previously helped; current probe deliberately excludes them to prevent new inner-fold leakage. | Refit histories within each fold and strictly earlier dates, include support/uncertainty, test shrinkage and cold-start. New seasons only after rule/schema/event-alignment checks. |
+| 8 | Which features transfer across games, dates, roles, seeds and input-availability conditions? | Existing reused development folds are not untouched tests; 2023 labels do not prove cross-season robustness. | Matched family removal/addition, seed replication, role/horizon/input-mask slices, game-bootstrap uncertainty. No winner/leaderboard comparison until actual comparable scoring. |
+
+## Do not confuse research categories
+- Feature count is not evidence. The existing repository documents 7,999 candidate columns plus overlapping neural/correction banks.
+- Earlier-origin construction and coordinate augmentation change data representation, not raw data availability.
+- Velocity auxiliary supervision changes the learning objective; it is not itself a newly observed input feature.
+- Learned temporal/agent attention changes how the model uses information. Keeping feature engineering first does not justify declaring algorithms irrelevant.
+- Ensemble size, training exposure, validation protocol and data representation can all contribute to the gap. Their relative contributions have not been quantified for the user's current system.
+
+## Next milestone after this kit
+Review the aggregate return ZIP. Preserve the measured result even if negative. Choose ONE next experiment from the ledger using observed support, fold behavior, real runtime and the old controlled evidence. Do not expand compute merely because the target has not been reached. Integration into the established neural model should use its verified source, exact controls and durable checkpoint protocol, not a newly invented claim that the historical missing 0.62708 model was recovered.

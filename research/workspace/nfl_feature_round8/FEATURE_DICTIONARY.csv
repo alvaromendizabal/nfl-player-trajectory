@@ -1,0 +1,19 @@
+family,channel,fixed_scale,availability,rationale,status
+common_player_sequence,relative_x,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,relative_y,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,vx,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,vy,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,ball_dx,20.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,ball_dy,20.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,orientation_x,1.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,orientation_y,1.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,ball_distance,20.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+common_player_sequence,ball_closing_speed,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,dx,20.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,dy,20.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,dvx,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,dvy,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,distance,20.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,closing_speed,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,lateral_speed,10.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data
+pair_sequence_treatment,alignment,1.0,Observed pre-origin only; explicit validity mask,Preserve motion and contextual dynamics before time pooling,unmeasured_in_private_data

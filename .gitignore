@@ -25,3 +25,10 @@ evidence/
 
 # Local lock for the bounded soft-coverage probe.
 .soft-coverage.lock
+
+# Private reproduction state; not distributable research evidence.
+research/**/input_contract.json
+research/**/review_release.json
+research/**/.venv/
+research/**/artifacts/
+research/**/outputs/

@@ -1,0 +1,3263 @@
+{
+  "comparison_limit": "Reused internal game splits. No new Kaggle score or model replay by publication.",
+  "label_readiness": {
+    "additional_label_eligible_plays": 2653,
+    "label_eligible_training_plays": 3352,
+    "observed_training_plays": 3352,
+    "selected_training_plays": 699,
+    "status": "training_labels_complete",
+    "training_games": 64
+  },
+  "metric": "sqrt(sum(dx^2+dy^2)/(2N)); yards; lower is better",
+  "schema": 1,
+  "source": "local AWS receipts collected during publication-plan",
+  "studies": [
+    {
+      "evidence_id": "round1/readiness",
+      "new_kaggle_score": null,
+      "preflight": {
+        "status": "preflight_passed"
+      },
+      "round": 1,
+      "status": "no_published_accuracy_summary"
+    },
+    {
+      "evaluation_games": 46,
+      "evaluation_rows": 4685,
+      "evidence_id": "round2/attribution/summary.json",
+      "feature_research": "open",
+      "original_summary_sha256": "52c5bca0d9d0439325be5d29f8c56a5c420eec6e6a0fdcbe49ef09ca95c6920a",
+      "pooled_rmse": {
+        "arrival": 0.807004011378828,
+        "control": 0.8370233220944524,
+        "only_acceleration": 0.8126095132557204,
+        "only_receiver": 0.8366748184218132,
+        "only_velocity": 0.8284905173978134,
+        "without_acceleration": 0.8281454857296718,
+        "without_receiver": 0.8072935209102389,
+        "without_velocity": 0.8125012924201491
+      },
+      "round": 2,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.40756696743442333,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 404.31376738494697
+        },
+        {
+          "arm": "control",
+          "rmse": 1.7186167268831778,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2788.239420502979
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6268585797795481,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 398.4530025498373
+        },
+        {
+          "arm": "control",
+          "rmse": 1.087169477426241,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2794.100185338089
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.3700665198900261,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 333.33442373531574
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.643118408276651,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2548.64716981501
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.6032787772078919,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 369.04051699186164
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.0310207754898715,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2512.941076558464
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.406825115485032,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 402.843245950623
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 1.6849910964471617,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2680.2000753802604
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.6213879397765177,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 391.5286933035011
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 1.0670251013202334,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2691.514628027382
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.385166500875351,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 361.09177008723134
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 1.6446920742866435,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2553.5313461449095
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.6050581508470988,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 371.2207010292017
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 1.0372508599815893,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2543.4024152029397
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.3843467679234754,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 359.55641412418197
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 1.6434468806875588,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2549.666261261734
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.6089308170075658,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 375.98789426012263
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 1.0351755005259173,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2533.2347811257932
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.40775568921970473,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 404.68828488958263
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 1.6851039899937412,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2680.5592314956284
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.6180582369116074,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 387.34392799328464
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 1.068290771632247,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2697.903588391926
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.40811840812561523,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 405.4085857141005
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 1.7200607295229853,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2792.9268141053044
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.6245153451783505,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 395.47968819231954
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 1.0888715093944044,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2802.855711627086
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.3688751505941524,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 331.1916459507398
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 1.6430449266537086,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2548.419219666351
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.6069907631931106,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 373.59591561417943
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 1.0295989539249724,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2506.0149500029115
+        },
+        {
+          "arm": "control",
+          "rmse": 0.404135582022033,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 412.8870375630944
+        },
+        {
+          "arm": "control",
+          "rmse": 1.396514312213522,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1357.3755480551756
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6210692475052814,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 350.240125258673
+        },
+        {
+          "arm": "control",
+          "rmse": 0.7830298700288124,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1420.0224603595968
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.4024509481436824,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 409.4519835929013
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.3257020126557353,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1223.210135146189
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.5450063760573621,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 269.70501054840645
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.7671350342046014,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1362.9571081906838
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.41100714030068414,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 427.04712578795375
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 1.3625289566331,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1292.1136697339243
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.5773649448320081,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 302.6820538049479
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.7820522196864248,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1416.4787417169305
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.41181059838078077,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 428.7183854771264
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 1.3269975558368037,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1225.602069185008
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.5434686674183986,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 268.1852387587012
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.7736303892899477,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1386.1352159034334
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.4116215169963516,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 428.324786787067
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 1.3261554608936812,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1224.0470612948598
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.5486017212441814,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 273.27517448528727
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.7716637123596277,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1379.0966735966394
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.41082494068542097,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 426.6685894158462
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 1.3629497786273095,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1292.9119409459213
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.5721758346747207,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 297.26574869342767
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.783661631954368,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1422.31478166834
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.4038499713550596,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 412.3036527908837
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 1.3940783109638881,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1352.6442186215493
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.6166820330355455,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 345.30943072091907
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.7829239846602394,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1419.6384406915138
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.40246902052723205,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 409.48875795993007
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 1.3246860628667096,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1221.3360429466998
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.5506532412487712,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 275.3228448247819
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.7650341058473186,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1355.5019560818482
+        },
+        {
+          "arm": "control",
+          "rmse": 0.3831741906537224,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 343.27091237577
+        },
+        {
+          "arm": "control",
+          "rmse": 1.7108481951389898,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1258.6106651284458
+        },
+        {
+          "arm": "control",
+          "rmse": 0.543327069766573,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 259.7797881721948
+        },
+        {
+          "arm": "control",
+          "rmse": 0.8431245451218199,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1342.1017893320213
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.38110945920280853,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 339.5814537118381
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.7036476795896294,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1248.0386289535852
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.47659607955530614,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 199.88656428178916
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.857337941888437,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1387.733518383634
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.39594534824929517,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 366.5346165549977
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 1.7136909860921545,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1262.7968221998055
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.5156345585260331,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 233.97351819277662
+        },
+        {
+          "arm": "only_velocity",
+          "rmse": 0.8596898831630727,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1395.3579205620263
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.39275706579457537,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 360.65546756639753
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 1.7091305437964195,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1256.084702767273
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.4844669231199298,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 206.54321564561693
+        },
+        {
+          "arm": "without_velocity",
+          "rmse": 0.8642490110602803,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1410.1969546880537
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.39255217616785054,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 360.27927935100126
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 1.7154956218328588,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1265.457848266914
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.4867965687051419,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 208.53439138672792
+        },
+        {
+          "arm": "only_acceleration",
+          "rmse": 0.8663931223730554,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1417.2027362311874
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.3960354833848961,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 366.7015153855856
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 1.7081542993896808,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1254.6501775250842
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.5133239241977697,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 231.8812770153419
+        },
+        {
+          "arm": "without_acceleration",
+          "rmse": 0.857874299360857,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1389.470415895328
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.3835654206086944,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 343.97224575116223
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 1.7063332148250971,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1251.976407206601
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.5415400806674758,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 258.0737798930159
+        },
+        {
+          "arm": "only_receiver",
+          "rmse": 0.8417957981709059,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1337.8748730647474
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.38098218758712177,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 339.3546849307678
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 1.7096528651955722,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1256.8525553727147
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.4791738887082761,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 202.054701745434
+        },
+        {
+          "arm": "without_receiver",
+          "rmse": 0.8593184807479113,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1394.152538558048
+        }
+      ],
+      "status": "attribution_complete",
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 46,
+      "evaluation_rows": 4685,
+      "evidence_id": "round2/motion/summary.json",
+      "feature_research": "open",
+      "original_summary_sha256": "8dbbdb8e7f95896ceb9d138d04870bc5c7823d620988b12d4f79942769e0e627",
+      "pooled_rmse": {
+        "arrival": 0.807004011378828,
+        "arrival_brake": 0.823322324893872,
+        "arrival_orientation": 0.8069300383002241,
+        "arrival_turn": 0.8204039629911295,
+        "control": 0.8370233220944524
+      },
+      "round": 2,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.40756696743442333,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 404.31376738494697
+        },
+        {
+          "arm": "control",
+          "rmse": 1.7186167268831778,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2788.239420502979
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6268585797795481,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 398.4530025498373
+        },
+        {
+          "arm": "control",
+          "rmse": 1.087169477426241,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2794.100185338089
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.3700665198900261,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 333.33442373531574
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.643118408276651,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2548.64716981501
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.6032787772078919,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 369.04051699186164
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.0310207754898715,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2512.941076558464
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.3714593421692636,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 335.84829238165685
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 1.722032754119046,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2799.3345851083327
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.7171896934566567,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 521.5621111900596
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 1.0514716071944175,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2613.620766299931
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.3678608929541995,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 329.37286339935855
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 1.6551500487159,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2586.1084694734486
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.6108268547865343,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 378.3329787798076
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 1.0359748088674106,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2537.1483540929994
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.3659710036689895,
+          "rows": 1217,
+          "slice": "first_second",
+          "sse": 325.9972436314706
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 1.632791301373524,
+          "rows": 472,
+          "slice": "after_first_second",
+          "sse": 2516.7110175459475
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.5994006616211014,
+          "rows": 507,
+          "slice": "role_0",
+          "sse": 364.3110892959395
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 1.0239098391283816,
+          "rows": 1182,
+          "slice": "role_1",
+          "sse": 2478.397171881479
+        },
+        {
+          "arm": "control",
+          "rmse": 0.404135582022033,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 412.8870375630944
+        },
+        {
+          "arm": "control",
+          "rmse": 1.396514312213522,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1357.3755480551756
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6210692475052814,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 350.240125258673
+        },
+        {
+          "arm": "control",
+          "rmse": 0.7830298700288124,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1420.0224603595968
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.4024509481436824,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 409.4519835929013
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.3257020126557353,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1223.210135146189
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.5450063760573621,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 269.70501054840645
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.7671350342046014,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1362.9571081906838
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.38594020641315774,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 376.54520291751146
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 1.3649843519945497,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1296.7748677082268
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.5150039436086452,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 240.82798823467064
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.78646035971654,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1432.4920823910677
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.39796119899082616,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 400.3672370008019
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 1.5076925072029177,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1582.1031406079705
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.4744304070990692,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 204.3764637516112
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.8762097272465078,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1778.0939138571614
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.41190533273988267,
+          "rows": 1264,
+          "slice": "first_second",
+          "sse": 428.91565593679115
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 1.3337781740978891,
+          "rows": 348,
+          "slice": "after_first_second",
+          "sse": 1238.1590955191296
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.5384626559378037,
+          "rows": 454,
+          "slice": "role_0",
+          "sse": 263.267364910351
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.7785463699415789,
+          "rows": 1158,
+          "slice": "role_1",
+          "sse": 1403.80738654557
+        },
+        {
+          "arm": "control",
+          "rmse": 0.3831741906537224,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 343.27091237577
+        },
+        {
+          "arm": "control",
+          "rmse": 1.7108481951389898,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1258.6106651284458
+        },
+        {
+          "arm": "control",
+          "rmse": 0.543327069766573,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 259.7797881721948
+        },
+        {
+          "arm": "control",
+          "rmse": 0.8431245451218199,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1342.1017893320213
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.38110945920280853,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 339.5814537118381
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.7036476795896294,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1248.0386289535852
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.47659607955530614,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 199.88656428178916
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.857337941888437,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1387.733518383634
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.37589894832407594,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 330.3594452429801
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 1.6479266424934738,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1167.7347541871195
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.4785862523434712,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 201.55942482030844
+        },
+        {
+          "arm": "arrival_turn",
+          "rmse": 0.8286880759548566,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1296.5347746097912
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.36959735283527045,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 319.3759511349985
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 1.624104236221679,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1134.2172651486776
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.45804068722464897,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 184.62511861484126
+        },
+        {
+          "arm": "arrival_brake",
+          "rmse": 0.8198310393534187,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1268.968097668835
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.38360349277936046,
+          "rows": 1169,
+          "slice": "first_second",
+          "sse": 344.04053355436315
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 1.7031582061298836,
+          "rows": 215,
+          "slice": "after_first_second",
+          "sse": 1247.3215862962522
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.48777491388993477,
+          "rows": 440,
+          "slice": "role_0",
+          "sse": 209.3734426258933
+        },
+        {
+          "arm": "arrival_orientation",
+          "rmse": 0.8555615279984605,
+          "rows": 944,
+          "slice": "role_1",
+          "sse": 1381.9886772247223
+        }
+      ],
+      "status": "motion_complete",
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 16,
+      "evaluation_rows": 6326,
+      "evidence_id": "round3/fold_1/summary.json",
+      "feature_research": "open",
+      "original_summary_sha256": "9d2769c806dc406060d6b6bd9201d3daeeaa8eaa03d91058c4f3bd3b65b4d365",
+      "pooled_rmse": {
+        "arrival": 0.685260369418602,
+        "control": 0.6831604367615998,
+        "history_pairs": 0.7065430190708821,
+        "terminal_pairs": 0.7014112331345965
+      },
+      "round": 3,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.30104018718759734,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 904.9831902992092
+        },
+        {
+          "arm": "control",
+          "rmse": 1.3694513953069993,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 4999.808732872694
+        },
+        {
+          "arm": "control",
+          "rmse": 0.5071947787796076,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 975.478893411951
+        },
+        {
+          "arm": "control",
+          "rmse": 0.745892668172441,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 4929.313029759953
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.30497149373649934,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 928.7740133508305
+        },
+        {
+          "arm": "arrival",
+          "rmse": 1.3711712142786523,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 5012.374589977806
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.5023567249948895,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 956.9577625276653
+        },
+        {
+          "arm": "arrival",
+          "rmse": 0.7500331701318802,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 4984.190840800971
+        },
+        {
+          "arm": "terminal_pairs",
+          "rmse": 0.3115427432910553,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 969.2299846406015
+        },
+        {
+          "arm": "terminal_pairs",
+          "rmse": 1.4040013688088004,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 5255.272103082883
+        },
+        {
+          "arm": "terminal_pairs",
+          "rmse": 0.5037567515227125,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 962.2991189602828
+        },
+        {
+          "arm": "terminal_pairs",
+          "rmse": 0.7706673084489013,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 5262.202968763203
+        },
+        {
+          "arm": "history_pairs",
+          "rmse": 0.3158988967692687,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 996.5240402186904
+        },
+        {
+          "arm": "history_pairs",
+          "rmse": 1.4125406597788686,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 5319.392793999037
+        },
+        {
+          "arm": "history_pairs",
+          "rmse": 0.521178828905546,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 1030.0109934839593
+        },
+        {
+          "arm": "history_pairs",
+          "rmse": 0.7724010409292843,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 5285.905840733767
+        }
+      ],
+      "status": "first_fold_complete",
+      "training_rows": 19713,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 16,
+      "evaluation_rows": 6326,
+      "evidence_id": "round4/summary.json",
+      "feature_research": "open",
+      "new_kaggle_score": null,
+      "original_summary_sha256": "465da3b66d4153783af45cbbd01f686f2b41fa2024c732728c50d1c4945037da",
+      "pooled_rmse": {
+        "control": 0.6831604367615998,
+        "direct_state": 0.6676231769882881,
+        "goal_geometry": 0.6754850591763902
+      },
+      "round": 4,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.30104018718759734,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 904.9831902992092
+        },
+        {
+          "arm": "control",
+          "rmse": 1.3694513953069993,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 4999.808732872694
+        },
+        {
+          "arm": "control",
+          "rmse": 0.5071947787796076,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 975.478893411951
+        },
+        {
+          "arm": "control",
+          "rmse": 0.745892668172441,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 4929.313029759953
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.2943294698658674,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 865.085550599584
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 1.3381937456555346,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 4774.172827430299
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.5007892390793088,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 950.9951566191847
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.7274265239795823,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 4688.263221410698
+        },
+        {
+          "arm": "goal_geometry",
+          "rmse": 0.293366931775715,
+          "rows": 4993,
+          "slice": "first_second",
+          "sse": 859.436668401737
+        },
+        {
+          "arm": "goal_geometry",
+          "rmse": 1.357568696877849,
+          "rows": 1333,
+          "slice": "after_first_second",
+          "sse": 4913.418716135828
+        },
+        {
+          "arm": "goal_geometry",
+          "rmse": 0.509870950070192,
+          "rows": 1896,
+          "slice": "role_0",
+          "sse": 985.8001186710212
+        },
+        {
+          "arm": "goal_geometry",
+          "rmse": 0.7350508087248521,
+          "rows": 4430,
+          "slice": "role_1",
+          "sse": 4787.055265866544
+        }
+      ],
+      "status": "round4_first_fold_complete",
+      "training_rows": 19713,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evidence_id": "round5/summary.json",
+      "feature_replication_gate_passed": false,
+      "feature_research": "open",
+      "new_kaggle_score": null,
+      "original_summary_sha256": "f03b46af306da4eb7f369e921569e8311d3415577f5ba21cce122e2cbab03706",
+      "round": 5,
+      "status": "temporal_replication_complete",
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "comparison": {
+        "delta_rmse": 0.005518718848776305,
+        "relative_gain": -0.00766020565989467
+      },
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round5/fold_2/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "control": 0.7204400369653067,
+        "direct_state": 0.725958755814083
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "1abd4a3910c95f488ac96c0b71c51328a25bf54c732bb82d4a0402f2877d7af9",
+      "round": 5,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "control",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "control",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "control",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.3069046301662863,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 871.6384429699908
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 1.4552355787133564,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5332.395264494951
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.4291886764104245,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 615.606158502751
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.8141998633217997,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5588.427548962191
+        }
+      ],
+      "status": "temporal_fold_complete",
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "comparison": {
+        "delta_rmse": 0.01122457138550148,
+        "relative_gain": -0.01248703684163166
+      },
+      "evaluation_games": 16,
+      "evaluation_rows": 7073,
+      "evidence_id": "round5/fold_3/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "control": 0.8988979153227862,
+        "direct_state": 0.9101224867082874
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "35aa15306244393912fed26a04e176d232b460016e3e85b05324f42ee032640d",
+      "round": 5,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.31462417274559074,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1030.6669092297223
+        },
+        {
+          "arm": "control",
+          "rmse": 1.668860660861085,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 10399.548110650449
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6658649360790073,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1756.6561601002209
+        },
+        {
+          "arm": "control",
+          "rmse": 0.9746169136718058,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 9673.55885977995
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.30965348640972473,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 998.3575524950031
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 1.6943065099346772,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 10719.098768232636
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.6306589320674361,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1575.8089882190911
+        },
+        {
+          "arm": "direct_state",
+          "rmse": 0.9979184606840642,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 10141.647332508548
+        }
+      ],
+      "status": "temporal_fold_complete",
+      "training_rows": 31925,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 30,
+      "evaluation_rows": 12959,
+      "evidence_id": "round6/summary.json",
+      "feature_research": "open",
+      "new_kaggle_score": null,
+      "original_summary_sha256": "8ac4be95a3bcb37a147913b105e01f4badf67742f549c56087a6664b22b34e5c",
+      "pooled_metrics": {
+        "control": 0.8226546110256957,
+        "pass_axis": 0.8387538998933497,
+        "pass_axis_history": 0.8288687882316008
+      },
+      "round": 6,
+      "status": "pass_axis_study_complete",
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round6/fold_2/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "control": 0.7204400369653067,
+        "pass_axis": 0.7234789682041965,
+        "pass_axis_history": 0.7147865256267684
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "8cacdb57bec004886fff557fec2debf3bdcb59df6f508094fb82244b568efd6b",
+      "round": 6,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "control",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "control",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "control",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 0.305410193028423,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 863.1704220963645
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 1.4506101278236592,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5298.551212734434
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 0.42106889750972615,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 592.533312976088
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 0.812797135875339,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5569.18832185471
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 0.304265174632546,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 856.7103017570835
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 1.4312185518461775,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5157.837315648349
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 0.4146897065190205,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 574.7155610994423
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 0.8033022042500716,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5439.832056305991
+        }
+      ],
+      "status": "pass_axis_fold_complete",
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 16,
+      "evaluation_rows": 7073,
+      "evidence_id": "round6/fold_3/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "control": 0.8988979153227862,
+        "pass_axis": 0.9237814018015877,
+        "pass_axis_history": 0.9130023055934282
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "33aa33d35ee6befdbeac8a6302c25282740c9db18344cb4f66c5757c45af7223",
+      "round": 6,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.31462417274559074,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1030.6669092297223
+        },
+        {
+          "arm": "control",
+          "rmse": 1.668860660861085,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 10399.548110650449
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6658649360790073,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1756.6561601002209
+        },
+        {
+          "arm": "control",
+          "rmse": 0.9746169136718058,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 9673.55885977995
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 0.31361580595218075,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1024.07094541249
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 1.720082900122917,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 11047.73047442452
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 0.6628799654636601,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1740.9418202051147
+        },
+        {
+          "arm": "pass_axis",
+          "rmse": 1.0071845017399534,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 10330.859599631895
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 0.3134731186674582,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1023.1393044753893
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 1.698213192206533,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 10768.58732445219
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 0.6521421303018147,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1684.9964368500018
+        },
+        {
+          "arm": "pass_axis_history",
+          "rmse": 0.9961990899781474,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 10106.730192077575
+        }
+      ],
+      "status": "pass_axis_fold_complete",
+      "training_rows": 31925,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 30,
+      "evaluation_rows": 12959,
+      "evidence_id": "round7/summary.json",
+      "feature_research": "open",
+      "new_kaggle_score": null,
+      "original_summary_sha256": "cd10e7f213e95c81fa9777d2ded9500c8ef75e597a4eb71794924ca1dbba2181",
+      "pooled_metrics": {
+        "control": 0.8226546110256957,
+        "player_response": 0.8421165724662966,
+        "role_response": 0.8419486915853789,
+        "support_only": 0.8265307950006053
+      },
+      "round": 7,
+      "status": "history_study_complete",
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round7/fold_2/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "control": 0.7204400369653067,
+        "player_response": 0.7194381287388176,
+        "role_response": 0.7144669129115889,
+        "support_only": 0.7238129237919041
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "1a12a1ec251c71d37449e97177a38839838c9aa0e6c5062e075f8c3ece8307d6",
+      "round": 7,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "control",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "control",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "control",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.3118419759816893,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 899.9090980254579
+        },
+        {
+          "arm": "support_only",
+          "rmse": 1.4463536788082416,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5267.502311860973
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.4279785638006035,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 612.1396058853886
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.8117809751414153,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5555.271804001042
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.3096832053386547,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 887.4927256872912
+        },
+        {
+          "arm": "role_response",
+          "rmse": 1.4261928180720558,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5121.677352978546
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.4209941011772525,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 592.3228230414347
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.8016033203707844,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5416.847255624402
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.3127402093011337,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 905.1007820059363
+        },
+        {
+          "arm": "player_response",
+          "rmse": 1.4353949445283183,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5187.98307258563
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.43180572112723925,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 623.136556227635
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.8055227002907741,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5469.947298363932
+        },
+        {
+          "arm": "control",
+          "rmse": 0.9812088914393517,
+          "rows": 1692,
+          "slice": "player_cold",
+          "sse": 3258.016687156547
+        },
+        {
+          "arm": "control",
+          "rmse": 0.5831084543147035,
+          "rows": 4194,
+          "slice": "player_warm",
+          "sse": 2852.0497581096542
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.9860632300865569,
+          "rows": 1692,
+          "slice": "player_cold",
+          "sse": 3290.3332275780363
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.5856614264460716,
+          "rows": 4194,
+          "slice": "player_warm",
+          "sse": 2877.0781823083944
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.9773435129762396,
+          "rows": 1692,
+          "slice": "player_cold",
+          "sse": 3232.397958535198
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.5753616473921215,
+          "rows": 4194,
+          "slice": "player_warm",
+          "sse": 2776.7721201306404
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.9743030055838876,
+          "rows": 1692,
+          "slice": "player_cold",
+          "sse": 3212.3173171982726
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.5860367091629699,
+          "rows": 4194,
+          "slice": "player_warm",
+          "sse": 2880.7665373932937
+        }
+      ],
+      "status": "history_fold_complete",
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evaluation_games": 16,
+      "evaluation_rows": 7073,
+      "evidence_id": "round7/fold_3/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "control": 0.8988979153227862,
+        "player_response": 0.9319764203863654,
+        "role_response": 0.9348764781178284,
+        "support_only": 0.9031478036811178
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "66ad2588ef5ddb7b23a6f8167721470da4535a6d5efe4b97878c9b6fd3c0f576",
+      "round": 7,
+      "slices": [
+        {
+          "arm": "control",
+          "rmse": 0.31462417274559074,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1030.6669092297223
+        },
+        {
+          "arm": "control",
+          "rmse": 1.668860660861085,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 10399.548110650449
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6658649360790073,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1756.6561601002209
+        },
+        {
+          "arm": "control",
+          "rmse": 0.9746169136718058,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 9673.55885977995
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.3133043685188153,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1022.0380397909215
+        },
+        {
+          "arm": "support_only",
+          "rmse": 1.6782194335084606,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 10516.514023798381
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.6676581341287775,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1766.1303756786865
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.9795844987801987,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 9772.421687910615
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.3159912634984776,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1039.6431832598773
+        },
+        {
+          "arm": "role_response",
+          "rmse": 1.7414475656562867,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 11323.876355755392
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.6896586926636049,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1884.4425431959644
+        },
+        {
+          "arm": "role_response",
+          "rmse": 1.0143838363948872,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 10479.076995819305
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.31424514070295667,
+          "rows": 5206,
+          "slice": "first_second",
+          "sse": 1028.1850880378438
+        },
+        {
+          "arm": "player_response",
+          "rmse": 1.7364324681478427,
+          "rows": 1867,
+          "slice": "after_first_second",
+          "sse": 11258.748273179524
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.6737502915626641,
+          "rows": 1981,
+          "slice": "role_0",
+          "sse": 1798.50812221863
+        },
+        {
+          "arm": "player_response",
+          "rmse": 1.0148361945977034,
+          "rows": 5092,
+          "slice": "role_1",
+          "sse": 10488.425238998738
+        },
+        {
+          "arm": "control",
+          "rmse": 1.3307756339567256,
+          "rows": 2078,
+          "slice": "player_cold",
+          "sse": 7360.125502649236
+        },
+        {
+          "arm": "control",
+          "rmse": 0.6382917578123539,
+          "rows": 4995,
+          "slice": "player_warm",
+          "sse": 4070.089517230935
+        },
+        {
+          "arm": "support_only",
+          "rmse": 1.3404122458704422,
+          "rows": 2078,
+          "slice": "player_cold",
+          "sse": 7467.105933782965
+        },
+        {
+          "arm": "support_only",
+          "rmse": 0.6383981243282122,
+          "rows": 4995,
+          "slice": "player_warm",
+          "sse": 4071.446129806337
+        },
+        {
+          "arm": "role_response",
+          "rmse": 1.3892733677449405,
+          "rows": 2078,
+          "slice": "player_cold",
+          "sse": 8021.414517792233
+        },
+        {
+          "arm": "role_response",
+          "rmse": 0.659276229868462,
+          "rows": 4995,
+          "slice": "player_warm",
+          "sse": 4342.105021223037
+        },
+        {
+          "arm": "player_response",
+          "rmse": 1.382979024321171,
+          "rows": 2078,
+          "slice": "player_cold",
+          "sse": 7948.894359996476
+        },
+        {
+          "arm": "player_response",
+          "rmse": 0.6589674789095055,
+          "rows": 4995,
+          "slice": "player_warm",
+          "sse": 4338.039001220892
+        }
+      ],
+      "status": "history_fold_complete",
+      "training_rows": 31925,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "conditional_feature_evidence": false,
+      "contrast": {
+        "delta_rmse": 7.87766427201575e-05,
+        "high95": 0.00029509061490202716,
+        "low95": -0.00019400171745577455,
+        "relative_gain": -0.00010309227947669086,
+        "resamples": 10000
+      },
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round8/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "constant_velocity": 1.4527985736322402,
+        "history": 0.764215946953194,
+        "preserved_tree": 0.7204400369653067,
+        "terminal": 0.7641371703104738
+      },
+      "new_kaggle_score": null,
+      "new_scientific_models": 2,
+      "original_summary_sha256": "f5bca9772f686359100b2e066a9c90671715d3266d0a542564580fb342608cab",
+      "protocol_signature": "526b0ab7d54bcc3bed9abed17a809a021741576d5e58b44d37c5b14218735e37",
+      "ready_for_later_fold": false,
+      "round": 8,
+      "slices": [
+        {
+          "arm": "terminal",
+          "rmse": 0.30521382156397703,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 862.0607829891014
+        },
+        {
+          "arm": "terminal",
+          "rmse": 1.5451474320361214,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 6011.676117380653
+        },
+        {
+          "arm": "terminal",
+          "rmse": 0.47765934684989625,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 762.5055453577182
+        },
+        {
+          "arm": "terminal",
+          "rmse": 0.8514331895554902,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 6111.231355012036
+        },
+        {
+          "arm": "history",
+          "rmse": 0.3052444752429545,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 862.2339511723719
+        },
+        {
+          "arm": "history",
+          "rmse": 1.5453073139233344,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 6012.920280662746
+        },
+        {
+          "arm": "history",
+          "rmse": 0.4775193501673404,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 762.0586469389268
+        },
+        {
+          "arm": "history",
+          "rmse": 0.8515630444140045,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 6113.095584896191
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        }
+      ],
+      "status": "matched_encoder_study_complete",
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evidence_id": "round9/readiness",
+      "new_kaggle_score": null,
+      "preflight": {
+        "status": "signal_preflight_passed"
+      },
+      "replay": {
+        "new_optimizer_steps": 0,
+        "status": "signal_audit_replay_exact"
+      },
+      "round": 9,
+      "status": "no_published_accuracy_summary"
+    },
+    {
+      "contrast": {
+        "delta_rmse": -0.01168209737592496,
+        "feature_gate_passed": false,
+        "high95": 0.01133297423166559,
+        "low95": -0.03264263521057738,
+        "relative_gain": 0.015071639912256796,
+        "resamples": 10000
+      },
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round10/summary.json",
+      "feature_research": "open",
+      "metrics": {
+        "cartesian": 0.7751045967084608,
+        "goal": 0.7634224993325358,
+        "preserved_tree": 0.7204400369653067
+      },
+      "new_kaggle_score": null,
+      "original_summary_sha256": "81a5d3698b295ac7c40cd2d0cceb092ab7d41089f95b1fb105bc1e99917e4bbc",
+      "protocol_signature": "6985bd936fd06e532cae8f48fb9ef3c09eef16ec73407d8a14379e3a8bd825f3",
+      "ready_for_later_fold": false,
+      "round": 10,
+      "scientific_models_total": 2,
+      "slices": [
+        {
+          "arm": "cartesian",
+          "rmse": 0.3103966984496802,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 891.5869057199046
+        },
+        {
+          "arm": "cartesian",
+          "rmse": 1.5667412106650411,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 6180.879257371927
+        },
+        {
+          "arm": "cartesian",
+          "rmse": 0.4600289354587404,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 707.2561689169871
+        },
+        {
+          "arm": "cartesian",
+          "rmse": 0.8689455844457348,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 6365.209994174846
+        },
+        {
+          "arm": "goal",
+          "rmse": 0.3158800450827162,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 923.3659974650201
+        },
+        {
+          "arm": "goal",
+          "rmse": 1.5355878146787858,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5937.519380333541
+        },
+        {
+          "arm": "goal",
+          "rmse": 0.4798802282906638,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 769.6125819713693
+        },
+        {
+          "arm": "goal",
+          "rmse": 0.8500417124526964,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 6091.272795827192
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        }
+      ],
+      "status": "grouped_goal_study_complete",
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evidence_id": "round11/readiness",
+      "new_kaggle_score": null,
+      "preflight": {
+        "new_optimizer_steps": 0,
+        "status": "training_review_preflight_passed"
+      },
+      "replay": {
+        "new_model_fits": 0,
+        "new_optimizer_steps": 0,
+        "status": "training_review_replay_exact"
+      },
+      "round": 11,
+      "smoke": {
+        "plays": 32,
+        "status": "motion_receiver_smoke_passed"
+      },
+      "status": "no_published_accuracy_summary"
+    },
+    {
+      "contrasts": {
+        "core_vs_mask": {
+          "delta_rmse": -0.00814747111373737,
+          "high_adjusted": 0.016530641767137737,
+          "low_adjusted": -0.028260617587429843,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.010904653428420175,
+          "resamples": 20000
+        },
+        "full_vs_core": {
+          "delta_rmse": 0.006645279999559994,
+          "high_adjusted": 0.019236787126927536,
+          "low_adjusted": -0.009407256722032641,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": -0.008992162862981434,
+          "resamples": 20000
+        },
+        "full_vs_mask": {
+          "delta_rmse": -0.0015021911141773758,
+          "high_adjusted": 0.01658710217365428,
+          "low_adjusted": -0.017662947327342735,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.0020105469850315583,
+          "resamples": 20000
+        }
+      },
+      "core_ready_for_replication": false,
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round12/summary.json",
+      "feature_research": "open",
+      "full_ready_for_replication": false,
+      "metrics": {
+        "core": {
+          "rmse": 0.7390079673620109,
+          "rows": 5886,
+          "sse": 6429.075037006378
+        },
+        "full": {
+          "rmse": 0.7456532473615709,
+          "rows": 5886,
+          "sse": 6545.217465121677
+        },
+        "mask": {
+          "rmse": 0.7471554384757483,
+          "rows": 5886,
+          "sse": 6571.615986099045
+        },
+        "preserved_tree": {
+          "rmse": 0.7204400369653067,
+          "rows": 5886,
+          "sse": 6110.066445266201
+        }
+      },
+      "models_total": 3,
+      "new_kaggle_score": null,
+      "original_summary_sha256": "26267ba0008330128d5765cc4a91499c789b257f3cb1b6bb48fc8512d1715b5f",
+      "protocol_signature": "bee3cceaa3c51338eb9b30b84628bdf2497091d23db0100d7be50789d52ab837",
+      "round": 12,
+      "slices": [
+        {
+          "arm": "mask",
+          "rmse": 0.3021402716647463,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 844.7860347702783
+        },
+        {
+          "arm": "mask",
+          "rmse": 1.508097017077646,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5726.8299513287675
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.4368933466086343,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 637.906911271002
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.8389756135018326,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5933.709074828044
+        },
+        {
+          "arm": "core",
+          "rmse": 0.29712456566273066,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 816.9709515925447
+        },
+        {
+          "arm": "core",
+          "rmse": 1.4929147045617963,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5612.104085413833
+        },
+        {
+          "arm": "core",
+          "rmse": 0.43602534610308974,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 635.3746983689148
+        },
+        {
+          "arm": "core",
+          "rmse": 0.8290185094698368,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5793.700338637463
+        },
+        {
+          "arm": "full",
+          "rmse": 0.2995968045260328,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 830.6228018415704
+        },
+        {
+          "arm": "full",
+          "rmse": 1.5064851421210024,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5714.594663280106
+        },
+        {
+          "arm": "full",
+          "rmse": 0.4394231844266521,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 645.3159204089661
+        },
+        {
+          "arm": "full",
+          "rmse": 0.8365821519024284,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5899.901544712711
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        }
+      ],
+      "status": "family_study_complete",
+      "training_metrics": {
+        "core": {
+          "rmse": 0.5491281271049546,
+          "rows": 26039,
+          "sse": 15703.68865144362
+        },
+        "full": {
+          "rmse": 0.5447806965328555,
+          "rows": 26039,
+          "sse": 15456.021688941368
+        },
+        "mask": {
+          "rmse": 0.5643709664775581,
+          "rows": 26039,
+          "sse": 16587.602703594897
+        }
+      },
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "contrasts": {
+        "core_vs_mask": {
+          "delta_rmse": -0.03070027355091165,
+          "high_adjusted": 0.021806919836336952,
+          "low_adjusted": -0.06530506240601892,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.04139661117312732,
+          "resamples": 20000
+        },
+        "full_vs_core": {
+          "delta_rmse": -0.016218229366684045,
+          "high_adjusted": 0.019129052907614522,
+          "low_adjusted": -0.04061830934783477,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.022813242824390567,
+          "resamples": 20000
+        },
+        "full_vs_mask": {
+          "delta_rmse": -0.046918502917595695,
+          "high_adjusted": 0.013562759018433696,
+          "low_adjusted": -0.09594293781910648,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.06326546305471847,
+          "resamples": 20000
+        }
+      },
+      "core_ready_for_replication": false,
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round13/summary.json",
+      "feature_research": "open",
+      "full_ready_for_replication": false,
+      "metrics": {
+        "core": {
+          "rmse": 0.7109129329629769,
+          "rows": 5886,
+          "sse": 5949.535817846348
+        },
+        "full": {
+          "rmse": 0.6946947035962928,
+          "rows": 5886,
+          "sse": 5681.175807742213
+        },
+        "mask": {
+          "rmse": 0.7416132065138885,
+          "rows": 5886,
+          "sse": 6474.484023148452
+        },
+        "preserved_tree": {
+          "rmse": 0.7204400369653067,
+          "rows": 5886,
+          "sse": 6110.066445266201
+        }
+      },
+      "models_total": 3,
+      "new_kaggle_score": null,
+      "original_summary_sha256": "3717f82ebd1506861e4b332cd48dcdb3130b863e2b4075c3060728a4b51f7c9b",
+      "protocol_signature": "8303173cda6fc9bc30567016c9fda4ebd37bb366952215cbb2076fcd6327b5da",
+      "round": 13,
+      "slices": [
+        {
+          "arm": "mask",
+          "rmse": 0.30081757855017455,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 837.4057088365706
+        },
+        {
+          "arm": "mask",
+          "rmse": 1.4962328010842636,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5637.0783143118815
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.44385067934000033,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 658.3854481900378
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.8306194414885175,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5816.098574958414
+        },
+        {
+          "arm": "core",
+          "rmse": 0.27518006601808764,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 700.7505320618362
+        },
+        {
+          "arm": "core",
+          "rmse": 1.4437817263924826,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5248.785285784512
+        },
+        {
+          "arm": "core",
+          "rmse": 0.49686388667531106,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 825.0519785299659
+        },
+        {
+          "arm": "core",
+          "rmse": 0.7796708128635841,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5124.483839316382
+        },
+        {
+          "arm": "full",
+          "rmse": 0.26527025310969177,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 651.1883146888789
+        },
+        {
+          "arm": "full",
+          "rmse": 1.4133690917298432,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5029.987493053335
+        },
+        {
+          "arm": "full",
+          "rmse": 0.4934649557187392,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 813.8026081501858
+        },
+        {
+          "arm": "full",
+          "rmse": 0.7598599171324507,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 4867.373199592029
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        }
+      ],
+      "status": "family_study_complete",
+      "training_metrics": {
+        "core": {
+          "rmse": 0.5399700922079319,
+          "rows": 26039,
+          "sse": 15184.262705547575
+        },
+        "full": {
+          "rmse": 0.5087116867707214,
+          "rows": 26039,
+          "sse": 13477.139604629909
+        },
+        "mask": {
+          "rmse": 0.5566779431855979,
+          "rows": 26039,
+          "sse": 16138.468732255573
+        }
+      },
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "contrasts": {
+        "core_vs_mask": {
+          "delta_rmse": -0.003824973382761887,
+          "high_adjusted": 0.024349124151207786,
+          "low_adjusted": -0.024036572303019952,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.00546050729676939,
+          "resamples": 20000
+        },
+        "full_vs_core": {
+          "delta_rmse": -0.006495904541962361,
+          "high_adjusted": 0.002325378784476033,
+          "low_adjusted": -0.015091539847772836,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.009324427473082042,
+          "resamples": 20000
+        },
+        "full_vs_mask": {
+          "delta_rmse": -0.010320877924724248,
+          "high_adjusted": 0.02218175528793098,
+          "low_adjusted": -0.033053595096839916,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.014734018665596427,
+          "resamples": 20000
+        }
+      },
+      "core_ready_for_replication": false,
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round14/summary.json",
+      "feature_research": "open",
+      "full_ready_for_replication": false,
+      "metrics": {
+        "core": {
+          "rmse": 0.6966545196168776,
+          "rows": 5886,
+          "sse": 5713.275561939272
+        },
+        "full": {
+          "rmse": 0.6901586150749153,
+          "rows": 5886,
+          "sse": 5607.226255162137
+        },
+        "mask": {
+          "rmse": 0.7004794929996395,
+          "rows": 5886,
+          "sse": 5776.185134770613
+        },
+        "preserved_tree": {
+          "rmse": 0.7204400369653067,
+          "rows": 5886,
+          "sse": 6110.066445266201
+        }
+      },
+      "models_total": 3,
+      "new_kaggle_score": null,
+      "original_summary_sha256": "a304f3dd65fac17e6103082ba10ec1a7134050bf9d2ca7b937803c63f9e58371",
+      "protocol_signature": "c8c95b6486cc5bb28e41670123400252b25dae8f281333e0d09a0f96e54aaf9a",
+      "round": 14,
+      "slices": [
+        {
+          "arm": "mask",
+          "rmse": 0.270687160175755,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 678.0548189818735
+        },
+        {
+          "arm": "mask",
+          "rmse": 1.4229105629415209,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5098.13031578874
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.4462558489383881,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 665.5401928225731
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.7786173332229767,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5110.6449419480405
+        },
+        {
+          "arm": "core",
+          "rmse": 0.27058419938286854,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 677.5390960757514
+        },
+        {
+          "arm": "core",
+          "rmse": 1.4141765589551192,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5035.736465863521
+        },
+        {
+          "arm": "core",
+          "rmse": 0.4724176440896873,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 745.862314554711
+        },
+        {
+          "arm": "core",
+          "rmse": 0.7676289732001973,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 4967.413247384561
+        },
+        {
+          "arm": "full",
+          "rmse": 0.26921676039246506,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 670.7083033612837
+        },
+        {
+          "arm": "full",
+          "rmse": 1.4001755750282963,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 4936.5179518008545
+        },
+        {
+          "arm": "full",
+          "rmse": 0.48219547160127496,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 777.0566842071373
+        },
+        {
+          "arm": "full",
+          "rmse": 0.7569503628596352,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 4830.169570955
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        }
+      ],
+      "status": "family_study_complete",
+      "training_metrics": {
+        "core": {
+          "rmse": 0.49653738319701796,
+          "rows": 26039,
+          "sse": 12839.798242518544
+        },
+        "full": {
+          "rmse": 0.49762887388240656,
+          "rows": 26039,
+          "sse": 12896.309289014025
+        },
+        "mask": {
+          "rmse": 0.5024338918469934,
+          "rows": 26039,
+          "sse": 13146.560720801617
+        }
+      },
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "contrasts": {
+        "core_vs_mask": {
+          "delta_rmse": -0.0005802147696308824,
+          "high_adjusted": 0.01114619720736181,
+          "low_adjusted": -0.009528999334314352,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": 0.000837605543622777,
+          "resamples": 20000
+        },
+        "full_vs_core": {
+          "delta_rmse": 0.006023974743186611,
+          "high_adjusted": 0.014335743040976758,
+          "low_adjusted": -0.0045559641672146085,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": -0.008703577994504164,
+          "resamples": 20000
+        },
+        "full_vs_mask": {
+          "delta_rmse": 0.0054437599735557285,
+          "high_adjusted": 0.01730289011664051,
+          "low_adjusted": -0.011972811215089819,
+          "passes": false,
+          "planned_family_comparisons": 6,
+          "relative_gain": -0.007858682285703855,
+          "resamples": 20000
+        }
+      },
+      "core_ready_for_replication": false,
+      "evaluation_games": 14,
+      "evaluation_rows": 5886,
+      "evidence_id": "round15/summary.json",
+      "feature_research": "open",
+      "full_ready_for_replication": false,
+      "metrics": {
+        "core": {
+          "rmse": 0.6921262435966467,
+          "rows": 5886,
+          "sse": 5639.24401284931
+        },
+        "full": {
+          "rmse": 0.6981502183398333,
+          "rows": 5886,
+          "sse": 5737.834398575587
+        },
+        "mask": {
+          "rmse": 0.6927064583662775,
+          "rows": 5886,
+          "sse": 5648.702819406801
+        },
+        "preserved_tree": {
+          "rmse": 0.7204400369653067,
+          "rows": 5886,
+          "sse": 6110.066445266201
+        }
+      },
+      "models_total": 3,
+      "new_kaggle_score": null,
+      "original_summary_sha256": "2ed7e39856cec015d0ff9f7c4de0fd5873cf3eb7e1e6ab2001e39d3d6ed72025",
+      "protocol_signature": "4a21e4cf49dc0007849adcdb1e8f63f9a8c4acc5674e741c83e5c00227e18571",
+      "round": 15,
+      "slices": [
+        {
+          "arm": "mask",
+          "rmse": 0.2679493031554131,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 664.4078561348568
+        },
+        {
+          "arm": "mask",
+          "rmse": 1.4069349065693304,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 4984.294963271945
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.4056255087958849,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 549.8661224157463
+        },
+        {
+          "arm": "mask",
+          "rmse": 0.7777173077627368,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5098.836696991056
+        },
+        {
+          "arm": "core",
+          "rmse": 0.2677347384094382,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 663.34421145893
+        },
+        {
+          "arm": "core",
+          "rmse": 1.405749540920856,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 4975.89980139038
+        },
+        {
+          "arm": "core",
+          "rmse": 0.4068447627128059,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 553.176732884337
+        },
+        {
+          "arm": "core",
+          "rmse": 0.7767428480218793,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5086.067279964973
+        },
+        {
+          "arm": "full",
+          "rmse": 0.27230363608140484,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 686.1773466450686
+        },
+        {
+          "arm": "full",
+          "rmse": 1.4164102692392488,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5051.657051930519
+        },
+        {
+          "arm": "full",
+          "rmse": 0.4096297381054866,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 560.775977661515
+        },
+        {
+          "arm": "full",
+          "rmse": 0.783660118675879,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5177.0584209140725
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.31047720969516085,
+          "rows": 4627,
+          "slice": "first_second",
+          "sse": 892.0494884868195
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 1.4395437892607226,
+          "rows": 1259,
+          "slice": "after_first_second",
+          "sse": 5218.016956779383
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.42258835892228225,
+          "rows": 1671,
+          "slice": "role_0",
+          "sse": 596.8174383049295
+        },
+        {
+          "arm": "preserved_tree",
+          "rmse": 0.8087047921959365,
+          "rows": 4215,
+          "slice": "role_1",
+          "sse": 5513.249006961272
+        }
+      ],
+      "status": "family_study_complete",
+      "training_metrics": {
+        "core": {
+          "rmse": 0.4912499194106844,
+          "rows": 26039,
+          "sse": 12567.800598391244
+        },
+        "full": {
+          "rmse": 0.4897728113868543,
+          "rows": 26039,
+          "sse": 12492.335589965078
+        },
+        "mask": {
+          "rmse": 0.4958979221201573,
+          "rows": 26039,
+          "sse": 12806.748306915382
+        }
+      },
+      "training_rows": 26039,
+      "verification": "aggregate arithmetic; saved replay is a source claim, not fresh model replay"
+    },
+    {
+      "evidence_id": "round16/readiness",
+      "new_kaggle_score": null,
+      "preflight": {
+        "new_model_fits": 0,
+        "status": "family_preflight_passed"
+      },
+      "round": 16,
+      "smoke": {
+        "new_model_fits": 0,
+        "plays": 32,
+        "status": "family_smoke_passed"
+      },
+      "status": "no_published_accuracy_summary",
+      "tests_receipt": {
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "status": "tests_passed",
+        "tests_run": 93
+      }
+    },
+    {
+      "evidence_id": "round17/readiness",
+      "new_kaggle_score": null,
+      "preflight": {
+        "new_model_fits": 0,
+        "status": "family_preflight_passed"
+      },
+      "round": 17,
+      "smoke": {
+        "new_model_fits": 0,
+        "plays": 32,
+        "status": "family_smoke_passed"
+      },
+      "status": "no_published_accuracy_summary"
+    }
+  ]
+}

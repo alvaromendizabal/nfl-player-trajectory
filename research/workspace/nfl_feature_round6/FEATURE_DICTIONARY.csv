@@ -1,0 +1,49 @@
+name,family,scale_or_units,availability,interpretation_limit
+pass_length,pass_axis_state,yards/20,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+player_along_fraction,pass_axis_state,fraction of pass length,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+player_across,pass_axis_state,yards/20,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+ball_along,pass_axis_state,yards/20,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+distance_to_passer,pass_axis_state,yards/20,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+velocity_along,pass_axis_state,yards per second/10,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+velocity_across,pass_axis_state,yards per second/10,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+orientation_along,pass_axis_state,unitless,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+orientation_across,pass_axis_state,unitless,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+receiver_gap_along,pass_axis_state,yards/20,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+receiver_gap_across,pass_axis_state,yards/20,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+receiver_velocity_gap_along,pass_axis_state,yards per second/10,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+receiver_velocity_gap_across,pass_axis_state,yards per second/10,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+signed_triangle_area,pass_axis_state,signed twice-area / pass-length squared,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+behind_passer,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+beyond_landing,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+axis_present,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+velocity_present,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+orientation_present,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+receiver_present,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+receiver_velocity_present,pass_axis_state,boolean,pre-throw; simultaneous passer/player; supplied landing point,"reference geometry, not actual ball path or coverage assignment"
+lag05__displacement_along,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__displacement_across,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__velocity_change_along,pass_axis_history,yards per second/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__velocity_change_across,pass_axis_history,yards per second/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__receiver_gap_change_along,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__receiver_gap_change_across,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__position_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__velocity_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag05__receiver_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__displacement_along,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__displacement_across,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__velocity_change_along,pass_axis_history,yards per second/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__velocity_change_across,pass_axis_history,yards per second/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__receiver_gap_change_along,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__receiver_gap_change_across,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__position_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__velocity_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag10__receiver_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__displacement_along,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__displacement_across,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__velocity_change_along,pass_axis_history,yards per second/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__velocity_change_across,pass_axis_history,yards per second/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__receiver_gap_change_along,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__receiver_gap_change_across,pass_axis_history,yards/10,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__position_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__velocity_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative
+lag15__receiver_endpoints_present,pass_axis_history,boolean,exact observed offset; endpoint masks; no interpolation,interval change in fixed final observed frame; not instantaneous derivative

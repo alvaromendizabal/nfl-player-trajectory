@@ -1,0 +1,13 @@
+name,family,unit,fixed_scale,availability,predictive_status
+receiver_dx,receiver,yards,20.0,simultaneous observed receiver pair; no self pair,candidate only; no model use or accuracy result
+receiver_dy,receiver,yards,20.0,simultaneous observed receiver pair; no self pair,candidate only; no model use or accuracy result
+receiver_dvx,receiver,yards/s,10.0,simultaneous observed receiver pair; no self pair,candidate only; no model use or accuracy result
+receiver_dvy,receiver,yards/s,10.0,simultaneous observed receiver pair; no self pair,candidate only; no model use or accuracy result
+receiver_distance,receiver,yards,20.0,simultaneous observed receiver pair; no self pair,candidate only; no model use or accuracy result
+receiver_closing_speed,receiver,yards/s,10.0,simultaneous observed receiver pair; no self pair,candidate only; no model use or accuracy result
+observed_ax,motion,yards/s^2,20.0,adjacent observed velocity slots; nonzero speed where required,candidate only; no model use or accuracy result
+observed_ay,motion,yards/s^2,20.0,adjacent observed velocity slots; nonzero speed where required,candidate only; no model use or accuracy result
+tangential_acceleration,motion,yards/s^2,20.0,adjacent observed velocity slots; nonzero speed where required,candidate only; no model use or accuracy result
+normal_acceleration,motion,yards/s^2,20.0,adjacent observed velocity slots; nonzero speed where required,candidate only; no model use or accuracy result
+velocity_turn_rate,motion,rad/s,10.0,adjacent observed velocity slots; nonzero speed where required,candidate only; no model use or accuracy result
+speed_change_rate,motion,yards/s^2,20.0,adjacent observed velocity slots; nonzero speed where required,candidate only; no model use or accuracy result

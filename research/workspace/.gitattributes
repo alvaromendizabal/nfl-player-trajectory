@@ -1,0 +1,3 @@
+# Immutable research snapshots: preserve the recorded bytes on add and checkout.
+# Only this archived-source subtree is affected; maintained code is unchanged.
+** -text -filter -ident -working-tree-encoding !eol whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

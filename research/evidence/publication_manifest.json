@@ -1,0 +1,1951 @@
+{
+  "byte_storage_policy": {
+    "archive_bytes_rewritten": false,
+    "attributes_file": "research/workspace/.gitattributes",
+    "attributes_sha256": "1988e9ef132de4fc3ded444909d8727e54d180d48c80e321792ef1788e53946b",
+    "checkout_verification": "public CI verifies raw hashes and indexed blob identities",
+    "git_config_changed": false,
+    "policy": "immutable-archive-bytes-v1",
+    "root_attributes_changed": false,
+    "scope": "research/workspace only"
+  },
+  "created_utc": "2026-09-13T16:16:12.188491+00:00",
+  "excluded": [
+    {
+      "path": "nfl_feature_round1/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round2/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round3/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round4/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round5/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round6/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round7/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round8/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round9/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round10/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_round11/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_rounds12_13/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_rounds14_15/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_feature_rounds16_17/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl_manual_sync/[private inputs, generated outputs, and local evidence]",
+      "reason": "input_contract.json, local manifests, caches, raw data, checkpoints, outputs, and logs excluded"
+    },
+    {
+      "path": "nfl-player-trajectory/docs/results/supervision_execution.json",
+      "reason": "untracked/non-source artifact retained privately"
+    }
+  ],
+  "notebook_policy": "archived notebook outputs removed; Research Review rendered from public aggregates only",
+  "original_base": "402843faa1722460aa84d1bbaf27c4050a7b7ff9",
+  "private_checkpoint_replay_performed": false,
+  "schema": 1,
+  "scientific_fits": 0,
+  "source_archives": [
+    {
+      "path": "research/workspace/nfl_feature_round1/04_observed_origin_features.ipynb",
+      "published_sha256": "780b8abd4a6a5d33b74562ba19f90bf3c5fc5609c2764b8f6c8d3188a888d6c0",
+      "source_sha256": "b84262dae9807467edb9e0b28ced24d1b5aa082dffc61018839c5fd87910977e",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/05_feature_ablation.ipynb",
+      "published_sha256": "477a642fc77713b48e79eb9a3817525aa59e1345deecafccc75b1e65789e5c20",
+      "source_sha256": "746ac22316b593cdc951cf5e650613a0c1fe3b580f0e76622386804f74231402",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "47823a38203a0f160e7ef562be12249c7303e5e76b3890fe06c9a509dc944d0e",
+      "source_sha256": "47823a38203a0f160e7ef562be12249c7303e5e76b3890fe06c9a509dc944d0e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/FEATURE_DICTIONARY.csv",
+      "published_sha256": "05138ae7b7a27bff1df457934d62989071b72f6e94c8c1ceec2262c4ffb4b9bc",
+      "source_sha256": "05138ae7b7a27bff1df457934d62989071b72f6e94c8c1ceec2262c4ffb4b9bc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/RESEARCH_LEDGER.md",
+      "published_sha256": "1ad9551435f1a4387c8103fbf310a6caf0ae519eb49fdbd68d13ffbb719ff9a6",
+      "source_sha256": "1ad9551435f1a4387c8103fbf310a6caf0ae519eb49fdbd68d13ffbb719ff9a6",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/run_round.py",
+      "published_sha256": "8a18d0063313eb383ca8d934e377deab3efc87e280f2fb0cf80aa93a753ceec2",
+      "source_sha256": "8a18d0063313eb383ca8d934e377deab3efc87e280f2fb0cf80aa93a753ceec2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/visuals.py",
+      "published_sha256": "4838567da24bb9c16281ee530f92e2a1d068fa7096732c360641f96a07193c3e",
+      "source_sha256": "4838567da24bb9c16281ee530f92e2a1d068fa7096732c360641f96a07193c3e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/tests/test_origin_features.py",
+      "published_sha256": "c67fc977690095c7876d196949bf4f811621f35661565215da0efab06f5e87ed",
+      "source_sha256": "c67fc977690095c7876d196949bf4f811621f35661565215da0efab06f5e87ed",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/tests/test_runner.py",
+      "published_sha256": "b2d7cda87d529ebc96711d29c3c0411e3aa146c3086491ebb3716b51f5113043",
+      "source_sha256": "b2d7cda87d529ebc96711d29c3c0411e3aa146c3086491ebb3716b51f5113043",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round1/tests/test_visuals.py",
+      "published_sha256": "c82875b5ae2320a637468155ebb330ab8d5018342e9c6f74be2bb2ff0ab05025",
+      "source_sha256": "c82875b5ae2320a637468155ebb330ab8d5018342e9c6f74be2bb2ff0ab05025",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/06_arrival_attribution.ipynb",
+      "published_sha256": "01da106785b562563a6c59a54b61864ad718aa472f2a47306556547a743ae23d",
+      "source_sha256": "109a0ff79ee0c39729ae6091c95d8bf93b2b456fbb7c89546b6400e733ee6fd5",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/07_turning_braking_features.ipynb",
+      "published_sha256": "469bc832596e9a6b3fe80d45d3f997f2fc052b2b94a7637a60529c7e98cb1139",
+      "source_sha256": "b415cb01df100ef206fce1c1095bd79900eeec9fd1e1b6f7a398198bd935d468",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "d42f78cf6ad29d321ddd6ac58836816b30ae7de37233effec405435d8f3ad391",
+      "source_sha256": "d42f78cf6ad29d321ddd6ac58836816b30ae7de37233effec405435d8f3ad391",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/FEATURE_DICTIONARY.csv",
+      "published_sha256": "8d9231a2370822b7f87234ec6a902b9ef171b5770854c9ad84b4d838aad11446",
+      "source_sha256": "8d9231a2370822b7f87234ec6a902b9ef171b5770854c9ad84b4d838aad11446",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/RESEARCH_LEDGER.md",
+      "published_sha256": "a5cc1a74efb51aee5dcd5ec82c3de10ba9a01b05a084bcad8f00e547556724dd",
+      "source_sha256": "a5cc1a74efb51aee5dcd5ec82c3de10ba9a01b05a084bcad8f00e547556724dd",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/motion_features.py",
+      "published_sha256": "636c9a06154bba87ed5e8d25797c30146f7ced794b24f0eeb2a3ceda5ff3bead",
+      "source_sha256": "636c9a06154bba87ed5e8d25797c30146f7ced794b24f0eeb2a3ceda5ff3bead",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/run_round.py",
+      "published_sha256": "e0a22f9b817c718ed7efb2c49590bf39c6f883cf86635e57ade2879560025ad3",
+      "source_sha256": "e0a22f9b817c718ed7efb2c49590bf39c6f883cf86635e57ade2879560025ad3",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/study.py",
+      "published_sha256": "afb8916799fcc4b50e190d0f7e4634cad9240db5a69870962f42be7203cebb3c",
+      "source_sha256": "afb8916799fcc4b50e190d0f7e4634cad9240db5a69870962f42be7203cebb3c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/visuals.py",
+      "published_sha256": "7148a57689762569c307968523d4bd74fa0e8bec4c24f79df59809e15b686f15",
+      "source_sha256": "7148a57689762569c307968523d4bd74fa0e8bec4c24f79df59809e15b686f15",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/tests/fixtures.py",
+      "published_sha256": "9dec59faa7cc5adece016cad747c0d30d19bad24b101935e9bb8c4034048f436",
+      "source_sha256": "9dec59faa7cc5adece016cad747c0d30d19bad24b101935e9bb8c4034048f436",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/tests/integration_check.py",
+      "published_sha256": "8e56f1e5ffef060eb6a547ffc6d2c3a0881ba41f2653d4c36aaf6e7cd8a74ad1",
+      "source_sha256": "8e56f1e5ffef060eb6a547ffc6d2c3a0881ba41f2653d4c36aaf6e7cd8a74ad1",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/tests/test_motion_features.py",
+      "published_sha256": "32461f0a387831bc3e9e2309f61337c7a321bc89eb30b07f85911b1b7297d87d",
+      "source_sha256": "32461f0a387831bc3e9e2309f61337c7a321bc89eb30b07f85911b1b7297d87d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/tests/test_study.py",
+      "published_sha256": "7ab0381b803f9e0bb33ce8352f6c27fbf253d4827841465609b8bae1cf491553",
+      "source_sha256": "7ab0381b803f9e0bb33ce8352f6c27fbf253d4827841465609b8bae1cf491553",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round2/tests/test_visuals.py",
+      "published_sha256": "a5ba38029a1e7f4c029c564f2dbe997f15150bedb83c210cea417a62e8758653",
+      "source_sha256": "a5ba38029a1e7f4c029c564f2dbe997f15150bedb83c210cea417a62e8758653",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/08_arrival_and_pair_history.ipynb",
+      "published_sha256": "6b3c74042ac5909c821874ba9f802ba82754456ffe215892267637edd88fe0eb",
+      "source_sha256": "9362187658de01b251e37f4185e522993d8b315b54ba52e156c8aad3dc26ec92",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/09_first_fold_feature_transfer.ipynb",
+      "published_sha256": "be5fad82a15762803f4283452cd1576711ab65015cd7f6b68a0d4807c227a94b",
+      "source_sha256": "f1ff5cc1691fdc8de85ef37506f02de345de122d548f07ff7648689a3650bfd3",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "3adbcd2e82a6ff8d6d209b470421475d8e1722ab68da94b28c01877e8bad5e2b",
+      "source_sha256": "3adbcd2e82a6ff8d6d209b470421475d8e1722ab68da94b28c01877e8bad5e2b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/FEATURE_DICTIONARY.csv",
+      "published_sha256": "340f75a9be65c85d5f90f7706ddd4db0428314e6f046d944c7b0e59c826ee33b",
+      "source_sha256": "340f75a9be65c85d5f90f7706ddd4db0428314e6f046d944c7b0e59c826ee33b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/RESEARCH_LEDGER.md",
+      "published_sha256": "5d4a0d60d84dd09d69a54c74085b9396ce66090ff34259ae720bfeebc2358e89",
+      "source_sha256": "5d4a0d60d84dd09d69a54c74085b9396ce66090ff34259ae720bfeebc2358e89",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/VALIDATION_SCOPE.md",
+      "published_sha256": "8c11183efe723f6478b9e95d9734cb97e32b751542a07758fdbb16ddf6a30b3a",
+      "source_sha256": "8c11183efe723f6478b9e95d9734cb97e32b751542a07758fdbb16ddf6a30b3a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/data_pipeline.py",
+      "published_sha256": "67e15ded919ce787423aa8355ff9b0fdb58961587c733e7381553695683e92ee",
+      "source_sha256": "67e15ded919ce787423aa8355ff9b0fdb58961587c733e7381553695683e92ee",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/pair_features.py",
+      "published_sha256": "587da963bc751550c2b4b2b38123967bc63f82cb5cbb11368e2ae7f6960a0229",
+      "source_sha256": "587da963bc751550c2b4b2b38123967bc63f82cb5cbb11368e2ae7f6960a0229",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/parent_support.py",
+      "published_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "source_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/run_round.py",
+      "published_sha256": "1b863d3f95c63316f36d8e08a6d53b3e5990569059431f165b865b4e2d3fd77d",
+      "source_sha256": "1b863d3f95c63316f36d8e08a6d53b3e5990569059431f165b865b4e2d3fd77d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/tree_worker.py",
+      "published_sha256": "3edd30004a81040da43ae3724d8687912ecea96637749e600387b683568d6d08",
+      "source_sha256": "3edd30004a81040da43ae3724d8687912ecea96637749e600387b683568d6d08",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/visuals.py",
+      "published_sha256": "294d207019c015c69b343c375f5a0dbf09ed665e94f21aecc914141a7c5fd6f5",
+      "source_sha256": "294d207019c015c69b343c375f5a0dbf09ed665e94f21aecc914141a7c5fd6f5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/tests/integration_check.py",
+      "published_sha256": "c1bc0c0cabbe52e3369664d1c21a69b982ae827152190971b10fd89c4af5871e",
+      "source_sha256": "c1bc0c0cabbe52e3369664d1c21a69b982ae827152190971b10fd89c4af5871e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/tests/base/test_pairs.py",
+      "published_sha256": "c1f42ccc8bdfd4c53c929f98813711a5891541c434d64157c32a74e1d5b51106",
+      "source_sha256": "c1f42ccc8bdfd4c53c929f98813711a5891541c434d64157c32a74e1d5b51106",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/tests/base/test_storage_parity.py",
+      "published_sha256": "37d83f37929c764095e23b92b7fd33877561ab87aa0d0ea13f759a74292bb21e",
+      "source_sha256": "37d83f37929c764095e23b92b7fd33877561ab87aa0d0ea13f759a74292bb21e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/tests/base/test_workflow.py",
+      "published_sha256": "ce58db9c52e5121fa015e3cd3d7ac3808ff87e660b389946003074ba2071c7f6",
+      "source_sha256": "ce58db9c52e5121fa015e3cd3d7ac3808ff87e660b389946003074ba2071c7f6",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round3/tests/model/test_tree.py",
+      "published_sha256": "4bea34a5614ea08a10d17483f7c59beda0b7792565c7f0ffe5ae10ae4ab2763d",
+      "source_sha256": "4bea34a5614ea08a10d17483f7c59beda0b7792565c7f0ffe5ae10ae4ab2763d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/10_observed_state_research.ipynb",
+      "published_sha256": "56e12d17035022f653eab748d5b7581bd1953d011b39fa35dae421fad5d71bde",
+      "source_sha256": "dab0ec118850446e6c4f755477d4d532ed8dbb2ba5bdd655fcb55d4cd60ad744",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/11_state_geometry_ablation.ipynb",
+      "published_sha256": "085ff52b2394f924ba45d1a0b185c9591b7bed1eb85afec98e139acadc7cdd50",
+      "source_sha256": "87016df1fa9e8237e869b3bdee758d9b6504036ec57c818d30f2b847bd112cc6",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "db3bdc8996eb79b6717bec0b58e52a65ffe8ca9fa596b2389672bf31dbfbb91b",
+      "source_sha256": "db3bdc8996eb79b6717bec0b58e52a65ffe8ca9fa596b2389672bf31dbfbb91b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/FEATURE_DICTIONARY.csv",
+      "published_sha256": "596981bff30723550f4e17cee366b796e99b0e9631b700b380674d21b9d3cb16",
+      "source_sha256": "596981bff30723550f4e17cee366b796e99b0e9631b700b380674d21b9d3cb16",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/RESEARCH_LEDGER.md",
+      "published_sha256": "9545fb5f46c8f520c546d6a0aca33fad845c4955b71968bbc92bc992cb5964e1",
+      "source_sha256": "9545fb5f46c8f520c546d6a0aca33fad845c4955b71968bbc92bc992cb5964e1",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/VALIDATION_SCOPE.md",
+      "published_sha256": "c3ba584b2b786f447f9ed469ca9b628aa91a2a82584d49075c96d81e3034e346",
+      "source_sha256": "c3ba584b2b786f447f9ed469ca9b628aa91a2a82584d49075c96d81e3034e346",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/feature_worker.py",
+      "published_sha256": "5f093d1bdc06d0bf2d464d4dc721e2b83806f4ff85f05d13d55d2d607d25180d",
+      "source_sha256": "5f093d1bdc06d0bf2d464d4dc721e2b83806f4ff85f05d13d55d2d607d25180d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/pair_features.py",
+      "published_sha256": "587da963bc751550c2b4b2b38123967bc63f82cb5cbb11368e2ae7f6960a0229",
+      "source_sha256": "587da963bc751550c2b4b2b38123967bc63f82cb5cbb11368e2ae7f6960a0229",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/parent_support.py",
+      "published_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "source_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/run_round.py",
+      "published_sha256": "b4dd4e45f8f41dde6302c1275957e0ab0333057903e24c53b1b4b4d04cf9392d",
+      "source_sha256": "b4dd4e45f8f41dde6302c1275957e0ab0333057903e24c53b1b4b4d04cf9392d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/state_features.py",
+      "published_sha256": "86ef5fdffe4eebf413780b8e318baa66e64262331454edb62fa5e3dbaafd92f4",
+      "source_sha256": "86ef5fdffe4eebf413780b8e318baa66e64262331454edb62fa5e3dbaafd92f4",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/study.py",
+      "published_sha256": "97d74a4c068cd033827776a2a2a6e70bfd93458935f823e410d9ca06cf52bc47",
+      "source_sha256": "97d74a4c068cd033827776a2a2a6e70bfd93458935f823e410d9ca06cf52bc47",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/tree_core.py",
+      "published_sha256": "3edd30004a81040da43ae3724d8687912ecea96637749e600387b683568d6d08",
+      "source_sha256": "3edd30004a81040da43ae3724d8687912ecea96637749e600387b683568d6d08",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/visuals.py",
+      "published_sha256": "d02a02c104e3eae4f31ff89c8b8c3bdfab61edbd10c12ec0e41e768433b051b8",
+      "source_sha256": "d02a02c104e3eae4f31ff89c8b8c3bdfab61edbd10c12ec0e41e768433b051b8",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/tests/integration_check.py",
+      "published_sha256": "2901809f4c46f875fe1e746bb2b0df9ed83b5a3978a3a7be16a9368346f3faba",
+      "source_sha256": "2901809f4c46f875fe1e746bb2b0df9ed83b5a3978a3a7be16a9368346f3faba",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/tests/base/fixtures.py",
+      "published_sha256": "2ca2c56cddf64d9b85fc3b4093f5a94c600a16dd1ba85a2109f88d28bc31e9b2",
+      "source_sha256": "2ca2c56cddf64d9b85fc3b4093f5a94c600a16dd1ba85a2109f88d28bc31e9b2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/tests/base/test_features.py",
+      "published_sha256": "9861dd98ed1a573386dbd6b426302d2afb96312589aac82e620db936a66bc5db",
+      "source_sha256": "9861dd98ed1a573386dbd6b426302d2afb96312589aac82e620db936a66bc5db",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/tests/base/test_safety.py",
+      "published_sha256": "d0a962e2b2da84bed2783812281384cb555e22cb6fdc348119526a0f709877ba",
+      "source_sha256": "d0a962e2b2da84bed2783812281384cb555e22cb6fdc348119526a0f709877ba",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round4/tests/model/test_tree.py",
+      "published_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "source_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/12_direct_state_temporal_research.ipynb",
+      "published_sha256": "60b6dc47237c96f719ad0488edf603af25b00a3bd06a03d77ba740d56fea22b5",
+      "source_sha256": "c0322e587f87f348ea3dadf7fe13a11d877cc2a30c6ff7fa3a9fa786fe3cf723",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/13_direct_state_temporal_ablation.ipynb",
+      "published_sha256": "b917afca333416cf55d3ca7b50f0c431aa9929b6476f44cca0b9f481bdfd7bcb",
+      "source_sha256": "6a7aa1b3b724a1b7726da76f361ab3cf7808de8879324b8b7c54b48810ced5c8",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "3f5b7f1bb49fd263b1bbc0e0c9afa9bd772cd7a8015ba2cdfee82cfa44b2f761",
+      "source_sha256": "3f5b7f1bb49fd263b1bbc0e0c9afa9bd772cd7a8015ba2cdfee82cfa44b2f761",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/FEATURE_DICTIONARY.csv",
+      "published_sha256": "303b986aa37daf5d1fd911510bd14a8646b2343f9955cc7f4166e0b48b921b0c",
+      "source_sha256": "303b986aa37daf5d1fd911510bd14a8646b2343f9955cc7f4166e0b48b921b0c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/RESEARCH_LEDGER.md",
+      "published_sha256": "997bd7f1b58cf55196170824378669fe08b5491662af6b724eda6f4e892491ba",
+      "source_sha256": "997bd7f1b58cf55196170824378669fe08b5491662af6b724eda6f4e892491ba",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/VALIDATION_SCOPE.md",
+      "published_sha256": "dfc562ee179306a25935d8a2d7a77b2f5e617ab669809328dc3851b16936fdc5",
+      "source_sha256": "dfc562ee179306a25935d8a2d7a77b2f5e617ab669809328dc3851b16936fdc5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/confirmation.py",
+      "published_sha256": "d64d9786aa8d8eaca6485a113455c28d0bf5d68da19307c4877faef358e3d407",
+      "source_sha256": "d64d9786aa8d8eaca6485a113455c28d0bf5d68da19307c4877faef358e3d407",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/feature_worker.py",
+      "published_sha256": "632bf7603c39bf4e8f932e421914bd69690460b8faa585bf21261e0723d4397d",
+      "source_sha256": "632bf7603c39bf4e8f932e421914bd69690460b8faa585bf21261e0723d4397d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/pair_features.py",
+      "published_sha256": "587da963bc751550c2b4b2b38123967bc63f82cb5cbb11368e2ae7f6960a0229",
+      "source_sha256": "587da963bc751550c2b4b2b38123967bc63f82cb5cbb11368e2ae7f6960a0229",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/parent_support.py",
+      "published_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "source_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/run_round.py",
+      "published_sha256": "5061916631d4f884bab8a15fe64fba16ad101d90be5f6e419ed35e813fde55b6",
+      "source_sha256": "5061916631d4f884bab8a15fe64fba16ad101d90be5f6e419ed35e813fde55b6",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/state_features.py",
+      "published_sha256": "86ef5fdffe4eebf413780b8e318baa66e64262331454edb62fa5e3dbaafd92f4",
+      "source_sha256": "86ef5fdffe4eebf413780b8e318baa66e64262331454edb62fa5e3dbaafd92f4",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/study.py",
+      "published_sha256": "97d74a4c068cd033827776a2a2a6e70bfd93458935f823e410d9ca06cf52bc47",
+      "source_sha256": "97d74a4c068cd033827776a2a2a6e70bfd93458935f823e410d9ca06cf52bc47",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/tree_core.py",
+      "published_sha256": "3edd30004a81040da43ae3724d8687912ecea96637749e600387b683568d6d08",
+      "source_sha256": "3edd30004a81040da43ae3724d8687912ecea96637749e600387b683568d6d08",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/visuals.py",
+      "published_sha256": "f1e86580bd9813a3259c8fa5e58cf5c414ea04099669fc042b94334b735cb6c0",
+      "source_sha256": "f1e86580bd9813a3259c8fa5e58cf5c414ea04099669fc042b94334b735cb6c0",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/tests/integration_check.py",
+      "published_sha256": "69a439f3542d9e8acd1480331799016e253b9629ae54b4917f69b1fede887dc8",
+      "source_sha256": "69a439f3542d9e8acd1480331799016e253b9629ae54b4917f69b1fede887dc8",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/tests/base/fixtures.py",
+      "published_sha256": "2ca2c56cddf64d9b85fc3b4093f5a94c600a16dd1ba85a2109f88d28bc31e9b2",
+      "source_sha256": "2ca2c56cddf64d9b85fc3b4093f5a94c600a16dd1ba85a2109f88d28bc31e9b2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/tests/base/test_confirmation.py",
+      "published_sha256": "2f72d8cb5176ec7f8fb53ba7c3056c20f14a155c375d2f8e9ef73206249fa96c",
+      "source_sha256": "2f72d8cb5176ec7f8fb53ba7c3056c20f14a155c375d2f8e9ef73206249fa96c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/tests/base/test_features.py",
+      "published_sha256": "9861dd98ed1a573386dbd6b426302d2afb96312589aac82e620db936a66bc5db",
+      "source_sha256": "9861dd98ed1a573386dbd6b426302d2afb96312589aac82e620db936a66bc5db",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round5/tests/model/test_tree.py",
+      "published_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "source_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/14_passing_line_research.ipynb",
+      "published_sha256": "5321eca55704f534337f791b4da24fa79eab0878ad7b866bd583925ba92d023a",
+      "source_sha256": "c177c931bafe40d21e97f17bcaf26829b6c6b4d74d5ee209ce741740010b9258",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/15_pass_axis_ablation.ipynb",
+      "published_sha256": "11ee14a6922021ca49d3bcd7376e37201a09caba12889bf15632219daa1e25bb",
+      "source_sha256": "586aee4cca6769250ee869056c194b3413d2c65567fa8222629a2238b0fcdf75",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "66d6ee408e972992c46b530f77b9353ec6c7aad8d7b6f8df10f49d45021c29cc",
+      "source_sha256": "66d6ee408e972992c46b530f77b9353ec6c7aad8d7b6f8df10f49d45021c29cc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/FEATURE_DICTIONARY.csv",
+      "published_sha256": "33548fc686b59efe16de39f18dd4884029e245a8338d5285160dcfd4308b0484",
+      "source_sha256": "33548fc686b59efe16de39f18dd4884029e245a8338d5285160dcfd4308b0484",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/RESEARCH_LEDGER.md",
+      "published_sha256": "737a992e8e00865650fe6b79b7352a1b951e777fdf0712d94c938f98375b08cf",
+      "source_sha256": "737a992e8e00865650fe6b79b7352a1b951e777fdf0712d94c938f98375b08cf",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/VALIDATION_SCOPE.md",
+      "published_sha256": "5b35227b443858f49ec0b3eaf0e7d0b1bf28edf06a6154d280463966a3531ffc",
+      "source_sha256": "5b35227b443858f49ec0b3eaf0e7d0b1bf28edf06a6154d280463966a3531ffc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/experiment.py",
+      "published_sha256": "308248818ead173fd46afdac7aa3c0cc9e8617089ad9c10bc6fc1f33f60bb1f6",
+      "source_sha256": "308248818ead173fd46afdac7aa3c0cc9e8617089ad9c10bc6fc1f33f60bb1f6",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/parent_support.py",
+      "published_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "source_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/pass_features.py",
+      "published_sha256": "f0f89cd173e1f4f78f40bf9b8886bf6aa22b2f725082374cc88a9edda4303b38",
+      "source_sha256": "f0f89cd173e1f4f78f40bf9b8886bf6aa22b2f725082374cc88a9edda4303b38",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/run_round.py",
+      "published_sha256": "00901d863d94a6c21ac026ea580fae71ffe8995d8d1e67661d5c80da2f1fc1ae",
+      "source_sha256": "00901d863d94a6c21ac026ea580fae71ffe8995d8d1e67661d5c80da2f1fc1ae",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/visuals.py",
+      "published_sha256": "d7fe9be784addcdba743c7c205816e2c35b76af7896c632dfb84c26c8a5ae45c",
+      "source_sha256": "d7fe9be784addcdba743c7c205816e2c35b76af7896c632dfb84c26c8a5ae45c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/worker.py",
+      "published_sha256": "34c62fc89e98edb7a8bfe4842d964a0451e41229044366487d9a0a0225535ea8",
+      "source_sha256": "34c62fc89e98edb7a8bfe4842d964a0451e41229044366487d9a0a0225535ea8",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/tests/fixtures.py",
+      "published_sha256": "e4b7243efbb5c449152f46fd8097a022e24f09b55613a52992e7f7519167bfb3",
+      "source_sha256": "e4b7243efbb5c449152f46fd8097a022e24f09b55613a52992e7f7519167bfb3",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/tests/test_pass_features.py",
+      "published_sha256": "d0ff96dfdb334733f728180e1457061c2385bd1dae25f1c5b2b44e1a0f3e8114",
+      "source_sha256": "d0ff96dfdb334733f728180e1457061c2385bd1dae25f1c5b2b44e1a0f3e8114",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/tests/test_workflow.py",
+      "published_sha256": "3a533aea301029c62268c6a115380d6c991d44af5852304d312671e72c75637a",
+      "source_sha256": "3a533aea301029c62268c6a115380d6c991d44af5852304d312671e72c75637a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round6/tests/model/test_tree.py",
+      "published_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "source_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/16_historical_response_research.ipynb",
+      "published_sha256": "57a5cf424016d3b24eb4ad99d4f7c2736b0b042c570f8d24e03efa38e4083822",
+      "source_sha256": "be27ca2339c80685109b7876dcf96d96b72054e7bc3e5b58078467ae0fc1987c",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/17_historical_response_ablation.ipynb",
+      "published_sha256": "06335fb26cbe13ce21bc1d94db26bf9da6ae03c5b7524d446cc68b488e59002b",
+      "source_sha256": "3863192055ea8090e8c96127ec5f5b5002317301b400491bf3dc82e93cb04e67",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "56aa3683517aeb3a7d0674c17c56d2d24a8bf235fd6515977d0501757931ac99",
+      "source_sha256": "56aa3683517aeb3a7d0674c17c56d2d24a8bf235fd6515977d0501757931ac99",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/FEATURE_DICTIONARY.csv",
+      "published_sha256": "1bd8b8a3752fdb3142c88ab94dfa2dcf106da3b8c78305af50ba8024af19c1c2",
+      "source_sha256": "1bd8b8a3752fdb3142c88ab94dfa2dcf106da3b8c78305af50ba8024af19c1c2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/RESEARCH_LEDGER.md",
+      "published_sha256": "2b89be47a2e222436b2da454679866321f67064b463014178a4847738632078f",
+      "source_sha256": "2b89be47a2e222436b2da454679866321f67064b463014178a4847738632078f",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/SOURCES.md",
+      "published_sha256": "9113a802cf788936d391416c7a92d8b2ab5265319ccb8753c0299975bdb3af26",
+      "source_sha256": "9113a802cf788936d391416c7a92d8b2ab5265319ccb8753c0299975bdb3af26",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/VALIDATION_SCOPE.md",
+      "published_sha256": "60138a96eb523303844d1f5d1bd1fc8705715670558fa37857f8746894fbacd3",
+      "source_sha256": "60138a96eb523303844d1f5d1bd1fc8705715670558fa37857f8746894fbacd3",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/history_features.py",
+      "published_sha256": "fa4f37ed7a5956e268020f38f67a51577a52292baaaf4e84b8942e2446306edb",
+      "source_sha256": "fa4f37ed7a5956e268020f38f67a51577a52292baaaf4e84b8942e2446306edb",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/history_study.py",
+      "published_sha256": "25fe2d69c8bbfb3349d59cb7940c361df376da169af5ed9e514791b87dc6c800",
+      "source_sha256": "25fe2d69c8bbfb3349d59cb7940c361df376da169af5ed9e514791b87dc6c800",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/parent_bridge.py",
+      "published_sha256": "096e39e2bb5d8bb49c6c841bea49172f5ab6d53083bae6f79e115fc35ef1521b",
+      "source_sha256": "096e39e2bb5d8bb49c6c841bea49172f5ab6d53083bae6f79e115fc35ef1521b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/parent_support.py",
+      "published_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "source_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/run_round.py",
+      "published_sha256": "05dfdcecc39247cf4d1a581920f12ebf9776b16dd4c799db0c29a2fd0c9ce655",
+      "source_sha256": "05dfdcecc39247cf4d1a581920f12ebf9776b16dd4c799db0c29a2fd0c9ce655",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/visuals.py",
+      "published_sha256": "ad2818f9fbd7df7600f81755a93a2251af8d95200b84f78c15ed3619529c2bba",
+      "source_sha256": "ad2818f9fbd7df7600f81755a93a2251af8d95200b84f78c15ed3619529c2bba",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/worker.py",
+      "published_sha256": "b221d31a29152bf4608fd1d5dfb7a93e6781d6cccb3d2b0e1c50b09a9abb51b7",
+      "source_sha256": "b221d31a29152bf4608fd1d5dfb7a93e6781d6cccb3d2b0e1c50b09a9abb51b7",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/tests/fixtures.py",
+      "published_sha256": "091651066b81fe3a843f6a56e7725ba1267c1fa66c3c5aaf858ec74becd9fbb4",
+      "source_sha256": "091651066b81fe3a843f6a56e7725ba1267c1fa66c3c5aaf858ec74becd9fbb4",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/tests/synthetic_workflow.py",
+      "published_sha256": "fa268d21a308fa72ddd05096b0e18f6907570e3f43c374a9f7d463fc66e05465",
+      "source_sha256": "fa268d21a308fa72ddd05096b0e18f6907570e3f43c374a9f7d463fc66e05465",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/tests/test_history.py",
+      "published_sha256": "1e587b6532c0447dd6e445915e060deb8d5e17bbf1bc30bc2919866c4302c4d7",
+      "source_sha256": "1e587b6532c0447dd6e445915e060deb8d5e17bbf1bc30bc2919866c4302c4d7",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/tests/test_workflow.py",
+      "published_sha256": "79c8848dad796d2e95b1146a403e731f070a16d6a5ae0d05e8f9b9435cf22b56",
+      "source_sha256": "79c8848dad796d2e95b1146a403e731f070a16d6a5ae0d05e8f9b9435cf22b56",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round7/tests/model/test_tree.py",
+      "published_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "source_sha256": "a1b85c2d286cf18b2ef1ddf5b21dcec2787ebb4fa0f653057cc852336d0508ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/18_learned_relationship_research.ipynb",
+      "published_sha256": "f0d29bd1e466108a03cbbb53d6d242764c76319d4260303319f774e3464559e1",
+      "source_sha256": "9b4464f61ebbb6f129a262c29bc00f6b89d034701fd1a04a113a5c0c787ffe9f",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/19_learned_relationship_ablation.ipynb",
+      "published_sha256": "506c1563aef6079874ce6ece595195fc931bd2b57d5364396f3b38626fb8b4fa",
+      "source_sha256": "60cb7d09d325bcc0d49d652d09e6261ecec9380b81ab5a58868a85ce258aeb14",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "d34fe978c6fd79a11d6f919be94db8786bd1454e916fe482d0648401948a6e4c",
+      "source_sha256": "d34fe978c6fd79a11d6f919be94db8786bd1454e916fe482d0648401948a6e4c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/FEATURE_DICTIONARY.csv",
+      "published_sha256": "2c29cd634f74a59bc108bb21e68ef9d6356b8a982ca31fea6d6c8ae7933c6cde",
+      "source_sha256": "2c29cd634f74a59bc108bb21e68ef9d6356b8a982ca31fea6d6c8ae7933c6cde",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/RESEARCH_LEDGER.md",
+      "published_sha256": "cc1f6174b54ddef8dbd0a08fcef113cee27c0b9984177636920b71ec0a3ddfd9",
+      "source_sha256": "cc1f6174b54ddef8dbd0a08fcef113cee27c0b9984177636920b71ec0a3ddfd9",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/SOURCES.md",
+      "published_sha256": "e3954f8680cdf79d7cd080aded68851c93a2d39c69139f431d6f641d765deed4",
+      "source_sha256": "e3954f8680cdf79d7cd080aded68851c93a2d39c69139f431d6f641d765deed4",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/VALIDATION_SCOPE.md",
+      "published_sha256": "ac27917b1c4eb5d35d59fedf7ea5a43f9817b67b7c6a12f939fb10fa96f70d58",
+      "source_sha256": "ac27917b1c4eb5d35d59fedf7ea5a43f9817b67b7c6a12f939fb10fa96f70d58",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/data_worker.py",
+      "published_sha256": "561a25e42f42c7468efaa26ed410bd08fdaec9598a4a890f63dee8646f0585a2",
+      "source_sha256": "561a25e42f42c7468efaa26ed410bd08fdaec9598a4a890f63dee8646f0585a2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/neural_study.py",
+      "published_sha256": "ffc6c943dbb56b076cf5d85cd52fd4d3f9dcaf6ea8ca2da923b3d4a2db019b41",
+      "source_sha256": "ffc6c943dbb56b076cf5d85cd52fd4d3f9dcaf6ea8ca2da923b3d4a2db019b41",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/neural_worker.py",
+      "published_sha256": "0d783273487f4daf09b4d124e6676184520a07a9e2695327f42324970927fc53",
+      "source_sha256": "0d783273487f4daf09b4d124e6676184520a07a9e2695327f42324970927fc53",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/origin_features.py",
+      "published_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "source_sha256": "5f436992361d3c1dd2ff752a5a594f5637730363935cbd14e7ec379e116b579b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/parent_bridge.py",
+      "published_sha256": "096e39e2bb5d8bb49c6c841bea49172f5ab6d53083bae6f79e115fc35ef1521b",
+      "source_sha256": "096e39e2bb5d8bb49c6c841bea49172f5ab6d53083bae6f79e115fc35ef1521b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/parent_support.py",
+      "published_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "source_sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/run_round.py",
+      "published_sha256": "b23c3e81f44f703a5a981d1531831f8994b2ddde82fe8d6f840a91c2bf327d1d",
+      "source_sha256": "b23c3e81f44f703a5a981d1531831f8994b2ddde82fe8d6f840a91c2bf327d1d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/sequence_data.py",
+      "published_sha256": "d956306a07d595a6e6f5ab8ed89f922d58869fee9178236afe9aeed81a3d1c38",
+      "source_sha256": "d956306a07d595a6e6f5ab8ed89f922d58869fee9178236afe9aeed81a3d1c38",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/sequence_features.py",
+      "published_sha256": "5f3e8aa2b0d4f28d9cdcbdf19435795eba569a60939aab3fc86956e66d92823f",
+      "source_sha256": "5f3e8aa2b0d4f28d9cdcbdf19435795eba569a60939aab3fc86956e66d92823f",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/sequence_model.py",
+      "published_sha256": "62f4634d67933629fee15e3e91c3e2669b1677711b3c1ed0f29f3c0859deaa30",
+      "source_sha256": "62f4634d67933629fee15e3e91c3e2669b1677711b3c1ed0f29f3c0859deaa30",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/visuals.py",
+      "published_sha256": "ad36bceef9ab07158544f312cd29ce410f594b46a85cf3234ab8fab0ce68b985",
+      "source_sha256": "ad36bceef9ab07158544f312cd29ce410f594b46a85cf3234ab8fab0ce68b985",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/tests/fixtures.py",
+      "published_sha256": "67d773609f55f7021980fff8cf240efd77403261b44a1732df780c25ea3372e5",
+      "source_sha256": "67d773609f55f7021980fff8cf240efd77403261b44a1732df780c25ea3372e5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/tests/integration_check.py",
+      "published_sha256": "671d3a73ed234dfad2fe35e9e986146cec08212f51a688650ecbc73584f0e3fe",
+      "source_sha256": "671d3a73ed234dfad2fe35e9e986146cec08212f51a688650ecbc73584f0e3fe",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/tests/replay_check.py",
+      "published_sha256": "757e4127af99d1ea6b7341bb6d9a38dfa671a922b46a189322d778007fe8b2d6",
+      "source_sha256": "757e4127af99d1ea6b7341bb6d9a38dfa671a922b46a189322d778007fe8b2d6",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/tests/base/test_features.py",
+      "published_sha256": "87ace7150572f4ee29e1e0cb91d33f26ae874e826d0475407af4f0dead684dc7",
+      "source_sha256": "87ace7150572f4ee29e1e0cb91d33f26ae874e826d0475407af4f0dead684dc7",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/tests/base/test_workflow.py",
+      "published_sha256": "a56ebf7ddfe0300ef1cf1b4aa0fee5c65ebfb933118825b173f889931bb3c077",
+      "source_sha256": "a56ebf7ddfe0300ef1cf1b4aa0fee5c65ebfb933118825b173f889931bb3c077",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round8/tests/model/test_model.py",
+      "published_sha256": "3b07e6a452cb024d3e84a9718523be2fb67d87c260ea016962de6c28aff3afee",
+      "source_sha256": "3b07e6a452cb024d3e84a9718523be2fb67d87c260ea016962de6c28aff3afee",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/20_relationship_evidence_and_geometry.ipynb",
+      "published_sha256": "7667cb0cc5058a6ead5e4d66be8563b1494dabe4ad40ba7308eea05cc0fc24fa",
+      "source_sha256": "2ce93c11cd436ca7a04b764ae2f987489179568c243dad92def98b740705ed57",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/21_relationship_signal_audit.ipynb",
+      "published_sha256": "2ffe6fbbef4026c744a910517c394448e8c90dc635d984527058196b7558efd3",
+      "source_sha256": "cbf82455f3da2f450b7f8309316beff00aba47de5d2989026e5c84180e574735",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "88b1c64fdf1ca11e742a04a676e98cdcfb1b816092520c6bc78d9822cd910173",
+      "source_sha256": "88b1c64fdf1ca11e742a04a676e98cdcfb1b816092520c6bc78d9822cd910173",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/FEATURE_DICTIONARY.csv",
+      "published_sha256": "ee7588fa7d99fdb2f201e91aa4f84e7e348fba706e75c8a0fafc721858479e5b",
+      "source_sha256": "ee7588fa7d99fdb2f201e91aa4f84e7e348fba706e75c8a0fafc721858479e5b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/RESEARCH_LEDGER.md",
+      "published_sha256": "e5c3f50732d314f0cc7427611e012060dc56cd144c470198408067c997f30025",
+      "source_sha256": "e5c3f50732d314f0cc7427611e012060dc56cd144c470198408067c997f30025",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/SOURCES.md",
+      "published_sha256": "96b32be198846fb410b545897cc9770647fe8b79e9296b9ddab3a241ea3f8412",
+      "source_sha256": "96b32be198846fb410b545897cc9770647fe8b79e9296b9ddab3a241ea3f8412",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/VALIDATION_SCOPE.md",
+      "published_sha256": "a19b73cf0ca5feb5490053c66b84e12d520f9d329475b26277f117e28162ae47",
+      "source_sha256": "a19b73cf0ca5feb5490053c66b84e12d520f9d329475b26277f117e28162ae47",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/audit_io.py",
+      "published_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "source_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/audit_worker.py",
+      "published_sha256": "ab1d9ac9682f1872f57577d5a29760dc28700e80ba53ce8827b17f6586f58caf",
+      "source_sha256": "ab1d9ac9682f1872f57577d5a29760dc28700e80ba53ce8827b17f6586f58caf",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/goal_frame.py",
+      "published_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "source_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/parent_audit.py",
+      "published_sha256": "53b900b0a9ee27676f8290f76a46b0d873e001002b4487efe27649cd864a91dc",
+      "source_sha256": "53b900b0a9ee27676f8290f76a46b0d873e001002b4487efe27649cd864a91dc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/run_round.py",
+      "published_sha256": "76ca6a9935f4c95e214bf6d88927bc699761d06e53cc3eb7f7837051e31cc785",
+      "source_sha256": "76ca6a9935f4c95e214bf6d88927bc699761d06e53cc3eb7f7837051e31cc785",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/signal_probe.py",
+      "published_sha256": "591de7b1e04d8596bf28a8922841db70f86ae3d202fa60204b021a21ce01dd28",
+      "source_sha256": "591de7b1e04d8596bf28a8922841db70f86ae3d202fa60204b021a21ce01dd28",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/visuals.py",
+      "published_sha256": "1c0e4ba2dbe395285c10311e7fcde8a472dfeb0316ee017f3654ac0926e24885",
+      "source_sha256": "1c0e4ba2dbe395285c10311e7fcde8a472dfeb0316ee017f3654ac0926e24885",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/tests/fixtures.py",
+      "published_sha256": "2542c3fa3608f7ddb4a20a84f8d6a8e15c24499f963c9af0676d55aead2963a5",
+      "source_sha256": "2542c3fa3608f7ddb4a20a84f8d6a8e15c24499f963c9af0676d55aead2963a5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/tests/integration_check.py",
+      "published_sha256": "57c3813c0a7e1a2a75e0304fdedb9ddf9e93978f4b8a8cccc8143d161ff28ff2",
+      "source_sha256": "57c3813c0a7e1a2a75e0304fdedb9ddf9e93978f4b8a8cccc8143d161ff28ff2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/tests/base/test_geometry.py",
+      "published_sha256": "a42ca6dd71b0627f38c5294971ef569e61012514f9205c10b207b13a71789820",
+      "source_sha256": "a42ca6dd71b0627f38c5294971ef569e61012514f9205c10b207b13a71789820",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/tests/base/test_io.py",
+      "published_sha256": "d2855560ad88f8bd7ff86b8cfa9a4c441ddeca6e6f938e750649859bfd1d1695",
+      "source_sha256": "d2855560ad88f8bd7ff86b8cfa9a4c441ddeca6e6f938e750649859bfd1d1695",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round9/tests/model/test_signal.py",
+      "published_sha256": "952bef1fb5de4d0d7f1b1cd6e06a7a656f223dec7cac6e739173eea2aee71676",
+      "source_sha256": "952bef1fb5de4d0d7f1b1cd6e06a7a656f223dec7cac6e739173eea2aee71676",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/22_goal_relationship_research.ipynb",
+      "published_sha256": "741dc707dfc49acf7d48311a38109be3fda5e44faa66fbc3abb9986e5d6dc726",
+      "source_sha256": "29605302b5db0d07a2a62444ecc148ec436fb1a3e227b1dafbaee03433c3687b",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/23_grouped_goal_ablation.ipynb",
+      "published_sha256": "e61e4eee08cec1096c137022dd273c94d9db7125e38cf63f794085252d312a87",
+      "source_sha256": "4f46b9942cee1ca277cf3bd08ec709747dfc87b12f766cc94b0b4aece49e5781",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "4dd3448c18a188d22917e15e373afc6fa3662b68c379fe4493e24803b4ab4a1d",
+      "source_sha256": "4dd3448c18a188d22917e15e373afc6fa3662b68c379fe4493e24803b4ab4a1d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/FEATURE_DICTIONARY.csv",
+      "published_sha256": "291133dae23a925d9202ae58e4796f8fd25aae5ca14c514b9c93a586c561a4e2",
+      "source_sha256": "291133dae23a925d9202ae58e4796f8fd25aae5ca14c514b9c93a586c561a4e2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/RESEARCH_LEDGER.md",
+      "published_sha256": "a3ad2f86e6a4f2e9e193f935b32cfaaba5973de425def5955fddcf8fcbc24ccd",
+      "source_sha256": "a3ad2f86e6a4f2e9e193f935b32cfaaba5973de425def5955fddcf8fcbc24ccd",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/SOURCES.md",
+      "published_sha256": "6850023bc59712b197a4025ecc386432a27f39b67ab30ea80c4b92e0988c1763",
+      "source_sha256": "6850023bc59712b197a4025ecc386432a27f39b67ab30ea80c4b92e0988c1763",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/VALIDATION_SCOPE.md",
+      "published_sha256": "3047344c651c82f25396021ca900e486221150dab7d6446f661f1b39a4316538",
+      "source_sha256": "3047344c651c82f25396021ca900e486221150dab7d6446f661f1b39a4316538",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/audit_io.py",
+      "published_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "source_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/checkpoints.py",
+      "published_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "source_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/data_io.py",
+      "published_sha256": "34ef54083c70502eda150879502b138bb8d57fc5e84fb5a3efc1189629c79b72",
+      "source_sha256": "34ef54083c70502eda150879502b138bb8d57fc5e84fb5a3efc1189629c79b72",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/goal_frame.py",
+      "published_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "source_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/grouped_features.py",
+      "published_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "source_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/grouped_model.py",
+      "published_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "source_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/parent_audit.py",
+      "published_sha256": "53b900b0a9ee27676f8290f76a46b0d873e001002b4487efe27649cd864a91dc",
+      "source_sha256": "53b900b0a9ee27676f8290f76a46b0d873e001002b4487efe27649cd864a91dc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/run_round.py",
+      "published_sha256": "1b308a5f13dc11ad6767d68aa95640aa6e7c4e0f7afb52c293c7246cc2c1c5b6",
+      "source_sha256": "1b308a5f13dc11ad6767d68aa95640aa6e7c4e0f7afb52c293c7246cc2c1c5b6",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/study.py",
+      "published_sha256": "ffb7a7502b8c89a1047c9791dbe8abe752605b35ec124f9fcd30224e2352fd62",
+      "source_sha256": "ffb7a7502b8c89a1047c9791dbe8abe752605b35ec124f9fcd30224e2352fd62",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/visuals.py",
+      "published_sha256": "792049883ed8c9b5d65c5bcbe721013714640a5128096da61c7e87a5f5af4ea8",
+      "source_sha256": "792049883ed8c9b5d65c5bcbe721013714640a5128096da61c7e87a5f5af4ea8",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/worker.py",
+      "published_sha256": "af85f07d1df63ed9256c9df3e70bceb9bb6b409398f10946acd45c85a66a5e44",
+      "source_sha256": "af85f07d1df63ed9256c9df3e70bceb9bb6b409398f10946acd45c85a66a5e44",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/fixtures.py",
+      "published_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "source_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/integration_check.py",
+      "published_sha256": "033fb321a3e8cc2cf1660398a5c3d6070909fab013070718a95a02d306bb0e77",
+      "source_sha256": "033fb321a3e8cc2cf1660398a5c3d6070909fab013070718a95a02d306bb0e77",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/base/test_features.py",
+      "published_sha256": "b342944ffb58f07f69e1a4881b8b8a3e3f7d5d6644495dcf5b3f2f79953a4718",
+      "source_sha256": "b342944ffb58f07f69e1a4881b8b8a3e3f7d5d6644495dcf5b3f2f79953a4718",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/base/test_geometry.py",
+      "published_sha256": "a42ca6dd71b0627f38c5294971ef569e61012514f9205c10b207b13a71789820",
+      "source_sha256": "a42ca6dd71b0627f38c5294971ef569e61012514f9205c10b207b13a71789820",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/base/test_io.py",
+      "published_sha256": "57beeb86c8c027d0b5724189d49733335358f545b27a6aa6e2498f119fa3c2e2",
+      "source_sha256": "57beeb86c8c027d0b5724189d49733335358f545b27a6aa6e2498f119fa3c2e2",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/base/test_launcher.py",
+      "published_sha256": "10f09a5e467b199d3e35769e696d73e026758136954d5c884ac83e2f95db3a8c",
+      "source_sha256": "10f09a5e467b199d3e35769e696d73e026758136954d5c884ac83e2f95db3a8c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round10/tests/model/test_model.py",
+      "published_sha256": "be47ed75831c71ebcd02ea60ab674da6c563260a2311ecf1a064b36596d9a795",
+      "source_sha256": "be47ed75831c71ebcd02ea60ab674da6c563260a2311ecf1a064b36596d9a795",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/24_training_coverage_and_features.ipynb",
+      "published_sha256": "c7855bf00fd7f7a5e45077e26684e4468d340cf57fe1c2168c6825c82377afa6",
+      "source_sha256": "2c9acb77b0add2b44b352ef093989575d4324dd5da2737c2f2afc2c9a5a891af",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/25_frozen_training_audit.ipynb",
+      "published_sha256": "1341cff0de8d987d3a4ab18d79f0ed3321cd164d6e977e85f4037923fce06520",
+      "source_sha256": "00148ad9a57c0f386915a368987ef75ff506542873750b50a2243e4eee6ec632",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "b587fb86e12e8a9c3b9e5ccc631fde08cbac04c110a68e5970a59c0565695fda",
+      "source_sha256": "b587fb86e12e8a9c3b9e5ccc631fde08cbac04c110a68e5970a59c0565695fda",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/FEATURE_DICTIONARY.csv",
+      "published_sha256": "d5c56f90aca05734ee126883b319723952be687a3e36a0b875acfc3058945ece",
+      "source_sha256": "d5c56f90aca05734ee126883b319723952be687a3e36a0b875acfc3058945ece",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/RESEARCH_LEDGER.md",
+      "published_sha256": "89a0196508a427bd8fefac9433478d15ea7368053eccaa53a9071e70cd2c3373",
+      "source_sha256": "89a0196508a427bd8fefac9433478d15ea7368053eccaa53a9071e70cd2c3373",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/SOURCES.md",
+      "published_sha256": "58b3b08937aa88f41d447250acadb71da1bc06264ae4e086a56dbe7045670794",
+      "source_sha256": "58b3b08937aa88f41d447250acadb71da1bc06264ae4e086a56dbe7045670794",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/VALIDATION_SCOPE.md",
+      "published_sha256": "5d0fcb5c3948aad4d50aeef999c2d4da8a95bd2b20b446dc70ec3357da6357ab",
+      "source_sha256": "5d0fcb5c3948aad4d50aeef999c2d4da8a95bd2b20b446dc70ec3357da6357ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/audit_io.py",
+      "published_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "source_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/core.py",
+      "published_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "source_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/diagnostics.py",
+      "published_sha256": "929da67263234a805eea08f0209a028cd5c80044b77e084baf0f6bd57d01f834",
+      "source_sha256": "929da67263234a805eea08f0209a028cd5c80044b77e084baf0f6bd57d01f834",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/goal_frame.py",
+      "published_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "source_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/grouped_features.py",
+      "published_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "source_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/grouped_model.py",
+      "published_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "source_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/new_features.py",
+      "published_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "source_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/run_round.py",
+      "published_sha256": "d7a567c95def31a54d176fa790fb8ada77addcd8399cec963bb0d5fa272d92c5",
+      "source_sha256": "d7a567c95def31a54d176fa790fb8ada77addcd8399cec963bb0d5fa272d92c5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/visuals.py",
+      "published_sha256": "02fa1ed299effaf8ab1f4d7c106411f9cbc7424056df2e64b061216268617204",
+      "source_sha256": "02fa1ed299effaf8ab1f4d7c106411f9cbc7424056df2e64b061216268617204",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/worker.py",
+      "published_sha256": "d3560c17d8a6827d2ab1144637b4160f2a7403ac626b1c07b4b4e5b652ad2ba7",
+      "source_sha256": "d3560c17d8a6827d2ab1144637b4160f2a7403ac626b1c07b4b4e5b652ad2ba7",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/tests/base/test_features.py",
+      "published_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "source_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/tests/base/test_workflow.py",
+      "published_sha256": "743f467f850593de211d5a3190e961ce5f76e8c6c5f6a8459795cc98b7288b7c",
+      "source_sha256": "743f467f850593de211d5a3190e961ce5f76e8c6c5f6a8459795cc98b7288b7c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_round11/tests/model/test_diagnostics.py",
+      "published_sha256": "c7798d795a2734b9222da81618f39eea234d8a2eca1a6997fbbc394ca8e58a6d",
+      "source_sha256": "c7798d795a2734b9222da81618f39eea234d8a2eca1a6997fbbc394ca8e58a6d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/26_receiver_history_research.ipynb",
+      "published_sha256": "40ea521e971b71c6722e6babf12eee6552745477ecac570ad364c23c2c024c42",
+      "source_sha256": "f4e511e81d7fecbc2a39c40099fc4abfacc9357f3db3c7174fbc6d302e6e8a7b",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/27_receiver_history_ablation.ipynb",
+      "published_sha256": "565dab893dd6f099cf67944c022da116749d25e9eab04e6286ab7928bde045e7",
+      "source_sha256": "c40cdc5d01973d9ddffc6757fd49902ce9961f5f9a45b75b1aec638e3bc2416d",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/28_motion_dynamics_research.ipynb",
+      "published_sha256": "25b3da918340f749ab27ea0e9dca9ee888120fec13d622328570989acbfcc621",
+      "source_sha256": "3ff9f39a614945ae205d98ff20c7868efaf40ddf654b651007d0fee529423156",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/29_motion_dynamics_ablation.ipynb",
+      "published_sha256": "e60fe88620f27490892672e4c3d447ebd16b1d31c8025c42ef8f290964bc92e0",
+      "source_sha256": "4ee8c0dc63d6ad8ca360479d232773022f608d5c1202965747905f797d564ed4",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "ebf4d111d9b11c3dede3942f7f91761006ef69468a3f1d1dfdcc94899a61ca5f",
+      "source_sha256": "ebf4d111d9b11c3dede3942f7f91761006ef69468a3f1d1dfdcc94899a61ca5f",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/FEATURE_DICTIONARY.csv",
+      "published_sha256": "4c21c603017d994fb6e82b600ee3215f0ad0f6b229665f83f82cb4153b503b1a",
+      "source_sha256": "4c21c603017d994fb6e82b600ee3215f0ad0f6b229665f83f82cb4153b503b1a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/RESEARCH_LEDGER.md",
+      "published_sha256": "82b219b7125f7f8447a94eabc0b2c74e0f38ae2014835f118ee3959eb150a90b",
+      "source_sha256": "82b219b7125f7f8447a94eabc0b2c74e0f38ae2014835f118ee3959eb150a90b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/SOURCES.md",
+      "published_sha256": "3af70d7765e3aca0d64a5466c4580ea89132dd7905d099a46424e2df49376f7c",
+      "source_sha256": "3af70d7765e3aca0d64a5466c4580ea89132dd7905d099a46424e2df49376f7c",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/VALIDATION_SCOPE.md",
+      "published_sha256": "f733e3d5f803061abdb5c02ac6f6fbc86ff58875de06bf8e16a041afe6f7c11b",
+      "source_sha256": "f733e3d5f803061abdb5c02ac6f6fbc86ff58875de06bf8e16a041afe6f7c11b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/audit_io.py",
+      "published_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "source_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/bridge.py",
+      "published_sha256": "30c1576d2d56bcd5b85bf6b90419daaf2dd9396f5b854649de564dfa46f53efa",
+      "source_sha256": "30c1576d2d56bcd5b85bf6b90419daaf2dd9396f5b854649de564dfa46f53efa",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/checkpoints.py",
+      "published_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "source_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/families.py",
+      "published_sha256": "85da9baaf061dc51b2a9de9b7b9d9d841aeca6d191d18dab6d491e443b1048dd",
+      "source_sha256": "85da9baaf061dc51b2a9de9b7b9d9d841aeca6d191d18dab6d491e443b1048dd",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/frozen_model.py",
+      "published_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "source_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/goal_frame.py",
+      "published_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "source_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/grouped_features.py",
+      "published_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "source_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/model.py",
+      "published_sha256": "cdf0ead09043880e56a5076dae5da29d6426c1a3e75f706d55496e978e9e19da",
+      "source_sha256": "cdf0ead09043880e56a5076dae5da29d6426c1a3e75f706d55496e978e9e19da",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/new_features.py",
+      "published_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "source_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/parent_core.py",
+      "published_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "source_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/run_round.py",
+      "published_sha256": "39a8c1a6f46e54b1dee896aba3f42d8411d66fa9798293c27116868587d58349",
+      "source_sha256": "39a8c1a6f46e54b1dee896aba3f42d8411d66fa9798293c27116868587d58349",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/study.py",
+      "published_sha256": "b31845c67be0ddb934a8ab8c76ee3b8f11d18d23833cd8927d52a58f6698be9a",
+      "source_sha256": "b31845c67be0ddb934a8ab8c76ee3b8f11d18d23833cd8927d52a58f6698be9a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/visuals.py",
+      "published_sha256": "7a38c3a6383dfb396f9cec8f098f15a638f2aa573b15aff4f9a033d6ee929212",
+      "source_sha256": "7a38c3a6383dfb396f9cec8f098f15a638f2aa573b15aff4f9a033d6ee929212",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/worker.py",
+      "published_sha256": "610ad41a39605bc2662f775e5a63bbc97736551eda242313f52001614e142010",
+      "source_sha256": "610ad41a39605bc2662f775e5a63bbc97736551eda242313f52001614e142010",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/tests/fixtures.py",
+      "published_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "source_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/tests/integration_check.py",
+      "published_sha256": "3652a5c7f6d70ad8792067366919726cac46248c833f2c9a324a99c0234248dc",
+      "source_sha256": "3652a5c7f6d70ad8792067366919726cac46248c833f2c9a324a99c0234248dc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/tests/base/test_audited_core.py",
+      "published_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "source_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/tests/base/test_families.py",
+      "published_sha256": "613ef629590ba68606756b63af3e145333f73db411d0bddf3822dcee42a00c48",
+      "source_sha256": "613ef629590ba68606756b63af3e145333f73db411d0bddf3822dcee42a00c48",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/tests/base/test_workflow.py",
+      "published_sha256": "6f33220e2ac26b304ba26e9325436cbb559b1963097acbe46399498fbc05cf9a",
+      "source_sha256": "6f33220e2ac26b304ba26e9325436cbb559b1963097acbe46399498fbc05cf9a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds12_13/tests/model/test_models.py",
+      "published_sha256": "dda94439ab83665206e1e2e2a0be80c0205ba5f8c0f06cfec3168b8f37295703",
+      "source_sha256": "dda94439ab83665206e1e2e2a0be80c0205ba5f8c0f06cfec3168b8f37295703",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/30_goal_motion_research.ipynb",
+      "published_sha256": "b468f3c61c601f806aedf0460c94d2acfa87f93eed04e5efff74d1c885b1c03f",
+      "source_sha256": "3db6eb442d013882978550dd8df05f85986d2841162fbd22e08dbcb0418cd58d",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/31_goal_motion_ablation.ipynb",
+      "published_sha256": "fda87743123452c0b897503cf2ae8ca364d2abca1317ee6e9a15ccc403b2a25b",
+      "source_sha256": "3d274c48d526263d6dd094b03fbbeb40a4bedacc10f7404d4ac31e8d69543a5c",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/32_receiver_response_research.ipynb",
+      "published_sha256": "b1910c9ff899e9f47858e16cd3006be99da1b4142fbd17891ceb596659625bb1",
+      "source_sha256": "7836a2751e08a03bf44be6ede114d63d13532633a51248f85f62b4d33f0df1df",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/33_receiver_response_ablation.ipynb",
+      "published_sha256": "bc5ba530c299c989431d26d4dc8aec4bae4eab2ca904f25e83b226552b043485",
+      "source_sha256": "50df42b130a92f496607b89e33ace879b69824ae07eefe9a79513f9136629bc4",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "d5810355d2ff15ad2c9333dc21465c607892928712ec566a4fa6c0d6d27bb5d7",
+      "source_sha256": "d5810355d2ff15ad2c9333dc21465c607892928712ec566a4fa6c0d6d27bb5d7",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/FEATURE_DICTIONARY.csv",
+      "published_sha256": "68630922a3bc56682fef977af3db3895f2a83ba5c7042e4171247253393331f9",
+      "source_sha256": "68630922a3bc56682fef977af3db3895f2a83ba5c7042e4171247253393331f9",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/RESEARCH_LEDGER.md",
+      "published_sha256": "12c3bfa0ed5362062debdbbbb853c5845714721f005a67bb43c63d4d685a3bc9",
+      "source_sha256": "12c3bfa0ed5362062debdbbbb853c5845714721f005a67bb43c63d4d685a3bc9",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/SOURCES.md",
+      "published_sha256": "bd95d7b8ab0c6b9019a7e6129256e08c06d8a967ba2f507a673c1651cf3fe97e",
+      "source_sha256": "bd95d7b8ab0c6b9019a7e6129256e08c06d8a967ba2f507a673c1651cf3fe97e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/VALIDATION_SCOPE.md",
+      "published_sha256": "aece347e2b89f353cca9961ab50c92ac0e4de8edad72e699d88edd07053ecc33",
+      "source_sha256": "aece347e2b89f353cca9961ab50c92ac0e4de8edad72e699d88edd07053ecc33",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/audit_io.py",
+      "published_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "source_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/bridge.py",
+      "published_sha256": "143f2794fbb585d21781b378fdfcc9a6115a858caa25194190a4c6fe840eac77",
+      "source_sha256": "143f2794fbb585d21781b378fdfcc9a6115a858caa25194190a4c6fe840eac77",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/checkpoints.py",
+      "published_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "source_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/families.py",
+      "published_sha256": "4cf118330bee4e9b2a89f1db76551f26a5d827ec2948d43553c706751a15b061",
+      "source_sha256": "4cf118330bee4e9b2a89f1db76551f26a5d827ec2948d43553c706751a15b061",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/frozen_model.py",
+      "published_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "source_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/goal_frame.py",
+      "published_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "source_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/grouped_features.py",
+      "published_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "source_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/label_audit.py",
+      "published_sha256": "8f11ae8758bd5bee443c8f75c1c2245d6f146b932b3f850a28dbd51892e78cc9",
+      "source_sha256": "8f11ae8758bd5bee443c8f75c1c2245d6f146b932b3f850a28dbd51892e78cc9",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/model.py",
+      "published_sha256": "3c4943e3f4b8f51e99b523e9d0117b6358ef2215b633393132b88a9428ccf707",
+      "source_sha256": "3c4943e3f4b8f51e99b523e9d0117b6358ef2215b633393132b88a9428ccf707",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/motion_reference.py",
+      "published_sha256": "85da9baaf061dc51b2a9de9b7b9d9d841aeca6d191d18dab6d491e443b1048dd",
+      "source_sha256": "85da9baaf061dc51b2a9de9b7b9d9d841aeca6d191d18dab6d491e443b1048dd",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/new_features.py",
+      "published_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "source_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/parent_core.py",
+      "published_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "source_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/readiness.py",
+      "published_sha256": "082145764718f5fa2f749e7e8768b323ee6a496ff22d0596efbdf4a467d6457b",
+      "source_sha256": "082145764718f5fa2f749e7e8768b323ee6a496ff22d0596efbdf4a467d6457b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/run_round.py",
+      "published_sha256": "bb558ef14e836a19cf7b31cc730cce50d3c9c601119e1dd94ebaf271fe555911",
+      "source_sha256": "bb558ef14e836a19cf7b31cc730cce50d3c9c601119e1dd94ebaf271fe555911",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/run_tests.py",
+      "published_sha256": "f31ab3e8039167583bb7f841f202fb9d9b4295badc06dd6ee6b8673c29caa5d3",
+      "source_sha256": "f31ab3e8039167583bb7f841f202fb9d9b4295badc06dd6ee6b8673c29caa5d3",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/study.py",
+      "published_sha256": "e09a6e1aa134373d8649dea81097be5ed3f7a71d889a4e171899c972fd0dfce1",
+      "source_sha256": "e09a6e1aa134373d8649dea81097be5ed3f7a71d889a4e171899c972fd0dfce1",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/visuals.py",
+      "published_sha256": "4221f173d40fbd11f8121380893238f83cf6af61fd58f1e7395250e69c500a03",
+      "source_sha256": "4221f173d40fbd11f8121380893238f83cf6af61fd58f1e7395250e69c500a03",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/worker.py",
+      "published_sha256": "594c6b5dd9803e566e2daed8492fa333e06548cd2db52f5d9fcef9ed28774618",
+      "source_sha256": "594c6b5dd9803e566e2daed8492fa333e06548cd2db52f5d9fcef9ed28774618",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/tests/fixtures.py",
+      "published_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "source_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/tests/base/test_audited_core.py",
+      "published_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "source_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/tests/base/test_families.py",
+      "published_sha256": "4295061c975de48f1d9471223e14a9d0d0bf9c25a12dab95ec9a1fc911c3d57e",
+      "source_sha256": "4295061c975de48f1d9471223e14a9d0d0bf9c25a12dab95ec9a1fc911c3d57e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/tests/base/test_readiness.py",
+      "published_sha256": "aa2ad93445cb9aa989f67a4c7889bd618318a11f4061ea3732795b47cd738296",
+      "source_sha256": "aa2ad93445cb9aa989f67a4c7889bd618318a11f4061ea3732795b47cd738296",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds14_15/tests/model/test_models.py",
+      "published_sha256": "f1f91820b5e08a6162b053b9eabc9014fba270a6330ece08bb36d237e37f63d9",
+      "source_sha256": "f1f91820b5e08a6162b053b9eabc9014fba270a6330ece08bb36d237e37f63d9",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/34_route_shape_research.ipynb",
+      "published_sha256": "715f721a49680e954c339372faee5fcac4f2279800ef86d19d8d5934c3c5806a",
+      "source_sha256": "fddbe8cb821d02e6bea8d026f621d29ad22de7881637f0b195638a0e26a074e3",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/35_route_shape_ablation.ipynb",
+      "published_sha256": "07e7ee5420478f626a0b8cd0802481407812af48e7e9fe5b4d2b9593be31b451",
+      "source_sha256": "5b6332bb577f67589b925638a9707e5f4b99f8cefc085cdad6c6e4f4fd92e283",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/36_opponent_approach_research.ipynb",
+      "published_sha256": "4ee570d6f9dee377356c23f245e02c075055cf8f6942c7dfcdd349146a7add3e",
+      "source_sha256": "087a720a276b4e98029400428af64c4a3f1a3991caa8ab409b64d4944ac48f1e",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/37_opponent_approach_ablation.ipynb",
+      "published_sha256": "e0a25941b48545ffbca47e2a74959f25dcfe444b2929ba15d7819b509609a1f1",
+      "source_sha256": "793b4829a2c7477edb00bfbadb689d09b4f7d713145b21d6c4f5e71738c9522f",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/EXPERIMENT_PROTOCOL.md",
+      "published_sha256": "d9b2342ea62b3199c389ee12a1b29e870e34b1330270bfa665e8a53d018fe328",
+      "source_sha256": "d9b2342ea62b3199c389ee12a1b29e870e34b1330270bfa665e8a53d018fe328",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/FEATURE_DICTIONARY.csv",
+      "published_sha256": "88fce1427614637059b9543856153371be863c6df5926a82b9c48a8de8e2b97d",
+      "source_sha256": "88fce1427614637059b9543856153371be863c6df5926a82b9c48a8de8e2b97d",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/RESEARCH_LEDGER.md",
+      "published_sha256": "7dc4bbf9a5ef30ef0eb36805e958c664580b5e9292bd40d559ecd8983206faa7",
+      "source_sha256": "7dc4bbf9a5ef30ef0eb36805e958c664580b5e9292bd40d559ecd8983206faa7",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/SOURCES.md",
+      "published_sha256": "c09a7014a03196159bff335770caea3df3598199fef959c24c9e430b961b7d3a",
+      "source_sha256": "c09a7014a03196159bff335770caea3df3598199fef959c24c9e430b961b7d3a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/VALIDATION_SCOPE.md",
+      "published_sha256": "26e2794c3313bd83fbe4d536e9d893fb95ee201a7004bab8bc1de99439de2016",
+      "source_sha256": "26e2794c3313bd83fbe4d536e9d893fb95ee201a7004bab8bc1de99439de2016",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/audit_io.py",
+      "published_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "source_sha256": "187f073d1d5b1d2933ffb988b044a299d7a41d88be73d04a6b0b8118f841864b",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/bridge.py",
+      "published_sha256": "9cc2a969810db33e128d58ab366f61679bb382a72b09a44ec68820dc2555d90e",
+      "source_sha256": "9cc2a969810db33e128d58ab366f61679bb382a72b09a44ec68820dc2555d90e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/checkpoints.py",
+      "published_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "source_sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/families.py",
+      "published_sha256": "15bf260c2cebf134a3a3d765a090b93ab00ea8750b24c56eeb138252c3096712",
+      "source_sha256": "15bf260c2cebf134a3a3d765a090b93ab00ea8750b24c56eeb138252c3096712",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/frozen_model.py",
+      "published_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "source_sha256": "de93287df1bee648575169bba58a5b9de48df9dd27d4c3c94d48752201c57ae5",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/goal_frame.py",
+      "published_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "source_sha256": "0fcdb64bb6ff8aaa46bf40a0dcf971a6e19d5b77d6b715cc712c2473e1d1d41a",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/grouped_features.py",
+      "published_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "source_sha256": "c4ab96145c790a10f24db538264e6c131dc57d073e93a3a93e95d6113f78c182",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/label_audit.py",
+      "published_sha256": "8f11ae8758bd5bee443c8f75c1c2245d6f146b932b3f850a28dbd51892e78cc9",
+      "source_sha256": "8f11ae8758bd5bee443c8f75c1c2245d6f146b932b3f850a28dbd51892e78cc9",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/model.py",
+      "published_sha256": "3c4943e3f4b8f51e99b523e9d0117b6358ef2215b633393132b88a9428ccf707",
+      "source_sha256": "3c4943e3f4b8f51e99b523e9d0117b6358ef2215b633393132b88a9428ccf707",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/motion_reference.py",
+      "published_sha256": "85da9baaf061dc51b2a9de9b7b9d9d841aeca6d191d18dab6d491e443b1048dd",
+      "source_sha256": "85da9baaf061dc51b2a9de9b7b9d9d841aeca6d191d18dab6d491e443b1048dd",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/new_features.py",
+      "published_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "source_sha256": "a9375fe09823b8703e4afb19587da921ef96fd38eee2637333ddccabbf49ff7e",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/parent_core.py",
+      "published_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "source_sha256": "5bdf93fdb6e3e91491a237d14ff149d70f3edd8fdeadde7e2118c7eef7faa794",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/readiness.py",
+      "published_sha256": "f3695815f408352af9b392a4ad093faec47ed6285647c7d25ff769b1751c291f",
+      "source_sha256": "f3695815f408352af9b392a4ad093faec47ed6285647c7d25ff769b1751c291f",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/run_round.py",
+      "published_sha256": "24f1aff44c21f6bc8dfb15177d94fbfa6213322c64026517174b01660e3d4908",
+      "source_sha256": "24f1aff44c21f6bc8dfb15177d94fbfa6213322c64026517174b01660e3d4908",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/run_tests.py",
+      "published_sha256": "f31ab3e8039167583bb7f841f202fb9d9b4295badc06dd6ee6b8673c29caa5d3",
+      "source_sha256": "f31ab3e8039167583bb7f841f202fb9d9b4295badc06dd6ee6b8673c29caa5d3",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/study.py",
+      "published_sha256": "f01e85956a4d2a8a224b39d925671efeb5d0b3274584e8c57204dac905d24a50",
+      "source_sha256": "f01e85956a4d2a8a224b39d925671efeb5d0b3274584e8c57204dac905d24a50",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/visuals.py",
+      "published_sha256": "4221f173d40fbd11f8121380893238f83cf6af61fd58f1e7395250e69c500a03",
+      "source_sha256": "4221f173d40fbd11f8121380893238f83cf6af61fd58f1e7395250e69c500a03",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/worker.py",
+      "published_sha256": "c734e1d4081619e1dd10a56be410c0dab9e8bcb057cf69a20c18307f0bb8eb43",
+      "source_sha256": "c734e1d4081619e1dd10a56be410c0dab9e8bcb057cf69a20c18307f0bb8eb43",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/tests/fixtures.py",
+      "published_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "source_sha256": "d815e6fa55611f30da4f511f74dceefa2ee19e4fc504943a1a55abbbb59113ab",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/tests/base/test_audited_core.py",
+      "published_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "source_sha256": "a371321ae6695bb2a965e09f0dde48898157bc953b590647ff2899875502c900",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/tests/base/test_families.py",
+      "published_sha256": "80d6497b4374ec26503196b94064a7277eddf0e833497d354b26d64efb64a161",
+      "source_sha256": "80d6497b4374ec26503196b94064a7277eddf0e833497d354b26d64efb64a161",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/tests/base/test_readiness.py",
+      "published_sha256": "29ec5db0e97a262e3b2893c0484a2f7c88a38e5253482697b3eb6aec15c2ddde",
+      "source_sha256": "29ec5db0e97a262e3b2893c0484a2f7c88a38e5253482697b3eb6aec15c2ddde",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_feature_rounds16_17/tests/model/test_models.py",
+      "published_sha256": "25a153d10524a02a1e4a7fcb944d3e92c8eaf419f7368e9e2eded8611e039188",
+      "source_sha256": "25a153d10524a02a1e4a7fcb944d3e92c8eaf419f7368e9e2eded8611e039188",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_manual_sync/FEATURE_RESEARCH_PLAN.md",
+      "published_sha256": "2bb50addf40303c25300a5a3878df89af182e32332e1f182b12b78abcbecbce3",
+      "source_sha256": "2bb50addf40303c25300a5a3878df89af182e32332e1f182b12b78abcbecbce3",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_manual_sync/interaction_feature_review.ipynb",
+      "published_sha256": "02065e8454da6d786ec8a8a9de68b2e8f2a30cbff9be3849bd298c267b2c0137",
+      "source_sha256": "2e997caf0e3b52df5defe072833ee4789dfe9e5fd0f9fd9276fbf77c570b4409",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_manual_sync/nfl_workspace.py",
+      "published_sha256": "21ec57d08caf9cf695d5357b2ca1aea97a6a118f221ab821115a6f354596d5c4",
+      "source_sha256": "21ec57d08caf9cf695d5357b2ca1aea97a6a118f221ab821115a6f354596d5c4",
+      "transformation": "byte-identical source"
+    },
+    {
+      "path": "research/workspace/nfl_manual_sync/workspace_readiness.ipynb",
+      "published_sha256": "793f59516d2cc122680ed00967545674388564def12a289c1a9908170c5b8732",
+      "source_sha256": "8eb30a71233bc616711660978e6649a48e9ad696b228d24c5b1864707260c97c",
+      "transformation": "private notebook outputs removed"
+    },
+    {
+      "path": "research/workspace/nfl_manual_sync/tests/test_workspace.py",
+      "published_sha256": "be81431e5bc3400b9bf508e4c43acc1ef98c5681eacb8aca7111c1949b511098",
+      "source_sha256": "be81431e5bc3400b9bf508e4c43acc1ef98c5681eacb8aca7111c1949b511098",
+      "transformation": "byte-identical source"
+    }
+  ],
+  "staging_policy": {
+    "all_files_staged_by_exact_literal_path": true,
+    "all_manifest_files_verified_in_git_index": true,
+    "allowed_ignored_files": [
+      "research/evidence/publication_manifest.json",
+      "research/evidence/studies.json"
+    ],
+    "gitignore_changed_by_correction": false,
+    "policy": "exact-reviewed-public-files-v1"
+  },
+  "whitespace_policy": {
+    "all_other_whitespace_and_conflict_errors_block": true,
+    "exceptions": 12,
+    "policy": "byte-identical-archive-python-eof-v1",
+    "receipt": "research/publication/whitespace_review.json",
+    "scope": "Only original EOF blank lines in hash-verified, byte-identical archived Python"
+  }
+}

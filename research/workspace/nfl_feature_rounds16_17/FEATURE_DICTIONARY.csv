@@ -1,0 +1,25 @@
+round,block,feature,unit,availability,missingness,evidence_status
+16,core,forward_displacement_3,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,core,lateral_displacement_3,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,core,path_efficiency_3,ratio,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,core,forward_displacement_5,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,core,lateral_displacement_5,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,core,path_efficiency_5,ratio,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,extension,forward_displacement_10,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,extension,lateral_displacement_10,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,extension,path_efficiency_10,ratio,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,extension,absolute_turn_sum_10,radians,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,extension,signed_turn_sum_10,radians,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+16,extension,step_direction_resultant_10,ratio,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,core,opponents_within_3y,players,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,core,opponents_within_6y,players,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,core,nearest_opponent_distance,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,core,nearest_opponent_closing_speed,yards/s,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,core,minimum_1s_projected_separation,yards,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,core,selected_closest_approach_time,seconds,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,extension,nearest_opponent_lateral_speed,yards/s,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,extension,closing_opponent_fraction,fraction,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,extension,projected_threats_within_1y,players,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,extension,projected_threats_within_2y,players,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,extension,landing_corridor_opponents,players,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured
+17,extension,mean_closing_speed_within_6y,yards/s,current/past observed frames only,explicit per-channel boolean mask,proposed; predictive contribution unmeasured

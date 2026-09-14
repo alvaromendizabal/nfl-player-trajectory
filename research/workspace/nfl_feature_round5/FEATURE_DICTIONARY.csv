@@ -1,0 +1,135 @@
+column,representation,availability,retention_status
+intercept,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+elapsed,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+elapsed_squared,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+remaining,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+phase,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+origin_offset,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__x_center,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__y_center,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__vx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__vy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__ball_dx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__ball_dy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__age,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__horizon,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__observed_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__vx_observed,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__orientation_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__orientation_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__orientation_observed,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__receiver_dx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__receiver_dy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__receiver_vx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__receiver_vy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__receiver_joint,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__passer_dx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__passer_dy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__passer_joint,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__is_offense,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_displacement_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_displacement_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_mean_vx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_mean_vy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_velocity_change_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_velocity_change_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_path_length,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_straightness,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_joint_receiver_dx_change,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_joint_receiver_dy_change,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_observed_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w5_joint_receiver_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_displacement_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_displacement_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_mean_vx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_mean_vy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_velocity_change_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_velocity_change_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_path_length,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_straightness,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_joint_receiver_dx_change,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_joint_receiver_dy_change,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_observed_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w10_joint_receiver_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_displacement_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_displacement_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_mean_vx,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_mean_vy,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_velocity_change_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_velocity_change_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_path_length,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_straightness,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_joint_receiver_dx_change,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_joint_receiver_dy_change,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_observed_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__w20_joint_receiver_fraction,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__role_Targeted Receiver,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__role_Defensive Coverage,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__role_Passer,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+response_time__role_Other Route Runner,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+ball_remaining_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+ball_remaining_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+receiver_projected_x,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+receiver_projected_y,control,observed input and supplied request/horizon,fixed baseline; train-only variance screen
+observed__x_center,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__y_center,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__vx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__vy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__ball_dx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__ball_dy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__age,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__horizon,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__observed_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__vx_observed,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__orientation_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__orientation_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__orientation_observed,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__receiver_dx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__receiver_dy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__receiver_vx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__receiver_vy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__receiver_joint,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__passer_dx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__passer_dy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__passer_joint,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__is_offense,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_displacement_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_displacement_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_mean_vx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_mean_vy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_velocity_change_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_velocity_change_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_path_length,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_straightness,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_joint_receiver_dx_change,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_joint_receiver_dy_change,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_observed_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w5_joint_receiver_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_displacement_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_displacement_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_mean_vx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_mean_vy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_velocity_change_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_velocity_change_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_path_length,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_straightness,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_joint_receiver_dx_change,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_joint_receiver_dy_change,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_observed_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w10_joint_receiver_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_displacement_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_displacement_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_mean_vx,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_mean_vy,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_velocity_change_x,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_velocity_change_y,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_path_length,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_straightness,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_joint_receiver_dx_change,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_joint_receiver_dy_change,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_observed_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__w20_joint_receiver_fraction,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__role_Targeted Receiver,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__role_Defensive Coverage,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__role_Passer,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending
+observed__role_Other Route Runner,direct_state,observed input only; no future targets,same Round4 candidate; temporal benefit pending

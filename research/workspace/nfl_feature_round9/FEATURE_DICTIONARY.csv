@@ -1,0 +1,7 @@
+name,physical_unit,scale,definition,availability,evidence_status
+goal_parallel_separation,yards,20,"dot(peer_position-self_position, self_goal_unit)",joint pre-throw observations; channel-specific masks,implemented/tested; not fitted; no measured RMSE benefit
+goal_lateral_separation,yards,20,"cross(self_goal_unit, peer_position-self_position)",joint pre-throw observations; channel-specific masks,implemented/tested; not fitted; no measured RMSE benefit
+goal_parallel_relative_velocity,yards/second,10,"dot(peer_velocity-self_velocity, self_goal_unit)",joint pre-throw observations; channel-specific masks,implemented/tested; not fitted; no measured RMSE benefit
+goal_lateral_relative_velocity,yards/second,10,"cross(self_goal_unit, peer_velocity-self_velocity)",joint pre-throw observations; channel-specific masks,implemented/tested; not fitted; no measured RMSE benefit
+peer_minus_self_goal_distance,yards,20,peer_goal_distance - self_goal_distance,joint pre-throw observations; channel-specific masks,implemented/tested; not fitted; no measured RMSE benefit
+peer_minus_self_goal_closing,yards/second,10,peer_goal_closing_speed - self_goal_closing_speed,joint pre-throw observations; channel-specific masks,implemented/tested; not fitted; no measured RMSE benefit

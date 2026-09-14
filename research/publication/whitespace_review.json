@@ -1,0 +1,81 @@
+{
+  "conflict_markers_checked": true,
+  "exceptions": [
+    {
+      "line": 36,
+      "path": "research/workspace/nfl_feature_round10/checkpoints.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc"
+    },
+    {
+      "line": 207,
+      "path": "research/workspace/nfl_feature_round3/parent_support.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671"
+    },
+    {
+      "line": 207,
+      "path": "research/workspace/nfl_feature_round4/parent_support.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671"
+    },
+    {
+      "line": 13,
+      "path": "research/workspace/nfl_feature_round4/tests/base/fixtures.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "2ca2c56cddf64d9b85fc3b4093f5a94c600a16dd1ba85a2109f88d28bc31e9b2"
+    },
+    {
+      "line": 207,
+      "path": "research/workspace/nfl_feature_round5/parent_support.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671"
+    },
+    {
+      "line": 13,
+      "path": "research/workspace/nfl_feature_round5/tests/base/fixtures.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "2ca2c56cddf64d9b85fc3b4093f5a94c600a16dd1ba85a2109f88d28bc31e9b2"
+    },
+    {
+      "line": 207,
+      "path": "research/workspace/nfl_feature_round6/parent_support.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671"
+    },
+    {
+      "line": 207,
+      "path": "research/workspace/nfl_feature_round7/parent_support.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671"
+    },
+    {
+      "line": 207,
+      "path": "research/workspace/nfl_feature_round8/parent_support.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "fe35bbea01d0ee79e04ef117d1bd980360a9fca0969ceb541271538f95f72671"
+    },
+    {
+      "line": 36,
+      "path": "research/workspace/nfl_feature_rounds12_13/checkpoints.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc"
+    },
+    {
+      "line": 36,
+      "path": "research/workspace/nfl_feature_rounds14_15/checkpoints.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc"
+    },
+    {
+      "line": 36,
+      "path": "research/workspace/nfl_feature_rounds16_17/checkpoints.py",
+      "reason": "Original archived Python ends with a blank line; bytes retained",
+      "sha256": "4a07f406f67eb3298f71b49e04d2a41cfd2f2b718761f8707f25ae20b2b4fccc"
+    }
+  ],
+  "global_git_configuration_changed": false,
+  "policy": "byte-identical-archive-python-eof-v1",
+  "source_bytes_changed": false,
+  "status": "passed_with_documented_archive_eof"
+}

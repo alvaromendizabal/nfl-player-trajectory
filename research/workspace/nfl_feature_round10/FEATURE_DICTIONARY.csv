@@ -1,0 +1,7 @@
+name,fixed_scale,information_time,role,rationale,evidence_status
+goal_parallel_separation,20.0,Observed pre-throw only,Additional numeric channel,Relative motion in source-to-landing coordinates,Round9 support verified; predictive gain unmeasured
+goal_lateral_separation,20.0,Observed pre-throw only,Additional numeric channel,Relative motion in source-to-landing coordinates,Round9 support verified; predictive gain unmeasured
+goal_parallel_relative_velocity,10.0,Observed pre-throw only,Additional numeric channel,Relative motion in source-to-landing coordinates,Round9 support verified; predictive gain unmeasured
+goal_lateral_relative_velocity,10.0,Observed pre-throw only,Additional numeric channel,Relative motion in source-to-landing coordinates,Round9 support verified; predictive gain unmeasured
+peer_minus_self_goal_distance,20.0,Observed pre-throw only,Additional numeric channel,Relative motion in source-to-landing coordinates,Round9 support verified; predictive gain unmeasured
+peer_minus_self_goal_closing,10.0,Observed pre-throw only,Additional numeric channel,Relative motion in source-to-landing coordinates,Round9 support verified; predictive gain unmeasured

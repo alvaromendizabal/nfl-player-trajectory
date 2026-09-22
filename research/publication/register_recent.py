@@ -5,6 +5,8 @@ import json
 
 ROOT = Path(__file__).resolve().parents[2]
 ADDITIONS = (
+    'README.md',
+    '.github/workflows/recent-models.yml',
     'research/evidence/model_reproduction.json',
     'research/publication/recent_models.py',
     'research/publication/checkpoint_lineage.py',
@@ -37,7 +39,7 @@ def main():
         if hashlib.sha256((ROOT/name).read_bytes()).hexdigest() != expected:
             raise ValueError('Existing publication changed unexpectedly: ' + name)
     path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + '\n')
-    print(json.dumps({'registered_additions': len(ADDITIONS), 'existing_archive_hashes_preserved': True}))
+    print(json.dumps({'registered_allowlisted_paths': len(ADDITIONS), 'existing_archive_hashes_preserved': True}))
 
 if __name__ == '__main__':
     main()

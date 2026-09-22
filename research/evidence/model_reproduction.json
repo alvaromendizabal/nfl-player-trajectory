@@ -1,0 +1,27 @@
+{
+  "as_of_utc": "2026-09-22",
+  "base_oof_rmse": 0.4681438519862962,
+  "base_folds": [
+    {"fold": 0, "epoch": 30, "rows": 109144, "rmse": 0.45882284999740136, "checkpoint_sha256": "7c12c01b57b4b830e7c83e87ae2cd08016eb3ff03a809500a114d624c6401482"},
+    {"fold": 1, "epoch": 20, "rows": 120035, "rmse": 0.4815711818445224, "checkpoint_sha256": "19fdeac30cb4a6b87488f4d9a61b7e3c278294d867b4071ecfb0fd6fe8e68bec"},
+    {"fold": 2, "epoch": 32, "rows": 108585, "rmse": 0.4409361330087485, "checkpoint_sha256": "b1efe8e10bc6b6ef7dcc13472f72223f6c8d3b9a35a1dd6d83093e96a6c2afb4"},
+    {"fold": 3, "epoch": 31, "rows": 112694, "rmse": 0.4679353569867801, "checkpoint_sha256": "544f34f64878647a1d192d6a1f4df8fbee1ffa52ebec459809487fb73e7745b1"},
+    {"fold": 4, "epoch": 25, "rows": 111149, "rmse": 0.4880909156530448, "checkpoint_sha256": "d4f45d498cf0c14df502dac29fa49893b3c3081a8fec7c3394f02658d5b08425"}
+  ],
+  "rot": [
+    {"stage": "Fold 1 discovery", "rows": 120035, "games": 55, "base": 0.4815711818445224, "rot": 0.48042354885410643, "blend": 0.4782259874985325, "gain": 0.003345194345989899, "interval95": [0.0013015947195656227, 0.005451173824931383], "gate_passed": true, "decision": "PROMISING_FOR_CONFIRMATION"},
+    {"stage": "Fold 2 fixed confirmation", "rows": 108585, "games": 54, "base": 0.4409361330087485, "rot": 0.4508622561373399, "blend": 0.4410931369868203, "gain": -0.00015700397807177913, "interval95": [-0.003746182463004508, 0.0032001775696687963], "gate_passed": false, "decision": "NO_CONFIRMATION"}
+  ],
+  "horizon_segments": [
+    {"segment": "Frames 1-21", "rows": 105514, "delta_sse": -280.94132209589594},
+    {"segment": "Frames 22-36", "rows": 3071, "delta_sse": 311.01548065741366}
+  ],
+  "new_kaggle_score": null,
+  "historical_private_score": 0.7009,
+  "historical_private_target": 0.4634,
+  "target_current_verification": "Not freshly verified; official page did not expose the leaderboard table.",
+  "norb_decision": "NO_PROMOTION",
+  "failure_snapshot": "39 tests passed, checkpoint-lineage gate stopped before first replay.",
+  "source_registry_sha256": "6ec3c9e4e03e16e18154a1728216499cb5386c86fcd1ff56a9502e6da9370bc9",
+  "confirmation_return_sha256": "ffb6ddd20e3a80a3647f5179412481474ac3cf331c18a165a2c513c3a53020e2"
+}

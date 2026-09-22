@@ -32,7 +32,7 @@ def main():
         if path.name in forbidden or path.suffix in blocked_ext:
             raise ValueError('Private/binary artifact in publication: ' + name)
         if path.suffix == '.png':
-            if not name.startswith('research/figures/review_') or not data.startswith(b'\x89PNG\r\n\x1a\n'):
+            if not (name.startswith('research/figures/review_') or name in {'research/figures/winner_folds.png', 'research/figures/winner_confirmation.png', 'research/figures/winner_horizon.png'}) or not data.startswith(b'\x89PNG\r\n\x1a\n'):
                 raise ValueError('Unexpected image artifact')
             files += 1
             continue

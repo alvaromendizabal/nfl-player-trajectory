@@ -1,57 +1,48 @@
-# NFL Big Data Bowl 2026 - Prediction
+# NFL Big Data Bowl 2026 — Prediction
 
-**Forecasting player motion after a pass with domain-informed features, temporal models, and reproducible experiment evidence.**
+**Player-motion forecasting with temporal convolutions, cross-player attention, domain-informed geometry, and reproducible AWS research.**
 
-[Research review](research/RESEARCH_REVIEW.ipynb) · [Experiment source](research/workspace/README.md) · [Run and reproduce](START_HERE.md) · [Model card](docs/MODEL_CARD.md)
+[Latest model review](research/RECENT_MODELS.ipynb) · [Earlier feature research](research/RESEARCH_REVIEW.ipynb) · [Run and reproduce](START_HERE.md) · [Model card](docs/MODEL_CARD.md)
 
-This project predicts selected players' future x/y locations from observed tracking, the organizer-supplied ball landing point, player role, and requested forecast horizon. It addresses the **NFL Big Data Bowl 2026 Prediction** task, not the separate Analytics track.
+Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. This is the **Prediction** task, not the separate Analytics track.
 
-## What this project demonstrates
+## Latest research snapshot
 
-- **Domain-informed representation:** motion derivatives, landing-point geometry, receiver-relative dynamics, observed player relationships, and strictly earlier-date histories.
-- **Controlled experimentation:** temporal game splits, matched feature ablations, availability controls, whole-game uncertainty, role/horizon diagnostics, and retained negative findings.
-- **Reliable execution:** bounded CPU work, source/input fingerprints, resumable checkpoints, saved prediction replay, and separation of private competition data from public evidence.
+Five source-faithful base models are trained and preserved. A geometric ROT variant passed its discovery gate but did not replicate under a fixed second-fold protocol. The current deployment candidate therefore retains the five base models, without unpromoted variants.
 
-## Read the results correctly
-
-| Evidence | Coordinate RMSE, yards | Interpretation |
+| Evidence | Coordinate RMSE, yards | Meaning |
 |---|---:|---|
-| Repository-recorded Kaggle private submission | **0.70090** | Historical after-deadline submission; no official competition rank is claimed. |
-| Reserved temporal evaluation | **0.80467** | Different data from Kaggle; already inspected, not an untouched set for later work. |
-| Historical motion/tree blend | **0.62708** | Earlier internal result with incomplete checkpoint/source recovery; not a current reproducible release. |
+| **Five-fold base OOF** | **0.468143852** | 561,607 retained rows; each row predicted only by its excluded-fold model. Checkpoints selected on these folds. |
+| Fold-1 base → fixed 50/50 base + ROT | 0.481571182 → 0.478225987 | Discovery passed the predeclared improvement and paired-game interval gates. |
+| Fold-2 base → fixed 50/50 base + ROT | 0.440936133 → 0.441093137 | Fixed epoch-22 confirmation failed; ROT was not promoted. |
+| Historical Kaggle private submission | 0.70090 | Earlier model, after the deadline; no official rank claimed. |
 
-These figures come from the existing [submission record](docs/results/kaggle_submission.json), [evaluation record](docs/results/final_evaluation.json), and [recovery documentation](docs/RECOVERY_STATUS.md). **No new Kaggle score is implied by this publication.**
+**No new Kaggle score is claimed for the five-base candidate.** Local OOF, historical private scoring, and the historical 0.46340 private-score target are different evaluation settings. The new candidate must pass saved-prediction replay and the official runtime before its score can be compared on Kaggle.
 
-The [public research review](research/RESEARCH_REVIEW.ipynb) reads the latest allowlisted aggregate receipts copied from the owner's AWS workspace at publication time. It shows each experiment separately rather than mixing scores from different populations. An improved mean score does not establish a retained feature when its predeclared uncertainty or replication gate fails.
+The [executed model review](research/RECENT_MODELS.ipynb) contains inline Plotly figures with static fallbacks, fold variability, paired-game uncertainty, and horizon error analysis. Its [aggregate evidence](research/evidence/model_reproduction.json) is inspectable without private data or cloud access.
 
-The historical **0.46340 private-score target remains unmet**. Feature research is open. The present contribution is a transparent, inspectable forecasting and research workflow—not a claim of competition-leading accuracy.
+![Preserved base-model fold variability](research/figures/winner_folds.png)
 
-## Start with the evidence
+## What the work demonstrates
 
-| Artifact | Purpose |
-|---|---|
-| [Research review notebook](research/RESEARCH_REVIEW.ipynb) | Inline Plotly charts of matched results, uncertainty, horizon errors, training/evaluation gaps, and readiness. No private data required. |
-| [Aggregate evidence](research/evidence/studies.json) | Metrics and source-summary hashes, without individual forecasts or identities. |
-| [Research guide](research/README.md) | Publication boundaries, reproduction requirements, and next scientific decisions. |
-| [Experiment source archive](research/workspace/README.md) | Original named source packages and output-stripped notebooks. Python source bytes are preserved where safe. |
-| [Original motion benchmark](notebooks/02_motion_benchmarks.ipynb) | Earlier controlled experiments and historical diagnostics. |
+- **Modeling:** grouped temporal convolutions, cross-player attention, positional and auxiliary Gaussian objectives, EMA checkpoints, and relative-motion features.
+- **Experimental judgment:** game-grouped validation, fixed replication protocols, paired-game intervals, retained negative findings, and error-driven research decisions.
+- **Engineering:** byte-pinned checkpoints, schema-aware provenance verification, label-free inference, ordered output contracts, bounded execution, and restartable receipts.
 
-![Matched internal evaluation evidence](research/figures/review_1.png)
+## A clear path through the evidence
 
-*Matched internal results only; the full notebook preserves confidence intervals and failed gates.*
+Start with [Recent Models](research/RECENT_MODELS.ipynb) for the reproduced-model study and deployment boundary. Continue to the [Research Review](research/RESEARCH_REVIEW.ipynb) for earlier feature-family experiments, [research guide](research/README.md), and [frozen workspace archive](research/workspace/README.md) for preserved methods. Maintained forecasting code and tests remain in `src/` and `tests/`.
 
-## Validation and limits
+The first inference-export attempt passed 39 software tests but stopped before replay because its lineage validator assumed the wrong historical metadata schema. The corrective work separates each checkpoint's training-cache fingerprint from the shared evaluation cache and checks the continuation trainer in its recorded field. The corrected GPU replay is pending at this snapshot; an early stop is not advertised as a successful deployment.
 
-The primary metric is `sqrt(sum(dx² + dy²) / (2N))`. Errors are in yards; lower is better. Paired confidence intervals resample games, not independent frames. Feature engineering is restricted to prediction-time information; learned transformations belong inside the training partition.
+## Validation and limitations
 
-Recent feature screens repeatedly use the same internal game splits and one seed. They are exploratory, not independent final confirmation. The reported training-label coverage identifies additional usable training data, but this publication does not run a data-scale experiment or fit another model. Detailed limitations remain attached to each experimental protocol.
+The metric is `sqrt(sum(dx² + dy²) / (2N))`, in yards. Pooled OOF is computed from row-weighted squared errors, not an unweighted mean of fold RMSEs. Fold checkpoint selection and repeated research inspection limit independence. Source-faithful normalization constants come from the archived upstream implementation, rather than being newly fitted inside each fold. Five source-excluded plays and unsupported raw-input cases remain coverage concerns. The complete winning ensemble has not been reproduced.
 
-## Reproducibility and quality
+Earlier results on other populations remain in the [historical submission record](docs/results/kaggle_submission.json), [temporal evaluation record](docs/results/final_evaluation.json), and [recovery notes](docs/RECOVERY_STATUS.md). They are not pooled with the newer folds.
 
-Maintained forecasting code remains under `src/`, with its existing tests and **Quality** workflow unchanged. Frozen manual experiments live under `research/workspace/`; they are not promoted into the production package simply because they are published. Formatting them would alter their historical fingerprints, so they have a separate publication gate for Python syntax, notebook structure, file hashes, privacy exclusions, and aggregate metric arithmetic. Their scientific tests are **not rerun** by that archive gate.
+## Reproducibility, privacy, and attribution
 
-Original AWS folders, data, credentials, private contracts, fitted weights, row-level errors, and notebook outputs remain private. Archive notebooks have outputs removed deliberately. The new Research Review is rendered from public aggregates only; its execution is documented separately from any model training.
+**AWS and GitHub have different roles.** AWS retains raw competition data, fitted weights, private execution state, and uncommitted research. GitHub contains selected source, aggregate receipts, notebooks, and documentation; it is not an AWS mirror. Quality checks do not retrain models or prove a new competition score.
 
-## Data and license
-
-Code uses the repository's MIT license. Competition data has separate terms and is not redistributed. See the [data card](docs/DATA_CARD.md), [sources](docs/SOURCES.md), and [competition page](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).
+The project-side reproduction follows the public [chack3 training reference](https://www.kaggle.com/code/chack3/nfl2026-1st-place-train), with its provenance and limitations documented in the notebook. Original repository code uses MIT; referenced upstream materials retain their own licenses. Competition data has separate terms and is not redistributed. See the [data card](docs/DATA_CARD.md), [sources](docs/SOURCES.md), and [competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).

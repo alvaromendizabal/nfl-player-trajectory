@@ -1,4 +1,4 @@
-# NFL Big Data Bowl 2026 — Prediction
+# NFL Big Data Bowl 2026 - Prediction
 
 **Player-motion forecasting with temporal convolutions, cross-player attention, domain-informed geometry, and reproducible AWS research.**
 

@@ -1,8 +1,6 @@
-"""Build an executed, aggregate-only review; no private data or model training."""
+"""Build an executed, aggregate-only employer-facing review; no private data or model training."""
 from pathlib import Path
-import json
-import math
-import sys
+import json, math, sys
 import nbformat
 from nbclient import NotebookClient
 from jupyter_client import KernelManager
@@ -13,12 +11,15 @@ def build():
     evidence=json.loads((ROOT/'research/evidence/model_reproduction.json').read_text())
     rows=sum(x['rows'] for x in evidence['base_folds'])
     score=math.sqrt(sum(x['rows']*x['rmse']**2 for x in evidence['base_folds'])/rows)
-    assert rows==561607 and abs(score-evidence['base_oof_rmse'])<1e-12
-    for trial in evidence['rot']:
+    assert rows==evidence['base_oof_rows']==561607
+    assert abs(score-evidence['base_oof_rmse'])<1e-12
+    for trial in evidence['experiments']:
         assert abs(trial['base']-trial['blend']-trial['gain'])<1e-12
-        gate=trial['gain']>=.001 and trial['interval95'][0]>0
-        assert gate==trial['gate_passed']
-    md=nbformat.v4.new_markdown_cell;code=nbformat.v4.new_code_cell
+    k=evidence['kaggle_private']
+    assert abs(k['five_base_submission']['private_rmse']-k['seven_model_submission']['private_rmse']-k['improvement_five_to_seven'])<1e-12
+    assert abs(k['seven_model_submission']['private_rmse']-k['final_first_place_private_rmse']-k['current_gap'])<1e-12
+
+    md=nbformat.v4.new_markdown_cell; code=nbformat.v4.new_code_cell
     setup="""import json, math, io, base64
 from pathlib import Path
 import numpy as np
@@ -26,9 +27,9 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from IPython.display import display
 E=json.loads(Path('research/evidence/model_reproduction.json').read_text())
-def show(fig, static, name):
-    fig.update_layout(width=900,height=480,margin=dict(l=80,r=40,t=70,b=70),font=dict(size=14))
-    static.set_size_inches(9,4.8);static.tight_layout()
+def show(fig, static, name, height=480):
+    fig.update_layout(width=940,height=height,margin=dict(l=90,r=40,t=80,b=80),font=dict(size=14))
+    static.set_size_inches(9.4,height/100);static.tight_layout()
     buf=io.BytesIO();static.savefig(buf,format='png',dpi=120)
     Path('research/figures').mkdir(exist_ok=True)
     Path('research/figures/'+name+'.png').write_bytes(buf.getvalue())
@@ -37,45 +38,79 @@ def show(fig, static, name):
 n=sum(f['rows'] for f in E['base_folds'])
 r=math.sqrt(sum(f['rows']*f['rmse']**2 for f in E['base_folds'])/n)
 assert n==561607 and abs(r-E['base_oof_rmse'])<1e-12
-print(f'Preserved base: {r:.9f} coordinate RMSE, {n:,} out-of-fold rows.')
-print('Selected checkpoints; not an untouched test. No new Kaggle score.')
+K=E['kaggle_private']
+print(f'Base OOF: {r:.9f} coordinate RMSE across {n:,} excluded-game rows.')
+print(f"Private score progression: {K['five_base_submission']['private_rmse']:.5f} -> {K['seven_model_submission']['private_rmse']:.5f}; final first-place private score {K['final_first_place_private_rmse']:.5f}.")
+print('Late post-competition submissions: performance measurements only; no official rank claimed.')
 """
-    fold="""f=E['base_folds']; x=[str(v['fold']) for v in f]; y=[v['rmse'] for v in f]
-fig=go.Figure(go.Scatter(x=x,y=y,mode='markers+lines',name='Excluded-fold base',text=[str(v['rows'])+' rows' for v in f]))
-fig.update_layout(title='Five preserved base models: fold variability',xaxis_title='Held-out fold',yaxis_title='Coordinate RMSE (yards; lower is better)')
+    folds="""f=E['base_folds']; x=[str(v['fold']) for v in f]; y=[v['rmse'] for v in f]
+fig=go.Figure(go.Scatter(x=x,y=y,mode='markers+lines',name='Excluded-game base',text=[f"{v['rows']:,} rows" for v in f]))
+fig.update_layout(title='Five source-faithful bases: excluded-game fold variability',xaxis_title='Held-out fold',yaxis_title='Coordinate RMSE (yards; lower is better)')
 fig.add_hline(y=E['base_oof_rmse'],line_dash='dash',annotation_text='Pooled OOF')
-static,ax=plt.subplots();ax.plot(x,y,marker='o');ax.axhline(E['base_oof_rmse'],linestyle='--');ax.set(xlabel='Held-out fold',ylabel='Coordinate RMSE (yards)',title='Five preserved base models: fold variability')
+static,ax=plt.subplots();ax.plot(x,y,marker='o');ax.axhline(E['base_oof_rmse'],linestyle='--');ax.set(xlabel='Held-out fold',ylabel='Coordinate RMSE (yards)',title='Five source-faithful bases: fold variability')
 show(fig,static,'winner_folds')
 """
-    rot="""trials=E['rot']; labels=[t['stage'] for t in trials]; gains=[t['gain'] for t in trials]
-low=[t['gain']-t['interval95'][0] for t in trials];high=[t['interval95'][1]-t['gain'] for t in trials]
-fig=go.Figure(go.Scatter(x=gains,y=labels,mode='markers',error_x=dict(type='data',array=high,arrayminus=low,symmetric=False)))
-fig.update_layout(title='ROT fixed 50/50 blend: discovery did not replicate',xaxis_title='Base RMSE minus blend RMSE (positive is better)',yaxis_title='Experiment')
+    diversity="""T=E['experiments']; labels=[t['name'] for t in T]; gains=[t['gain'] for t in T]
+low=[t['gain']-t['interval95'][0] for t in T]; high=[t['interval95'][1]-t['gain'] for t in T]
+fig=go.Figure(go.Scatter(x=gains,y=labels,mode='markers',error_x=dict(type='data',array=high,arrayminus=low,symmetric=False),text=[t['decision'] for t in T],hovertemplate='%{y}<br>gain=%{x:.6f}<br>%{text}<extra></extra>'))
+fig.update_layout(title='Diversity experiments: point gains versus paired-game uncertainty',xaxis_title='Base RMSE minus fixed blend RMSE (positive is better)',yaxis_title='Experiment')
 fig.add_vline(x=0,line_dash='dash')
-static,ax=plt.subplots();ax.errorbar(gains,labels,xerr=[low,high],fmt='o',capsize=5);ax.axvline(0,linestyle='--');ax.set(xlabel='RMSE improvement (yards)',title='Paired-game 95% intervals: discovery versus confirmation')
+static,ax=plt.subplots();ax.errorbar(gains,labels,xerr=[low,high],fmt='o',capsize=5);ax.axvline(0,linestyle='--');ax.set(xlabel='RMSE improvement (yards)',title='Diversity experiments and paired-game intervals')
+show(fig,static,'winner_diversity',560)
+"""
+    rot="""T=[t for t in E['experiments'] if t['family']=='geometry']; labels=[t['name'] for t in T]; gains=[t['gain'] for t in T]
+low=[t['gain']-t['interval95'][0] for t in T];high=[t['interval95'][1]-t['gain'] for t in T]
+fig=go.Figure(go.Scatter(x=gains,y=labels,mode='markers',error_x=dict(type='data',array=high,arrayminus=low,symmetric=False)))
+fig.update_layout(title='ROT: discovery did not reproduce under the fixed confirmation',xaxis_title='RMSE improvement (yards)',yaxis_title='Experiment');fig.add_vline(x=0,line_dash='dash')
+static,ax=plt.subplots();ax.errorbar(gains,labels,xerr=[low,high],fmt='o',capsize=5);ax.axvline(0,linestyle='--');ax.set(xlabel='RMSE improvement (yards)',title='ROT discovery versus confirmation')
 show(fig,static,'winner_confirmation')
 """
     horizon="""s=E['horizon_segments'];labels=[v['segment'] for v in s];delta=[v['delta_sse'] for v in s]
-fig=go.Figure(go.Bar(x=labels,y=delta,text=[str(v['rows'])+' rows' for v in s]))
-fig.update_layout(title='Fold 2: late-horizon errors erased earlier gains',xaxis_title='Forecast segment',yaxis_title='Blend minus base total squared error (yards squared)')
-static,ax=plt.subplots();ax.bar(labels,delta);ax.axhline(0,linestyle='--');ax.set(ylabel='Change in total squared error',title='Fold 2: late-horizon errors erased earlier gains')
+fig=go.Figure(go.Bar(x=labels,y=delta,text=[f"{v['rows']:,} rows" for v in s]))
+fig.update_layout(title='Fold-2 ROT error analysis: late horizons erased earlier gains',xaxis_title='Forecast segment',yaxis_title='Blend minus base total squared error')
+static,ax=plt.subplots();ax.bar(labels,delta);ax.axhline(0,linestyle='--');ax.set(ylabel='Change in total squared error',title='Late-horizon errors erased earlier ROT gains')
 show(fig,static,'winner_horizon')
 """
-    cells=[md('# Player trajectory forecasting: reproduced models and deployment evidence\n\n**Snapshot: September 21, 2026 Pacific / September 22 UTC.** Alvaro Mendizabal.\n\nThe task is to forecast player x/y positions after a pass using observed tracking, supplied landing location, player roles, and horizon. This review shows the latest completed experiments, retained negative evidence, and the deployment boundary. It uses aggregate receipts only; no AWS credentials, player identities, raw tracking, labels, or fitted weights are needed.'),
-    md('## Representation and architecture\n\nThe recreated base uses 20 observed frames, 10 dynamic channels, 12 static channels, grouped temporal convolutions, cross-player attention, and a trajectory decoder with positional and auxiliary Gaussian objectives. Exponential moving-average weights are retained for inference. Source-faithful normalization constants are fixed from the upstream implementation, not newly fitted within these folds. This is a component reproduction, not reproduction of the complete winning ensemble.\n\nResearch reference: [ohkawa3 / chack3 training notebook](https://www.kaggle.com/code/chack3/nfl2026-1st-place-train), captured source hash `6be46a4a8beccf14a65bbe3a18fd233cd00fc7d2281b1f396c08e5ba7e6f0fc2`; archived upstream notice identifies Apache-2.0.'),
-    md('## Validation and provenance\n\nMetric: the square root of the mean squared error over both coordinates. Five seed-0 game-grouped folds cover 561,607 retained rows. Each OOF row comes from its excluded-fold model. Checkpoints were selected on these folds; the score is model-selection evidence, not an untouched final assessment. The source-faithful training population excluded five plays. Equal-weight averaging of the five models is reserved for new inputs and is not evaluated as OOF on their training rows.'),code(setup),code(fold),
-    md('Fold variation is substantial. The pooled score weights squared errors by row counts before taking the square root; it is not an unweighted average of fold RMSEs. The historical 0.70090 post-deadline private submission belongs to an earlier model and a different evaluation population.'),code(rot),
-    md('The discovery chose epoch 22 on Fold 1. Confirmation fixed that epoch and the 50/50 weight in advance on Fold 2, using a fresh fit excluding its games. The gate required at least 0.001 RMSE improvement and a paired-game interval lower bound above zero. Fold 2 failed both conditions. These are saved experiment intervals, not a bootstrap re-run by this notebook. Cross-fold training overlap and prior model selection limit independence. ROT remains unpromoted; NORB remains NO_PROMOTION.'),code(horizon),
-    md('The horizon split is post-hoc error analysis, not a rule for tuning weights on the confirmation data. The smaller late-horizon population contributes enough squared error to reverse the earlier gains.\n\n## Deployment incident and corrective test\n\nThe initial inference gate passed 39 software tests but stopped before its first saved-model replay. It looked for the continuation trainer in the wrong metadata field and incorrectly equated every checkpoint training-cache hash with the shared replay-cache hash. Read-only header inspection of all five selected checkpoints exposed both defects. The repair pins each historical cache and verifies the continuation hash while preserving full checkpoint byte checks, source identity, excluded-fold membership, and exact prediction replay. Fifty local regression tests passed after repair; the repaired full GPU replay and new Kaggle evaluation remain pending at this snapshot.\n\n## Competitive next steps\n\nFirst measure the preserved five-base candidate through the official Kaggle runtime; do not retrain the completed folds. Then compare the returned score only with the same leaderboard setting. The full winning ensemble, additional feature families, and full raw-input coverage remain separate work. A failed confirmation does not license a post-hoc change to its threshold, epoch, or weights.\n\nAWS retains private data, fitted models, and execution state. GitHub contains selected code, aggregate evidence, and this review; the two are not mirrors.'),code("assert E['rot'][1]['gate_passed'] is False\nassert E['new_kaggle_score'] is None\nprint('REVIEW_COMPLETE: three inline figures, aggregate arithmetic verified, unscored deployment candidate.')")]
+    private="""K=E['kaggle_private']; labels=['Five bases','Seven-model ensemble','Final first place'];vals=[K['five_base_submission']['private_rmse'],K['seven_model_submission']['private_rmse'],K['final_first_place_private_rmse']]
+fig=go.Figure(go.Scatter(x=labels,y=vals,mode='markers+lines+text',text=[f'{v:.5f}' for v in vals],textposition='top center'))
+fig.update_layout(title='Current private-score frontier: ensemble diversity narrowed the gap',xaxis_title='Measured system / reference',yaxis_title='Private coordinate RMSE (yards; lower is better)')
+fig.update_yaxes(range=[0.4628,0.4668])
+static,ax=plt.subplots();ax.plot(labels,vals,marker='o');ax.set(xlabel='System / reference',ylabel='Private coordinate RMSE',title='Current private-score frontier');ax.set_ylim(0.4628,0.4668);ax.tick_params(axis='x',rotation=10)
+show(fig,static,'winner_private_progress')
+"""
+    matrix="""rows=E['leading_solution_reproduction']
+for r in rows:
+    print(f"{r['status']:<34} | {r['capability']} — {r['evidence']}")
+assert E['next_experiment']['status']=='prepared_not_executed'
+"""
+    cells=[
+      md('# NFL player-trajectory forecasting: reproduced neural systems and ensemble frontier\n\n**Evidence snapshot: September 23, 2026 UTC.** Alvaro Mendizabal.\n\nThis notebook is the employer-facing evidence layer for the current neural research line. It reconstructs aggregate arithmetic, preserves negative findings, and separates local OOF evidence from private leaderboard measurements. It contains no raw tracking, player identities, credentials, or fitted weights.'),
+      md('## Problem and current capability\n\nForecast selected players’ future x/y positions after the pass from observed tracking, player roles, organizer-supplied landing location, and forecast horizon. The current system combines source-faithful temporal convolutions, cross-player attention, EMA inference, and controlled diversity mechanisms. The strongest measured deployment is a fixed equal seven-model ensemble: five game-fold bases plus one independent-seed model and one protected context-dropout model.'),
+      md('## Validation contract\n\nThe base family uses five game-grouped folds. Every OOF row comes only from a model that excluded that game. Coordinate RMSE pools squared coordinate errors before the final square root. Checkpoint selection and repeated research inspection mean OOF is model-selection evidence rather than an untouched final test. Private Kaggle scores are reported separately and are the authoritative measurement of deployed ensembles.'),
+      code(setup), code(folds),
+      md('Fold variability is material. The pooled score is row-weighted through squared error, not an unweighted average of the five fold RMSEs.'),
+      code(diversity),
+      md('Positive point movement is not enough for automatic promotion. Seed diversity passed Fold-0 discovery but its fixed Fold-1 interval crossed zero. Context dropout improved the Fold-0 fixed blend but its interval also crossed zero. Those models were retained as complementary ensemble members rather than advertised as independently validated upgrades.'),
+      code(rot),
+      md('ROT geometry is the clearest replication example: the Fold-1 discovery passed its gate, while the fixed Fold-2 confirmation did not. The failure is retained rather than reweighted away.'),
+      code(horizon),
+      md('The post-hoc horizon split explains part of the ROT failure but is not used to retune the confirmation. The small late-horizon population contributed enough additional squared error to reverse earlier gains.'),
+      code(private),
+      md('## Deployment result\n\nThe five-base candidate scored **0.46615** private RMSE. The predeclared equal seven-model ensemble scored **0.46547**, an improvement of **0.00068**. The official final first-place private score is **0.46340**, so the remaining gap is **0.00207**. These are late post-competition submissions used as comparable performance measurements; no official rank is claimed. The local seven-model proxy improved by 0.003556053, larger than the leaderboard gain, so local screening was directionally useful but optimistic.'),
+      md('## Leading-solution reproduction boundary\n\nThe table below is intentionally explicit about what has and has not been recreated. “Adapted” means independently implemented and tested inside this project, not copied weights or hidden predictions.'),
+      code(matrix),
+      md('## Next research question\n\nThe next prepared experiment is a complete second game-grouped cross-validation split family. That tests a structurally new diversity source used by large leading ensembles. It is **not yet executed**, so this snapshot claims no alternate-CV metric. If split diversity is insufficient, the next architectural gap is the broader pretraining / multi-auxiliary transformer family rather than another ordinary seed.\n\nAWS remains the private experimental workspace for raw data, weights, and checkpoint archives. GitHub is the curated evidence and engineering surface; the two are intentionally not mirrors.'),
+      code("K=E['kaggle_private']\nassert K['seven_model_submission']['private_rmse']==0.46547\nassert K['seven_model_submission']['private_rmse']>K['final_first_place_private_rmse']\nassert E['frontier_equal7']['status']=='SCORED'\nprint('REVIEW_COMPLETE: five persisted inline figures; current private score and reproduction boundary verified.')")
+    ]
     nb=nbformat.v4.new_notebook(cells=cells,metadata={'kernelspec':{'name':'python3','display_name':'Python 3','language':'python'},'evidence_only':True})
-    for i,c in enumerate(nb.cells):c.id=f'winner-review-{i}'
+    for i,c in enumerate(nb.cells): c.id=f'winner-frontier-{i}'
     km=KernelManager(kernel_name='python3');km.kernel_spec.argv=[sys.executable,'-m','ipykernel_launcher','-f','{connection_file}']
-    NotebookClient(nb,timeout=120,km=km,resources={'metadata':{'path':str(ROOT)}}).execute()
+    NotebookClient(nb,timeout=None,km=km,resources={'metadata':{'path':str(ROOT)}}).execute()
     path=ROOT/'research/RECENT_MODELS.ipynb';nbformat.write(nb,path)
     n=nbformat.read(path,4);codes=[c for c in n.cells if c.cell_type=='code']
     assert all(c.execution_count is not None and not any(o.output_type=='error' for o in c.outputs) for c in codes)
     figures=[o for c in codes for o in c.outputs if 'application/vnd.plotly.v1+json' in o.get('data',{})]
-    assert len(figures)==3 and all('image/png' in o['data'] for o in figures)
+    assert len(figures)==5 and all('image/png' in o['data'] for o in figures)
     assert 'REVIEW_COMPLETE' in json.dumps(codes[-1].outputs)
-    print(json.dumps({'status':'PASS','code_cells':len(codes),'plotly_figures':3,'png_fallbacks':3,'training_runs':0}))
-if __name__=='__main__':build()
+    print(json.dumps({'status':'PASS','code_cells':len(codes),'plotly_figures':5,'png_fallbacks':5,'training_runs':0,'private_score':evidence['kaggle_private']['seven_model_submission']['private_rmse']}))
+if __name__=='__main__': build()

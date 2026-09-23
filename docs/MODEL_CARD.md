@@ -1,9 +1,31 @@
 # Model card
 
-**Task:** post-throw x/y player trajectory prediction for NFL Big Data Bowl 2026
-Prediction. Inputs are pre-throw tracking, player roles, the supplied ball landing
-point, and requested forecast horizon. This is not a system that infers an unknown
-ball landing point at release time.
+**Task:** post-throw x/y player trajectory prediction for NFL Big Data Bowl 2026 Prediction. Inputs are observed tracking, player roles, the supplied ball landing point, and requested forecast horizon.
+
+## Current competition-facing neural ensemble — September 23, 2026
+
+The strongest measured deployment is an **equal seven-model ensemble**: five source-faithful game-fold bases plus one independent-seed Fold-0 model and one protected context-dropout Fold-0 model. The ensemble was fixed before scoring and uses 1/7 weight per model.
+
+| Evidence | Coordinate RMSE |
+|---|---:|
+| Five-fold base OOF, 561,607 retained rows | 0.468143852 |
+| Five-base private submission `56470102` | 0.46615 |
+| **Seven-model private submission `56478271`** | **0.46547** |
+| Final first-place private score | 0.46340 |
+
+The seven-model ensemble improved the prior private score by **0.00068 RMSE** and reduced the gap to first place from 0.00275 to **0.00207**. Both submissions were post-competition measurements; no official rank is claimed.
+
+The local seven-model screening proxy improved Fold-0 RMSE by 0.003556053 with a paired-game 95% interval of +0.001847278 to +0.005319216. The smaller private-score gain demonstrates why local and leaderboard settings remain distinct.
+
+Seed-1 diversity and context-player dropout were retained as complementary members despite failing their standalone confirmation/uncertainty gates. ROT geometry and mirror averaging were not promoted after locked confirmation/robustness failures. The next prepared experiment tests a complete alternate game-grouped CV split family; it is not yet a measured result.
+
+Private weights, competition data, and large checkpoint archives remain in AWS. GitHub contains aggregate evidence, source/protocol snapshots, executed notebooks, and documentation.
+
+---
+
+## Earlier feature-engineered system retained for lineage
+
+The sections below document the earlier ridge/boosting research line and sealed holdout evaluation. They remain useful evidence of feature engineering, validation, and inference engineering, but they are **not** the current strongest competition-facing model family.
 
 ## Measured research comparisons
 

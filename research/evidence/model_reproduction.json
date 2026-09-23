@@ -1,6 +1,12 @@
 {
-  "as_of_utc": "2026-09-23",
+  "as_of_utc": "2026-09-23T02:10:06Z",
+  "metric": {
+    "name": "coordinate_rmse_yards",
+    "lower_is_better": true,
+    "formula": "sqrt(sum(dx^2 + dy^2) / (2N))"
+  },
   "base_oof_rmse": 0.4681438519862962,
+  "base_oof_rows": 561607,
   "base_folds": [
     {
       "fold": 0,
@@ -38,9 +44,11 @@
       "checkpoint_sha256": "d4f45d498cf0c14df502dac29fa49893b3c3081a8fec7c3394f02658d5b08425"
     }
   ],
-  "rot": [
+  "experiments": [
     {
-      "stage": "Fold 1 discovery",
+      "name": "ROT discovery",
+      "family": "geometry",
+      "fold": "Fold 1",
       "rows": 120035,
       "games": 55,
       "base": 0.4815711818445224,
@@ -54,7 +62,9 @@
       "decision": "PROMISING_FOR_CONFIRMATION"
     },
     {
-      "stage": "Fold 2 fixed confirmation",
+      "name": "ROT fixed confirmation",
+      "family": "geometry",
+      "fold": "Fold 2",
       "rows": 108585,
       "games": 54,
       "base": 0.4409361330087485,
@@ -66,14 +76,14 @@
         0.0032001775696687963
       ],
       "decision": "NO_CONFIRMATION"
-    }
-  ],
-  "seed_diversity": [
+    },
     {
-      "stage": "Fold 0 discovery",
+      "name": "Seed-1 discovery",
+      "family": "training diversity",
+      "fold": "Fold 0",
       "rows": 109144,
       "games": 55,
-      "base": 0.4588228499974014,
+      "base": 0.45882284999740147,
       "candidate": 0.45634647885212076,
       "blend": 0.4539265743180465,
       "gain": 0.004896275679354911,
@@ -81,12 +91,12 @@
         0.001927811890459076,
         0.008076995536804054
       ],
-      "decision": "PROMISING_FOR_CONFIRMATION",
-      "training_seed": 1,
-      "epoch": 30
+      "decision": "PROMISING_FOR_CONFIRMATION"
     },
     {
-      "stage": "Fold 1 fixed confirmation",
+      "name": "Seed-1 confirmation",
+      "family": "training diversity",
+      "fold": "Fold 1",
       "rows": 120035,
       "games": 55,
       "base": 0.4815711818445224,
@@ -97,27 +107,37 @@
         -0.0018628715388478002,
         0.007903557294551946
       ],
-      "decision": "NO_CONFIRMATION",
-      "training_seed": 1,
-      "epoch": 30
+      "decision": "NO_CONFIRMATION"
+    },
+    {
+      "name": "Context dropout",
+      "family": "augmentation diversity",
+      "fold": "Fold 0",
+      "rows": 109144,
+      "games": 55,
+      "base": 0.45882284999740147,
+      "candidate": 0.4590364580975178,
+      "blend": 0.4555153401579136,
+      "gain": 0.003307509839487799,
+      "interval95": [
+        -0.0006204327175293803,
+        0.007364286778320932
+      ],
+      "decision": "NO_PROMOTION"
     }
   ],
-  "context_dropout": {
-    "stage": "Fold 0 discovery",
-    "rows": 109144,
-    "games": 55,
-    "base": 0.4588228499974014,
-    "candidate": 0.4590364580975178,
-    "blend": 0.4555153401579136,
-    "gain": 0.003307509839487799,
+  "mirror": {
+    "population": "five-fold OOF",
+    "base": 0.4681438519862962,
+    "blend": 0.466539148,
+    "gain": 0.001604704,
     "interval95": [
-      -0.0006204327175293803,
-      0.007364286778320931
+      0.000188035,
+      0.003096781
     ],
-    "decision": "NO_PROMOTION",
-    "epoch": 30,
-    "training_seed": 0,
-    "residual_correlation": 0.9703520138707008
+    "folds_improved": 4,
+    "fold2_degradation": 0.002466088,
+    "decision": "NO_PROMOTION"
   },
   "horizon_segments": [
     {
@@ -131,52 +151,84 @@
       "delta_sse": 311.01548065741366
     }
   ],
-  "private_submissions": [
-    {
-      "label": "Earlier frozen tree system",
-      "submission_ref": null,
-      "private_score": 0.7009,
-      "status": "historical late submission"
+  "frontier_equal7": {
+    "models": 7,
+    "weights": "equal 1/7 per model",
+    "local_proxy_population": "Fold 0 held-out; 5/7 base-family proxy + 1/7 seed1 + 1/7 context",
+    "local_proxy_base_rmse": 0.45882284999740147,
+    "local_proxy_rmse": 0.45526679698008526,
+    "local_proxy_gain": 0.0035560530173162075,
+    "local_proxy_interval95": [
+      0.001847277782492586,
+      0.0053192164915099385
+    ],
+    "candidate_signature": "2c54d499eae490f19ee5f598e1d84027cc473c1356601fe18a1e7e5e4e2739d1",
+    "submission_ref": "56478271",
+    "private_rmse": 0.46547,
+    "status": "SCORED"
+  },
+  "kaggle_private": {
+    "historical_submission": {
+      "submission_ref": "56129348",
+      "private_rmse": 0.7009,
+      "note": "earlier post-deadline model; no official rank claimed"
     },
-    {
-      "label": "Five-base ensemble",
+    "five_base_submission": {
       "submission_ref": "56470102",
-      "private_score": 0.46615,
-      "status": "complete"
+      "private_rmse": 0.46615,
+      "note": "five preserved source-faithful bases"
+    },
+    "seven_model_submission": {
+      "submission_ref": "56478271",
+      "private_rmse": 0.46547,
+      "note": "five bases + seed1 Fold0 + context-dropout Fold0, equal weights"
+    },
+    "final_first_place_private_rmse": 0.4634,
+    "current_gap": 0.0020700000000000163,
+    "improvement_five_to_seven": 0.0006800000000000139,
+    "leaderboard_comparison": "private score only; late submissions are not assigned an official competition rank"
+  },
+  "leading_solution_reproduction": [
+    {
+      "capability": "Source-faithful temporal + cross-player base architecture",
+      "status": "Recreated and validated",
+      "evidence": "five excluded-game folds; 561,607 OOF rows"
     },
     {
-      "label": "Seven-model equal ensemble",
-      "submission_ref": "56478271",
-      "private_score": 0.46547,
-      "status": "complete",
-      "notebook": "alvaromendizabal/nfl-frontier-score-2c54d499eae4",
-      "notebook_version": 1,
-      "candidate_signature": "2c54d499eae490f19ee5f598e1d84027cc473c1356601fe18a1e7e5e4e2739d1"
+      "capability": "Independent-seed diversity",
+      "status": "Adapted and evaluated",
+      "evidence": "strong Fold0 point gain; Fold1 uncertainty confirmation failed"
+    },
+    {
+      "capability": "Context-player dropout",
+      "status": "Adapted and evaluated",
+      "evidence": "Fold0 point gain; uncertainty gate failed; retained as complementary model"
+    },
+    {
+      "capability": "Equal-weight heterogeneous ensemble",
+      "status": "Recreated and validated on Kaggle",
+      "evidence": "private RMSE 0.46615 -> 0.46547"
+    },
+    {
+      "capability": "Alternate grouped CV split family",
+      "status": "Prepared; not yet executed",
+      "evidence": "next leakage-safe full-OOF diversity experiment"
+    },
+    {
+      "capability": "Large multi-CV / feature-diverse ensemble",
+      "status": "Partially represented",
+      "evidence": "7 models deployed versus substantially larger public leading ensembles"
+    },
+    {
+      "capability": "Pretraining + multi-auxiliary transformer system",
+      "status": "Not yet implemented",
+      "evidence": "structural frontier if split diversity is insufficient"
     }
   ],
-  "first_place_private_score": 0.4634,
-  "first_place_source": "official final private leaderboard",
-  "current_private_score": 0.46547,
-  "prior_private_score": 0.46615,
-  "private_improvement": 0.00068,
-  "gap_to_first_place": 0.00207,
-  "relative_gap_to_first_place": 0.004466983167889548,
-  "frontier_local_proxy": {
-    "rows": 109144,
-    "games": 55,
-    "base_rmse": 0.4588228499974014,
-    "seven_family_proxy_rmse": 0.4552667969800852,
-    "gain": 0.0035560530173162075,
-    "model_count": 7,
-    "deployment_weight_per_model": 0.14285714285714285
-  },
-  "alternate_cv": {
-    "status": "PENDING_USER_EXECUTION",
-    "split_assignment_seed": 1,
-    "folds": 5,
-    "automatic_submission": false,
-    "claim": "No alternate-CV metric is published yet."
-  },
   "norb_decision": "NO_PROMOTION",
-  "source_registry_sha256": "6ec3c9e4e03e16e18154a1728216499cb5386c86fcd1ff56a9502e6da9370bc9"
+  "next_experiment": {
+    "name": "alternate grouped CV split diversity",
+    "status": "prepared_not_executed",
+    "claim_boundary": "no metric or improvement is claimed until returned evidence exists"
+  }
 }

@@ -30,7 +30,8 @@ jobs:
         run: |
           set -euo pipefail
           python3 research/publication/register_recent.py
-          git add -- README.md docs/MODEL_CARD.md docs/results/frontier_submission.json research/RECENT_MODELS.ipynb research/evidence/model_reproduction.json research/figures/winner_folds.png research/figures/winner_confirmation.png research/figures/winner_diversity.png research/figures/winner_private_score.png research/figures/winner_horizon.png research/publication/files.json research/publication/recent_models.py research/publication/register_recent.py research/publication/validate.py .github/workflows/recent-models.yml
+          git add -- README.md docs/MODEL_CARD.md docs/results/frontier_submission.json research/RECENT_MODELS.ipynb research/figures/winner_folds.png research/figures/winner_confirmation.png research/figures/winner_diversity.png research/figures/winner_private_score.png research/figures/winner_horizon.png research/publication/files.json research/publication/recent_models.py research/publication/register_recent.py research/publication/validate.py .github/workflows/recent-models.yml
+          git add -f -- research/evidence/model_reproduction.json
           python3 research/publication/validate.py
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'docs: preserve executed frontier model review with registered public hashes'

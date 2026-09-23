@@ -2,7 +2,7 @@ name: Recent Model Evidence
 on:
   pull_request:
   push:
-    branches: [main, 'feat/frontier-evidence-20260922']
+    branches: [main, 'feat/frontier-evidence-*', 'feat/winner-evidence-*']
 permissions:
   contents: read
 jobs:
@@ -22,17 +22,25 @@ jobs:
           download-from-astral-mirror: false
       - name: Execute aggregate-only model review
         run: uv run --frozen --with nbclient==0.10.2 python research/publication/recent_models.py
-      - name: Publish this explicitly requested frontier evidence snapshot
+      - name: Publish explicitly requested frontier evidence snapshot
         if: >-
           github.event_name == 'push' &&
-          github.ref == 'refs/heads/feat/frontier-evidence-20260922' &&
-          contains(github.event.head_commit.message, '[render frontier evidence]')
+          (startsWith(github.ref, 'refs/heads/feat/frontier-evidence-') ||
+           startsWith(github.ref, 'refs/heads/feat/winner-evidence-')) &&
+          (contains(github.event.head_commit.message, '[render frontier evidence]') ||
+           contains(github.event.head_commit.message, '[render winner evidence]'))
         run: |
           set -euo pipefail
           python3 research/publication/register_recent.py
-          git add -- research/RECENT_MODELS.ipynb             research/figures/winner_folds.png             research/figures/winner_confirmation.png             research/figures/winner_horizon.png             research/figures/winner_diversity.png             research/figures/winner_private_progress.png             research/publication/files.json
+          git add -- research/RECENT_MODELS.ipynb \
+            research/figures/winner_folds.png \
+            research/figures/winner_confirmation.png \
+            research/figures/winner_horizon.png \
+            research/figures/winner_diversity.png \
+            research/figures/winner_private_progress.png \
+            research/publication/files.json
           python3 research/publication/validate.py
           if ! git diff --cached --quiet; then
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'docs: preserve executed frontier model review with registered public hashes'
-            git push origin HEAD:feat/frontier-evidence-20260922
+            git push origin HEAD:${GITHUB_REF_NAME}
           fi

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-23T02:10:06Z",
+  "competition": "nfl-big-data-bowl-2026-prediction",
+  "system": "seven_model_equal_ensemble",
+  "model_count": 7,
+  "weight_per_model": 0.14285714285714285,
+  "composition": [
+    "base_fold0",
+    "base_fold1",
+    "base_fold2",
+    "base_fold3",
+    "base_fold4",
+    "seed1_fold0",
+    "context_dropout_fold0"
+  ],
+  "submission_ref": "56478271",
+  "candidate_signature": "2c54d499eae490f19ee5f598e1d84027cc473c1356601fe18a1e7e5e4e2739d1",
+  "notebook": "alvaromendizabal/nfl-frontier-score-2c54d499eae4",
+  "notebook_version": 1,
+  "status": "COMPLETE",
+  "private_score": 0.46547,
+  "public_score": 0.0,
+  "prior_submission_ref": "56470102",
+  "prior_private_score": 0.46615,
+  "private_improvement": 0.00068,
+  "first_place_private_score": 0.4634,
+  "gap_to_first_place": 0.00207,
+  "relative_gap_to_first_place": 0.004466983167889548,
+  "official_rank_claimed": false,
+  "interpretation": "Post-competition research score. Private-score comparison is valid; no official competition placement is claimed.",
+  "score_readback": {
+    "score_checks": 1,
+    "polling": false,
+    "remote_writes": 0,
+    "new_fits": 0,
+    "optimizer_updates": 0
+  },
+  "next_research_question": "Does a complete alternate game-grouped CV split family add enough leakage-safe diversity to justify a larger fixed ensemble?"
+}

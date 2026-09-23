@@ -6,6 +6,8 @@ import json
 ROOT = Path(__file__).resolve().parents[2]
 ADDITIONS = (
     'README.md',
+    'docs/MODEL_CARD.md',
+    'docs/results/frontier_submission.json',
     '.github/workflows/recent-models.yml',
     'research/evidence/model_reproduction.json',
     'research/publication/recent_models.py',
@@ -14,6 +16,8 @@ ADDITIONS = (
     'research/RECENT_MODELS.ipynb',
     'research/figures/winner_folds.png',
     'research/figures/winner_confirmation.png',
+    'research/figures/winner_diversity.png',
+    'research/figures/winner_private_score.png',
     'research/figures/winner_horizon.png',
 )
 
@@ -22,8 +26,8 @@ def main():
     manifest = json.loads(path.read_text())
     validator = ROOT / 'research/publication/validate.py'
     text = validator.read_text()
-    old = "not name.startswith('research/figures/review_')"
-    new = "not (name.startswith('research/figures/review_') or name in {'research/figures/winner_folds.png', 'research/figures/winner_confirmation.png', 'research/figures/winner_horizon.png'})"
+    old = "name in {'research/figures/winner_folds.png', 'research/figures/winner_confirmation.png', 'research/figures/winner_horizon.png'}"
+    new = "name in {'research/figures/winner_folds.png', 'research/figures/winner_confirmation.png', 'research/figures/winner_diversity.png', 'research/figures/winner_private_score.png', 'research/figures/winner_horizon.png'}"
     if old in text:
         if text.count(old) != 1:
             raise ValueError('Unexpected image allowlist source')

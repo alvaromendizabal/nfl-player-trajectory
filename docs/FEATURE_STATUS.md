@@ -1,3 +1,5 @@
+> **Current-status note (26 September 2026):** This document preserves the earlier feature-engineering phase. The current project state is maintained in [CURRENT_RESEARCH_STATUS.md](CURRENT_RESEARCH_STATUS.md), and the latest executed aggregate study is [04_observed_context_supervision.ipynb](../notebooks/04_observed_context_supervision.ipynb). The strongest recorded private score is 0.46547, and the strongest completed local multisplit-20 OOF is 0.4631723213 over 561,607 rows. Values below are historical stage evidence, not the current leaderboard/model snapshot.
+
 # Current features, models and research decision
 
 Verified 10 September 2026. **Feature research remains open; the 0.46 target is unmet.**

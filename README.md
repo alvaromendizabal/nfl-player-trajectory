@@ -4,7 +4,7 @@
 
 [Latest executed study](notebooks/04_observed_context_supervision.ipynb) · [Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [Recent model review](research/RECENT_MODELS.ipynb) · [Run and reproduce](START_HERE.md) · [Model card](docs/MODEL_CARD.md)
 
-Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. This repository is the curated public research record; AWS/SageMaker remains the canonical workspace for private data, fitted weights, checkpoints, and full experiment state.
+Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. Competition slug: `nfl-big-data-bowl-2026-prediction`. This repository is the curated public research record; AWS/SageMaker remains the canonical workspace for private data, fitted weights, checkpoints, and full experiment state.
 
 ## Current research snapshot
 

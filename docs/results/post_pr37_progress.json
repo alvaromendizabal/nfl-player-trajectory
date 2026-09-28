@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "snapshot": "2026-09-27",
+  "metric": "coordinate_rmse_yards",
+  "lower_is_better": true,
+  "competition": "nfl-big-data-bowl-2026-prediction",
+  "late_submissions_no_official_rank": true,
+  "private_score": {
+    "previous_best": 0.46547,
+    "current_best": 0.46487,
+    "improvement": 0.0006,
+    "published_first_place_comparator": 0.4634,
+    "remaining_gap": 0.00147
+  },
+  "local_oof": {
+    "multisplit20_rmse": 0.4631723212629593,
+    "rows": 561607,
+    "model_count": 20,
+    "split_families": 4,
+    "directly_comparable_to_private_score": false
+  },
+  "inference_acceleration": {
+    "legacy_median_seconds_per_play": 0.5411140285000329,
+    "shared_preparation_median_seconds_per_play": 0.11310043274988857,
+    "measured_speedup": 4.7843674453187806,
+    "parity_plays": 96,
+    "parity_rows": 3723,
+    "maximum_coordinate_difference_yards": 0,
+    "promoted_path": "shared preparation",
+    "weights_changed": false
+  },
+  "research_outcomes": [
+    {
+      "milestone": "multisplit20 private scoring",
+      "status": "promoted evidence",
+      "public_summary": "new private best"
+    },
+    {
+      "milestone": "shared preparation inference",
+      "status": "promoted engineering",
+      "public_summary": "measured speedup with exact parity"
+    },
+    {
+      "milestone": "scratch feature configuration",
+      "status": "not promoted",
+      "public_summary": "control and evaluation credibility failed"
+    },
+    {
+      "milestone": "normalization and continuation recovery",
+      "status": "retired",
+      "public_summary": "control remained outside credibility gate"
+    },
+    {
+      "milestone": "source recipe audit",
+      "status": "next direction",
+      "public_summary": "restore verified training contract before new feature confirmation"
+    }
+  ],
+  "publication_boundary": {
+    "semi_reproducible": true,
+    "publishes": [
+      "aggregate metrics",
+      "validation and promotion logic",
+      "executed aggregate notebooks",
+      "selected protocol and source snapshots",
+      "negative-result decisions"
+    ],
+    "withholds": [
+      "raw competition data",
+      "fitted weights",
+      "private checkpoint locations",
+      "credentials",
+      "unreleased competition-specific feature transforms"
+    ]
+  }
+}

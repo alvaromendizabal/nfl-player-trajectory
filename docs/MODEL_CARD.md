@@ -2,24 +2,33 @@
 
 **Task:** post-throw x/y player trajectory prediction for NFL Big Data Bowl 2026 Prediction. Inputs are observed tracking, player roles, the supplied ball landing point, and requested forecast horizon.
 
-## Current competition-facing neural ensemble — September 23, 2026
+## Current competition-facing neural ensemble — September 2026
 
-The strongest measured deployment is an **equal seven-model ensemble**: five source-faithful game-fold bases plus one independent-seed Fold-0 model and one protected context-dropout Fold-0 model. The ensemble was fixed before scoring and uses 1/7 weight per model.
+The strongest measured deployment is a **20-model multisplit ensemble** spanning four grouped-CV split families. The submission uses fixed equal weighting across the preserved models.
 
 | Evidence | Coordinate RMSE |
 |---|---:|
-| Five-fold base OOF, 561,607 retained rows | 0.468143852 |
-| Five-base private submission `56470102` | 0.46615 |
-| **Seven-model private submission `56478271`** | **0.46547** |
-| Final first-place private score | 0.46340 |
+| Multisplit local OOF, 561,607 rows | 0.4631723213 |
+| Five-base private submission | 0.46615 |
+| Seven-model private submission | 0.46547 |
+| **Multisplit-20 private submission** | **0.46487** |
+| Published first-place private comparator | 0.46340 |
 
-The seven-model ensemble improved the prior private score by **0.00068 RMSE** and reduced the gap to first place from 0.00275 to **0.00207**. Both submissions were post-competition measurements; no official rank is claimed.
+The latest private result improved the prior private score by **0.00060 RMSE**, reducing the comparable gap to **0.00147**. These are late post-competition measurements; no official competition rank is claimed.
 
-The local seven-model screening proxy improved Fold-0 RMSE by 0.003556053 with a paired-game 95% interval of +0.001847278 to +0.005319216. The smaller private-score gain demonstrates why local and leaderboard settings remain distinct.
+### Inference engineering
 
-Seed-1 diversity and context-player dropout were retained as complementary members despite failing their standalone confirmation/uncertainty gates. ROT geometry and mirror averaging were not promoted after locked confirmation/robustness failures. The next prepared experiment tests a complete alternate game-grouped CV split family; it is not yet a measured result.
+A fixed-weight AWS benchmark validated a **4.784× measured speedup** by sharing input preparation across the ensemble: median latency moved from 0.541114 to 0.113100 seconds per play on the declared timing sample.
 
-Private weights, competition data, and large checkpoint archives remain in AWS. GitHub contains aggregate evidence, source/protocol snapshots, executed notebooks, and documentation.
+The promoted path was bitwise-identical on **96 plays / 3,723 requested rows**, with maximum coordinate difference zero. More aggressive vectorized alternatives were rejected when they violated the numerical-parity tolerance. This was an execution improvement, not a model-quality change.
+
+### Current research interpretation
+
+Several follow-up feature configurations were not promoted because their control or evaluation checks did not establish a trustworthy improvement. A subsequent source audit found training-contract drift between the earlier successful trainer and later high-throughput experiments.
+
+The next feature study therefore returns to the verified training contract before testing a new configuration. Its exact unreleased transform remains private and it has no published metric yet.
+
+Private data, fitted weights, large checkpoints, exact private object locations, and unreleased competition-specific feature transforms remain in AWS. GitHub contains aggregate evidence, selected protocols/source snapshots, executed aggregate notebooks, and documentation.
 
 ---
 

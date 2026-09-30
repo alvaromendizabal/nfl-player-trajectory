@@ -2,13 +2,13 @@
   ".github/workflows/publication.yml": "50682daa310e65ec5616ebba1054bf2b431a093bd2d6db1a15e5ad6e3206ba12",
   ".github/workflows/recent-models.yml": "1b1858b3762f9deabd97d12da1b66b65760ee98aecf5d0d850b458afb84b264f",
   ".gitignore": "ee5e7aade0b200ef118590732cd3f2e36f53170b6d18584b8afade2261bf81cc",
-  "README.md": "660818c11609d4b4506ea45baf81c4d2d5a03876df5b51c2a8db1bf88f609883",
+  "README.md": "f88a4c14fa4358fcf3ea085334e9d19bb9cc9862d671b441d0878669527aa434",
   "START_HERE.md": "2aec0088ff55c5f4367a00f6b4273d0c4ca46773198fb0b91a07de7280b9720d",
-  "docs/MODEL_CARD.md": "3b1179b3a399a7a64c8e1b2d69e516abf9a992d1d500f6f918e23bcf68058233",
+  "docs/MODEL_CARD.md": "d80e792b3b61280d86be221637ad1c480fbc0ff50945b435b70cd3c91a0f9d78",
   "docs/SOURCES.md": "cb716842b197d0250a6fe5ef9e01c7a62fe974298a504ebebc57592cf8d848b1",
   "docs/results/frontier_submission.json": "7615fd2e19327205855a74a0f551da67dec9b043563875d75fe46dbb7d248c62",
   "pyproject.toml": "1ca233da14ab8a4f2836fe7c8b64b981fa65ccd1cff157a4dfd93ad62d6b51aa",
-  "research/README.md": "41462c9e80df3e57fa600ee614ebcc7559115af32d5eacf6e0fb355f36182a0c",
+  "research/README.md": "72bfe0af635226d91ebf8edd87e0e692497f08e86197f7ca7f077c9489fd6b6d",
   "research/RECENT_MODELS.ipynb": "1fb10ffabf594d1a0dbb5e4eb965bcef2c2c0fcc5a57ea83fabf7c016686837c",
   "research/RESEARCH_REVIEW.html": "e5e7a5cf0fc325d76f6a0603e2c67f3c33cbcd09a87ecdcfc90f2003aa40d8aa",
   "research/RESEARCH_REVIEW.ipynb": "800e1e58bf82a321064acaeffa9e8fbb7bea6f882f56b788e105246909d6466d",
@@ -341,5 +341,8 @@
   "research/workspace/nfl_manual_sync/interaction_feature_review.ipynb": "02065e8454da6d786ec8a8a9de68b2e8f2a30cbff9be3849bd298c267b2c0137",
   "research/workspace/nfl_manual_sync/nfl_workspace.py": "21ec57d08caf9cf695d5357b2ca1aea97a6a118f221ab821115a6f354596d5c4",
   "research/workspace/nfl_manual_sync/tests/test_workspace.py": "be81431e5bc3400b9bf508e4c43acc1ef98c5681eacb8aca7111c1949b511098",
-  "research/workspace/nfl_manual_sync/workspace_readiness.ipynb": "793f59516d2cc122680ed00967545674388564def12a289c1a9908170c5b8732"
+  "research/workspace/nfl_manual_sync/workspace_readiness.ipynb": "793f59516d2cc122680ed00967545674388564def12a289c1a9908170c5b8732",
+  "docs/CURRENT_RESEARCH_STATUS.md": "121423343faef8a4ff4255f5df495c0c82016f8b5ab5311bcbc8d99c0b391fd4",
+  "docs/results/post_pr38_architecture_progress.json": "3dfa0fa64d541e8e9265fea38f5f01c7c8a680d44dc5db6937ef59da1ddd2858",
+  "notebooks/06_architecture_research_progress.ipynb": "927f9b5b5d4a286631fee5c9cedaf5490a5b0e6da2d6a5725174c32ed7d25615"
 }

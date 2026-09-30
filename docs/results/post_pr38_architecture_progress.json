@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "snapshot": "2026-09-29",
+  "competition": "nfl-big-data-bowl-2026-prediction",
+  "metric": "coordinate_rmse_yards",
+  "lower_is_better": true,
+  "private_frontier": {
+    "private_best": 0.46487,
+    "published_first_place_comparator": 0.4634,
+    "remaining_gap": 0.00147,
+    "late_submissions_no_official_rank": true
+  },
+  "local_frontier": {
+    "multisplit20_oof_rmse": 0.4631723212629593,
+    "rows": 561607,
+    "directly_comparable_to_private": false
+  },
+  "common_fold0_reference": {
+    "rmse": 0.4537257476309679,
+    "rows": 109144,
+    "games": 55,
+    "inspected_development_fold": true
+  },
+  "studies": [
+    {
+      "public_name": "expanded observed-motion representation",
+      "standalone_rmse": 0.46063278603812063,
+      "fixed_blend_rmse": 0.4525854218277901,
+      "gain_vs_reference": 0.0011403258031777996,
+      "interval95": [
+        -0.00040696886555451756,
+        0.0024975173169987526
+      ],
+      "anchor_blend_incremental_gain": 0.0010585182795705417,
+      "anchor_interval95": [
+        -0.0006647808738853414,
+        0.0027199863816794925
+      ],
+      "decision": "NO_PROMOTION",
+      "fold1_run": false
+    },
+    {
+      "public_name": "future-conditioned delta decoder",
+      "standalone_rmse": 0.4599762248441056,
+      "fixed_blend_rmse": 0.4529808663099405,
+      "gain_vs_reference": 0.0007448813210274019,
+      "interval95": [
+        -0.0006815486872915472,
+        0.0020490253736768337
+      ],
+      "anchor_blend_incremental_gain": 0.0006630737974201439,
+      "anchor_interval95": [
+        -0.0007723288624942148,
+        0.0020225316749122244
+      ],
+      "decision": "NO_PROMOTION",
+      "fold1_run": false
+    }
+  ],
+  "locked_reference_gain_threshold": 0.0015,
+  "gpu_benchmark": {
+    "gpu_family": "NVIDIA L4",
+    "statistical_recipe_changed": false,
+    "worker_measurements_seconds": [
+      {
+        "workers": 0,
+        "median_full_step_seconds": 0.11017817699939769
+      },
+      {
+        "workers": 2,
+        "median_full_step_seconds": 0.04855473699990398
+      },
+      {
+        "workers": 4,
+        "median_full_step_seconds": 0.04861624949990073
+      },
+      {
+        "workers": 12,
+        "median_full_step_seconds": 0.05089610849972814
+      }
+    ],
+    "selected_workers": 2
+  },
+  "next_research_family": {
+    "public_name": "target-specific sparse interaction",
+    "state": "prepared_unmeasured",
+    "published_metric": null
+  },
+  "publication_boundary": {
+    "semi_reproducible": true,
+    "publishes": [
+      "aggregate metrics",
+      "validation and promotion logic",
+      "executed aggregate notebooks",
+      "selected protocol descriptions",
+      "negative-result decisions"
+    ],
+    "withholds": [
+      "raw competition data",
+      "fitted weights",
+      "private checkpoint locations",
+      "credentials",
+      "private experiment runners",
+      "unreleased feature and interaction transforms"
+    ]
+  }
+}

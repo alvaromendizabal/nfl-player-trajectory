@@ -1,4 +1,4 @@
-# Current research status — September 2026
+# Current research status — October 2026
 
 ## Competitive state
 
@@ -6,51 +6,63 @@
 - Published first-place private comparator: **0.46340 RMSE**.
 - Remaining comparable gap: **0.00147 RMSE**.
 - Strongest completed local system: **0.4631723213 OOF RMSE** over 561,607 rows from a 20-model, four-split-family ensemble.
-- Stretch research target: **0.44 RMSE**. No local result is presented as an equivalent private score.
+- Stretch research target: **0.44 RMSE**. No local development-fold result is presented as an equivalent private score.
 
-## Post-PR38 controlled neural studies
+## Controlled research completed since PR #39
 
-The source-recipe recovery made it possible to compare new candidates against a credible archived anchor without extending the earlier drifted control.
+| Family | Fold-0 evidence | Fold-1 evidence | Decision |
+|---|---|---|---|
+| Target-specific sparse interaction | Candidate best **0.456751**; fixed blend **0.452395**; +0.001330 vs reference | Not run | **NO_PROMOTION** |
+| Wide/shallow dual-path | Candidate **0.465845**; fixed blend **0.451572**; +0.002154; interval fully positive | Candidate **0.493347**; fixed blend **0.474765**; +0.001081; interval crossed zero | **NO_PROMOTION after confirmation** |
+| Dual-path + fixed TTA | Parent standalone **0.462773** | Parent standalone **0.491123** | **Retain TTA mechanism** |
+| Augmentation fine-tune + TTA | Selected epoch 0; fixed blend **0.451607** | Selected epoch 0; fixed blend **0.474849** | **NO_PROMOTION** |
+| Fourier / RBF adapters | Selected epoch -1; no incremental parent+TTA gain | Not run | **NO_PROMOTION** |
+| Late-horizon / defender experts | Selected epoch -1; no incremental parent+TTA gain | Not run | **NO_PROMOTION** |
+| Muon optimizer | Best candidate **0.471918**; blend **0.451556**; parent+TTA incremental gain effectively zero | Not run | **NO_PROMOTION** |
 
-| Evidence | Expanded motion | Future-delta decoder |
-|---|---:|---:|
-| Standalone Fold-0 RMSE | 0.460633 | **0.459976** |
-| Multisplit reference RMSE | 0.453726 | 0.453726 |
-| Fixed 80/20 blend RMSE | **0.452585** | 0.452981 |
-| Gain vs reference | **+0.001140** | +0.000745 |
-| Locked minimum gain | +0.001500 | +0.001500 |
-| Paired-game interval | -0.000407 to +0.002498 | -0.000682 to +0.002049 |
-| Decision | **NO_PROMOTION** | **NO_PROMOTION** |
+The dual-path Fold-0 result is the strongest new complementary signal discovered in this sequence, but the project does not promote a one-fold win. Fold 1 did not reproduce the required gain, so the exact configuration was retired.
 
-The expanded-motion candidate also improved the equivalent archived-anchor blend by **0.001059 RMSE**, while the future-delta candidate improved it by **0.000663 RMSE**. In both cases the paired-game interval crossed zero, so neither family advanced to Fold 1.
+## What transferred
 
-These are useful negative results: both candidates contained signal, but the evidence was not strong enough for promotion. No post-hoc fold selection, blend-weight search, or threshold relaxation followed the result.
+### Fixed test-time augmentation
 
-## GPU and runtime evidence
+A fixed original / horizontal-flip / cropped-input inference blend improved the selected dual-path parent on both tested folds:
 
-The current AWS training environment uses a single NVIDIA L4. A complete forward/backward/optimizer benchmark on the future-delta architecture measured:
+- Fold 0: **0.465845 → 0.462773 RMSE**
+- Fold 1: **0.493347 → 0.491123 RMSE**
 
-| Loader workers | Median full step |
-|---:|---:|
-| 0 | 0.11018 s |
-| **2** | **0.04855 s** |
-| 4 | 0.04862 s |
-| 12 | 0.05090 s |
+The augmentation fine-tune itself did not improve beyond the starting parent; both folds selected epoch 0.
 
-Two workers were selected. The result shows that the input pipeline was materially improved without changing the statistical training recipe; additional host workers did not improve the measured step.
+### GPU and input-pipeline engineering
 
-This GPU benchmark is separate from the previously published **4.784× inference acceleration** for the fixed 20-model ensemble.
+An end-to-end loader benchmark corrected an earlier benchmark that timed only GPU compute and excluded data-fetch latency. On the dual-path workload:
+
+- 0 workers: about **687 examples/s**
+- selected worker plan: about **2,137 examples/s**
+- throughput improvement: about **3.11×**
+
+Later bounded runs commonly reached **~70–74% mean sampled GPU utilization** with **100% peaks**. Worker choice is benchmarked per workload because the optimum varied by model and fold.
+
+This GPU engineering is separate from the previously published **4.784× inference acceleration** for the fixed 20-model ensemble.
 
 ## Scientific interpretation
 
-1. **Split diversity remains the strongest proven new ensemble axis.** It is the only recent mechanism that transferred to a stronger private score.
-2. **Small representation changes can add complementarity without earning promotion.** The expanded-motion model improved the fixed blend but missed the predeclared gain and uncertainty gates.
-3. **A different decoder alone was insufficient.** Future-conditioned incremental motion improved standalone Fold-0 RMSE relative to the expanded-motion candidate, but contributed less to the fixed ensemble.
-4. **The next studies should change interaction structure, not merely append more kinematics.** A target-specific sparse-interaction family is prepared for AWS execution and has no published accuracy result yet.
-5. **Negative experiments remain first-class evidence.** Retiring a family after a locked no-promotion decision prevents repeated compute spend and selective reporting.
+1. **Complementarity matters more than standalone RMSE.**
+2. **One-fold wins are not enough.**
+3. **TTA transferred better than augmentation fine-tuning.**
+4. **Small parent-neutral adapters did not escape the ceiling.**
+5. **Muon did not improve this architecture under a controlled optimizer-only comparison.**
+6. **The remaining major public-solution gap is system-level diversity and broader supervision.**
+7. **Negative experiments remain first-class evidence.**
+
+## Current next direction
+
+The next prepared AWS experiment is a **competition-data-only two-stage / all-player pseudo-supervision** study. The selected project-owned dual-path model acts as teacher; two predeclared student variants test plain and uncertainty-weighted pseudo-label consistency for valid unscored players. It remains **unmeasured** until a real AWS execution completes.
+
+If pseudo-supervision does not transfer, the next major program should emphasize **first-place-style feature/configuration and split diversity**, not additional rescue variants of retired branches.
 
 ## Public/private boundary
 
-Public GitHub contains aggregate score and latency evidence, validation logic, executed aggregate notebooks, selected protocols, and high-level research decisions.
+Public GitHub contains aggregate score and latency evidence, validation logic, selected protocols, decision history, public notebooks, and privacy-safe implementation patterns.
 
 Private AWS retains competition data, fitted states, large checkpoints, object locations, private runners, and unreleased feature/interaction transforms. Kaggle remains the organizer-required submission surface only.

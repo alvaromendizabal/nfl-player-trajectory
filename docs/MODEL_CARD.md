@@ -2,7 +2,7 @@
 
 **Task:** post-throw x/y player trajectory prediction for NFL Big Data Bowl 2026 Prediction. Inputs are observed tracking, player roles, the supplied ball landing point, and requested forecast horizon.
 
-## Current competition-facing neural ensemble — September 2026
+## Current competition-facing neural ensemble — October 2026
 
 The strongest measured deployment remains the **20-model multisplit ensemble** spanning four grouped-CV split families.
 
@@ -15,30 +15,31 @@ The strongest measured deployment remains the **20-model multisplit ensemble** s
 
 The latest private result remains **0.00147 RMSE** behind the published first-place comparator. These are late post-competition measurements; no official competition rank is claimed.
 
-### Post-frontier architecture research
+### Post-PR39 neural research
 
-Two subsequent Fold-0 candidates completed locked promotion studies:
+| Candidate family | Best public aggregate evidence | Decision |
+|---|---|---|
+| Target-specific sparse interaction | Fold-0 blend 0.452395, +0.001330 vs fixed reference | No promotion |
+| Wide/shallow dual-path | Fold-0 blend 0.451572 passed discovery; Fold-1 blend 0.474765 missed confirmation | No promotion after confirmation |
+| Fixed TTA on dual-path | Standalone improved 0.465845→0.462773 on Fold 0 and 0.493347→0.491123 on Fold 1 | Retained mechanism |
+| Augmentation fine-tune | Selected epoch 0 on both folds | No promotion |
+| Fourier / RBF adapters | No incremental gain beyond parent+TTA | No promotion |
+| Late-horizon / defender specialists | No incremental gain beyond parent+TTA | No promotion |
+| Muon optimizer | Best candidate 0.471918; no measurable incremental parent+TTA gain | No promotion |
 
-| Candidate family | Standalone RMSE | Fixed blend RMSE | Gain | Decision |
-|---|---:|---:|---:|---|
-| Expanded observed-motion representation | 0.460633 | **0.452585** | +0.001140 | No promotion |
-| Future-conditioned delta decoder | **0.459976** | 0.452981 | +0.000745 | No promotion |
-
-The common fixed reference is **0.453726 RMSE**. Both candidates improved its point estimate, but neither achieved the predeclared **0.0015** gain and both paired-game confidence intervals crossed zero. Neither advanced to Fold 1.
-
-These are development-fold results, not private-leaderboard scores. Their value is diagnostic: new representations can create complementary errors without meeting the project's robustness threshold.
+These are development-fold results, not private-leaderboard scores. The key finding is that **dual-path interaction structure produced real ensemble complementarity on the discovery fold, but the gain did not survive the required confirmation fold**.
 
 ### GPU engineering
 
-On the current single-NVIDIA-L4 AWS environment, loader benchmarking reduced median complete training-step time from **0.1102 s to 0.0486 s** while leaving the scientific training contract unchanged. Two workers were selected; larger worker counts were not faster.
+The training pipeline now benchmarks data loading end to end rather than timing only GPU compute. On the dual-path workload this changed measured throughput from roughly **687 to 2,137 examples/s (~3.11×)**. Later runs reached **~70–74% mean sampled GPU utilization with 100% peaks**.
 
 The previously published inference result remains separate: shared preparation accelerated the fixed 20-model ensemble by **4.784×** with exact prediction parity on its declared benchmark sample.
 
 ### Current research direction
 
-The next prepared family changes **target/context interaction structure** rather than adding another small kinematic feature set. It remains unmeasured and is not presented as an improvement.
+The next prepared mechanism is **competition-data-only two-stage / all-player pseudo-supervision**, adapted without importing external historical NFL labels. It is unmeasured until AWS execution completes.
 
-Private competition data, fitted weights, large checkpoints, private runners, exact object locations, and unreleased feature/interaction transforms remain in AWS. GitHub contains aggregate evidence, selected protocols/source snapshots, executed aggregate notebooks, and documentation.
+Private competition data, fitted weights, large checkpoints, private runners, exact object locations, and unreleased feature/interaction transforms remain in AWS. GitHub contains aggregate evidence, selected protocols, public artifacts, and documentation.
 
 ---
 

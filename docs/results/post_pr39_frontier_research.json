@@ -1,0 +1,114 @@
+{
+  "prepared": "2026-10-01",
+  "scope": "Aggregate public research evidence after PR #39; no raw data, fitted weights, private object locations, or private runners.",
+  "competitive_state": {
+    "private_best_rmse": 0.46487,
+    "published_first_place_private_rmse": 0.4634,
+    "private_gap": 0.00147,
+    "local_multisplit_oof_rmse": 0.4631723212629593,
+    "local_multisplit_rows": 561607,
+    "stretch_target_rmse": 0.44
+  },
+  "fixed_reference": {
+    "fold0_rmse": 0.4537257476309679
+  },
+  "studies": [
+    {
+      "family": "target_sparse",
+      "fold0_candidate_rmse": 0.456751317,
+      "fold0_blend_rmse": 0.452395469,
+      "fold0_gain_vs_reference": 0.001330279,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "dualpath",
+      "fold0_candidate_rmse": 0.46584545062040644,
+      "fold0_blend_rmse": 0.451571832025195,
+      "fold0_gain_vs_reference": 0.0021539156057728825,
+      "fold0_gain_interval95": [
+        0.0006980826775425734,
+        0.0036114604862227625
+      ],
+      "fold1_candidate_rmse": 0.493347317437521,
+      "fold1_reference_rmse": 0.4758463667508105,
+      "fold1_blend_rmse": 0.4747650332536033,
+      "fold1_gain_vs_reference": 0.001081333497207182,
+      "fold1_gain_interval95": [
+        -0.0010110228956147008,
+        0.00295952476071604
+      ],
+      "decision": "NO_PROMOTION_AFTER_CONFIRMATION"
+    },
+    {
+      "family": "dualpath_fixed_tta",
+      "fold0_original_rmse": 0.46584545062040644,
+      "fold0_tta_rmse": 0.46277335769588285,
+      "fold1_original_rmse": 0.493347317437521,
+      "fold1_tta_rmse": 0.4911234228641024,
+      "decision": "RETAIN_MECHANISM"
+    },
+    {
+      "family": "dualpath_aug_tta",
+      "fold0_selected_epoch": 0,
+      "fold0_candidate_tta_rmse": 0.4627060585968518,
+      "fold0_blend_rmse": 0.4516065772000859,
+      "fold0_gain_vs_reference": 0.0021191704308820003,
+      "fold1_selected_epoch": 0,
+      "fold1_candidate_tta_rmse": 0.49105830241131315,
+      "fold1_blend_rmse": 0.47484876488766115,
+      "fold1_gain_vs_reference": 0.0009976018631493444,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "spectral_fourier",
+      "selected_epoch": -1,
+      "parent_tta_incremental_gain": 5.277114245583192e-9,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "spectral_rbf",
+      "selected_epoch": -1,
+      "parent_tta_incremental_gain": 5.277114245583192e-9,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "late_horizon_residual",
+      "selected_epoch": -1,
+      "parent_tta_incremental_gain": 5.277114245583192e-9,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "late_defender_residual",
+      "selected_epoch": -1,
+      "parent_tta_incremental_gain": 5.277114245583192e-9,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "muon",
+      "selected_epoch": 28,
+      "candidate_rmse": 0.4719183101651798,
+      "blend_rmse": 0.45155553933107334,
+      "parent_tta_incremental_gain": 9.25735040846476e-8,
+      "parent_tta_interval95": [
+        -0.0018986439258380256,
+        0.0021351223184169097
+      ],
+      "decision": "NO_PROMOTION"
+    }
+  ],
+  "gpu": {
+    "dualpath_workers0_examples_per_second": 687.1803696948,
+    "dualpath_selected_examples_per_second": 2137.2561601371626,
+    "dualpath_speedup": 3.11018220891029,
+    "representative_mean_gpu_utilization_percent_range": [
+      70.1,
+      74
+    ],
+    "observed_peak_gpu_utilization_percent": 100,
+    "published_inference_speedup": 4.784367
+  },
+  "next_prepared_family": {
+    "name": "competition_data_only_two_stage_all_player_pseudo_supervision",
+    "status": "UNMEASURED"
+  }
+}

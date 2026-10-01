@@ -4,7 +4,7 @@
 
 [Frontier research review](docs/FRONTIER_RESEARCH_POST_PR39.md) · [Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [Model card](docs/MODEL_CARD.md) · [Recent model review](research/RECENT_MODELS.ipynb) · [Run and reproduce](START_HERE.md)
 
-Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. AWS/SageMaker is the canonical research workspace; Kaggle is used only for the required submission surface.
+Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. Competition slug: `nfl-big-data-bowl-2026-prediction`. AWS/SageMaker is the canonical research workspace; Kaggle is used only for the required submission surface.
 
 ## Current research snapshot
 

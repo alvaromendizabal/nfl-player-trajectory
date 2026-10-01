@@ -4,46 +4,44 @@
 
 The public record separates software correctness, local grouped-game validation, promotion-gate decisions, inference/runtime evidence, and private submission score. They are never treated as interchangeable.
 
-The current hierarchy is:
-
-1. **Multisplit grouped-game OOF** remains the strongest completed local system: **0.4631723213 RMSE over 561,607 rows**.
-2. **Late private submission evidence** remains **0.46487 RMSE**, the strongest recorded competition-facing measurement in the project.
-3. **Controlled candidate studies** test new representation and architecture families against fixed references and locked gates.
-4. **Runtime evidence** is evaluated separately from predictive quality.
-5. **Prepared next experiments** are labeled unmeasured until AWS execution produces a valid result.
+1. **Multisplit grouped-game OOF:** **0.4631723213 RMSE over 561,607 rows**.
+2. **Late private submission evidence:** **0.46487 RMSE**.
+3. **Controlled candidate studies:** fixed references and locked promotion gates.
+4. **Runtime evidence:** evaluated separately from predictive quality.
+5. **Prepared experiments:** labeled unmeasured until AWS execution produces a valid result.
 
 Late submissions are performance measurements, not official competition ranks.
 
 ## Preserved source, curated presentation
 
-`workspace/` retains selected source modules, protocols, tests, feature dictionaries, and notebooks with private outputs removed. It excludes raw data, credentials, fitted weights, large checkpoints, private object locations, and unreleased competition-specific runners/transforms.
+The public archive retains selected source modules, protocols, tests, feature dictionaries, aggregate evidence, and notebooks with private outputs removed. It excludes raw data, credentials, fitted weights, large checkpoints, private object locations, and unreleased competition-specific runners/transforms.
 
-The repository is intentionally **semi-reproducible**: reviewers can inspect the research structure, aggregate evidence, validation discipline, and selected implementation patterns without receiving a drop-in copy of the private competition system.
+The repository is intentionally **semi-reproducible**.
 
-## Scientific conclusions since PR #38
+## Scientific conclusions since PR #39
 
-**The restored training contract enabled credible new studies.** Two subsequent candidates completed full Fold-0 decisions without relying on the earlier drifted control.
+**Target-specific sparse interaction was useful but insufficient.** It improved the fixed blend but missed the locked promotion requirement.
 
-**An expanded observed-motion representation added ensemble signal but was not promoted.** Its fixed blend improved the common reference by **0.001140 RMSE**, below the locked 0.0015 threshold, and its paired-game interval crossed zero.
+**Wide/shallow dual-path interaction produced the strongest new complementary signal.** Its Fold-0 blend improved the reference by **0.002154 RMSE** with a fully positive interval, but Fold 1 did not reproduce the required gain.
 
-**A future-conditioned delta decoder improved standalone quality but contributed less ensemble gain.** It improved the fixed blend by **0.000745 RMSE**, again with an interval crossing zero.
+**Fixed TTA transferred better than augmentation fine-tuning.** The original/flip/crop inference blend improved the parent on both tested folds; the fine-tune selected epoch 0 on both folds.
 
-**GPU data feeding was materially improved.** On the current single-L4 environment, the measured full training step fell from about **0.110 s** with no loader workers to **0.0486 s** with the selected two-worker plan; more workers did not improve the benchmark.
+**Parent-neutral spectral and specialist adapters did not add value.** Fourier, RBF, late-horizon, and defender-only residual branches all selected the unchanged parent baseline.
 
-**The next branch changes interaction structure rather than appending more kinematic channels.** A target-specific sparse-interaction family is prepared but remains unmeasured.
+**Muon did not improve the dual-path architecture under a controlled optimizer-only test.**
 
-These negative results are preserved because they prevent repeated spending and selective promotion.
+**GPU data feeding was materially improved.** End-to-end loader benchmarking raised dual-path throughput from about **687 to 2,137 examples/s (~3.11×)**; later runs commonly reached **~70–74% mean sampled GPU utilization with 100% peaks**.
+
+**The next prepared mechanism changes supervision rather than architecture.** A competition-data-only two-stage/all-player pseudo-supervision study is prepared but remains unmeasured.
 
 ## Leading-solution reproduction boundary
 
-The project substantially covers the strongest public solution's compact temporal/player-interaction base, grouped folds, moving-average inference, motion objectives, augmentation, and multi-split diversity. Recent work also explored a distinct future-conditioned motion decoder.
+The project now substantially covers compact temporal/player interaction, grouped folds, EMA, motion objectives, augmentation, multi-split diversity, major dual-path/auxiliary ideas, target-specific interaction, fixed TTA, and a controlled Muon axis.
 
-Important gaps remain in broader feature-configuration diversity and more complete standalone interaction/auxiliary-objective families. Additional-data recipes remain outside the current competition-data-only boundary.
+Important gaps remain in **broader feature-configuration diversity**, **larger split/model diversity**, and **two-stage/all-player supervision**. Historical/external-data recipes remain outside the current competition-data-only boundary.
 
-The goal is independent recreation and controlled testing, not copying trained weights or public feature files.
+The goal is independent recreation and controlled testing, not copying trained weights, private runners, or public feature files.
 
 ## What publication does not certify
 
-Publication CI performs no new fitting, private prediction replay, submission, or cloud mutation. It validates public bytes, notebook structure, privacy boundaries, and aggregate evidence.
-
-No local development-fold result is presented as a private score, and no prepared-but-unrun architecture is presented as measured.
+Publication CI performs no new fitting, private prediction replay, submission, or cloud mutation. No local development-fold result is presented as a private score, and no prepared-but-unrun architecture is presented as measured.

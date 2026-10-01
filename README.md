@@ -2,9 +2,9 @@
 
 **Player-motion forecasting with controlled sequence modeling, ensemble diversity, GPU engineering, and reproducible AWS research.**
 
-[Latest aggregate notebook](notebooks/06_architecture_research_progress.ipynb) · [Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [Model card](docs/MODEL_CARD.md) · [Recent model review](research/RECENT_MODELS.ipynb) · [Run and reproduce](START_HERE.md)
+[Frontier research review](docs/FRONTIER_RESEARCH_POST_PR39.md) · [Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [Model card](docs/MODEL_CARD.md) · [Recent model review](research/RECENT_MODELS.ipynb) · [Run and reproduce](START_HERE.md)
 
-Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. Competition slug: `nfl-big-data-bowl-2026-prediction`. AWS/SageMaker is the canonical research workspace; Kaggle is used only for the required submission surface.
+Predict selected players' future x/y locations after a pass using observed tracking, organizer-supplied landing location, player roles, and forecast horizon. AWS/SageMaker is the canonical research workspace; Kaggle is used only for the required submission surface.
 
 ## Current research snapshot
 
@@ -12,41 +12,44 @@ The strongest recorded late post-competition private submission remains **0.4648
 
 The strongest completed local system remains the **20-model, four-split-family equal-weight ensemble** at **0.4631723213 OOF RMSE over 561,607 rows**. Local OOF and private leaderboard measurements are intentionally kept separate.
 
-Since the previous public snapshot, two source-recipe neural candidates completed controlled Fold-0 studies:
+Since the previous public snapshot, the project completed a broader sequence of controlled neural studies:
 
-| Candidate family | Standalone RMSE | Fixed 80/20 blend RMSE | Gain vs reference | Decision |
-|---|---:|---:|---:|---|
-| Expanded observed-motion representation | 0.460633 | **0.452585** | +0.001140 | No promotion |
-| Future-conditioned delta decoder | **0.459976** | 0.452981 | +0.000745 | No promotion |
+| Candidate family | Key evidence | Decision |
+|---|---|---|
+| Target-specific sparse interaction | Best Fold-0 candidate **0.456751**; fixed blend **0.452395**, +0.001330 vs reference | No promotion |
+| Wide/shallow dual-path | Fold 0 fixed blend **0.451572**, +0.002154 and passed; Fold 1 blend **0.474765**, +0.001081 and failed | No promotion after confirmation |
+| Dual-path + fixed TTA | Parent standalone improved to **0.462773** on Fold 0 and **0.491123** on Fold 1 | Retained inference mechanism |
+| Augmentation fine-tune | Selected epoch 0 on both folds | No promotion |
+| Fourier / RBF spatial adapters | Incremental gain over parent+TTA was effectively zero | No promotion |
+| Late-horizon / defender residual experts | Incremental gain over parent+TTA was effectively zero | No promotion |
+| Muon optimizer | Best candidate **0.471918**; no measurable incremental gain beyond parent+TTA | No promotion |
 
-Both candidates improved the fixed **0.453726** Fold-0 ensemble reference, but neither cleared the predeclared **0.0015 RMSE** promotion threshold and both paired-game confidence intervals crossed zero. No post-hoc blend search was used.
+The important positive result is **complementarity**: the dual-path family produced a strong predeclared Fold-0 blend improvement even though its standalone score was weaker than the reference. The important negative result is **cross-fold instability**: the same family did not reproduce the locked gain on Fold 1, so it was not promoted.
 
 ## What changed technically
 
-- **Training-contract recovery:** new studies returned to the verified successful recipe instead of continuing a drifted high-throughput control.
-- **Representation research:** an observed-motion expansion produced useful but insufficient ensemble complementarity.
-- **Architecture research:** a future-conditioned incremental-motion decoder improved standalone quality but did not add enough robust ensemble gain.
-- **GPU engineering:** on the current NVIDIA L4, loader benchmarking reduced median full training-step time from **0.1102 s to 0.0486 s** while holding the scientific training contract fixed.
-- **Research discipline:** negative results are preserved and retired rather than tuned retrospectively on the inspected development fold.
+- **Interaction architecture:** recreated a wide/shallow dual-path family with individual-motion and inter-player paths plus displacement, endpoint, and dense correspondence auxiliaries.
+- **Inference robustness:** a fixed original/flip/crop TTA scheme produced repeatable standalone gains and remains in the research toolkit.
+- **Medal-solution ablations:** target-specific sparse pooling, spectral pair encodings, late-horizon specialists, defender specialists, augmentation fine-tuning, and Muon were tested under locked gates and retired when they failed to add robust incremental value.
+- **GPU engineering:** an end-to-end loader benchmark exposed data starvation that a compute-only benchmark had missed. On the dual-path workload, measured throughput improved from roughly **687 to 2,137 examples/s (~3.11×)**, and later runs reached **~70–74% mean sampled GPU utilization with 100% peaks**.
+- **Research discipline:** Fold-0 wins require Fold-1 confirmation and incremental gain beyond the strongest parent+TTA baseline before expensive full-OOF work.
 
-The next prepared branch studies **target-specific sparse interaction** at a high level; it is intentionally labeled unmeasured until a real AWS result exists.
+The next prepared branch studies **competition-data-only two-stage / all-player pseudo-supervision**. It is explicitly unmeasured until a real AWS run completes.
 
 ## Public reproducibility boundary
 
-This repository is intentionally **semi-reproducible**. It publishes aggregate metrics, validation rules, selected protocols, decision history, executed aggregate notebooks, and privacy-safe implementation patterns.
+This repository is intentionally **semi-reproducible**. It publishes aggregate metrics, validation rules, selected protocols, decision history, public artifacts, and privacy-safe implementation patterns.
 
-It does **not** publish raw competition data, fitted weights, private checkpoint locations, credentials, complete private experiment runners, or unreleased feature/interaction transforms that provide competition-specific edge.
-
-That boundary keeps the project technically reviewable without turning the public repository into a one-command clone of the private competition system.
+It does **not** publish raw competition data, fitted weights, private checkpoint locations, credentials, complete private experiment runners, or unreleased competition-specific transforms that provide a competitive edge.
 
 ## Evidence map
 
-- [`notebooks/06_architecture_research_progress.ipynb`](notebooks/06_architecture_research_progress.ipynb): executed aggregate notebook for the two completed post-PR38 neural studies and current GPU benchmark.
-- [`docs/CURRENT_RESEARCH_STATUS.md`](docs/CURRENT_RESEARCH_STATUS.md): current score state, controlled results, limitations, and next direction.
-- [`docs/results/post_pr38_architecture_progress.json`](docs/results/post_pr38_architecture_progress.json): machine-readable aggregate snapshot.
-- [`docs/results/frontier_submission.json`](docs/results/frontier_submission.json): competition-facing score lineage.
-- [`research/RECENT_MODELS.ipynb`](research/RECENT_MODELS.ipynb): earlier reproduced-model and frontier evidence.
+- [Post-PR39 frontier research](docs/FRONTIER_RESEARCH_POST_PR39.md)
+- [Machine-readable aggregate snapshot](docs/results/post_pr39_frontier_research.json)
+- [Current research status](docs/CURRENT_RESEARCH_STATUS.md)
+- [Competition-facing score lineage](docs/results/frontier_submission.json)
+- [Earlier reproduced-model review](research/RECENT_MODELS.ipynb)
 
 ## Validation and limitations
 
-The official coordinate metric is `sqrt(sum(dx^2 + dy^2) / (2N))`. Pooled OOF uses row-weighted squared errors, not an unweighted average of fold RMSEs. The latest architecture studies use an inspected development fold and are not private-leaderboard scores or untouched test estimates.
+The official coordinate metric is sqrt(sum(dx^2 + dy^2) / (2N)). Pooled OOF uses row-weighted squared errors, not an unweighted average of fold RMSEs. Development-fold results, private leaderboard scores, and late submissions are kept separate. A mechanism is not promoted from one favorable fold; confirmation and uncertainty gates are part of the research protocol.

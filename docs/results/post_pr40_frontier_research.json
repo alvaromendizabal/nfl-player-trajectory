@@ -1,0 +1,112 @@
+{
+  "prepared": "2026-10-02",
+  "scope": "Aggregate employer-facing research evidence completed after PR #40. No raw competition data, fitted weights, private object locations, credentials, or complete private runners.",
+  "competitive_state": {
+    "private_best_rmse": 0.46487,
+    "published_first_place_private_rmse": 0.4634,
+    "private_gap_rmse": 0.00147,
+    "local_multisplit_oof_rmse": 0.4631723212629593,
+    "local_multisplit_rows": 561607,
+    "multisplit_models": 20,
+    "split_families": 4,
+    "stretch_target_rmse": 0.44
+  },
+  "post_pr40_studies": [
+    {
+      "family": "competition_only_pseudo_supervision",
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "stgru",
+      "candidate_fold0_rmse": 0.635602873732982,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "stgru_ballnode",
+      "candidate_fold0_rmse": 0.6046696629763174,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "multisplit_meta_postprocessing",
+      "best_candidate_rmse": 0.4631229253,
+      "reference_rmse": 0.4631723212629593,
+      "gain_rmse": 0.000049396,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "frozen_parent_feature_adapters",
+      "best_candidate_rmse": 0.458649,
+      "best_fixed_blend_gain_rmse": 0.00017,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "full_parent_coverage_physics",
+      "max_increment_over_control_rmse": 0.000042,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "source_native_configs",
+      "best_intermediate_fixed_blend_gain_rmse": 0.001182,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "interaction_role_frontier",
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "single_target_route",
+      "best_candidate_rmse": 0.459089,
+      "best_fixed_blend_gain_rmse": 0.000131,
+      "decision": "NO_PROMOTION"
+    },
+    {
+      "family": "winner_parent_tta_five_fold",
+      "base_reference_rmse": 0.46814385198629604,
+      "recipes": [
+        {
+          "name": "yflip_equal",
+          "base_candidate_rmse": 0.4665400283424633,
+          "base_gain_rmse": 0.001603823643832769,
+          "multisplit_hybrid_gain_rmse": 0.00003379,
+          "decision": "NO_PROMOTION"
+        },
+        {
+          "name": "thirdplace_weighted",
+          "base_candidate_rmse": 0.46669682072061575,
+          "base_gain_rmse": 0.0014470312656802986,
+          "multisplit_hybrid_rmse": 0.46311463647659795,
+          "multisplit_hybrid_gain_rmse": 0.0000576847863613672,
+          "multisplit_hybrid_interval95": [
+            -0.0001159593,
+            0.0002370044
+          ],
+          "decision": "NO_PROMOTION"
+        },
+        {
+          "name": "fourway_symmetry",
+          "base_candidate_rmse": 0.472669022788096,
+          "base_gain_rmse": -0.004525170801799983,
+          "multisplit_hybrid_rmse": 0.46437390876194423,
+          "multisplit_hybrid_gain_rmse": -0.001201587498984913,
+          "decision": "NO_PROMOTION"
+        }
+      ]
+    }
+  ],
+  "engineering_lessons": {
+    "cuda_multistream_status": "RETIRED_UNCHANGED",
+    "cuda_multistream_relative_speed": 0.902,
+    "torch_compile_status": "NOT_REQUIRED_CURRENT_IMAGE",
+    "resume_checkpoints": "ENFORCED",
+    "amp_overflow_backoff": "ENFORCED",
+    "ema_device_safe_restore": "ENFORCED",
+    "archived_prediction_anchor_for_replay": "ENFORCED",
+    "structured_resource_cost_heartbeats": "ENFORCED"
+  },
+  "next_prepared_family": {
+    "experiment_id": "E-062",
+    "name": "fresh_source_faithful_feature_configuration_family",
+    "status": "PREPARED_NOT_MEASURED",
+    "mechanism": "independently trained feature-configuration diversity under the preserved source training contract"
+  }
+}

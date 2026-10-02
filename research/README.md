@@ -18,30 +18,28 @@ The public archive retains selected source modules, protocols, tests, feature di
 
 The repository is intentionally **semi-reproducible**.
 
-## Scientific conclusions since PR #39
+## Scientific conclusions through the post-PR40 frontier
 
-**Target-specific sparse interaction was useful but insufficient.** It improved the fixed blend but missed the locked promotion requirement.
+**Split/model diversity remains the strongest transferred mechanism.** The 20-model multisplit system still owns the strongest local OOF and private submission evidence.
 
-**Wide/shallow dual-path interaction produced the strongest new complementary signal.** Its Fold-0 blend improved the reference by **0.002154 RMSE** with a fully positive interval, but Fold 1 did not reproduce the required gain.
+**A broad sequence of parent-level adaptations plateaued.** Competition-only pseudo-supervision, ST-GRU, zero-fit post-processing, frozen-parent feature adapters, full-parent context fine-tuning, source-native context variants, target/role-specific interaction, and single-target route variants all completed controlled tests without promotion.
 
-**Fixed TTA transferred better than augmentation fine-tuning.** The original/flip/crop inference blend improved the parent on both tested folds; the fine-tune selected epoch 0 on both folds.
+**TTA improved individual model families but was mostly redundant inside multisplit-20.** The best five-fold winner-parent TTA recipe improved its base family by **0.001604 RMSE**, yet improved the final multisplit ensemble by only about **0.000034 RMSE**.
 
-**Parent-neutral spectral and specialist adapters did not add value.** Fourier, RBF, late-horizon, and defender-only residual branches all selected the unchanged parent baseline.
+**Cross-fold and matched-control gates prevented false promotion.** Several discovery-stage point gains disappeared under confirmation or full-system replacement tests.
 
-**Muon did not improve the dual-path architecture under a controlled optimizer-only test.**
-
-**GPU data feeding was materially improved.** End-to-end loader benchmarking raised dual-path throughput from about **687 to 2,137 examples/s (~3.11×)**; later runs commonly reached **~70–74% mean sampled GPU utilization with 100% peaks**.
-
-**The next prepared mechanism changes supervision rather than architecture.** A competition-data-only two-stage/all-player pseudo-supervision study is prepared but remains unmeasured.
+**The project now needs independently trained error diversity rather than more small parent modifications.** The next prepared program trains fresh source-faithful feature configurations and only scales a configuration after full-OOF complementarity is demonstrated.
 
 ## Leading-solution reproduction boundary
 
-The project now substantially covers compact temporal/player interaction, grouped folds, EMA, motion objectives, augmentation, multi-split diversity, major dual-path/auxiliary ideas, target-specific interaction, fixed TTA, and a controlled Muon axis.
+The project substantially covers compact temporal/player interaction, grouped folds, EMA, motion objectives, augmentation, multi-split diversity, dual-path/auxiliary modeling, target-specific interaction, single-target supervision, and multiple TTA forms.
 
-Important gaps remain in **broader feature-configuration diversity**, **larger split/model diversity**, and **two-stage/all-player supervision**. Historical/external-data recipes remain outside the current competition-data-only boundary.
+The largest remaining competition-data-only gap is **breadth of independently trained feature configurations combined with repeated grouped-CV split families**.
 
-The goal is independent recreation and controlled testing, not copying trained weights, private runners, or public feature files.
+Historical/external-data pretraining remains outside the active data boundary.
+
+The goal is independent recreation and controlled testing, not copying trained weights, hidden predictions, private runners, or another competitor's private feature pipeline.
 
 ## What publication does not certify
 
-Publication CI performs no new fitting, private prediction replay, submission, or cloud mutation. No local development-fold result is presented as a private score, and no prepared-but-unrun architecture is presented as measured.
+Publication CI performs no new fitting, private prediction replay, submission, or cloud mutation. No local development-fold result is presented as a private score, and no prepared-but-unrun experiment is presented as measured.

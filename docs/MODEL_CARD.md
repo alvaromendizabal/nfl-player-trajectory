@@ -15,29 +15,43 @@ The strongest measured deployment remains the **20-model multisplit ensemble** s
 
 The latest private result remains **0.00147 RMSE** behind the published first-place comparator. These are late post-competition measurements; no official competition rank is claimed.
 
-### Post-PR39 neural research
+### Post-PR40 frontier research
 
-| Candidate family | Best public aggregate evidence | Decision |
+The project has now completed a broad set of controlled studies beyond the earlier dual-path sequence.
+
+| Candidate family | Employer-facing aggregate result | Decision |
 |---|---|---|
-| Target-specific sparse interaction | Fold-0 blend 0.452395, +0.001330 vs fixed reference | No promotion |
-| Wide/shallow dual-path | Fold-0 blend 0.451572 passed discovery; Fold-1 blend 0.474765 missed confirmation | No promotion after confirmation |
-| Fixed TTA on dual-path | Standalone improved 0.465845→0.462773 on Fold 0 and 0.493347→0.491123 on Fold 1 | Retained mechanism |
-| Augmentation fine-tune | Selected epoch 0 on both folds | No promotion |
-| Fourier / RBF adapters | No incremental gain beyond parent+TTA | No promotion |
-| Late-horizon / defender specialists | No incremental gain beyond parent+TTA | No promotion |
-| Muon optimizer | Best candidate 0.471918; no measurable incremental parent+TTA gain | No promotion |
+| Competition-only pseudo-supervision | Completed controlled variants without confirmation-stage promotion | No promotion |
+| ST-GRU / landing-node ST-GRU | Standalone performance far behind the incumbent | No promotion |
+| Multisplit meta/post-processing | Best pooled OOF gain ~0.000049 RMSE | No promotion |
+| Frozen-parent feature adapters | Best fixed-blend gain ~0.00017 RMSE | No promotion |
+| Coverage/physics full-parent fine-tune | Nearly indistinguishable from matched control | No promotion |
+| Source-native configurations | Useful point signal but below locked gates | No promotion |
+| Direct interaction / role-specific heads | Did not beat live matched control | No promotion |
+| Single-target / defender / route variants | Fixed-blend gains remained ~0.00012–0.00013 | No promotion |
+| Five-fold incumbent TTA | Base-family gain up to 0.001604; multisplit hybrid gain only ~0.000034 | No promotion |
 
-These are development-fold results, not private-leaderboard scores. The key finding is that **dual-path interaction structure produced real ensemble complementarity on the discovery fold, but the gain did not survive the required confirmation fold**.
+These results are development/OOF evidence, not private-leaderboard scores.
 
-### GPU engineering
+The main scientific conclusion is that **small fitted-parent modifications have largely plateaued, while independent configuration and split diversity remains the strongest transferred mechanism**.
 
-The training pipeline now benchmarks data loading end to end rather than timing only GPU compute. On the dual-path workload this changed measured throughput from roughly **687 to 2,137 examples/s (~3.11×)**. Later runs reached **~70–74% mean sampled GPU utilization with 100% peaks**.
+### TTA interpretation
+
+Five-fold TTA materially improved the standalone source-faithful base family, but the improvement was almost entirely redundant after the family was inserted back into multisplit-20.
+
+That result is deliberately retained because it distinguishes a useful component-level technique from a useful final-system technique.
+
+### GPU / runner engineering
+
+The private AWS research workflow now uses bounded resumable runners with checkpoint recovery, structured resource/cost heartbeats, fail-closed integrity gates, workload-specific throughput benchmarks, AMP overflow handling, and device-safe EMA restoration.
 
 The previously published inference result remains separate: shared preparation accelerated the fixed 20-model ensemble by **4.784×** with exact prediction parity on its declared benchmark sample.
 
 ### Current research direction
 
-The next prepared mechanism is **competition-data-only two-stage / all-player pseudo-supervision**, adapted without importing external historical NFL labels. It is unmeasured until AWS execution completes.
+The next prepared mechanism is a **fresh independently trained source-faithful feature-configuration family**, not another fitted-parent adapter or fine-tune. It is **prepared but unmeasured** until AWS execution completes.
+
+If a new configuration demonstrates full-OOF complementarity, the next step is repeated split-family scaling—the remaining direction most closely aligned with the documented large first-place ensemble.
 
 Private competition data, fitted weights, large checkpoints, private runners, exact object locations, and unreleased feature/interaction transforms remain in AWS. GitHub contains aggregate evidence, selected protocols, public artifacts, and documentation.
 

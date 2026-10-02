@@ -2,67 +2,97 @@
 
 ## Competitive state
 
-- Strongest recorded late private submission: **0.46487 RMSE**.
-- Published first-place private comparator: **0.46340 RMSE**.
-- Remaining comparable gap: **0.00147 RMSE**.
-- Strongest completed local system: **0.4631723213 OOF RMSE** over 561,607 rows from a 20-model, four-split-family ensemble.
-- Stretch research target: **0.44 RMSE**. No local development-fold result is presented as an equivalent private score.
+- Strongest recorded late private submission: **0.46487 RMSE**
+- Published first-place private comparator: **0.46340 RMSE**
+- Remaining comparable gap: **0.00147 RMSE**
+- Strongest completed local system: **0.4631723213 OOF RMSE** over **561,607 rows**
+- Ensemble size: **20 models across four split families**
+- Stretch research target: **0.44 RMSE**
 
-## Controlled research completed since PR #39
+Local OOF, development-fold metrics, and private leaderboard scores are intentionally not treated as interchangeable.
 
-| Family | Fold-0 evidence | Fold-1 evidence | Decision |
-|---|---|---|---|
-| Target-specific sparse interaction | Candidate best **0.456751**; fixed blend **0.452395**; +0.001330 vs reference | Not run | **NO_PROMOTION** |
-| Wide/shallow dual-path | Candidate **0.465845**; fixed blend **0.451572**; +0.002154; interval fully positive | Candidate **0.493347**; fixed blend **0.474765**; +0.001081; interval crossed zero | **NO_PROMOTION after confirmation** |
-| Dual-path + fixed TTA | Parent standalone **0.462773** | Parent standalone **0.491123** | **Retain TTA mechanism** |
-| Augmentation fine-tune + TTA | Selected epoch 0; fixed blend **0.451607** | Selected epoch 0; fixed blend **0.474849** | **NO_PROMOTION** |
-| Fourier / RBF adapters | Selected epoch -1; no incremental parent+TTA gain | Not run | **NO_PROMOTION** |
-| Late-horizon / defender experts | Selected epoch -1; no incremental parent+TTA gain | Not run | **NO_PROMOTION** |
-| Muon optimizer | Best candidate **0.471918**; blend **0.451556**; parent+TTA incremental gain effectively zero | Not run | **NO_PROMOTION** |
+## Research completed since PR #40
 
-The dual-path Fold-0 result is the strongest new complementary signal discovered in this sequence, but the project does not promote a one-fold win. Fold 1 did not reproduce the required gain, so the exact configuration was retired.
+The post-PR40 sequence deliberately tested several missing mechanisms from strong public approaches while preserving locked promotion gates and the competition-data-only boundary.
 
-## What transferred
+| Family | Evidence | Decision |
+|---|---|---|
+| Competition-only two-stage pseudo-supervision | Controlled variants completed without confirmation-stage promotion | **NO_PROMOTION** |
+| ST-GRU / landing-node ST-GRU | Fold-0 standalone RMSE roughly 0.636 / 0.605 versus ~0.454 reference | **NO_PROMOTION** |
+| Zero-fit multisplit meta frontier | Best candidate improved full OOF by only ~0.000049 RMSE | **NO_PROMOTION** |
+| Frozen-parent feature adapters | Intent / temporal variants produced fixed-blend gains around 0.00011–0.00017 | **NO_PROMOTION** |
+| Full-parent coverage/physics fine-tune | Candidate gains over matched control were only a few 1e-5 RMSE | **NO_PROMOTION** |
+| Source-native ball/context/window variants | Best Fold-0 blend gain ~0.00118 at an intermediate checkpoint, below final gate | **NO_PROMOTION** |
+| Direct interaction / Entmax-ball / role heads | All three completed Fold 0; none beat matched control | **NO_PROMOTION** |
+| Single-target / defender-focused / route representation | All three completed Fold 0; fixed-blend gains remained ~0.00012–0.00013 | **NO_PROMOTION** |
+| Full five-fold winner-parent TTA | Best base-family gain **0.001604**; multisplit-20 hybrid gain only **~0.000034** | **NO_PROMOTION** |
 
-### Fixed test-time augmentation
+## Five-fold TTA result
 
-A fixed original / horizontal-flip / cropped-input inference blend improved the selected dual-path parent on both tested folds:
+The TTA audit is the clearest recent example of why local family gains and final-system gains must be separated.
 
-- Fold 0: **0.465845 → 0.462773 RMSE**
-- Fold 1: **0.493347 → 0.491123 RMSE**
+### Equal original + horizontal-flip recipe
 
-The augmentation fine-tune itself did not improve beyond the starting parent; both folds selected epoch 0.
+- base-family RMSE: **0.46814385 → 0.46654003**
+- base-family gain: **+0.00160382**
+- pooled bootstrap evidence: positive
+- multisplit-20 hybrid gain: only **~+0.00003379**
+- hybrid uncertainty crossed zero
 
-### GPU and input-pipeline engineering
+### Original / flip / deterministic crop recipe
 
-An end-to-end loader benchmark corrected an earlier benchmark that timed only GPU compute and excluded data-fetch latency. On the dual-path workload:
+- base-family RMSE: **0.46814385 → 0.46669682**
+- base-family gain: **+0.00144703**
+- multisplit-20 hybrid RMSE: **0.46311464**
+- multisplit-20 hybrid gain: **+0.00005768**
+- hybrid 95% interval crossed zero
 
-- 0 workers: about **687 examples/s**
-- selected worker plan: about **2,137 examples/s**
-- throughput improvement: about **3.11×**
+### Four-way symmetry recipe
 
-Later bounded runs commonly reached **~70–74% mean sampled GPU utilization** with **100% peaks**. Worker choice is benchmarked per workload because the optimum varied by model and fold.
+- base-family RMSE: **0.47266902**
+- multisplit-20 hybrid RMSE: **0.46437391**
+- both materially worse
 
-This GPU engineering is separate from the previously published **4.784× inference acceleration** for the fixed 20-model ensemble.
+Conclusion: **TTA is useful at the family level but largely redundant with the error diversity already present in multisplit-20.** No 20-model TTA rollout is justified from this evidence.
 
-## Scientific interpretation
+## What the project has learned
 
-1. **Complementarity matters more than standalone RMSE.**
-2. **One-fold wins are not enough.**
-3. **TTA transferred better than augmentation fine-tuning.**
-4. **Small parent-neutral adapters did not escape the ceiling.**
-5. **Muon did not improve this architecture under a controlled optimizer-only comparison.**
-6. **The remaining major public-solution gap is system-level diversity and broader supervision.**
-7. **Negative experiments remain first-class evidence.**
+1. **Split/model diversity is the strongest transferred mechanism.**
+2. **Complementarity matters more than standalone quality, but it must survive confirmation.**
+3. **One-fold wins are insufficient.**
+4. **Adapters and fine-tunes around the same fitted parent mostly remained in the same error basin.**
+5. **Target-specific, role-specific, and single-target variants did not robustly escape that basin.**
+6. **TTA can improve a component model while adding almost nothing to an already diverse ensemble.**
+7. **Negative experiments reduce future search cost when they are recorded and retired.**
+8. **The remaining major competition-data-only gap is independently trained feature-configuration breadth combined with repeated grouped-CV diversity.**
 
 ## Current next direction
 
-The next prepared AWS experiment is a **competition-data-only two-stage / all-player pseudo-supervision** study. The selected project-owned dual-path model acts as teacher; two predeclared student variants test plain and uncertainty-weighted pseudo-label consistency for valid unscored players. It remains **unmeasured** until a real AWS execution completes.
+The next prepared study trains **fresh full first-place-style models from scratch** under the verified source training contract rather than adapting an existing fitted parent.
 
-If pseudo-supervision does not transfer, the next major program should emphasize **first-place-style feature/configuration and split diversity**, not additional rescue variants of retired branches.
+Two project-owned feature configurations are screened in a staged protocol. The study is **prepared but unmeasured** until a real AWS execution completes.
+
+If a fresh configuration demonstrates credible standalone quality and leakage-safe ensemble complementarity, it advances to confirmation, full OOF, and then additional split-family scaling.
+
+Historical-data pretraining remains a high-value **blocked** hypothesis because the active project boundary is competition-data-only.
+
+## Engineering state
+
+Recent runners use bounded, resumable execution with:
+
+- collision-resistant run IDs
+- checkpointed epoch/stage recovery
+- structured JSONL + human-readable logs
+- CPU/RAM/GPU/disk telemetry
+- measured cost accumulation
+- workload-specific worker/batch benchmarks
+- fail-closed integrity checks
+- notebook/Plotly persistence gates
+
+Important operational lessons are retained: transient AMP overflow should use GradScaler semantics; EMA checkpoint restoration must preserve destination device/dtype; floating-point kernel-path drift should not be mistaken for model drift; and previously slower/invalid CUDA-stream overlap should not be retried unchanged.
 
 ## Public/private boundary
 
-Public GitHub contains aggregate score and latency evidence, validation logic, selected protocols, decision history, public notebooks, and privacy-safe implementation patterns.
+Public GitHub contains aggregate metrics, validation logic, selected protocols, decision history, privacy-safe implementation patterns, and machine-readable research snapshots.
 
-Private AWS retains competition data, fitted states, large checkpoints, object locations, private runners, and unreleased feature/interaction transforms. Kaggle remains the organizer-required submission surface only.
+Private AWS retains competition data, fitted states, large checkpoints, exact object locations, complete private runners, and unreleased feature transforms. Kaggle remains the organizer-required submission surface only.

@@ -2,44 +2,45 @@
 
 ## Evidence hierarchy
 
-The public record separates software correctness, local grouped-game validation, promotion-gate decisions, inference/runtime evidence, and private submission score. They are never treated as interchangeable.
+The public record separates software correctness, grouped-game validation, promotion decisions, runtime evidence, and private submission evidence.
 
-1. **Multisplit grouped-game OOF:** **0.4631723213 RMSE over 561,607 rows**.
-2. **Late private submission evidence:** **0.46487 RMSE**.
+1. **Multisplit grouped-game OOF:** `0.4631723213` RMSE over `561,607` rows.
+2. **Private submission evidence:** `0.46487` RMSE.
 3. **Controlled candidate studies:** fixed references and locked promotion gates.
-4. **Runtime evidence:** evaluated separately from predictive quality.
-5. **Prepared experiments:** labeled unmeasured until AWS execution produces a valid result.
-
-Late submissions are performance measurements, not official competition ranks.
+4. **External-data evidence:** provenance, coverage, point-in-time construction, and controlled model studies.
+5. **Runtime evidence:** evaluated separately from predictive quality.
+6. **Prepared experiments:** explicitly labeled unmeasured until AWS execution produces a valid result.
 
 ## Preserved source, curated presentation
 
-The public archive retains selected source modules, protocols, tests, feature dictionaries, aggregate evidence, and notebooks with private outputs removed. It excludes raw data, credentials, fitted weights, large checkpoints, private object locations, and unreleased competition-specific runners/transforms.
+The public archive retains selected source modules, protocols, tests, feature dictionaries, aggregate evidence, and notebooks with private outputs removed.
+
+It excludes raw competition data, raw third-party response archives, credentials, fitted weights, large checkpoints, private object locations, complete private runners, and unreleased competitive feature transforms.
 
 The repository is intentionally **semi-reproducible**.
 
-## Scientific conclusions through the post-PR40 frontier
+## Scientific conclusions through the October external-data frontier
 
-**Split/model diversity remains the strongest transferred mechanism.** The 20-model multisplit system still owns the strongest local OOF and private submission evidence.
+**Split/model diversity remains the strongest proven system-level mechanism.**
 
-**A broad sequence of parent-level adaptations plateaued.** Competition-only pseudo-supervision, ST-GRU, zero-fit post-processing, frozen-parent feature adapters, full-parent context fine-tuning, source-native context variants, target/role-specific interaction, and single-target route variants all completed controlled tests without promotion.
+**Standalone gains often remain ensemble-correlated.** Dense temporal supervision, zero dropout, and several source-family modifications improved component quality without adding enough independent residual signal.
 
-**TTA improved individual model families but was mostly redundant inside multisplit-20.** The best five-fold winner-parent TTA recipe improved its base family by **0.001604 RMSE**, yet improved the final multisplit ensemble by only about **0.000034 RMSE**.
+**Direct external historical context is useful.** NFL Next Gen Stats improved standalone fitting, while ESPN prior-game context produced stronger recent complementarity.
 
-**Cross-fold and matched-control gates prevented false promotion.** Several discovery-stage point gains disappeared under confirmation or full-system replacement tests.
+**Point-in-time construction is mandatory.** Historical features exclude current-week and future observations.
 
-**The project now needs independently trained error diversity rather than more small parent modifications.** The next prepared program trains fresh source-faithful feature configurations and only scales a configuration after full-OOF complementarity is demonstrated.
+**Negative experiments are preserved as evidence.** Exact failed branches are retired rather than repeatedly rescued with minor parameter changes.
 
-## Leading-solution reproduction boundary
+**The next active program is player-specific historical context.** It reuses the already acquired direct-source data and asks whether finer player/pass-target priors create more independent residual signal.
 
-The project substantially covers compact temporal/player interaction, grouped folds, EMA, motion objectives, augmentation, multi-split diversity, dual-path/auxiliary modeling, target-specific interaction, single-target supervision, and multiple TTA forms.
+## Public-solution research boundary
 
-The largest remaining competition-data-only gap is **breadth of independently trained feature configurations combined with repeated grouped-CV split families**.
+Public solution writeups and repositories may be studied for transferable mechanisms, but prepared competitor data artifacts are not used as external training data.
 
-Historical/external-data pretraining remains outside the active data boundary.
+The current external-data program pulls directly from first-party or neutral public sources and creates its own point-in-time transformations.
 
-The goal is independent recreation and controlled testing, not copying trained weights, hidden predictions, private runners, or another competitor's private feature pipeline.
+## Publication does not certify
 
-## What publication does not certify
+Publication CI does not retrain private models, replay private predictions, mutate AWS, or submit externally.
 
-Publication CI performs no new fitting, private prediction replay, submission, or cloud mutation. No local development-fold result is presented as a private score, and no prepared-but-unrun experiment is presented as measured.
+Prepared-but-unrun experiments are never presented as measured.

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "published_at": "2026-10-02",
+  "project": "NFL Big Data Bowl 2026 Prediction",
+  "metric": {"name": "coordinate_rmse", "direction": "lower_is_better"},
+  "systems": {
+    "multisplit_20_oof": {"rmse": 0.4631723212629593, "rows": 561607, "models": 20, "split_families": 4},
+    "private_submission": {"rmse": 0.46487}
+  },
+  "engineering": {
+    "shared_prep_inference_speedup_x": 4.784367,
+    "canonical_environment": "AWS SageMaker",
+    "accelerator": "NVIDIA L4"
+  },
+  "external_data": {
+    "nfl_ngs": {
+      "rows": 3920,
+      "players": 691,
+      "competition_players_bridged": 401,
+      "passer_coverage_pct": 95.74,
+      "target_receiver_coverage_pct": 85.35
+    },
+    "espn": {
+      "weekly_scoreboards": 36,
+      "game_summaries": 544,
+      "competition_games_mapped": 272,
+      "competition_games_total": 272,
+      "play_team_mapping_pct": 100.0,
+      "player_prior_coverage_pct": 97.15,
+      "dual_team_pbp_prior_coverage_pct": 100.0
+    }
+  },
+  "selected_studies": [
+    {"family": "dense_temporal_correspondence", "standalone_improvement_rmse": 0.00096561, "system_decision": "retired_exact_recipe"},
+    {"family": "zero_dropout", "standalone_improvement_rmse": 0.00182495, "fixed_blend_gain_rmse": 0.00029724, "system_decision": "retired_exact_recipe"},
+    {"family": "direct_nfl_ngs", "best_fold0_rmse": 0.46157848, "fixed_blend_gain_rmse": 0.00037302, "system_decision": "retired_exact_recipe"},
+    {"family": "direct_espn_team_pbp", "best_fold0_rmse": 0.46344145, "fixed_blend_rmse": 0.45293240, "fixed_blend_gain_rmse": 0.00079334, "system_decision": "retired_exact_recipe"},
+    {"family": "player_specific_pbp", "system_decision": "prepared_unmeasured"}
+  ],
+  "public_private_boundary": {
+    "public": ["aggregate metrics", "validation rules", "selected engineering patterns", "notebooks", "decision history"],
+    "private": ["raw competition data", "raw third-party responses", "weights", "large checkpoints", "private cloud paths", "complete runners", "active competitive feature formulas"]
+  }
+}

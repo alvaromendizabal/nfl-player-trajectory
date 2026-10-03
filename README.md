@@ -6,6 +6,8 @@
 
 Predict selected NFL players' future x/y locations after a pass using observed tracking, player roles, organizer-supplied landing context, and forecast horizon. AWS/SageMaker is the canonical research workspace; Kaggle is reserved for submission delivery.
 
+Competition identifier: `nfl-big-data-bowl-2026-prediction`.
+
 ## Current research snapshot
 
 The strongest recorded private submission is **0.46487 coordinate RMSE**. The strongest completed local system is a **20-model, four-split-family ensemble** at **0.4631723213 pooled OOF RMSE over 561,607 rows**.

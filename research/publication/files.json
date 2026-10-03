@@ -342,11 +342,11 @@
   "research/workspace/nfl_manual_sync/nfl_workspace.py": "21ec57d08caf9cf695d5357b2ca1aea97a6a118f221ab821115a6f354596d5c4",
   "research/workspace/nfl_manual_sync/tests/test_workspace.py": "be81431e5bc3400b9bf508e4c43acc1ef98c5681eacb8aca7111c1949b511098",
   "research/workspace/nfl_manual_sync/workspace_readiness.ipynb": "793f59516d2cc122680ed00967545674388564def12a289c1a9908170c5b8732",
-  "docs/CURRENT_RESEARCH_STATUS.md": "436bdb3a3a7bacac058f7a6d41f7c6caee297f269f173eda60a3271c7b5acc4b",
+  "docs/CURRENT_RESEARCH_STATUS.md": "cbab61ad2e434c76e5949794667b196b72c50cd36a46fab5335cfd9446920505",
   "docs/results/post_pr38_architecture_progress.json": "3dfa0fa64d541e8e9265fea38f5f01c7c8a680d44dc5db6937ef59da1ddd2858",
   "notebooks/06_architecture_research_progress.ipynb": "927f9b5b5d4a286631fee5c9cedaf5490a5b0e6da2d6a5725174c32ed7d25615",
-  "docs/FRONTIER_RESEARCH_POST_PR39.md": "0723c8c0f05679a7b56a87526d56e912f7040fb41194340d80d5d9db1065d592",
+  "docs/FRONTIER_RESEARCH_POST_PR39.md": "282d4a38f0d9cb7fb10735e0b561f2f67d121748812e43b7404d7ecab2cac10c",
   "docs/results/post_pr39_frontier_research.json": "0eb0790c9a22a58c0d592b97af436345cbf4185d2d55d5f79c0c55a6f31507d6",
-  "docs/FRONTIER_RESEARCH_POST_PR40.md": "782fbb144f8621039dc39deea18ac476b256e4b5954163dc63f007d1bd5296e9",
+  "docs/FRONTIER_RESEARCH_POST_PR40.md": "549f34b85c211174f4248b4d5ec2fba2b80c11bc1d727ff225b844551bf1fc27",
   "docs/results/post_pr40_frontier_research.json": "c30740fe160753b37b5893984a449e663d94238cac0e7f3114f3ff90460cd6d4"
 }

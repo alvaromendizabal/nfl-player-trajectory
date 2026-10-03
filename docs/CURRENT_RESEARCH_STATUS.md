@@ -1,98 +1,102 @@
 # Current research status — October 2026
 
-## Competitive state
+## Current measured system
 
-- Strongest recorded late private submission: **0.46487 RMSE**
-- Published first-place private comparator: **0.46340 RMSE**
-- Remaining comparable gap: **0.00147 RMSE**
-- Strongest completed local system: **0.4631723213 OOF RMSE** over **561,607 rows**
-- Ensemble size: **20 models across four split families**
-- Stretch research target: **0.44 RMSE**
+- Strongest recorded private submission: **0.46487 coordinate RMSE**
+- Strongest completed local system: **0.4631723213 pooled OOF RMSE**
+- Pooled OOF population: **561,607 rows**
+- Ensemble size: **20 models across four grouped split families**
+- Canonical research environment: **AWS SageMaker / 1× NVIDIA L4**
 
-Local OOF, development-fold metrics, and private leaderboard scores are intentionally not treated as interchangeable.
+Local OOF and private submission evidence are intentionally treated as separate measurements.
 
-## Research completed since PR #40
+## Research completed since the previous public milestone
 
-The post-PR40 sequence deliberately tested several missing mechanisms from strong public approaches while preserving locked promotion gates and the competition-data-only boundary.
+The project completed a broad controlled program across representation, supervision, architecture, optimization, physics, and external historical context.
 
-| Family | Evidence | Decision |
+| Research family | Public-safe evidence | Decision |
 |---|---|---|
-| Competition-only two-stage pseudo-supervision | Controlled variants completed without confirmation-stage promotion | **NO_PROMOTION** |
-| ST-GRU / landing-node ST-GRU | Fold-0 standalone RMSE roughly 0.636 / 0.605 versus ~0.454 reference | **NO_PROMOTION** |
-| Zero-fit multisplit meta frontier | Best candidate improved full OOF by only ~0.000049 RMSE | **NO_PROMOTION** |
-| Frozen-parent feature adapters | Intent / temporal variants produced fixed-blend gains around 0.00011–0.00017 | **NO_PROMOTION** |
-| Full-parent coverage/physics fine-tune | Candidate gains over matched control were only a few 1e-5 RMSE | **NO_PROMOTION** |
-| Source-native ball/context/window variants | Best Fold-0 blend gain ~0.00118 at an intermediate checkpoint, below final gate | **NO_PROMOTION** |
-| Direct interaction / Entmax-ball / role heads | All three completed Fold 0; none beat matched control | **NO_PROMOTION** |
-| Single-target / defender-focused / route representation | All three completed Fold 0; fixed-blend gains remained ~0.00012–0.00013 | **NO_PROMOTION** |
-| Full five-fold winner-parent TTA | Best base-family gain **0.001604**; multisplit-20 hybrid gain only **~0.000034** | **NO_PROMOTION** |
+| Fresh source-faithful configurations | One configuration survived early screening but failed the locked midpoint ensemble gate | Retired exact branch |
+| Alternative temporal objectives | Temporal Huber rejected early; late-horizon objective failed midpoint complementarity | Retired |
+| Dense temporal correspondence | Improved standalone source-family fit by ~0.00097 RMSE but did not improve the fixed ensemble | Retired exact branch |
+| Zero-dropout source model | Improved standalone source-family fit by ~0.00183 RMSE; ensemble gain remained uncertain | Retired exact branch |
+| Wide/shallow interaction transfer | Did not outperform the matched source-family control | Retired |
+| Layer-wise AdamW transfer | Weak at early screen | Retired |
+| Explicit physics integration | Survived the screen but did not pass the midpoint ensemble gate | Retired |
+| Residual physics/context heads | Failed early quality screens | Retired |
+| Direct NFL NGS priors | Strong standalone improvement; exact static-injection recipe remained too correlated | Retired exact recipe |
+| Direct ESPN team/PBP priors | Produced the most promising recent fixed-blend gain but uncertainty still crossed zero | Retired exact recipe |
+| Player-specific prior-game PBP | Packaged and tested; next active research milestone | Prepared |
 
-## Five-fold TTA result
+## What transferred
 
-The TTA audit is the clearest recent example of why local family gains and final-system gains must be separated.
+### 1. Ensemble diversity remains the strongest system-level result
 
-### Equal original + horizontal-flip recipe
+The 20-model, four-split-family ensemble remains the strongest completed local system. Repeated evidence shows that independent error diversity matters more than isolated one-fold gains.
 
-- base-family RMSE: **0.46814385 → 0.46654003**
-- base-family gain: **+0.00160382**
-- pooled bootstrap evidence: positive
-- multisplit-20 hybrid gain: only **~+0.00003379**
-- hybrid uncertainty crossed zero
+### 2. Standalone quality is not enough
 
-### Original / flip / deterministic crop recipe
+Several candidates were better than the matched source-family model on Fold 0 but still failed to add enough independent residual signal to the ensemble.
 
-- base-family RMSE: **0.46814385 → 0.46669682**
-- base-family gain: **+0.00144703**
-- multisplit-20 hybrid RMSE: **0.46311464**
-- multisplit-20 hybrid gain: **+0.00005768**
-- hybrid 95% interval crossed zero
+That distinction is now a central design constraint: new work is prioritized for **complementarity**, not merely component RMSE.
 
-### Four-way symmetry recipe
+### 3. External historical context is useful
 
-- base-family RMSE: **0.47266902**
-- multisplit-20 hybrid RMSE: **0.46437391**
-- both materially worse
+Direct NFL Next Gen Stats and direct ESPN historical data both added measurable signal.
 
-Conclusion: **TTA is useful at the family level but largely redundant with the error diversity already present in multisplit-20.** No 20-model TTA rollout is justified from this evidence.
+The strongest external-data findings so far are:
 
-## What the project has learned
+- NGS historical priors improved standalone source-family fitting
+- team-level ESPN PBP context produced more promising ensemble complementarity
+- fine-grained player-specific history is the next logical representation
 
-1. **Split/model diversity is the strongest transferred mechanism.**
-2. **Complementarity matters more than standalone quality, but it must survive confirmation.**
-3. **One-fold wins are insufficient.**
-4. **Adapters and fine-tunes around the same fitted parent mostly remained in the same error basin.**
-5. **Target-specific, role-specific, and single-target variants did not robustly escape that basin.**
-6. **TTA can improve a component model while adding almost nothing to an already diverse ensemble.**
-7. **Negative experiments reduce future search cost when they are recorded and retired.**
-8. **The remaining major competition-data-only gap is independently trained feature-configuration breadth combined with repeated grouped-CV diversity.**
+### 4. Point-in-time engineering is now first-class infrastructure
 
-## Current next direction
+For a competition play in week `w`, 2023 priors only use observations from weeks `< w`.
 
-The next prepared study trains **fresh full first-place-style models from scratch** under the verified source training contract rather than adapting an existing fitted parent.
+The pipeline preserves raw-source provenance, hashes, coverage reports, identity bridges, and reusable point-in-time feature stores.
 
-Two project-owned feature configurations are screened in a staged protocol. The study is **prepared but unmeasured** until a real AWS execution completes.
+## Direct-source external-data assets
 
-If a fresh configuration demonstrates credible standalone quality and leakage-safe ensemble complementarity, it advances to confirmation, full OOF, and then additional split-family scaling.
+### NFL Next Gen Stats
 
-Historical-data pretraining remains a high-value **blocked** hypothesis because the active project boundary is competition-data-only.
+- **3,920 rows**
+- **691 NGS players**
+- **401 competition players bridged**
+- passer prior coverage: **95.74%**
+- targeted-receiver prior coverage: **85.35%**
+
+### ESPN historical context
+
+- **36/36 weekly scoreboards acquired**
+- **544/544 game summaries acquired**
+- **272/272 competition games mapped**
+- **100% play-team mapping**
+- player-prior coverage: **97.15%**
+- dual team-PBP prior coverage: **100%**
+
+These assets are cached in AWS and are reused rather than redownloaded for every experiment.
+
+## Validation discipline
+
+Candidate promotion requires more than one attractive fold result.
+
+The research protocol uses game-grouped validation, fixed predeclared blend weights, paired-game bootstrap uncertainty, early screen / midpoint / final gates, negative-result retirement, explicit checkpoint lineage, point-in-time external-data construction, and local OOF / private submission separation.
+
+## Current active direction
+
+The next prepared experiment builds **player-specific prior-game PBP tendencies** from the already acquired ESPN corpus.
+
+Two controlled arms test each player's own prior-week tendencies and the same player-specific priors plus passer/target context broadcast to the play.
+
+The milestone is prepared and tested but remains unmeasured until AWS execution completes.
 
 ## Engineering state
 
-Recent runners use bounded, resumable execution with:
-
-- collision-resistant run IDs
-- checkpointed epoch/stage recovery
-- structured JSONL + human-readable logs
-- CPU/RAM/GPU/disk telemetry
-- measured cost accumulation
-- workload-specific worker/batch benchmarks
-- fail-closed integrity checks
-- notebook/Plotly persistence gates
-
-Important operational lessons are retained: transient AMP overflow should use GradScaler semantics; EMA checkpoint restoration must preserve destination device/dtype; floating-point kernel-path drift should not be mistaken for model drift; and previously slower/invalid CUDA-stream overlap should not be retried unchanged.
+The AWS runner framework now supports bounded 20–30 minute child executions, checkpointed recovery, collision-resistant run IDs, structured JSONL + human-readable logs, CPU/RAM/GPU/disk telemetry, cost accumulation, workload-specific worker benchmarks, fail-closed package integrity, executed-notebook and Plotly persistence gates, and one artifact / one command / one outer return bundle.
 
 ## Public/private boundary
 
-Public GitHub contains aggregate metrics, validation logic, selected protocols, decision history, privacy-safe implementation patterns, and machine-readable research snapshots.
+GitHub publishes aggregate metrics, validation logic, selected engineering patterns, notebooks, decision history, and machine-readable snapshots.
 
-Private AWS retains competition data, fitted states, large checkpoints, exact object locations, complete private runners, and unreleased feature transforms. Kaggle remains the organizer-required submission surface only.
+AWS retains raw competition data, fitted weights, large checkpoints, exact private object locations, complete private runners, and unreleased competitive feature combinations.

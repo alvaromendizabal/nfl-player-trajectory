@@ -5,7 +5,6 @@ This document summarizes controlled NFL Big Data Bowl 2026 research completed af
 ## Competitive context
 
 - Strongest recorded late private submission: **0.46487 RMSE**
-- Published first-place private comparator: **0.46340 RMSE**
 - Strongest completed local system: **0.4631723213 OOF RMSE** over 561,607 rows
 - Stretch research target: **0.44 RMSE**
 

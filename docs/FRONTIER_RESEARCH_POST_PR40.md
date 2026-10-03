@@ -7,7 +7,6 @@ The public record intentionally includes **aggregate evidence, validation rules,
 ## Competitive context
 
 - strongest recorded late private submission: **0.46487 RMSE**
-- published first-place private comparator: **0.46340 RMSE**
 - private gap: **0.00147 RMSE**
 - strongest completed local system: **0.4631723213 pooled OOF RMSE**
 - OOF rows: **561,607**

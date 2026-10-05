@@ -1,33 +1,82 @@
-# NFL Big Data Bowl 2026 - Prediction
+# NFL Big Data Bowl 2026 — Start Here
 
-[Prediction competition](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction)
+This repository is the employer-facing, semi-reproducible record for an AWS-first player-trajectory forecasting research program.
 
-## Start here
+## 10-minute technical review
 
-## Review without private data
+Read these in order:
 
-Open [the Research Review](research/RESEARCH_REVIEW.ipynb). Its inline Plotly figures are generated exclusively from the public JSON aggregates in `research/evidence/studies.json`. The notebook and HTML export are evidence views, not an inference service.
+1. [README](README.md) — project scope and headline evidence
+2. [Current research status](docs/CURRENT_RESEARCH_STATUS.md) — latest verified system and active milestone
+3. [Research system and reproducibility](docs/RESEARCH_SYSTEM.md) — architecture, validation, observability, and public/private boundary
+4. [Model card](docs/MODEL_CARD.md) — model family, evidence, limitations, and lifecycle
+5. [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md) — controlled experiment history
+6. [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md) — direct-source acquisition and point-in-time controls
+7. [Research evidence archive](research/README.md) — evidence hierarchy and preserved public artifacts
 
-From the repository root, validate the frozen published files with the Python standard library:
+The strongest completed local system is a 20-model, four-split-family ensemble at **0.4631723213 pooled OOF RMSE over 561,607 rows**. The strongest recorded private submission is **0.46487 RMSE**. These are different evaluation settings and are reported separately.
+
+## Validate the public publication
+
+From the repository root:
 
 ```bash
 python research/publication/validate.py
 ```
 
-Open the notebook to explore the public evidence using an environment with Plotly. The optional `python research/publication/render.py` also renders static fallbacks and therefore requires Matplotlib. Rerendering with a different library environment can legitimately change derived file bytes; the frozen publication hash manifest must not be silently rewritten to disguise that difference.
+This standard-library validator checks registered public hashes, publication structure, source-archive provenance, credential-like patterns, notebook structure, and aggregate RMSE arithmetic. It does **not** retrain private models.
 
-The renderer executes only the small, supplied aggregate-review notebook. It imports no experimental model code and does not request AWS credentials. The manifest validator is a standard-library check, not an assertion that every experiment was reproduced.
+## Review the executed aggregate evidence
 
-## Inspect the forecasting implementation
+Open [research/RESEARCH_REVIEW.ipynb](research/RESEARCH_REVIEW.ipynb) for the frozen aggregate research review. Its public figures are generated from registered aggregate evidence; the notebook is an evidence view, not an inference service.
 
-The maintained implementation is in `src/nfl_trajectory/`. Original project notebooks remain under `notebooks/`. The earlier detailed execution guide is preserved at [docs/archive/START_HERE.md](docs/archive/START_HERE.md); its old commands describe historical experiments and must not be run blindly to review this publication.
+The later October narrative in `docs/` extends the public-safe research record beyond the frozen aggregate notebook without publishing private row-level predictions or active experiment recipes.
 
-## Inspect the manual feature research
+## Inspect the maintained implementation
 
-[research/workspace/README.md](research/workspace/README.md) indexes the original named experiment packages. These are preserved source mirrors, not a reorganized training application. Do not assume moving them changes the hardcoded paths or the source fingerprints in their private contracts. Public copies intentionally omit `input_contract.json`, fitted objects, raw competition files, row-level results, and private recovery receipts.
+- `src/nfl_trajectory/` — maintained public implementation
+- `tests/` — software and research-contract tests
+- `notebooks/` — selected project notebooks
+- `research/workspace/` — preserved public source mirrors and experiment materials
+- `docs/results/` — selected machine-readable public snapshots
 
-The owner continues running the original folders in the existing SageMaker workspace. Publication does not replace those folders or invalidate their checkpoints. Reproducing a historical experiment on another machine requires authorized data and the corresponding private input contract, source revision, and environment; none are inferred from a public score.
+Historical experiment packages under `research/workspace/` are preserved evidence, not a single reorganized training application. Public copies intentionally omit private input contracts, fitted objects, raw competition files, private row-level results, and private recovery receipts.
 
-## Publication is not deployment
+## Reproducibility contract
 
-A GitHub merge changes the repository. It does not itself update the existing AWS checkout, retrain a model, or submit to Kaggle. The owner-side publication helper verifies the merged commit in a separate worktree. Active research contracts require the original checkout to remain at their pinned Git HEAD, so that checkout is intentionally preserved while the publication worktree displays the merged revision. No private contract is rewritten to bypass provenance checks. Private artifacts stay local/S3.
+The public repository is intentionally semi-reproducible.
+
+A public reviewer should be able to inspect:
+
+- the forecasting architecture and selected source implementation
+- the official metric and grouped-validation contract
+- public experiment protocols and negative-result decisions
+- aggregate OOF/private evidence without conflating them
+- direct-source acquisition architecture and leakage controls
+- test, CI, checkpoint-lineage, and publication-validation patterns
+- research-system engineering and measured performance outcomes
+
+A public clone is **not** expected to reproduce private competition scores without the authorized data, private fitted weights, exact active feature combinations, and corresponding environment.
+
+## Canonical environment
+
+AWS SageMaker is the live source of truth for research, data preparation, training, validation, checkpoints, telemetry, and immutable run evidence.
+
+GitHub is the durable employer-facing code and reproducibility layer derived from validated AWS milestones.
+
+Kaggle is used only for external submission delivery/status where required.
+
+A GitHub merge does not retrain a model, mutate AWS, or submit a candidate.
+
+## Public/private boundary
+
+Public GitHub excludes:
+
+- raw competition data
+- raw third-party response archives
+- fitted private weights and large checkpoints
+- credentials and private cloud locations
+- complete private execution runners
+- unreleased competition-specific active feature combinations
+
+This boundary preserves reviewability and scientific provenance without distributing restricted data or active competitive IP.

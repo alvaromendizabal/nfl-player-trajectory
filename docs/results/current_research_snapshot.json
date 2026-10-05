@@ -1,0 +1,84 @@
+{
+  "snapshot_date": "2026-10-05",
+  "project": "NFL Big Data Bowl 2026 - Player Trajectory Prediction",
+  "metric": {
+    "name": "coordinate_rmse",
+    "direction": "lower_is_better",
+    "formula": "sqrt(mean((prediction_xy - target_xy)^2))"
+  },
+  "accepted_system": {
+    "name": "multisplit_20",
+    "pooled_oof_rmse": 0.4631723212629593,
+    "oof_rows": 561607,
+    "oof_games": 272,
+    "models": 20,
+    "split_families": 4,
+    "strongest_recorded_private_rmse": 0.46487
+  },
+  "diversity_audit": {
+    "two_to_four_family_rmse_gain": 0.002178351245099408,
+    "paired_game_interval95": [
+      0.00062912,
+      0.00386127
+    ],
+    "original_folds_improved": 5,
+    "original_folds_total": 5,
+    "leave_one_game_out_positive": 272,
+    "leave_one_game_out_total": 272,
+    "decision": "supports_bounded_fresh_split_pilot"
+  },
+  "active_pilot": {
+    "status": "experimental",
+    "split_seed": 4,
+    "fold": 0,
+    "epochs_completed": 28,
+    "epochs_total": 35,
+    "best_standalone_rmse": 0.46597135,
+    "incumbent_rmse_same_population": 0.45634058,
+    "fixed_blend_rmse": 0.4565575,
+    "blend_improvement_vs_incumbent": -0.00021691,
+    "promotion_claimed": false
+  },
+  "external_data": {
+    "nfl_ngs_rows": 3920,
+    "nfl_ngs_players": 691,
+    "competition_players_bridged": 401,
+    "passer_prior_coverage": 0.9574,
+    "targeted_receiver_prior_coverage": 0.8535,
+    "espn_scoreboards": 36,
+    "espn_game_summaries": 544,
+    "competition_games_mapped": 272,
+    "competition_games_total": 272,
+    "play_team_mapping": 1.0,
+    "player_prior_coverage": 0.9715,
+    "dual_team_pbp_coverage": 1.0
+  },
+  "engineering": {
+    "canonical_environment": "AWS SageMaker",
+    "gpu": "NVIDIA L4",
+    "measured_fixed_ensemble_inference_speedup": 4.784367,
+    "workflow": "one artifact / one command / one outer return bundle",
+    "public_repository_role": "semi-reproducible employer-facing evidence layer"
+  },
+  "public_boundary": {
+    "includes": [
+      "selected implementation",
+      "aggregate metrics",
+      "validation contracts",
+      "tests and protocols",
+      "public-safe notebooks",
+      "provenance patterns",
+      "machine-readable snapshots"
+    ],
+    "excludes": [
+      "raw competition data",
+      "raw third-party response archives",
+      "fitted private weights",
+      "large checkpoints",
+      "credentials",
+      "private cloud object locations",
+      "complete private runners",
+      "unreleased active feature combinations"
+    ]
+  }
+}

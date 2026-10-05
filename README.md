@@ -1,125 +1,157 @@
 # NFL Big Data Bowl 2026 - Prediction
 
-**Player-motion forecasting with sequence modeling, ensemble diversity, direct-source external data, GPU engineering, and reproducible AWS research.**
+**End-to-end player-motion forecasting research with temporal deep learning, repeated grouped-CV ensembles, direct-source historical context, GPU engineering, and reproducible AWS experimentation.**
 
-[Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md) · [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md) · [Model card](docs/MODEL_CARD.md) · [Run and reproduce](START_HERE.md)
+[Current status](docs/CURRENT_RESEARCH_STATUS.md) · [Research system](docs/RESEARCH_SYSTEM.md) · [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md) · [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md) · [Model card](docs/MODEL_CARD.md) · [Start here](START_HERE.md)
 
-Predict selected NFL players' future x/y locations after a pass using observed tracking, player roles, organizer-supplied landing context, and forecast horizon. AWS/SageMaker is the canonical research workspace; Kaggle is reserved for submission delivery.
+The task is to forecast selected NFL players' future x/y locations after a pass using observed tracking, player roles, organizer-supplied landing context, and forecast horizon. AWS SageMaker is the canonical research environment; the public repository is the versioned, employer-facing reproducibility layer.
 
 Competition identifier: `nfl-big-data-bowl-2026-prediction`.
 
-## Current research snapshot
+## Portfolio snapshot
 
-The strongest recorded private submission is **0.46487 coordinate RMSE**. The strongest completed local system is a **20-model, four-split-family ensemble** at **0.4631723213 pooled OOF RMSE over 561,607 rows**.
+| Evidence | Result |
+|---|---:|
+| Strongest recorded private submission | **0.46487 coordinate RMSE** |
+| Strongest completed local ensemble | **0.4631723213 pooled OOF RMSE** |
+| OOF evaluation population | **561,607 scored rows / 272 games** |
+| Accepted ensemble | **20 models / 4 grouped split families** |
+| Measured inference acceleration | **4.784×** with exact parity on the declared benchmark |
+| Direct NFL NGS acquisition | **3,920 rows / 691 historical players** |
+| Direct ESPN acquisition | **36 scoreboards / 544 game summaries / 272 of 272 games mapped** |
 
-Those two measurements serve different purposes: private-submission evidence tracks delivered performance, while grouped-game OOF is the primary local research instrument.
+Local OOF and private-submission results are intentionally reported as separate evaluation settings.
 
-The project has evolved into a full ML research system rather than a single model:
+## What this project demonstrates
 
-- **20-model ensemble diversity** across repeated grouped splits
-- **5-fold sequence-model research** with locked promotion gates
-- **direct NFL Next Gen Stats acquisition and identity bridging**
-- **direct ESPN schedule, game-summary, and play-by-play acquisition**
-- **point-in-time historical feature stores** with strict prior-week leakage controls
-- **resumable GPU runners** with checkpointing, telemetry, cost accounting, and fail-closed integrity checks
-- **negative-result retention** so unsuccessful hypotheses reduce future search cost instead of being repeated
+This repository represents a full ML research system rather than a single competition notebook:
 
-## Recent research program
+- **sequence modeling:** temporal convolution, player-interaction attention, Gaussian trajectory supervision, and auxiliary motion objectives
+- **robust validation:** game-grouped cross-validation, repeated split families, paired-game bootstrap uncertainty, fixed promotion gates, and leakage-safe OOF analysis
+- **ensemble research:** a 20-model multisplit system with explicit prediction/residual complementarity analysis
+- **direct-source data engineering:** first-party/neutral historical acquisition, identity bridging, point-in-time feature construction, coverage audits, and immutable provenance receipts
+- **GPU engineering:** NVIDIA L4 mixed-precision training, workload-specific loader/thread benchmarking, checkpoint recovery, structured telemetry, and cost accounting
+- **research operations:** immutable experiment manifests, champion/challenger states, negative-result retirement, collision-resistant run IDs, and one-artifact/one-command/one-return-bundle execution
 
-Since the previous public milestone, the project has completed a large controlled sequence of representation, objective, architecture, optimization, physics, and external-context studies.
+## Strongest system-level evidence
 
-The most useful conclusions are:
+The clearest transferable result is **split/model diversity**.
 
-1. **Split/model diversity remains the strongest system-level mechanism.**
-2. **Several candidate families improved standalone Fold-0 quality without adding enough independent residual signal to the ensemble.**
-3. **Zero dropout and dense temporal supervision improved source-family fitting but remained strongly correlated with the incumbent.**
-4. **Direct NFL Next Gen Stats materially improved standalone fitting.**
-5. **Direct ESPN prior-game context produced more promising ensemble complementarity than static external priors alone.**
-6. **Fine-grained player-specific prior-game context is the current active research direction.**
-7. **Cross-fold confirmation and paired-game uncertainty gates prevent attractive one-fold results from being promoted prematurely.**
+A full-OOF audit of the accepted prediction bank reproduced the 20-model system at **0.4631723213 RMSE** and measured a **0.00217835 RMSE gain** when expanding from two to four split families. The paired-game 95% interval was **[0.000629, 0.003861]**; all five original folds improved, and the direction remained positive under all 272 leave-one-game-out removals.
 
-The detailed public-safe record is in [docs/OCTOBER_RESEARCH_PROGRESS.md](docs/OCTOBER_RESEARCH_PROGRESS.md).
+That evidence motivated a fresh grouped-split source-family pilot rather than another post-hoc blend search.
 
-## External data engineering
+The active pilot is deliberately labeled **experimental**: it has completed **28 of 35 prespecified epochs**. Its best standalone checkpoint is **0.46597135 RMSE** on its own split-4/fold-0 population; the corresponding fixed blend remains slightly worse than that population's incumbent, so **no promotion is claimed**.
 
-The external-data pipeline is built from **self-pulled public sources**, not competitor-prepared datasets.
+## Recent controlled research
+
+Recent experiments deliberately tested materially different sources of signal rather than repeatedly tuning one recipe.
+
+| Research direction | Public-safe conclusion |
+|---|---|
+| dense temporal correspondence | improved source-family standalone fit; insufficient ensemble complementarity |
+| zero-dropout source family | strong standalone improvement; residuals remained too correlated |
+| direct NFL Next Gen Stats priors | useful standalone historical signal; exact injection recipe not promoted |
+| direct ESPN prior-game PBP | stronger complementarity signal; uncertainty gate still failed |
+| player-specific PBP histories | data/gradient pipeline validated; exact model failed midpoint promotion |
+| early joint temporal/player history | controlled treatments underperformed the matched short-history control |
+| source-anchored longer history | exact parent replay passed; longer-history treatments did not beat control |
+| trajectory-memory retrieval | all three memory variants completed; gains were too small and uncertain |
+| full-OOF diversity audit | robust support for a bounded fresh-split expansion pilot |
+
+Negative results remain in the research record so future work does not repeatedly spend compute on answered questions.
+
+## Direct-source historical data
+
+External historical context is accepted only when it can be acquired directly from a first-party or neutral public source and made point-in-time safe.
 
 Current reusable assets include:
 
-- **3,920 direct NFL Next Gen Stats rows**
-- **691 NGS players**
-- **401 competition players bridged**
-- **95.74% passer prior coverage**
-- **85.35% targeted-receiver prior coverage**
-- **36/36 ESPN weekly scoreboards**
-- **544/544 ESPN game summaries**
-- **272/272 competition games mapped**
-- **100% play-team mapping**
-- **97.15% ESPN player-prior coverage**
-- **100% dual team-PBP prior coverage**
+- **NFL Next Gen Stats:** 3,920 rows, 691 historical players, 401 competition-player matches
+- **NGS coverage:** 95.74% passer priors, 85.35% targeted-receiver priors
+- **ESPN:** 36/36 weekly scoreboards and 544/544 game summaries
+- **competition bridge:** 272/272 games mapped and 100% play-team mapping
+- **historical coverage:** 97.15% player-prior coverage and 100% dual team-PBP coverage
 
-All 2023 historical priors are point-in-time: a play in week `w` may only use historical observations from weeks `< w`.
+For a 2023 competition play in week `w`, 2023 historical features may only use observations from weeks `< w`.
 
-See [docs/EXTERNAL_DATA_ENGINEERING.md](docs/EXTERNAL_DATA_ENGINEERING.md).
+See [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md).
 
-## GPU and systems engineering
+## Engineering highlights
 
-The research stack runs on AWS SageMaker with a single NVIDIA L4.
+The canonical research stack runs on AWS SageMaker with a single NVIDIA L4.
 
-Selected measured engineering results:
+Measured and implemented engineering capabilities include:
 
-- **4.784× inference acceleration** for the fixed 20-model ensemble through shared preparation
-- exact prediction parity on the declared inference benchmark
-- workload-specific `DataLoader` benchmarking rather than fixed worker assumptions
-- checkpointed epoch/stage recovery
-- structured JSONL and human-readable logs
-- CPU/RAM/GPU/disk telemetry
-- run-level cost accounting
-- device-safe EMA restoration
-- AMP overflow handling through `GradScaler`
-- collision-resistant run IDs and immutable manifests
-- one-artifact / one-command / one-return-bundle execution
+- **4.784×** shared-preparation inference acceleration with exact parity on the declared benchmark
+- resumable model/optimizer/EMA/scaler/RNG checkpointing
+- workload-specific `DataLoader` and CPU-thread benchmarks
+- FP16/BF16 training where numerically valid and FP32 evaluation where required
+- CPU/RAM/GPU/disk utilization heartbeats and peak-memory tracking
+- structured JSONL plus human-readable logs
+- reconstructable run-cost estimates and explicit cost ceilings
+- fail-closed schema, source-hash, checkpoint, metric, and packaging gates
+- executed-notebook and Plotly persistence checks
+- deterministic regression tests for avoidable execution failures
+
+See [Research system and reproducibility](docs/RESEARCH_SYSTEM.md).
 
 ## Scientific operating discipline
 
-A candidate is not promoted because it looks good on one fold.
+A candidate is not promoted because one fold looks attractive.
 
 The project uses:
 
 - game-grouped validation
-- fixed predeclared blend weights
+- fixed, predeclared blend weights
 - paired-game bootstrap uncertainty
 - explicit screen / midpoint / final gates
-- separate treatment of local OOF and submission evidence
-- negative-result retirement
+- standalone-versus-ensemble attribution
+- full-OOF confirmation before scaling
 - point-in-time external-data construction
-- immutable raw-source provenance and hashes
+- immutable provenance and checkpoint lineage
+- negative-result retirement
 
-This keeps the repository focused on defensible ML engineering rather than leaderboard storytelling.
+This keeps the repository centered on defensible ML research rather than score-chasing.
 
 ## Public reproducibility boundary
 
-This repository is intentionally **semi-reproducible**.
+The repository is intentionally **semi-reproducible**.
 
-It publishes aggregate metrics, validation rules, selected protocols, public-safe data-engineering patterns, decision history, notebooks, and machine-readable public evidence.
+**Published:** selected implementation, aggregate metrics, validation contracts, source/provenance patterns, executed aggregate notebooks, tests, machine-readable snapshots, and research decisions.
 
-It intentionally does **not** publish raw competition data, fitted private weights, large checkpoints, private cloud object locations, credentials, complete private runners, unreleased competition-specific transforms, or the exact feature combinations that constitute active competitive IP.
+**Kept private:** raw competition data, raw third-party response archives, fitted weights, large checkpoints, credentials, private cloud object locations, complete private runners, and unreleased active feature combinations.
 
-## Repository tour
+The public artifacts are sufficient to review the architecture, scientific process, engineering quality, and reproducibility discipline without distributing restricted data or active competitive IP.
 
-- [START_HERE.md](START_HERE.md) — review and reproducibility entry point
-- [docs/CURRENT_RESEARCH_STATUS.md](docs/CURRENT_RESEARCH_STATUS.md) — latest measured state
-- [docs/OCTOBER_RESEARCH_PROGRESS.md](docs/OCTOBER_RESEARCH_PROGRESS.md) — controlled research program since the last publication
-- [docs/EXTERNAL_DATA_ENGINEERING.md](docs/EXTERNAL_DATA_ENGINEERING.md) — direct-source acquisition, identity resolution, and leakage controls
-- [docs/MODEL_CARD.md](docs/MODEL_CARD.md) — system evidence, limitations, and deployment boundary
-- [research/README.md](research/README.md) — research-evidence hierarchy
-- [src/nfl_trajectory/](src/nfl_trajectory/) — maintained public implementation
-- [tests/](tests/) — software and research-contract tests
+## Review path
 
-## Validation and limitations
+For a fast technical review:
 
-The official coordinate metric is `sqrt(mean((prediction_xy - target_xy)^2))` over all scored x/y coordinates.
+1. [Current research status](docs/CURRENT_RESEARCH_STATUS.md)
+2. [Research system and reproducibility](docs/RESEARCH_SYSTEM.md)
+3. [Model card](docs/MODEL_CARD.md)
+4. [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md)
+5. [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md)
+6. [Research evidence archive](research/README.md)
+7. [Run and validate the public artifacts](START_HERE.md)
 
-Development folds, pooled OOF, and private submission measurements are kept distinct. The current public dataset covers one competition season, so cross-season generalization remains a research limitation. External priors are historical and point-in-time, but public coverage varies by player and source.
+## Repository map
 
-The project is a research artifact, not a certified player-evaluation or production decision system.
+- `src/nfl_trajectory/` — maintained public implementation
+- `tests/` — software and research-contract tests
+- `notebooks/` — selected project notebooks
+- `research/` — public research evidence and source archive
+- `docs/` — model, validation, system, and data-engineering documentation
+
+## Metric and limitations
+
+The official metric is coordinate RMSE:
+
+`sqrt(mean((prediction_xy - target_xy)^2))`
+
+Lower is better.
+
+The labeled competition data cover one competition season, so cross-season generalization remains a research limitation. External-source coverage varies by player and source. Component improvements can be redundant inside an ensemble. Development-fold evidence, pooled OOF, and private submission measurements are never treated as interchangeable.
+
+This is a research artifact, not a certified player-evaluation or production decision system.

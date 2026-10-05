@@ -4,99 +4,140 @@
 
 - Strongest recorded private submission: **0.46487 coordinate RMSE**
 - Strongest completed local system: **0.4631723213 pooled OOF RMSE**
-- Pooled OOF population: **561,607 rows**
-- Ensemble size: **20 models across four grouped split families**
+- Pooled OOF population: **561,607 scored rows across 272 games**
+- Accepted ensemble: **20 models across four grouped split families**
 - Canonical research environment: **AWS SageMaker / 1× NVIDIA L4**
 
-Local OOF and private submission evidence are intentionally treated as separate measurements.
+Local OOF, individual-fold validation, and private submission evidence are intentionally kept separate.
+
+## Current active milestone
+
+The current active challenger is a **fresh source-family model trained on a new grouped split family**.
+
+The pilot uses split seed 4 / fold 0 and is predeclared for 35 epochs. It has completed **28/35 epochs**.
+
+Current public-safe evidence:
+
+- best standalone pilot checkpoint: **0.46597135 RMSE**
+- exact-population four-family incumbent: **0.45634058 RMSE**
+- fixed 80% incumbent / 20% pilot blend: **0.45655750 RMSE**
+- current blend delta: **−0.00021691 RMSE** relative to the incumbent
+- seven prespecified epochs remain
+- **no promotion is claimed**
+
+The pilot passed its earlier continuation gates, but its current best blend remains slightly worse than the incumbent. Finishing the prespecified program is a controlled completion step, not a post-hoc extension.
+
+## Strongest recent system evidence
+
+### Full-OOF diversity audit
+
+The accepted 20-model prediction bank was replayed across all 561,607 rows.
+
+Expanding from two to four split families produced:
+
+- OOF gain: **0.00217835 RMSE**
+- paired-game 95% interval: **[0.000629, 0.003861]**
+- original folds improved: **5/5**
+- leave-one-game-out direction: positive for **272/272** game removals
+
+This is the strongest recent evidence for system-level scaling and motivated the current fresh-split pilot.
+
+The audit also produced a conditional four-to-eight-family scenario, but that value is treated as an assumption-dependent planning calculation rather than a trained result.
 
 ## Research completed since the previous public milestone
 
-The project completed a broad controlled program across representation, supervision, architecture, optimization, physics, and external historical context.
-
-| Research family | Public-safe evidence | Decision |
+| Research direction | Public-safe evidence | Decision |
 |---|---|---|
-| Fresh source-faithful configurations | One configuration survived early screening but failed the locked midpoint ensemble gate | Retired exact branch |
-| Alternative temporal objectives | Temporal Huber rejected early; late-horizon objective failed midpoint complementarity | Retired |
-| Dense temporal correspondence | Improved standalone source-family fit by ~0.00097 RMSE but did not improve the fixed ensemble | Retired exact branch |
-| Zero-dropout source model | Improved standalone source-family fit by ~0.00183 RMSE; ensemble gain remained uncertain | Retired exact branch |
-| Wide/shallow interaction transfer | Did not outperform the matched source-family control | Retired |
-| Layer-wise AdamW transfer | Weak at early screen | Retired |
-| Explicit physics integration | Survived the screen but did not pass the midpoint ensemble gate | Retired |
-| Residual physics/context heads | Failed early quality screens | Retired |
-| Direct NFL NGS priors | Strong standalone improvement; exact static-injection recipe remained too correlated | Retired exact recipe |
-| Direct ESPN team/PBP priors | Produced the most promising recent fixed-blend gain but uncertainty still crossed zero | Retired exact recipe |
-| Player-specific prior-game PBP | Packaged and tested; next active research milestone | Prepared |
+| player-specific PBP history | direct-data coverage and model gradients validated; exact candidate failed locked midpoint promotion | Retired exact recipe |
+| early joint temporal/player history | controlled joint-history treatments underperformed the short-history control | Retired |
+| source-anchored longer history | frozen parent reproduced to tight numerical tolerance; longer-history treatments did not beat control | Retired |
+| trajectory-memory retrieval | three retrieval memories and two controls completed; best gain was small and statistically uncertain | Retired |
+| full-OOF diversity audit | 20-model OOF replay and robustness analysis strongly supported bounded expansion testing | Validated system evidence |
+| fresh split-4 source-family pilot | 28/35 epochs complete; no blend improvement yet | Experimental |
+
+Earlier October studies also covered fresh source configurations, temporal objectives, dense correspondence, dropout, architecture/optimizer transfer, explicit physics, residual heads, NFL NGS priors, and ESPN prior-game context.
 
 ## What transferred
 
-### 1. Ensemble diversity remains the strongest system-level result
+### 1. Split/model diversity is the strongest system-level mechanism
 
-The 20-model, four-split-family ensemble remains the strongest completed local system. Repeated evidence shows that independent error diversity matters more than isolated one-fold gains.
+The 20-model, four-split-family ensemble remains the strongest completed local system. The full-OOF audit shows that its diversity benefit is broad across folds and games.
 
-### 2. Standalone quality is not enough
+### 2. Standalone quality is not sufficient
 
-Several candidates were better than the matched source-family model on Fold 0 but still failed to add enough independent residual signal to the ensemble.
+Several candidates improved a matched source-family checkpoint but remained too residual-correlated to improve the accepted ensemble.
 
-That distinction is now a central design constraint: new work is prioritized for **complementarity**, not merely component RMSE.
+This distinction now drives experiment design: new work is evaluated for **complementarity**, not only component RMSE.
 
-### 3. External historical context is useful
+### 3. Direct historical context is useful
 
-Direct NFL Next Gen Stats and direct ESPN historical data both added measurable signal.
+Direct NFL Next Gen Stats and direct ESPN historical data both produced measurable signal.
 
-The strongest external-data findings so far are:
+The exact tested integrations did not earn promotion, but the reusable direct-source acquisition, identity, provenance, and point-in-time infrastructure remain valuable project assets.
 
-- NGS historical priors improved standalone source-family fitting
-- team-level ESPN PBP context produced more promising ensemble complementarity
-- fine-grained player-specific history is the next logical representation
+### 4. Negative experiments are durable evidence
 
-### 4. Point-in-time engineering is now first-class infrastructure
+Exact rejected configurations are retired rather than rescued with small hidden-size, learning-rate, epoch, or blend-weight changes.
 
-For a competition play in week `w`, 2023 priors only use observations from weeks `< w`.
-
-The pipeline preserves raw-source provenance, hashes, coverage reports, identity bridges, and reusable point-in-time feature stores.
+That reduces repeated compute and makes the research ledger cumulative.
 
 ## Direct-source external-data assets
 
 ### NFL Next Gen Stats
 
 - **3,920 rows**
-- **691 NGS players**
+- **691 historical players**
 - **401 competition players bridged**
 - passer prior coverage: **95.74%**
 - targeted-receiver prior coverage: **85.35%**
 
 ### ESPN historical context
 
-- **36/36 weekly scoreboards acquired**
-- **544/544 game summaries acquired**
+- **36/36 weekly scoreboards**
+- **544/544 game summaries**
 - **272/272 competition games mapped**
 - **100% play-team mapping**
 - player-prior coverage: **97.15%**
 - dual team-PBP prior coverage: **100%**
 
-These assets are cached in AWS and are reused rather than redownloaded for every experiment.
+For a 2023 competition play in week `w`, 2023 historical priors may only use observations from weeks `< w`.
 
 ## Validation discipline
 
-Candidate promotion requires more than one attractive fold result.
+Candidate promotion is evidence-based.
 
-The research protocol uses game-grouped validation, fixed predeclared blend weights, paired-game bootstrap uncertainty, early screen / midpoint / final gates, negative-result retirement, explicit checkpoint lineage, point-in-time external-data construction, and local OOF / private submission separation.
+The research protocol uses:
 
-## Current active direction
-
-The next prepared experiment builds **player-specific prior-game PBP tendencies** from the already acquired ESPN corpus.
-
-Two controlled arms test each player's own prior-week tendencies and the same player-specific priors plus passer/target context broadcast to the play.
-
-The milestone is prepared and tested but remains unmeasured until AWS execution completes.
+- game-grouped validation
+- exact coordinate RMSE
+- fixed, predeclared blend weights
+- paired whole-game bootstrap uncertainty
+- screen / midpoint / final spending gates
+- standalone-versus-ensemble attribution
+- full-OOF confirmation before scaling
+- negative-result retirement
+- point-in-time external-data construction
+- immutable checkpoint/source lineage
 
 ## Engineering state
 
-The AWS runner framework now supports bounded 20–30 minute child executions, checkpointed recovery, collision-resistant run IDs, structured JSONL + human-readable logs, CPU/RAM/GPU/disk telemetry, cost accumulation, workload-specific worker benchmarks, fail-closed package integrity, executed-notebook and Plotly persistence gates, and one artifact / one command / one outer return bundle.
+The AWS research framework supports:
+
+- bounded, resumable executions
+- model / optimizer / EMA / scaler / RNG checkpoint recovery
+- collision-resistant run IDs
+- structured JSONL and human-readable logs
+- CPU/RAM/GPU/disk telemetry
+- cost accumulation and explicit runtime ceilings
+- workload-specific loader/thread benchmarks
+- fail-closed package, source, schema, checkpoint, and metric integrity checks
+- executed-notebook and Plotly persistence gates
+- one artifact / one command / one outer return bundle
+
+Measured fixed-ensemble inference acceleration remains **4.784×** through shared preparation with exact prediction parity on the declared benchmark.
 
 ## Public/private boundary
 
-GitHub publishes aggregate metrics, validation logic, selected engineering patterns, notebooks, decision history, and machine-readable snapshots.
+GitHub publishes selected implementation, aggregate metrics, validation logic, system architecture, public-safe notebooks, research decisions, provenance patterns, and machine-readable snapshots.
 
-AWS retains raw competition data, fitted weights, large checkpoints, exact private object locations, complete private runners, and unreleased competitive feature combinations.
+AWS retains raw competition data, raw third-party response archives, fitted weights, large checkpoints, exact private cloud locations, complete private runners, and unreleased active feature combinations.

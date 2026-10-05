@@ -4,79 +4,137 @@
 
 **Primary metric:** coordinate RMSE; lower is better.
 
-## Current system — October 2026
+## Current accepted system
 
-The strongest completed deployment candidate remains the **20-model multisplit ensemble** spanning four grouped-CV split families.
+The strongest completed local system is the **20-model multisplit ensemble** spanning four grouped-CV split families.
 
 | Evidence | Coordinate RMSE |
 |---|---:|
-| Multisplit local OOF, 561,607 rows | **0.4631723213** |
-| Seven-model private submission | 0.46547 |
-| Multisplit-20 private submission | **0.46487** |
+| Multisplit pooled OOF, 561,607 rows | **0.4631723213** |
+| Strongest recorded private submission | **0.46487** |
 
-Local OOF and private submission measurements are not treated as interchangeable.
+Local OOF and private-submission measurements are not treated as interchangeable.
 
 ## Model family
 
-The main neural family combines temporal sequence encoding over observed player motion, player-interaction modeling, static play/player context, Gaussian trajectory supervision, velocity/acceleration auxiliary supervision, exponential moving-average weights, geometric and frame-shift augmentation, and grouped-game cross-validation.
+The primary neural family combines:
 
-The final ensemble obtains diversity from multiple grouped split families rather than a single training seed.
+- temporal sequence encoding over observed player motion
+- player-interaction modeling
+- static play/player context
+- Gaussian trajectory supervision
+- velocity/acceleration auxiliary supervision
+- exponential moving-average weights
+- geometric and frame-shift augmentation
+- grouped-game cross-validation
+
+The accepted ensemble obtains most of its validated diversity from **multiple grouped split families**, not from post-hoc learned blend weights.
+
+## Strongest system evidence
+
+A full-OOF audit of the accepted prediction bank reproduced **0.4631723213 RMSE** across **561,607 rows and 272 games**.
+
+Expanding from two to four split families yielded:
+
+- incremental OOF gain: **0.00217835 RMSE**
+- paired-game 95% interval: **[0.000629, 0.003861]**
+- improved original folds: **5/5**
+- positive direction under leave-one-game-out removal: **272/272**
+
+This evidence motivates the current fresh-split pilot.
+
+## Active challenger
+
+A freshly initialized source-family model on split seed 4 / fold 0 is currently **EXPERIMENTAL**.
+
+At the latest verified milestone:
+
+- 28/35 prespecified epochs were complete
+- best standalone RMSE was **0.46597135**
+- exact-population incumbent RMSE was **0.45634058**
+- fixed 80% incumbent / 20% pilot blend was **0.45655750**
+- no promotion had occurred
+
+The pilot is not called a better system merely because it ran more recently.
 
 ## Recent controlled research
 
-The latest research program tested fresh configurations, temporal objectives, dense auxiliary supervision, dropout/architecture changes, optimizer transfer, explicit physics integration, residual heads, and external historical context.
+The October program tested representation, supervision, architecture, optimization, external historical context, longer histories, and retrieval.
 
-The most informative outcomes:
+Key conclusions:
 
-- **dense temporal correspondence** improved standalone source-family quality but remained ensemble-correlated
-- **zero dropout** materially improved standalone fitting but did not pass ensemble uncertainty gates
-- **direct NFL NGS priors** produced strong standalone external-data gains
-- **direct ESPN prior-game PBP context** produced the strongest recent complementarity signal
-- **player-specific PBP context** is the next active representation
+- dense correspondence and zero dropout improved source-family standalone fitting but remained ensemble-correlated
+- direct NFL NGS historical priors added useful standalone information
+- direct ESPN prior-game context produced stronger complementarity than static NGS-only integration
+- repaired player-specific PBP history reached the model but failed its locked midpoint gate
+- early joint-history and source-anchored longer-history treatments failed matched controls
+- trajectory-memory retrieval produced only small, uncertain gains
+- repeated grouped-split diversity remains the clearest system-level improvement mechanism
 
-Exact unsuccessful configurations are retired to avoid repeated search over already answered questions.
+Exact rejected recipes are retired to avoid repeated search over already answered questions.
 
 ## External historical context
 
-The project maintains reusable direct-source external-data infrastructure.
+The project maintains reusable direct-source historical-data infrastructure.
 
 ### NFL Next Gen Stats
 
-The point-in-time NGS feature store contains historical passing, receiving, and rushing context acquired directly from NFL public endpoints.
-
-Coverage in the current competition bridge:
-
-- passer: **95.74%**
-- targeted receiver: **85.35%**
+- historical rows: **3,920**
+- historical players: **691**
+- competition-player matches: **401**
+- passer-prior coverage: **95.74%**
+- targeted-receiver-prior coverage: **85.35%**
 
 ### ESPN historical game context
 
-The project directly acquired 36 weekly scoreboards, 544 game summaries, complete competition-game mapping, team and player historical priors, and prior-game PBP tendency summaries.
+- weekly scoreboards: **36/36**
+- game summaries: **544/544**
+- competition games mapped: **272/272**
+- play-team mapping: **100%**
+- player-prior coverage: **97.15%**
+- dual team-PBP coverage: **100%**
 
-For 2023, a play in week `w` may only use historical information from weeks `< w`.
+For 2023, a competition play in week `w` may only use eligible historical information from weeks `< w`.
 
 ## Validation and promotion
 
-A candidate is evaluated through early quality screening, fixed-weight blend comparison, paired-game bootstrap uncertainty, confirmation on another grouped fold, and full OOF evaluation before system promotion.
+A candidate is evaluated through:
 
-This deliberately favors reproducible, complementary signal over one-fold point improvements.
+1. correctness/data/integration gates
+2. early quality screening
+3. fixed-weight blend comparison
+4. paired whole-game bootstrap uncertainty
+5. confirmation on additional grouped folds where required
+6. full OOF analysis before system promotion
 
-## GPU / runner engineering
+This favors reproducible, complementary signal over attractive one-fold point estimates.
 
-The AWS research workflow uses NVIDIA L4 acceleration with mixed precision, workload-specific data-loader benchmarks, checkpoint recovery, device-safe EMA restoration, structured telemetry, cost accounting, package integrity checks, immutable run manifests, and single outer return bundles.
+## GPU and research-systems engineering
 
-The previously measured shared-preparation inference path accelerated the fixed 20-model ensemble by **4.784×** with exact prediction parity on its declared benchmark.
+The canonical AWS workflow uses an NVIDIA L4 and supports:
+
+- mixed-precision training with explicit precision contracts
+- workload-specific loader/thread benchmarks
+- resumable model/optimizer/EMA/scaler/RNG checkpoints
+- structured telemetry and cost accounting
+- fail-closed source/schema/checkpoint/metric validation
+- immutable run manifests and champion/challenger lifecycle states
+- executed-notebook and Plotly persistence gates
+- single outer return bundles
+
+The fixed 20-model inference path achieved a measured **4.784× acceleration** through shared preparation with exact prediction parity on the declared benchmark.
 
 ## Public reproducibility boundary
 
-This public repository includes selected implementation, aggregate research evidence, validation logic, notebooks, and documentation.
+The public repository includes selected implementation, aggregate research evidence, validation logic, notebooks, source/provenance patterns, tests, and system documentation.
 
-It excludes raw competition data, fitted private weights, large checkpoints, credentials, private cloud paths, full private runners, and unreleased feature combinations that are still active research IP.
+It excludes raw competition data, raw third-party response archives, fitted private weights, large checkpoints, credentials, private cloud locations, complete private runners, and unreleased active feature combinations.
 
 ## Limitations
 
-- one labelled competition season limits external-validity claims
-- player-level external-source coverage varies
-- long-horizon errors remain harder than short-horizon errors
-- component-level improvements may be redundant with the ensemble
-- public artifacts do not reproduce private competition data or trained weights
+- one labeled competition season limits external-validity claims
+- external-source coverage varies by player and source
+- long-horizon trajectories remain harder than short-horizon trajectories
+- strong component models can remain redundant inside an ensemble
+- development-fold and OOF evidence are not private leaderboard evidence
+- public artifacts intentionally do not reproduce private fitted models end to end

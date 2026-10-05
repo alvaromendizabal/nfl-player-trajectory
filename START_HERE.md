@@ -1,24 +1,52 @@
-# NFL Big Data Bowl 2026 - Prediction
+# Start here
 
-Competition identifier: `nfl-big-data-bowl-2026-prediction`.
+This repository is the **employer-facing, semi-reproducible record** of an AWS-first NFL player-trajectory forecasting research program.
 
-This repository is the employer-facing, semi-reproducible record for an AWS-first player-trajectory forecasting research program.
+The public surface is intentionally curated: it exposes the system design, validation discipline, selected implementation, aggregate evidence, and engineering decisions needed for technical review while keeping restricted data, fitted weights, private cloud locations, and active competitive IP out of public history.
 
-## 10-minute technical review
+## Choose a review path
 
-Read these in order:
+### 60 seconds — recruiter / hiring manager
 
-1. [README](README.md) — project scope and headline evidence
-2. [Current research status](docs/CURRENT_RESEARCH_STATUS.md) — latest verified system and active milestone
-3. [Research system and reproducibility](docs/RESEARCH_SYSTEM.md) — architecture, validation, observability, and public/private boundary
-4. [Model card](docs/MODEL_CARD.md) — model family, evidence, limitations, and lifecycle
-5. [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md) — controlled experiment history
-6. [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md) — direct-source acquisition and point-in-time controls
-7. [Research evidence archive](research/README.md) — evidence hierarchy and preserved public artifacts
+Read:
 
-The strongest completed local system is a 20-model, four-split-family ensemble at **0.4631723213 pooled OOF RMSE over 561,607 rows**. The strongest recorded private submission is **0.46487 RMSE**. These are different evaluation settings and are reported separately.
+1. [README](README.md)
+2. [Employer engineering case study](docs/EMPLOYER_CASE_STUDY.md)
 
-## Validate the public publication
+Focus on:
+
+- 20-model / four-split-family ensemble
+- 561,607-row pooled OOF evaluation
+- robust diversity evidence across folds and games
+- 4.784× measured inference acceleration
+- direct NFL / ESPN historical-data engineering
+- resumable AWS GPU execution and research controls
+
+### 10 minutes — ML engineer / applied scientist
+
+Read:
+
+1. [Current research status](docs/CURRENT_RESEARCH_STATUS.md)
+2. [Research system and reproducibility](docs/RESEARCH_SYSTEM.md)
+3. [Model card](docs/MODEL_CARD.md)
+4. [October research progress](docs/OCTOBER_RESEARCH_PROGRESS.md)
+5. [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md)
+
+This path shows how hypotheses move from integration checks to grouped validation, uncertainty analysis, ensemble testing, promotion, rejection, or retirement.
+
+### Deep review — implementation and evidence
+
+Inspect:
+
+- `src/nfl_trajectory/` — maintained public implementation
+- `tests/` — software and research-contract tests
+- `research/` — public research evidence and preserved source archive
+- selected notebooks under `notebooks/`
+- machine-readable snapshots under `docs/results/`
+
+## Validate the frozen public evidence
+
+The repository includes a frozen publication manifest and validator.
 
 From the repository root:
 
@@ -26,59 +54,102 @@ From the repository root:
 python research/publication/validate.py
 ```
 
-This standard-library validator checks registered public hashes, publication structure, source-archive provenance, credential-like patterns, notebook structure, and aggregate RMSE arithmetic. It does **not** retrain private models.
+The validator checks the registered public artifact hashes. It does **not** claim to retrain private models or reproduce restricted competition inputs.
 
-## Review the executed aggregate evidence
+## Review the aggregate notebook
 
-Open [research/RESEARCH_REVIEW.ipynb](research/RESEARCH_REVIEW.ipynb) for the frozen aggregate research review. Its public figures are generated from registered aggregate evidence; the notebook is an evidence view, not an inference service.
+Open [research/RESEARCH_REVIEW.ipynb](research/RESEARCH_REVIEW.ipynb).
 
-The later October narrative in `docs/` extends the public-safe research record beyond the frozen aggregate notebook without publishing private row-level predictions or active experiment recipes.
+Its inline Plotly figures are generated from registered public aggregate evidence rather than private row-level predictions.
+
+The optional renderer:
+
+```bash
+python research/publication/render.py
+```
+
+requires Matplotlib in addition to the project environment. Rerendering under a different library stack can legitimately change derived notebook/HTML bytes; frozen publication hashes must not be rewritten merely to hide environment drift.
 
 ## Inspect the maintained implementation
 
-- `src/nfl_trajectory/` — maintained public implementation
-- `tests/` — software and research-contract tests
-- `notebooks/` — selected project notebooks
-- `research/workspace/` — preserved public source mirrors and experiment materials
-- `docs/results/` — selected machine-readable public snapshots
+The maintained public package lives in:
 
-Historical experiment packages under `research/workspace/` are preserved evidence, not a single reorganized training application. Public copies intentionally omit private input contracts, fitted objects, raw competition files, private row-level results, and private recovery receipts.
+`src/nfl_trajectory/`
 
-## Reproducibility contract
+The package and tests demonstrate selected reusable project patterns while intentionally excluding complete private competition runners and fitted artifacts.
 
-The public repository is intentionally semi-reproducible.
+The project uses Python 3.11 for the maintained public environment, with pinned dependencies and quality tooling defined in `pyproject.toml`.
 
-A public reviewer should be able to inspect:
+## What is reproducible publicly
 
-- the forecasting architecture and selected source implementation
-- the official metric and grouped-validation contract
-- public experiment protocols and negative-result decisions
-- aggregate OOF/private evidence without conflating them
-- direct-source acquisition architecture and leakage controls
-- test, CI, checkpoint-lineage, and publication-validation patterns
-- research-system engineering and measured performance outcomes
+The public repository supports review of:
 
-A public clone is **not** expected to reproduce private competition scores without the authorized data, private fitted weights, exact active feature combinations, and corresponding environment.
+- metric definitions
+- grouped validation design
+- selected preprocessing and modeling components
+- public-safe tests
+- direct-source provenance patterns
+- experiment lifecycle design
+- aggregate model / ensemble evidence
+- system architecture
+- CI and publication-integrity controls
 
-## Canonical environment
+## What remains private by design
 
-AWS SageMaker is the live source of truth for research, data preparation, training, validation, checkpoints, telemetry, and immutable run evidence.
-
-GitHub is the durable employer-facing code and reproducibility layer derived from validated AWS milestones.
-
-Kaggle is used only for external submission delivery/status where required.
-
-A GitHub merge does not retrain a model, mutate AWS, or submit a candidate.
-
-## Public/private boundary
-
-Public GitHub excludes:
+The following are intentionally excluded:
 
 - raw competition data
 - raw third-party response archives
-- fitted private weights and large checkpoints
-- credentials and private cloud locations
-- complete private execution runners
-- unreleased competition-specific active feature combinations
+- fitted model weights
+- large checkpoints
+- credentials
+- private AWS object paths
+- row-level private predictions
+- complete private runners
+- unreleased active feature combinations
 
-This boundary preserves reviewability and scientific provenance without distributing restricted data or active competitive IP.
+That boundary is part of the project design, not a missing-file accident.
+
+## Canonical environment
+
+The live research source of truth is AWS SageMaker.
+
+GitHub is the versioned, employer-facing implementation and evidence layer derived from validated milestones.
+
+Publishing to GitHub does not:
+
+- mutate AWS experiment state
+- retrain a model
+- alter checkpoint lineage
+- submit a candidate externally
+- convert an experimental challenger into a promoted model
+
+## Research archive
+
+[research/README.md](research/README.md) explains the evidence hierarchy and the distinction between:
+
+- software correctness
+- individual-fold validation
+- pooled OOF
+- ensemble promotion evidence
+- runtime/performance evidence
+- private submission evidence
+- experimental work still awaiting its required gates
+
+Historical experiment packages under `research/workspace/` are preserved source mirrors. They are not a reorganized public training application and should not be treated as turnkey replacements for the AWS-canonical workflow.
+
+## Review standard
+
+A reviewer should be able to answer the following from the public repository:
+
+- What is the current accepted system?
+- Which metrics support it, and on what evaluation population?
+- What did the project owner build end to end?
+- Which hypotheses improved standalone quality but failed ensemble promotion?
+- How are leakage and point-in-time correctness handled?
+- How does long-running GPU work resume after interruption?
+- Which execution failures became regression tests?
+- How are public artifacts separated from private/restricted research state?
+- Which results were measured versus projected or still experimental?
+
+That reviewability is treated as a first-class engineering deliverable.

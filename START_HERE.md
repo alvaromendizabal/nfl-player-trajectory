@@ -1,5 +1,7 @@
 # NFL Big Data Bowl 2026 - Prediction
 
+Competition identifier: `nfl-big-data-bowl-2026-prediction`.
+
 This repository is the employer-facing, semi-reproducible record for an AWS-first player-trajectory forecasting research program.
 
 ## 10-minute technical review

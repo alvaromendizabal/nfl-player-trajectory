@@ -2,8 +2,8 @@
   ".github/workflows/publication.yml": "50682daa310e65ec5616ebba1054bf2b431a093bd2d6db1a15e5ad6e3206ba12",
   ".github/workflows/recent-models.yml": "1b1858b3762f9deabd97d12da1b66b65760ee98aecf5d0d850b458afb84b264f",
   ".gitignore": "ee5e7aade0b200ef118590732cd3f2e36f53170b6d18584b8afade2261bf81cc",
-  "README.md": "6e3969229a46892e110af275a621818d1c4bd2fa2a63b248173ea356233417ec",
-  "START_HERE.md": "f9e79777a143ae5fb53b3bd0747e20e7a3ceaf017ea4654e030e71da1d09cac7",
+  "README.md": "e0e74521ea95af3bb23d963b589787d57091fd7b100a287eb0a4b45fad21355b",
+  "START_HERE.md": "21a8bd21f122a676c19c213c2af5c93e755c81141f801afe02c9afddb926ecd8",
   "docs/MODEL_CARD.md": "a95ce4d2228298f34bcca9176f6f362dce75c24bc35f184576cd2b35fa74b6d8",
   "docs/SOURCES.md": "0633190749a9f9c7705eec48129d4a94cd3c679dc7d2b16f92a98435dcb1ff79",
   "docs/results/frontier_submission.json": "ff22663831d8a71679586c62042dc171eb76b482f0e64e439b5b7638c4e2dfba",
@@ -351,5 +351,6 @@
   "docs/results/post_pr40_frontier_research.json": "c30740fe160753b37b5893984a449e663d94238cac0e7f3114f3ff90460cd6d4",
   "docs/OCTOBER_RESEARCH_PROGRESS.md": "9f1153f04cad764dbe22bee659ccd9707e205ada49f3e74eb508074bfd86b38c",
   "docs/RESEARCH_SYSTEM.md": "8c98351b1bc9fee8ad77b9bd32aeb6e0e1bb64421fbbb5ec0b303167c2a19f3f",
-  "docs/results/current_research_snapshot.json": "581565d9f91ca37dc2246d43c7b8dfcc8ec9497f70683d59b4776884d3891d47"
+  "docs/results/current_research_snapshot.json": "581565d9f91ca37dc2246d43c7b8dfcc8ec9497f70683d59b4776884d3891d47",
+  "docs/EMPLOYER_CASE_STUDY.md": "547f71a99a80edcf5a69471deb773523ad33bcee78f5b2770d9df8225a90eb5a"
 }

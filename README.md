@@ -1,4 +1,4 @@
-# NFL Big Data Bowl 2026 — Player Trajectory Prediction
+# NFL Big Data Bowl 2026 - Prediction
 
 **End-to-end player-motion forecasting research with temporal deep learning, repeated grouped-CV ensembles, direct-source historical context, GPU engineering, and reproducible AWS experimentation.**
 

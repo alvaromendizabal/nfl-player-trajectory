@@ -1,5 +1,7 @@
 # NFL Big Data Bowl 2026 - Prediction | Player Trajectory Forecasting
 
+**Competition ID:** `nfl-big-data-bowl-2026-prediction`
+
 **End-to-end machine learning research for forecasting NFL player motion with temporal deep learning, grouped-CV ensembles, direct-source historical context, GPU optimization, and reproducible AWS experimentation.**
 
 [![Quality](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml)

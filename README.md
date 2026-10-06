@@ -1,4 +1,6 @@
-# NFL Big Data Bowl 2026 - Player Trajectory Prediction
+# NFL Big Data Bowl 2026 - Prediction | Player Trajectory Forecasting
+
+**Competition ID:** `nfl-big-data-bowl-2026-prediction`
 
 **End-to-end machine learning research for forecasting NFL player motion with temporal deep learning, grouped-CV ensembles, direct-source historical context, GPU optimization, and reproducible AWS experimentation.**
 
@@ -6,7 +8,7 @@
 [![Public Research Evidence](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/publication.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/publication.yml)
 [![Recent Model Evidence](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/recent-models.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/recent-models.yml)
 
-[60-second review](#60-second-review) · [Engineering case study](docs/EMPLOYER_CASE_STUDY.md) · [Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [Research system](docs/RESEARCH_SYSTEM.md) · [Model card](docs/MODEL_CARD.md) · [Start here](START_HERE.md)
+[60-second review](#60-second-review) · [Engineering case study](docs/EMPLOYER_CASE_STUDY.md) · [Current research status](docs/CURRENT_RESEARCH_STATUS.md) · [Feature-diversity study](docs/FEATURE_DIVERSITY_STUDY.md) · [Research system](docs/RESEARCH_SYSTEM.md) · [Model card](docs/MODEL_CARD.md) · [Start here](START_HERE.md)
 
 ---
 
@@ -28,8 +30,9 @@ This project demonstrates **end-to-end ownership of a serious ML research system
 | Measured fixed-ensemble inference acceleration | **4.784×** with exact declared-benchmark parity |
 | Direct NFL NGS acquisition | **3,920 rows / 691 historical players** |
 | Direct ESPN acquisition | **36 scoreboards / 544 game summaries / 272 of 272 games mapped** |
+| Confirmation-stage challenger | **0.44850 RMSE vs 0.45373 incumbent on a 109,144-row development fold; separate-fold confirmation pending** |
 
-Local OOF, individual-fold validation, and private-submission evidence are intentionally treated as separate evaluation settings.
+Local OOF, individual-fold validation, confirmation-stage evidence, and private-submission evidence are intentionally treated as separate evaluation settings.
 
 ### What I built
 
@@ -85,6 +88,16 @@ That improvement was broad rather than driven by one convenient slice:
 
 This led to a bounded fresh-split pilot rather than indiscriminate model scaling.
 
+## Latest confirmation-stage study
+
+A later controlled study tested **feature-configuration diversity** while holding the core architecture, training maturity, evaluation population, and fixed blend policy constant.
+
+On the development fold, the fixed feature-diversity portfolio improved the incumbent from **0.45372575 to 0.44849765 RMSE**. The adjusted whole-game intervals for improvement were positive against both the incumbent and a maturity-matched native-control blend. The direction remained positive after every single-game removal, and all displayed horizon bands improved.
+
+This result is intentionally labeled **confirmation-stage**, not promoted. The next gate uses a different grouped validation fold, fresh model initialization, and no discovery-fold weight reuse.
+
+See [Feature-diversity confirmation study](docs/FEATURE_DIVERSITY_STUDY.md).
+
 ## Research discipline
 
 The project deliberately separates **component quality** from **system value**.
@@ -103,7 +116,7 @@ Promotion decisions use:
 - point-in-time external-data construction
 - immutable checkpoint and source lineage
 
-The current fresh grouped-split challenger remains **experimental** until its prespecified validation finishes. Recent execution state and measured evidence are documented in [Current research status](docs/CURRENT_RESEARCH_STATUS.md).
+The latest feature-diversity challenger passed its predeclared development-fold gate and is now **awaiting separate-fold confirmation**. It is not part of the accepted system until that confirmation and full pooled-OOF requirements are satisfied. Recent execution state and measured evidence are documented in [Current research status](docs/CURRENT_RESEARCH_STATUS.md).
 
 ## Direct-source historical data engineering
 
@@ -198,7 +211,8 @@ The public surface is designed to make the engineering, science, and reproducibi
 1. [Current research status](docs/CURRENT_RESEARCH_STATUS.md)
 2. [Research system and reproducibility](docs/RESEARCH_SYSTEM.md)
 3. [Model card](docs/MODEL_CARD.md)
-4. [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md)
+4. [Feature-diversity confirmation study](docs/FEATURE_DIVERSITY_STUDY.md)
+5. [October research review](docs/OCTOBER_RESEARCH_PROGRESS.md)
 
 ### Deep technical review
 

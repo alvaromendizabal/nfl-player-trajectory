@@ -137,6 +137,18 @@ Robustness checks:
 
 This was treated as evidence for controlled model-family expansion rather than a reason to scale blindly.
 
+### Confirmation-stage feature-diversity study
+
+A later study held the core architecture and maturity endpoint fixed while training multiple full models with complementary feature configurations.
+
+Across **109,144 scored rows / 55 games**, the fixed portfolio improved the incumbent from **0.45372575 to 0.44849765 RMSE**. Improvement remained positive under every single-game removal, and adjusted whole-game intervals were positive against both the incumbent and a maturity-matched native-control blend.
+
+The result is not presented as a new champion. It earned a **fresh separate-fold confirmation**, using new model initialization and no discovery-fold trained tensors.
+
+The study also exposed a research-process issue: an earlier epoch-9 screen was too aggressive for this model family's learning curve. Instead of rewriting the old decision, the project preserved the rejection, audited historical learning dynamics, and defined a new fixed 35-epoch maturity-matched protocol.
+
+That sequence is representative of the project's scientific-engineering standard: **preserve evidence, identify why a gate failed, repair the protocol prospectively, then retest under controlled conditions**.
+
 ## Performance engineering
 
 The project treats runtime as an ML systems problem, not an afterthought.
@@ -238,7 +250,7 @@ This preserves experiment meaning across interrupted GPU sessions.
 
 The accepted 20-model ensemble remains the completed local system.
 
-The current fresh grouped-split challenger is explicitly labeled **experimental** until its prespecified validation is complete.
+The latest feature-diversity challenger has passed a development-fold gate and is explicitly labeled **confirmation-stage** until it succeeds on a separately trained grouped fold and later full-OOF requirements.
 
 The public repository does not present "most recent" as equivalent to "best." Model states are evidence-driven:
 
@@ -333,7 +345,8 @@ The most technically representative discussion areas are:
 4. **How the 4.784× inference speedup preserved exact prediction parity**
 5. **How checkpoint state was designed for true interrupted-run recovery**
 6. **How avoidable failures were converted into regression tests**
-7. **How the public/private boundary preserves reviewability without exposing restricted artifacts**
+7. **How an over-aggressive early gate was detected, preserved as historical evidence, and corrected prospectively**
+8. **How the public/private boundary preserves reviewability without exposing restricted artifacts**
 
 ## Review next
 

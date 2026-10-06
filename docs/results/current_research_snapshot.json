@@ -25,18 +25,48 @@
     "original_folds_total": 5,
     "leave_one_game_out_positive": 272,
     "leave_one_game_out_total": 272,
-    "decision": "supports_bounded_fresh_split_pilot"
+    "decision": "validated_system_evidence"
   },
-  "active_pilot": {
-    "status": "experimental",
-    "split_seed": 4,
-    "fold": 0,
-    "epochs_completed": 28,
-    "epochs_total": 35,
-    "best_standalone_rmse": 0.46597135,
-    "incumbent_rmse_same_population": 0.45634058,
-    "fixed_blend_rmse": 0.4565575,
-    "blend_improvement_vs_incumbent": -0.00021691,
+  "confirmation_stage_challenger": {
+    "status": "ready_for_separate_fold_confirmation",
+    "disclosure": "aggregate_public_evidence_only",
+    "development_fold": {
+      "validation_rows": 109144,
+      "validation_games": 55,
+      "incumbent_rmse": 0.4537257476,
+      "native_control_blend_rmse": 0.4547125988,
+      "feature_portfolio_blend_rmse": 0.4484976512,
+      "improvement_vs_incumbent": 0.0052280964,
+      "improvement_vs_native_control": 0.0062149476,
+      "adjusted_interval95_vs_incumbent": [
+        0.0002693,
+        0.0099451
+      ],
+      "adjusted_interval95_vs_native_control": [
+        0.0013023,
+        0.0114739
+      ],
+      "games_improved": 38,
+      "games_total": 55,
+      "leave_one_game_out_positive": 55,
+      "leave_one_game_out_total": 55,
+      "displayed_horizon_bands_improved": "all",
+      "scored_roles_improved": "both"
+    },
+    "design": {
+      "treatment_models": 4,
+      "native_controls": 1,
+      "endpoint_outer_epochs": 35,
+      "final_weight_state": "ema",
+      "fitted_blend_weights": false,
+      "best_epoch_selection": false
+    },
+    "next_confirmation": {
+      "validation_rows": 112694,
+      "validation_games": 54,
+      "fresh_initialization": true,
+      "discovery_trained_tensors_reused": false
+    },
     "promotion_claimed": false
   },
   "external_data": {
@@ -49,15 +79,16 @@
     "espn_game_summaries": 544,
     "competition_games_mapped": 272,
     "competition_games_total": 272,
-    "play_team_mapping": 1.0,
+    "play_team_mapping": 1,
     "player_prior_coverage": 0.9715,
-    "dual_team_pbp_coverage": 1.0
+    "dual_team_pbp_coverage": 1
   },
   "engineering": {
     "canonical_environment": "AWS SageMaker",
     "gpu": "NVIDIA L4",
     "measured_fixed_ensemble_inference_speedup": 4.784367,
     "workflow": "one artifact / one command / one outer return bundle",
+    "resumability": "model / optimizer / EMA / scaler / RNG / cursor where required",
     "public_repository_role": "semi-reproducible employer-facing evidence layer"
   },
   "public_boundary": {
@@ -68,7 +99,8 @@
       "tests and protocols",
       "public-safe notebooks",
       "provenance patterns",
-      "machine-readable snapshots"
+      "machine-readable snapshots",
+      "confirmation-stage aggregate evidence"
     ],
     "excludes": [
       "raw competition data",
@@ -78,7 +110,8 @@
       "credentials",
       "private cloud object locations",
       "complete private runners",
-      "unreleased active feature combinations"
+      "row-level private predictions",
+      "exact active feature recipes"
     ]
   }
 }

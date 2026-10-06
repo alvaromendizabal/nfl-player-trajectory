@@ -45,17 +45,25 @@ This evidence motivates the current fresh-split pilot.
 
 ## Active challenger
 
-A freshly initialized source-family model on split seed 4 / fold 0 is currently **EXPERIMENTAL**.
+The current challenger is a **four-model feature-configuration portfolio** evaluated against a maturity-matched native control.
 
-At the latest verified milestone:
+The core architecture and model size are held constant. The exact active feature recipes remain private; public evidence records the experimental design and aggregate validation outcome.
 
-- 28/35 prespecified epochs were complete
-- best standalone RMSE was **0.46597135**
-- exact-population incumbent RMSE was **0.45634058**
-- fixed 80% incumbent / 20% pilot blend was **0.45655750**
-- no promotion had occurred
+On the development fold:
 
-The pilot is not called a better system merely because it ran more recently.
+- validation population: **109,144 rows / 55 games**
+- incumbent RMSE: **0.4537257476**
+- native-control blend RMSE: **0.4547125988**
+- feature-portfolio blend RMSE: **0.4484976512**
+- improvement versus incumbent: **0.0052280964**
+- improvement versus control: **0.0062149476**
+- adjusted grouped interval versus incumbent: **[0.0002693, 0.0099451]**
+- adjusted grouped interval versus control: **[0.0013023, 0.0114739]**
+- leave-one-game-out direction: **55/55 positive**
+
+The challenger is **READY_FOR_SEPARATE_FOLD_CONFIRMATION**, not promoted.
+
+The next gate uses a different grouped fold, fresh initialization, and no discovery-fold weight reuse.
 
 ## Recent controlled research
 
@@ -69,7 +77,8 @@ Key conclusions:
 - repaired player-specific PBP history reached the model but failed its locked midpoint gate
 - early joint-history and source-anchored longer-history treatments failed matched controls
 - trajectory-memory retrieval produced only small, uncertain gains
-- repeated grouped-split diversity remains the clearest system-level improvement mechanism
+- repeated grouped-split diversity remains the clearest fully validated system-level mechanism
+- maturity-matched full-model feature diversity produced a strong development-fold ensemble gain and is now in separate-fold confirmation
 
 Exact rejected recipes are retired to avoid repeated search over already answered questions.
 
@@ -107,7 +116,7 @@ A candidate is evaluated through:
 5. confirmation on additional grouped folds where required
 6. full OOF analysis before system promotion
 
-This favors reproducible, complementary signal over attractive one-fold point estimates.
+This favors reproducible, complementary signal over attractive one-fold point estimates. A discovery-fold pass is therefore treated as a confirmation-stage result rather than a promoted system.
 
 ## GPU and research-systems engineering
 

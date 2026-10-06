@@ -42,9 +42,13 @@ Historical 2023 features exclude current-week and future observations.
 
 Exact failed branches are retired rather than repeatedly rescued with small parameter or blend changes.
 
-**The current active program is fresh grouped-split source-family expansion.**
+**The current active program is confirmation of full-model feature-configuration diversity.**
 
-The pilot is experimental and incomplete; no promotion is claimed until its prespecified validation finishes.
+A maturity-matched development-fold study improved the incumbent from **0.45372575 to 0.44849765 RMSE** under a fixed portfolio construction, with positive adjusted whole-game intervals and positive direction under every single-game removal.
+
+The challenger is not promoted. A separate grouped fold with fresh model initialization is the next required gate, followed by full pooled-OOF evaluation if confirmation succeeds.
+
+The exact active feature recipes remain private; the public archive records aggregate evidence, validation contracts, and the decision boundary.
 
 ## Public-solution research boundary
 

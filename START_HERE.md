@@ -18,6 +18,7 @@ Focus on:
 - 20-model / four-split-family ensemble
 - 561,607-row pooled OOF evaluation
 - robust diversity evidence across folds and games
+- confirmation-stage full-model feature diversity with fresh-fold validation gates
 - 4.784× measured inference acceleration
 - direct NFL / ESPN historical-data engineering
 - resumable AWS GPU execution and research controls
@@ -29,8 +30,9 @@ Read:
 1. [Current research status](docs/CURRENT_RESEARCH_STATUS.md)
 2. [Research system and reproducibility](docs/RESEARCH_SYSTEM.md)
 3. [Model card](docs/MODEL_CARD.md)
-4. [October research progress](docs/OCTOBER_RESEARCH_PROGRESS.md)
-5. [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md)
+4. [Feature-diversity confirmation study](docs/FEATURE_DIVERSITY_STUDY.md)
+5. [October research progress](docs/OCTOBER_RESEARCH_PROGRESS.md)
+6. [External data engineering](docs/EXTERNAL_DATA_ENGINEERING.md)
 
 This path shows how hypotheses move from integration checks to grouped validation, uncertainty analysis, ensemble testing, promotion, rejection, or retirement.
 

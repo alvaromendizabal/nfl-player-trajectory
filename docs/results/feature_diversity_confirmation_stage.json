@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "study": "confirmation_stage_feature_diversity",
+  "status": "ready_for_separate_fold_confirmation",
+  "accepted_system": {
+    "name": "multisplit_20",
+    "pooled_oof_rmse": 0.4631723212629593,
+    "rows": 561607,
+    "games": 272,
+    "models": 20,
+    "split_families": 4
+  },
+  "development_fold": {
+    "rows": 109144,
+    "games": 55,
+    "incumbent_rmse": 0.4537257476,
+    "native_control_blend_rmse": 0.4547125988,
+    "feature_portfolio_blend_rmse": 0.4484976512,
+    "improvement_vs_incumbent": 0.0052280964,
+    "improvement_vs_native_control": 0.0062149476,
+    "adjusted_interval95_vs_incumbent": [
+      0.0002693,
+      0.0099451
+    ],
+    "adjusted_interval95_vs_native_control": [
+      0.0013023,
+      0.0114739
+    ],
+    "games_improved": 38,
+    "games_total": 55,
+    "leave_one_game_out_positive": 55,
+    "leave_one_game_out_total": 55,
+    "displayed_horizon_bands_improved": "all",
+    "scored_roles_improved": "both"
+  },
+  "design": {
+    "native_controls": 1,
+    "treatment_models": 4,
+    "parameters_per_model": 5005452,
+    "outer_epochs": 35,
+    "final_state": "ema",
+    "fixed_portfolio": true,
+    "fitted_blend_weights": false,
+    "best_epoch_selection": false
+  },
+  "confirmation": {
+    "rows": 112694,
+    "games": 54,
+    "fresh_initialization": true,
+    "reuse_discovery_trained_tensors": false,
+    "required_before_promotion": true
+  },
+  "public_boundary": {
+    "exact_feature_recipes_published": false,
+    "row_level_predictions_published": false,
+    "fitted_checkpoints_published": false,
+    "private_cloud_paths_published": false
+  }
+}

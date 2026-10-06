@@ -1,37 +1,75 @@
-# Current research status — October 2026
+# Current research status - October 2026
 
-## Current measured system
+## Current accepted system
 
 - Strongest recorded private submission: **0.46487 coordinate RMSE**
 - Strongest completed local system: **0.4631723213 pooled OOF RMSE**
 - Pooled OOF population: **561,607 scored rows across 272 games**
 - Accepted ensemble: **20 models across four grouped split families**
-- Canonical research environment: **AWS SageMaker / 1× NVIDIA L4**
+- Canonical research environment: **AWS SageMaker / 1x NVIDIA L4**
 
-Local OOF, individual-fold validation, and private submission evidence are intentionally kept separate.
+Local OOF, individual-fold validation, confirmation-stage results, and private-submission evidence are deliberately reported as different evaluation settings.
 
-## Current active milestone
+## Active milestone: separate-fold confirmation
 
-The current active challenger is a **fresh source-family model trained on a new grouped split family**.
+The current challenger is a **feature-configuration portfolio** built from the same core temporal architecture but trained as multiple full models with complementary input representations.
 
-The pilot uses split seed 4 / fold 0 and is predeclared for 35 epochs. It has completed **28/35 epochs**.
+The exact active feature recipes remain private. Public evidence focuses on the scientific design, aggregate metrics, and validation protocol.
 
-Current public-safe evidence:
+### Development-fold result
 
-- best standalone pilot checkpoint: **0.46597135 RMSE**
-- exact-population four-family incumbent: **0.45634058 RMSE**
-- fixed 80% incumbent / 20% pilot blend: **0.45655750 RMSE**
-- current blend delta: **−0.00021691 RMSE** relative to the incumbent
-- seven prespecified epochs remain
-- **no promotion is claimed**
+The maturity-matched study trained one native control and four feature-configuration models through the same 35-epoch endpoint.
 
-The pilot passed its earlier continuation gates, but its current best blend remains slightly worse than the incumbent. Finishing the prespecified program is a controlled completion step, not a post-hoc extension.
+Across **109,144 validation rows from 55 games**:
 
-## Strongest recent system evidence
+| Comparison | RMSE |
+|---|---:|
+| Existing accepted ensemble | **0.4537257476** |
+| Existing ensemble + native-control blend | **0.4547125988** |
+| Existing ensemble + four-model feature portfolio | **0.4484976512** |
+
+Measured improvements:
+
+- versus existing ensemble: **0.0052280964 RMSE**
+- versus native-control blend: **0.0062149476 RMSE**
+- adjusted whole-game interval versus incumbent: **[0.0002693, 0.0099451]**
+- adjusted whole-game interval versus control: **[0.0013023, 0.0114739]**
+- games improved: **38/55**
+- direction after every leave-one-game-out removal: **55/55 positive**
+- displayed horizon bands improved: **all**
+- scored player roles improved: **both**
+
+The challenger therefore reached **READY_FOR_SEPARATE_FOLD_CONFIRMATION**.
+
+It is **not promoted**. The accepted system remains the 20-model multisplit ensemble.
+
+### Confirmation protocol
+
+The next validation stage uses a different grouped fold:
+
+- validation games: **54**
+- scored rows: **112,694**
+- fresh initialization for all five confirmation models
+- no discovery-fold trained tensors reused
+- same 35-epoch maturity endpoint
+- same fixed portfolio construction
+- same grouped uncertainty logic
+
+A confirmation failure cannot be rescued by pooling it with the discovery fold.
+
+## Why the protocol changed
+
+An earlier feature-portfolio attempt was stopped at an immature checkpoint. A subsequent audit showed that a historical native model had also looked weak at the same training age before improving materially later.
+
+Rather than retroactively changing that earlier decision, the project preserved the original rejection and created a new, explicit maturity-matched protocol.
+
+This is an important research-systems lesson: **spending gates must be calibrated against the learning dynamics of the model family they govern**.
+
+## Strongest validated system evidence
 
 ### Full-OOF diversity audit
 
-The accepted 20-model prediction bank was replayed across all 561,607 rows.
+The accepted 20-model prediction bank was replayed across all **561,607 rows**.
 
 Expanding from two to four split families produced:
 
@@ -40,55 +78,30 @@ Expanding from two to four split families produced:
 - original folds improved: **5/5**
 - leave-one-game-out direction: positive for **272/272** game removals
 
-This is the strongest recent evidence for system-level scaling and motivated the current fresh-split pilot.
+This remains the strongest fully completed system-level evidence and is why the feature-diversity challenger is being evaluated as an additional diversity axis rather than a replacement for grouped split diversity.
 
-The audit also produced a conditional four-to-eight-family scenario, but that value is treated as an assumption-dependent planning calculation rather than a trained result.
+## Recent controlled research
 
-## Research completed since the previous public milestone
-
-| Research direction | Public-safe evidence | Decision |
+| Direction | Public-safe conclusion | State |
 |---|---|---|
-| player-specific PBP history | direct-data coverage and model gradients validated; exact candidate failed locked midpoint promotion | Retired exact recipe |
-| early joint temporal/player history | controlled joint-history treatments underperformed the short-history control | Retired |
-| source-anchored longer history | frozen parent reproduced to tight numerical tolerance; longer-history treatments did not beat control | Retired |
-| trajectory-memory retrieval | three retrieval memories and two controls completed; best gain was small and statistically uncertain | Retired |
-| full-OOF diversity audit | 20-model OOF replay and robustness analysis strongly supported bounded expansion testing | Validated system evidence |
-| fresh split-4 source-family pilot | 28/35 epochs complete; no blend improvement yet | Experimental |
+| additional unmodified split family | fresh family did not improve the accepted ensemble | Retired exact path |
+| probabilistic trajectory mixtures | mixture treatments did not establish incremental value over matched controls | Retired exact path |
+| capability/error audit | identified concentrated long-horizon defensive error and reusable analysis infrastructure | Completed |
+| predicted-future interaction | joint interaction did not beat matched self-only refinements | Retired exact path |
+| early feature-portfolio screen | stopped at the original gate | Historical rejection preserved |
+| maturity audit | demonstrated that the old early screen could reject a later-useful control | Completed |
+| maturity-matched feature portfolio | passed development-fold effect-size, uncertainty, and robustness gates | Confirmation stage |
 
-Earlier October studies also covered fresh source configurations, temporal objectives, dense correspondence, dropout, architecture/optimizer transfer, explicit physics, residual heads, NFL NGS priors, and ESPN prior-game context.
+Earlier October work also covered direct NFL/ESPN context, player history, longer histories, retrieval, dense correspondence, dropout, optimizer/architecture transfers, physics-inspired features, residual heads, and multiple objective variants.
 
-## What transferred
-
-### 1. Split/model diversity is the strongest system-level mechanism
-
-The 20-model, four-split-family ensemble remains the strongest completed local system. The full-OOF audit shows that its diversity benefit is broad across folds and games.
-
-### 2. Standalone quality is not sufficient
-
-Several candidates improved a matched source-family checkpoint but remained too residual-correlated to improve the accepted ensemble.
-
-This distinction now drives experiment design: new work is evaluated for **complementarity**, not only component RMSE.
-
-### 3. Direct historical context is useful
-
-Direct NFL Next Gen Stats and direct ESPN historical data both produced measurable signal.
-
-The exact tested integrations did not earn promotion, but the reusable direct-source acquisition, identity, provenance, and point-in-time infrastructure remain valuable project assets.
-
-### 4. Negative experiments are durable evidence
-
-Exact rejected configurations are retired rather than rescued with small hidden-size, learning-rate, epoch, or blend-weight changes.
-
-That reduces repeated compute and makes the research ledger cumulative.
-
-## Direct-source external-data assets
+## Direct-source historical-data assets
 
 ### NFL Next Gen Stats
 
 - **3,920 rows**
 - **691 historical players**
 - **401 competition players bridged**
-- passer prior coverage: **95.74%**
+- passer-prior coverage: **95.74%**
 - targeted-receiver prior coverage: **85.35%**
 
 ### ESPN historical context
@@ -102,19 +115,21 @@ That reduces repeated compute and makes the research ledger cumulative.
 
 For a 2023 competition play in week `w`, 2023 historical priors may only use observations from weeks `< w`.
 
+Historical frame-level tracking transfer remains a separate sourcing/provenance problem and is not claimed as implemented.
+
 ## Validation discipline
 
-Candidate promotion is evidence-based.
-
-The research protocol uses:
+Candidate promotion uses:
 
 - game-grouped validation
 - exact coordinate RMSE
-- fixed, predeclared blend weights
+- fixed, predeclared ensemble weights
 - paired whole-game bootstrap uncertainty
-- screen / midpoint / final spending gates
-- standalone-versus-ensemble attribution
-- full-OOF confirmation before scaling
+- matched controls
+- leave-one-game-out robustness
+- role/horizon accounting with row and SSE conservation
+- confirmation on fresh grouped folds
+- full pooled OOF before system promotion
 - negative-result retirement
 - point-in-time external-data construction
 - immutable checkpoint/source lineage
@@ -123,21 +138,22 @@ The research protocol uses:
 
 The AWS research framework supports:
 
-- bounded, resumable executions
-- model / optimizer / EMA / scaler / RNG checkpoint recovery
+- resumable model / optimizer / EMA / scaler / RNG checkpoints
+- exact batch-cursor recovery where required
 - collision-resistant run IDs
 - structured JSONL and human-readable logs
 - CPU/RAM/GPU/disk telemetry
-- cost accumulation and explicit runtime ceilings
+- cost accounting and runtime estimates
 - workload-specific loader/thread benchmarks
 - fail-closed package, source, schema, checkpoint, and metric integrity checks
 - executed-notebook and Plotly persistence gates
 - one artifact / one command / one outer return bundle
+- deterministic regression tests for avoidable execution failures
 
-Measured fixed-ensemble inference acceleration remains **4.784×** through shared preparation with exact prediction parity on the declared benchmark.
+Measured fixed-ensemble inference acceleration remains **4.784x** through shared preparation with exact prediction parity on the declared benchmark.
 
 ## Public/private boundary
 
-GitHub publishes selected implementation, aggregate metrics, validation logic, system architecture, public-safe notebooks, research decisions, provenance patterns, and machine-readable snapshots.
+GitHub publishes selected implementation, aggregate metrics, validation logic, public-safe protocols, system architecture, notebooks, research decisions, provenance patterns, and machine-readable snapshots.
 
-AWS retains raw competition data, raw third-party response archives, fitted weights, large checkpoints, exact private cloud locations, complete private runners, and unreleased active feature combinations.
+AWS retains raw competition data, raw third-party response archives, fitted weights, large checkpoints, private cloud locations, complete private runners, row-level private predictions, and the exact active feature recipes.

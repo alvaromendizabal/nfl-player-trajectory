@@ -9,7 +9,7 @@ The October program progressed through four broad phases:
 1. **representation, objective, architecture, and optimization studies**
 2. **direct-source external historical context**
 3. **player-history, longer-history, and retrieval studies**
-4. **full-OOF diversity auditing and fresh split-family expansion**
+4. **full-OOF diversity auditing, split-family rejection, and maturity-matched feature-configuration confirmation**
 
 The strongest recurring lesson is that **component quality and ensemble value are different objectives**.
 
@@ -41,7 +41,12 @@ These evaluation settings are intentionally kept distinct.
 | source-anchored longer history | parent replay reproduced tightly; longer-history treatments did not beat control | Retired |
 | trajectory-memory retrieval | all three retrieval memories completed; gains were small and uncertain | Retired |
 | full-OOF diversity audit | robust evidence that four split families outperform two across folds/games | Validated |
-| fresh split-4 source-family pilot | 28/35 epochs complete; no promotion yet | Experimental |
+| fresh split-4 source-family pilot | completed and failed its final ensemble gate | Retired exact path |
+| trajectory-mixture decoders | matched controls showed no robust incremental mixture benefit | Retired exact path |
+| capability/error audit | localized a large share of squared error to late defensive coverage and quantified ensemble disagreement | Completed |
+| predicted-future interaction | joint forecast interaction did not beat self-only matched controls | Retired exact path |
+| feature-portfolio maturity audit | historical control evidence showed the original epoch-9 screen could be a false negative | Completed |
+| maturity-matched feature portfolio | fixed portfolio improved the incumbent by 0.005228 RMSE with positive grouped uncertainty | Separate-fold confirmation |
 
 ## Representative findings
 
@@ -106,20 +111,30 @@ This audit evaluated all 15 non-empty family subsets, 75 fold/subset comparisons
 
 It supported a bounded fresh-split pilot rather than an immediate large-scale model launch.
 
-## Active fresh-split pilot
+## Maturity-matched feature-diversity program
 
-The current pilot is a newly initialized source-family model on split seed 4 / fold 0.
+After the fresh split-family path and several decoder-level alternatives were retired, the project returned to a mechanism strongly supported by leading public work: **diversity across full-model feature configurations**.
 
-Public-safe status:
+An initial epoch-9 screen rejected the portfolio. A follow-up maturity audit showed that a historical native model had also looked weak at the same training age before becoming useful later. The original rejection was preserved, and a new maturity-matched protocol was defined rather than retrospectively changing the old gate.
 
-- completed epochs: **28/35**
-- best standalone RMSE: **0.46597135**
-- exact-population four-family incumbent: **0.45634058**
-- fixed 80/20 blend: **0.45655750**
-- current blend delta: **−0.00021691**
-- remaining prespecified epochs: **7**
+The revised study trained one native control plus four feature-configuration models to the same 35-epoch endpoint.
 
-The earlier continuation gates passed because the model was fitting credibly. The final promotion gate has not passed, and no expansion claim is made.
+Across **109,144 validation rows / 55 games**:
+
+- incumbent RMSE: **0.45372575**
+- native-control blend RMSE: **0.45471260**
+- feature-portfolio blend RMSE: **0.44849765**
+- improvement versus incumbent: **0.00522810**
+- improvement versus native-control blend: **0.00621495**
+- adjusted interval versus incumbent: **[0.0002693, 0.0099451]**
+- adjusted interval versus control: **[0.0013023, 0.0114739]**
+- games improved: **38/55**
+- leave-one-game-out direction: **55/55 positive**
+- all displayed horizon bands improved
+
+The result passed its development-fold gate and is now undergoing **separate-fold confirmation with fresh model initialization**. No promotion is claimed until that stage and full pooled-OOF requirements are satisfied.
+
+The exact active feature recipes remain private; the public repository records the experimental design, aggregate evidence, and confirmation protocol.
 
 ## Direct-source external-data program
 
@@ -178,6 +193,6 @@ Long-running work is checkpointed and resumable; valid completed stages are not 
 
 ## Current research decision
 
-The project is prioritizing **validated diversity expansion over repeated correlated residual tweaks**.
+The project is prioritizing **confirmation of full-model feature diversity** over additional correlated residual tweaks.
 
-The fresh split-family pilot must finish its prespecified validation before any broader family expansion. A completed pilot that fails its fixed blend and uncertainty gates stops that exact expansion path; a qualifying pilot advances to the remaining folds of the same family before full-OOF promotion.
+The accepted 20-model ensemble remains unchanged. The feature-configuration portfolio has earned a fresh grouped-fold confirmation, not promotion. A successful confirmation advances to the remaining original folds and full pooled-OOF evaluation; a failed confirmation closes the exact portfolio without post-hoc epoch, weight, seed, or subset rescue.

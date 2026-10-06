@@ -1,4 +1,4 @@
-# Start here
+# NFL Big Data Bowl 2026 - Prediction | Start Here
 
 This repository is the **employer-facing, semi-reproducible record** of an AWS-first NFL player-trajectory forecasting research program.
 

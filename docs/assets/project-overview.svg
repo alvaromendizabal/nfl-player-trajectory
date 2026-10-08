@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420" role="img" aria-labelledby="title description">
+  <title id="title">Player trajectory forecasting: research and engineering results</title>
+  <desc id="description">ML research, AWS engineering, and reproducible evidence. Recorded private RMSE: 0.46468. Inference acceleration: 4.784 times on a 96-play benchmark with exact parity. Games evaluated: 272. The decorative football trajectory drawing is illustrative and contains no player data.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#142a36"/>
+      <stop offset="1" stop-color="#0c1c29"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#193c45"/>
+      <stop offset="1" stop-color="#102936"/>
+    </linearGradient>
+    <clipPath id="field-clip">
+      <rect x="994" y="44" width="358" height="304" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <rect x="1" y="1" width="1398" height="418" rx="24" fill="url(#background)" stroke="#355363" stroke-width="2"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="48" y="45" width="5" height="17" rx="2.5" fill="#6fdec5"/>
+    <text x="66" y="59" fill="#c4d6df" font-size="16" letter-spacing="0.6">ML research · AWS engineering · Reproducible evidence</text>
+    <text x="46" y="125" fill="#f6f9fc" font-size="43" font-weight="700" letter-spacing="-1.2">Player trajectory forecasting</text>
+    <text x="49" y="164" fill="#b7cbd6" font-size="19">Temporal models. Game-heldout validation. Measured GPU performance.</text>
+
+    <g>
+      <rect x="48" y="207" width="288" height="139" rx="14" fill="#19313f" stroke="#36505f"/>
+      <text x="69" y="266" fill="#f6f9fc" font-size="44" font-weight="700" letter-spacing="-0.8">0.46468</text>
+      <text x="70" y="300" fill="#d4e1e8" font-size="17">Recorded private RMSE</text>
+      <text x="70" y="326" fill="#aec5d1" font-size="14">Competition submission</text>
+    </g>
+    <g>
+      <rect x="350" y="207" width="288" height="139" rx="14" fill="#19313f" stroke="#36505f"/>
+      <text x="371" y="266" fill="#86e5d0" font-size="44" font-weight="700" letter-spacing="-0.8">4.784×</text>
+      <text x="372" y="300" fill="#d4e1e8" font-size="17">Inference acceleration</text>
+      <text x="372" y="326" fill="#aec5d1" font-size="14">96-play benchmark · exact parity</text>
+    </g>
+    <g>
+      <rect x="652" y="207" width="288" height="139" rx="14" fill="#19313f" stroke="#36505f"/>
+      <text x="673" y="266" fill="#f6f9fc" font-size="44" font-weight="700" letter-spacing="-0.8">272</text>
+      <text x="674" y="300" fill="#d4e1e8" font-size="17">Games evaluated</text>
+      <text x="674" y="326" fill="#aec5d1" font-size="14">Game-heldout evaluation</text>
+    </g>
+    <text x="49" y="382" fill="#a9c0cd" font-size="14">Separate measurement scopes · Evidence and methodology linked below</text>
+  </g>
+
+  <rect x="994" y="44" width="358" height="304" rx="20" fill="url(#field)" stroke="#355966"/>
+  <g clip-path="url(#field-clip)" fill="none">
+    <g stroke="#43626d" stroke-width="1" opacity="0.55">
+      <path d="M1038 44V348 M1095 44V348 M1152 44V348 M1209 44V348 M1266 44V348 M1323 44V348"/>
+      <path d="M994 106H1352 M994 286H1352"/>
+    </g>
+    <g stroke="#8da8b2" stroke-width="2" opacity="0.4">
+      <path d="M1033 150H1043 M1090 150H1100 M1147 150H1157 M1204 150H1214 M1261 150H1271 M1318 150H1328"/>
+      <path d="M1033 241H1043 M1090 241H1100 M1147 241H1157 M1204 241H1214 M1261 241H1271 M1318 241H1328"/>
+    </g>
+    <path d="M1023 287C1065 277 1084 255 1116 240S1162 218 1182 201" stroke="#88a7b7" stroke-width="3" stroke-linecap="round"/>
+    <path d="M1182 201C1210 175 1224 132 1289 111" stroke="#86e5d0" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 9"/>
+    <path d="M1028 174C1060 170 1102 158 1127 140S1177 92 1237 84" stroke="#5e889d" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+    <path d="M1041 314C1091 299 1135 303 1180 287S1233 267 1283 268" stroke="#5e889d" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+    <circle cx="1182" cy="201" r="17" stroke="#86e5d0" stroke-width="1.5" opacity="0.3"/>
+    <circle cx="1296" cy="109" r="21" stroke="#86e5d0" stroke-width="1.5" opacity="0.25"/>
+  </g>
+  <g stroke="#102936" stroke-width="3">
+    <circle cx="1023" cy="287" r="6" fill="#afc7d3"/>
+    <circle cx="1061" cy="272" r="6" fill="#afc7d3"/>
+    <circle cx="1094" cy="251" r="6" fill="#afc7d3"/>
+    <circle cx="1139" cy="229" r="6" fill="#afc7d3"/>
+    <circle cx="1182" cy="201" r="8" fill="#f5fbfd"/>
+    <circle cx="1296" cy="109" r="8" fill="#86e5d0"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#b7cbd6" font-size="13">
+    <text x="1016" y="73" letter-spacing="1.4">MOTION → FORECAST</text>
+    <text x="1013" y="377">Illustrative trajectories · no player data</text>
+  </g>
+</svg>

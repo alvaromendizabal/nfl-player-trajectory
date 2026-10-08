@@ -38,14 +38,16 @@ rationale, provenance, availability, and leakage guards. The
 
 ## Validation and limits
 
-The research split preserves games: 192 for training, 32 later development games,
+The final neural evaluation uses game-grouped out-of-fold predictions across 272 games. Its supported and complete populations are reported separately in [Results](RESULTS.md). The public synthetic demo uses invented games and is not a measurement on this competition data.
+
+The earlier chronological research track preserves games: 192 for training, 32 later development games,
 and a reserved final 48 games. Three expanding chronological inner splits choose
 feature variants. Every fold refits historical encodings, route representations,
 screening, and estimators using its training partition. Development has been
 repeatedly inspected and must not be described as an untouched test set.
 
-The research cloud jobs exclude reserved holdout tracking and labels. Their
-holdout status remains `not_run`. Calendar-year diversity in an unlabelled sample
+Those earlier research cloud jobs excluded reserved holdout tracking and labels;
+their archived holdout status was `not_run`. This does not describe the later grouped-OOF protocol. Calendar-year diversity in an unlabelled sample
 only checks interface coverage; **across-season accuracy is not established**.
 New legitimate labelled seasons require another feature-stability study before
 making broader claims. The completion review checks the labelled seasons in the
@@ -55,6 +57,6 @@ verified inventory against the research scope.
 
 Competition data has its own terms; the repository's MIT license covers code.
 Raw tracking, private frame-error files, credentials, and fitted artifacts are
-excluded from Git. Public outputs contain aggregate metrics, feature definitions,
+excluded from the new closeout publication. Selected historical source and a small fitted baseline are already public; the private neural champion weights remain withheld. Public outputs contain aggregate metrics, feature definitions,
 and review figures. Content-addressed private snapshots and source/input receipts
 support checksum-verified recovery without publishing the competition data.

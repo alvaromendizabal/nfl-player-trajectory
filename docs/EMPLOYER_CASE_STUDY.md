@@ -1,358 +1,74 @@
-# Employer engineering case study
+# Engineering case study: NFL player trajectory forecasting
 
-## Executive summary
+**From multi-agent motion prediction to a validated, reproducible ML delivery system.**
 
-This project is an end-to-end machine learning research system for forecasting NFL player trajectories after a pass.
+The completed project combines temporal deep learning, grouped validation, cloud GPU execution, and inference verification. Across the project’s recorded submissions, private coordinate RMSE fell **33.7%, from 0.70090 to 0.46468**. The latest result comes from a 20-model ensemble in Kaggle late evaluation. This measures progress across successive systems; controlled experiment effects are reported separately, and no official competition placement is claimed.
 
-The work spans **data acquisition, temporal modeling, grouped validation, ensemble research, GPU optimization, experiment orchestration, reproducibility, and scientific decision-making**.
+## The problem
 
-The strongest completed local system is a **20-model ensemble across four grouped split families** with **0.4631723213 pooled OOF RMSE over 561,607 scored rows and 272 games**. The strongest recorded private submission is **0.46487 RMSE**; those evaluation settings are intentionally reported separately.
+Forecast selected players' future x/y coordinates from observed tracking history and supplied play context. Players move in relation to one another, forecasts have different lengths, and rows from a game share substantial context. A useful evaluation must keep games separate, align every requested prediction, and preserve difficult cases rather than silently dropping them.
 
-The project is designed to answer not only *whether a model improves*, but also:
+Compute was another design constraint. The research workflow ran on a single NVIDIA L4 in AWS SageMaker, so redundant preparation, interrupted jobs, and weak experiment selection all had practical costs.
 
-- whether the improvement survives grouped validation
-- whether it contributes independent ensemble signal
-- whether uncertainty is acceptable
-- whether the result is reproducible and resumable
-- whether the compute cost is justified
-- whether the evidence is strong enough to change the accepted system
+## What I delivered
 
-## Ownership scope
-
-The project demonstrates end-to-end ownership across the ML lifecycle.
-
-### Data and feature engineering
-
-- direct acquisition from public NFL and ESPN sources
-- immutable raw-source provenance and hashes
-- player/game identity resolution
-- point-in-time historical feature construction
-- leakage controls for current-week and future observations
-- coverage audits by player role and source
-- reusable cached feature stores
-
-### Modeling
-
-- temporal convolution over observed motion
-- player-interaction attention
-- static play/player context
-- probabilistic trajectory supervision
-- velocity / acceleration auxiliary supervision
-- exponential moving-average weights
-- geometric and temporal augmentation
-- repeated grouped split families
-- ensemble complementarity analysis
-
-### Validation and research
-
-- game-grouped cross-validation
-- exact coordinate RMSE
-- pooled out-of-fold evaluation
-- fixed, predeclared blend weights
-- paired whole-game bootstrap intervals
-- screen / midpoint / final promotion gates
-- residual-correlation analysis
-- leave-one-game-out robustness checks
-- negative-result retirement
-
-### ML systems engineering
-
-- AWS SageMaker as the canonical research environment
-- NVIDIA L4 mixed-precision training
-- resumable model / optimizer / EMA / scaler / RNG checkpoints
-- collision-resistant run IDs
-- immutable experiment manifests
-- structured JSONL and human-readable logs
-- CPU / RAM / GPU / disk telemetry
-- measured throughput and cost accounting
-- fail-closed integrity gates
-- regression tests for avoidable execution failures
-
-## Problem
-
-The prediction task is multi-agent and temporal: forecast selected players' future x/y coordinates using observed tracking history and play context.
-
-The main engineering difficulty is not just fitting a trajectory model. A credible system must handle:
-
-- variable player sets
-- variable forecast horizons
-- correlated player movement
-- grouped games and leakage risk
-- multiple evaluation views
-- high model-to-model residual correlation
-- expensive GPU experimentation
-- external historical context with identity and timestamp uncertainty
-
-## System design
-
-```mermaid
-flowchart TD
-    A[Competition tracking + authorized public history] --> B[Acquisition and immutable provenance]
-    B --> C[Identity resolution]
-    C --> D[Point-in-time feature stores]
-    D --> E[Grouped game splits]
-    E --> F[Temporal sequence models]
-    F --> G[OOF prediction bank]
-    G --> H[Standalone + complementarity analysis]
-    H --> I[Bootstrap / robustness gates]
-    I --> J[Champion / challenger registry]
-    J --> K[AWS checkpoints, manifests, telemetry]
-    K --> L[Public-safe GitHub evidence]
-```
-
-The system deliberately separates the **live scientific state** from the **public review layer**.
-
-AWS retains private data, checkpoints, predictions, and experiment state. GitHub contains selected implementation, tests, aggregate metrics, architecture, provenance patterns, and research decisions.
-
-## Strongest measured system evidence
-
-### 20-model grouped-split ensemble
-
-The accepted local ensemble uses **20 models across four grouped split families**.
-
-Full pooled OOF:
-
-- coordinate RMSE: **0.4631723213**
-- scored rows: **561,607**
-- games: **272**
-
-### Diversity audit
-
-A full-OOF audit compared the accepted four-family system with the earlier two-family system.
-
-Measured incremental improvement:
-
-**0.00217835 RMSE**
-
-Paired-game 95% interval:
-
-**[0.000629, 0.003861]**
-
-Robustness checks:
-
-- **5/5** original folds improved
-- direction remained positive after **272/272** leave-one-game-out removals
-- all non-empty family subsets were evaluated
-- no learned post-hoc family weighting was required for the headline result
-
-This was treated as evidence for controlled model-family expansion rather than a reason to scale blindly.
-
-### Confirmation-stage feature-diversity study
-
-A later study held the core architecture and maturity endpoint fixed while training multiple full models with complementary feature configurations.
-
-Across **109,144 scored rows / 55 games**, the fixed portfolio improved the incumbent from **0.45372575 to 0.44849765 RMSE**. Improvement remained positive under every single-game removal, and adjusted whole-game intervals were positive against both the incumbent and a maturity-matched native-control blend.
-
-The result is not presented as a new champion. It earned a **fresh separate-fold confirmation**, using new model initialization and no discovery-fold trained tensors.
-
-The study also exposed a research-process issue: an earlier epoch-9 screen was too aggressive for this model family's learning curve. Instead of rewriting the old decision, the project preserved the rejection, audited historical learning dynamics, and defined a new fixed 35-epoch maturity-matched protocol.
-
-That sequence is representative of the project's scientific-engineering standard: **preserve evidence, identify why a gate failed, repair the protocol prospectively, then retest under controlled conditions**.
-
-## Performance engineering
-
-The project treats runtime as an ML systems problem, not an afterthought.
-
-A shared-preparation inference path for the fixed 20-model system achieved a measured:
-
-**4.784× speedup**
-
-with exact prediction parity on the declared benchmark.
-
-Other runtime practices include:
-
-- benchmarking data-loader worker counts on the actual workload
-- benchmarking CPU thread counts
-- mixed precision only where numerically valid
-- explicit FP32 evaluation when source parity requires it
-- caching immutable preparation results
-- resumable checkpoint boundaries
-- GPU utilization and memory telemetry
-- hard runtime / memory / disk gates
-
-## Direct-source historical data
-
-The project builds its own historical context rather than relying on competitor-prepared datasets.
-
-### NFL Next Gen Stats
-
-- 3,920 historical rows
-- 691 historical players
-- 401 competition-player matches
-- 95.74% passer-prior coverage
-- 85.35% targeted-receiver-prior coverage
-
-### ESPN
-
-- 36/36 weekly scoreboards
-- 544/544 game summaries
-- 272/272 competition games mapped
-- 100% play-team mapping
-- 97.15% player-prior coverage
-- 100% dual team-PBP coverage
-
-For a 2023 competition play in week `w`, 2023 historical features may only use weeks `< w`.
-
-This constraint is enforced as a data-contract rule rather than left to analyst convention.
-
-## Research decisions that mattered
-
-### 1. Standalone improvement is not enough
-
-Several candidates improved a matched component model but failed to add enough independent ensemble signal.
-
-The project therefore evaluates both:
-
-- standalone RMSE
-- contribution to the fixed incumbent ensemble
-
-This avoids promoting models that look strong in isolation but duplicate existing errors.
-
-### 2. Negative experiments are assets
-
-Failed scientific hypotheses are preserved and exact configurations are retired.
-
-That prevents repeated compute on already answered questions and makes the research program cumulative.
-
-### 3. Operational failures become tests
-
-Avoidable execution failures are converted into deterministic regression tests before the next expensive run.
-
-Examples include:
-
-- live external-source schema drift
-- timestamp/date semantics
-- stale benchmark configuration
-- duplicate telemetry fields
-- prediction-column mismatch
-- source evaluation precision mismatch
-
-This turns expensive failures into durable reliability improvements.
-
-### 4. Reproducibility includes state
-
-A training checkpoint is not treated as only model weights.
-
-Where required, resume state includes:
-
-- model
-- optimizer
-- EMA
-- gradient scaler
-- random state
-- epoch / batch cursor
-- metric history
-- source/config identity
-
-This preserves experiment meaning across interrupted GPU sessions.
-
-## Current research lifecycle
-
-The accepted 20-model ensemble remains the completed local system.
-
-The latest feature-diversity challenger has passed a development-fold gate and is explicitly labeled **confirmation-stage** until it succeeds on a separately trained grouped fold and later full-OOF requirements.
-
-The public repository does not present "most recent" as equivalent to "best." Model states are evidence-driven:
-
-`EXPERIMENTAL → VALIDATED → PROMOTED → CHAMPION`
-
-with terminal states such as:
-
-`REJECTED · BLOCKED · FAILED · RETIRED`
-
-## Technology map
-
-| Capability | Technologies / methods |
+| Workstream | Delivered capability |
 |---|---|
-| Deep learning | PyTorch, temporal convolution, attention, Gaussian objectives, EMA |
-| Data science | Python, pandas, NumPy, scikit-learn |
-| Cloud | AWS SageMaker, boto3 |
-| GPU | NVIDIA L4, CUDA mixed precision |
-| Validation | grouped CV, pooled OOF, bootstrap uncertainty |
-| Research ops | checkpoints, immutable manifests, champion/challenger registry |
-| Quality | pytest, Ruff, mypy, GitHub Actions |
-| Analysis | Jupyter, Plotly |
-| Observability | JSONL logs, utilization telemetry, throughput and cost tracking |
+| Modeling | Reproduced temporal/player-interaction baseline, controlled model extensions, and a 20-model ensemble across four grouped split families |
+| Validation | Game-held-out predictions, exact coordinate RMSE, fixed ensemble comparisons, paired whole-game uncertainty estimates, and slice/coverage accounting |
+| Data engineering | Direct NFL/ESPN acquisition, provenance records, player/game identity resolution, and historical features restricted to eligible earlier observations |
+| Runtime | Shared inference preparation, measured GPU-workload settings, resumable training state, and resource/throughput telemetry |
+| Delivery | Integrity-checked model artifacts, packaged inference, organizer-gateway validation, and an exact recorded private submission |
+| Public review | Selected source, tests, sanitized aggregate evidence, a dependency-free synthetic demo, and a documented reproducibility boundary |
 
-## What this project demonstrates to employers
+The source neural architecture and training reference are credited to [chack3](https://www.kaggle.com/code/chack3/nfl2026-1st-place-train). My contribution is the project system around that reproduced baseline and its independently evaluated extensions. [Sources](SOURCES.md) documents the broader research lineage.
 
-### Machine Learning Engineer
+## Three decisions with measurable consequences
 
-- model development plus production-minded training infrastructure
-- GPU performance engineering
-- resumable experiment systems
-- validation and deployment discipline
-- cloud-native ML workflow ownership
+### Evaluate diversity at the ensemble level
 
-### Applied Scientist / Research Engineer
+A lower standalone model error does not establish that a candidate improves an existing ensemble. I retained out-of-fold prediction banks and compared fixed ensemble constructions on the same game-held-out rows.
 
-- controlled experiments and ablations
-- uncertainty-aware promotion criteria
-- ensemble complementarity analysis
-- negative-result retention
-- rigorous distinction between evaluation settings
+An earlier expansion from two to four grouped split families improved supported-population OOF RMSE by **0.00217835**, with a paired-game 95% interval of **[0.000629, 0.003861]**. All five original folds improved. The gain remained positive after each of 272 single-game removals. This established a system-level benefit while preserving unsuccessful variants as negative evidence.
 
-### Data Scientist
+### Make evaluation coverage part of correctness
 
-- messy external data acquisition
-- identity resolution
-- point-in-time feature engineering
-- grouped validation
-- interpretable decision history
+A later inference-policy study included all **562,936 forecast rows**, covering rare missing-context and unusually long-horizon cases. Output clipping and horizon extension were evaluated against the existing policy before the selected behavior was packaged for delivery.
 
-### Senior technical ownership
+The accepted policy produced **0.4629258204 supported-population OOF RMSE** on 561,607 rows and **0.5242026277 full-population OOF RMSE** on all rows. The larger full-population change was concentrated in two unusually long plays, so it is not evidence of a broad improvement of the same magnitude.
 
-- research prioritization under compute constraints
-- evidence-based stopping rules
-- public/private reproducibility design
-- debugging across data, model, numerical, and systems layers
-- converting one-off experiments into reusable infrastructure
+The subsequent private measurement moved from **0.46487 to 0.46468**. That separate measurement established transfer to the late-evaluation setting; local OOF gains alone did not establish it.
 
-## Public reproducibility boundary
+### Remove repeated work without changing predictions
 
-The public repository intentionally exposes enough to review the system without publishing restricted data or active competitive IP.
+The fixed 20-model inference path originally repeated preparation work across ensemble members. Sharing that preparation produced a measured **4.784× speedup**, with exact prediction parity on the declared benchmark.
 
-### Public
+Long-running training also saved more than weights: checkpoints retained optimizer state, exponential moving-average weights, gradient-scaler state, random state, progress, and source/configuration identity. Integrity checks and resumable stages let valid upstream work survive downstream failures. Runtime improvements were tied to measured workloads rather than claimed as universal speedups.
 
-- selected source implementation
-- tests
-- validation contracts
-- aggregate metrics
-- system architecture
-- provenance patterns
-- research decisions
-- machine-readable public snapshots
-- public-safe notebooks
+## Evidence at closeout
 
-### Private
+| Measurement | Result | Interpretation |
+|---|---:|---|
+| Recorded private evaluation | **0.46468** | Submission 56928100; late evaluation, no official rank claim |
+| Recorded private RMSE reduction | **33.7%** | 0.70090 → 0.46468 across successive project systems |
+| Supported-population OOF | **0.4629258204** | 561,607 forecast rows |
+| Full-population OOF | **0.5242026277** | 562,936 forecast rows across 272 games |
+| Deployed ensemble | **20 models** | Four grouped split families |
 
-- raw competition data
-- raw third-party response archives
-- fitted weights
-- large checkpoints
-- private cloud paths
-- complete private runners
-- row-level private predictions
-- unreleased active feature combinations
+These are separate evaluation scopes. OOF uses held-out models for each game; deployment uses the full ensemble. OOF results were inspected during research and should not be interpreted as a fresh untouched test set. [Results](RESULTS.md) and the [sanitized snapshot](results/project_closeout.json) contain the exact values and provenance.
 
-## Suggested interview discussion
+## Data and reliability work
 
-The most technically representative discussion areas are:
+The historical-data pipeline acquired **3,920 NFL Next Gen Stats rows covering 691 historical players**, plus **36 ESPN scoreboards and 544 game summaries**. Game identity resolution mapped all 272 competition games. For within-season historical context, a play in week w could use only eligible observations from earlier weeks.
 
-1. **Why grouped split diversity improved the full ensemble**
-2. **Why strong standalone candidates can fail ensemble promotion**
-3. **How point-in-time historical data prevents subtle leakage**
-4. **How the 4.784× inference speedup preserved exact prediction parity**
-5. **How checkpoint state was designed for true interrupted-run recovery**
-6. **How avoidable failures were converted into regression tests**
-7. **How an over-aggressive early gate was detected, preserved as historical evidence, and corrected prospectively**
-8. **How the public/private boundary preserves reviewability without exposing restricted artifacts**
+Coverage, data access, model integration, and predictive benefit remained separate decisions. A successful data pipeline did not automatically qualify its features for the accepted ensemble.
 
-## Review next
+Operational failures also became reproducible checks: source schemas, prediction keys, numerical precision, artifact hashes, and external-service response handling were tested before reuse. Submission identity and recorded score were tracked separately from dataset or notebook creation, preventing an uploaded artifact from being mistaken for a completed evaluation.
 
-- [README](../README.md)
-- [Current research status](CURRENT_RESEARCH_STATUS.md)
-- [Research system and reproducibility](RESEARCH_SYSTEM.md)
-- [Model card](MODEL_CARD.md)
-- [External data engineering](EXTERNAL_DATA_ENGINEERING.md)
-- [Research evidence archive](../research/README.md)
+## Public reproduction and limitations
+
+The public repository contains selected source and tests, aggregate evidence, and a standard-library demo on deterministic synthetic trajectories. It runs without credentials or restricted data. The reported private model scores require private fitted artifacts and cannot be regenerated by the public demo.
+
+Private neural champion weights, row-level private predictions, the latest production recipe, and nonpublic execution bundles are withheld. A small fitted baseline and historical source archives remain public. Evidence from one labeled season limits claims about other seasons; repeated validation inspection limits claims of unbiased generalization. The system is a completed research and engineering artifact, not a certified player-evaluation product.
+
+[Run and verify the public project](REPRODUCIBILITY.md) · [Read the final project state](PROJECT_CLOSEOUT.md) · [Return to the review guide](../START_HERE.md)

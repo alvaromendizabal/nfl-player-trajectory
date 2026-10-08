@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "status": "closed_research_project",
+  "as_of_utc": "2026-10-08",
+  "competition": "nfl-big-data-bowl-2026-prediction",
+  "metric": {
+    "name": "coordinate_rmse_yards",
+    "lower_is_better": true,
+    "formula": "sqrt(sum((pred_x-x)^2 + (pred_y-y)^2) / (2 * rows))"
+  },
+  "accepted_system": {
+    "model_count": 20,
+    "private_rmse": 0.46468,
+    "submission_ref": "56928100",
+    "previous_private_rmse": 0.46487,
+    "private_improvement": 0.00019,
+    "late_submission": true,
+    "official_rank_claim": false
+  },
+  "evaluation_scopes": [
+    {
+      "id": "private_submission",
+      "rmse": 0.46468,
+      "rows": null,
+      "games": null,
+      "setting": "Kaggle recorded private late submission; hidden evaluation population"
+    },
+    {
+      "id": "supported_oof",
+      "rmse": 0.4629258203901377,
+      "rows": 561607,
+      "games": 272,
+      "sse": 240705.11421894887,
+      "setting": "Game-heldout OOF on the historically supported population with accepted inference policy"
+    },
+    {
+      "id": "complete_oof",
+      "rmse": 0.5242026276721191,
+      "rows": 562936,
+      "games": 272,
+      "sse": 309376.55969596514,
+      "setting": "Game-heldout full-population OOF including long-horizon and missing-role cases"
+    }
+  ],
+  "scope_warning": "These populations differ. Local OOF, historical chronological holdouts, synthetic-demo metrics and private submission scores are not interchangeable.",
+  "inference_benchmark": {
+    "speedup": 4.7843674453187806,
+    "legacy_seconds_per_play": 0.5411140285000329,
+    "shared_seconds_per_play": 0.11310043274988857,
+    "plays": 96,
+    "rows": 3723,
+    "maximum_coordinate_difference_yards": 0,
+    "setting": "Fixed 20-model ensemble, declared 96-play benchmark; no generalized production-latency claim",
+    "public_source": "docs/results/frontier_submission.json"
+  },
+  "data_audit": {
+    "observed_player_frames": 4880579,
+    "forecast_player_frames": 562936,
+    "games": 272,
+    "labelled_season": 2023,
+    "public_source": "docs/DATA_CARD.md"
+  },
+  "reproducibility": {
+    "public_demo": "synthetic; deterministic standard-library reference; no private model",
+    "public_demo_reproduces_champion": false,
+    "champion_weights_published": false,
+    "public_baseline_weights_already_available": true,
+    "training_launched_by_closeout": false
+  },
+  "provenance": [
+    {
+      "claim": "recorded private submission score",
+      "evidence": "owner-retained scored submission response",
+      "sha256": "29c0abffbdca8d254fb9095f9bae39e8eb93bf7b19626efdf1053ab7c48322b3",
+      "visibility": "private source; curated aggregate only"
+    },
+    {
+      "claim": "full and supported OOF metrics",
+      "evidence": "owner-retained completed policy evaluation",
+      "sha256": "7c306d7b325d4e6f03492b75f5f048fbb426f0a3f229b567227dd6c9392db9ef",
+      "visibility": "private source; curated aggregate only"
+    },
+    {
+      "claim": "inference acceleration",
+      "evidence": "docs/results/frontier_submission.json",
+      "sha256": "ff22663831d8a71679586c62042dc171eb76b482f0e64e439b5b7638c4e2dfba",
+      "visibility": "public historical snapshot"
+    },
+    {
+      "claim": "additional tracking acquisition branch stopped before training",
+      "evidence": "owner-retained final historical acquisition result",
+      "sha256": "83ea8c69d62f4adc87a630b114c175587494a04752015f4198bec23c8b14500d",
+      "visibility": "private source; curated aggregate only"
+    }
+  ],
+  "attribution": "Adapted public trajectory-modeling references with project-specific data engineering, validation, optimization, reliability and delivery work. See docs/SOURCES.md.",
+  "historical_comparison": {
+    "first_recorded_submission_ref": "56129348",
+    "first_recorded_private_rmse": 0.7009,
+    "final_recorded_private_rmse": 0.46468,
+    "absolute_reduction": 0.23622,
+    "relative_reduction_percent": 33.70238265087744,
+    "interpretation": "Descriptive progression across recorded systems, not a controlled component ablation",
+    "public_source": "docs/results/frontier_submission.json"
+  },
+  "public_demo_preview": {
+    "path": "docs/assets/demo-preview.svg",
+    "sha256": "62449bd6c3091981009d2cb4b9d26ef9278b9afbb46b27cc1d387c3759ed9b58",
+    "source_file": "src/nfl_trajectory/portfolio_demo.py",
+    "source_sha256": "0fddd650c347dd833b19ca4493716af9bb417411a6707b9b6dd3c9bf782ca2c3",
+    "seed": 2026,
+    "synthetic_only": true
+  },
+  "research_dispositions": [
+    {
+      "workstream": "grouped ensemble diversity",
+      "status": "accepted",
+      "evidence": "docs/results/frontier_submission.json"
+    },
+    {
+      "workstream": "final inference delivery",
+      "status": "scored",
+      "submission_ref": "56928100"
+    },
+    {
+      "workstream": "historical four-model feature portfolio",
+      "status": "research_only_not_in_final_ensemble",
+      "confirmed_system_gain_claimed": false,
+      "public_confirmation_outcome": "not_asserted_from_available_public_evidence",
+      "evidence": "docs/results/feature_diversity_confirmation_stage.json"
+    },
+    {
+      "workstream": "additional historical tracking transfer branch",
+      "status": "acquisition_stopped_access_error",
+      "training_fits": 0
+    },
+    {
+      "workstream": "unexecuted ensemble expansion proposal",
+      "status": "closed_unexecuted",
+      "training_fits": 0,
+      "performance_claimed": false
+    }
+  ]
+}

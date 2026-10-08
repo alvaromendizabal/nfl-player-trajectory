@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 390" role="img" aria-labelledby="trajectory-title trajectory-description">
+<title id="trajectory-title">Synthetic heldout trajectories</title>
+<desc id="trajectory-description">Three players: observed motion in slate, future truth in teal, constant velocity in amber, and a stationary reference in rose. All paths are simulated, not NFL tracking data.</desc>
+<rect width="1080" height="390" rx="16" fill="#f6f9fa"/>
+<text x="28" y="32" font-family="sans-serif" font-size="17" fill="#183a45">Player 1</text>
+<path d="M40.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="40.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">39</text>
+<path d="M102.22 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="102.22" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">41</text>
+<path d="M164.44 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="164.44" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">43</text>
+<path d="M226.67 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="226.67" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">45</text>
+<path d="M288.89 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="288.89" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">47</text>
+<path d="M35 257.78 H325" stroke="#e5edef" stroke-width="1"/>
+<text x="24" y="261.78" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">18</text>
+<path d="M35 226.67 H325" stroke="#e5edef" stroke-width="1"/>
+<text x="24" y="230.67" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">19</text>
+<path d="M35 195.56 H325" stroke="#e5edef" stroke-width="1"/>
+<text x="24" y="199.56" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">20</text>
+<path d="M35 164.44 H325" stroke="#e5edef" stroke-width="1"/>
+<text x="24" y="168.44" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">21</text>
+<path d="M35 133.33 H325" stroke="#e5edef" stroke-width="1"/>
+<text x="24" y="137.33" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">22</text>
+<path d="M35 102.22 H325" stroke="#e5edef" stroke-width="1"/>
+<text x="24" y="106.22" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">23</text>
+<polyline points="73.16,207.18 80.72,203.26 88.55,199.64 96.63,196.32 104.97,193.30 113.56,190.58 122.42,188.17 131.53,186.05" fill="none" stroke="#526875" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="131.53,186.05 140.91,184.23 150.54,182.71 160.43,181.49 170.58,180.57 180.99,179.95 191.65,179.63 202.58,179.61 213.76,179.90 225.20,180.48 236.91,181.36 248.86,182.54 261.08,184.02" fill="none" stroke="#117f73" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="131.53,186.05 140.65,183.93 149.76,181.81 158.88,179.69 167.99,177.57 177.11,175.45 186.22,173.33 195.34,171.21 204.45,169.10 213.57,166.98 222.68,164.86 231.80,162.74 240.91,160.62" fill="none" stroke="#d9861d" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<circle cx="131.53" cy="186.05" r="5" fill="#b45665" stroke="white" stroke-width="2"/>
+<text x="180" y="360" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#536c76">x position (yards) · equal x/y scale</text>
+<text x="388" y="32" font-family="sans-serif" font-size="17" fill="#183a45">Player 2</text>
+<path d="M400.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="400.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">41</text>
+<path d="M456.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="456.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">43</text>
+<path d="M512.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="512.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">45</text>
+<path d="M568.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="568.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">47</text>
+<path d="M624.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="624.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">49</text>
+<path d="M680.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="680.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">51</text>
+<path d="M395 264.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="268.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">24</text>
+<path d="M395 236.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="240.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">25</text>
+<path d="M395 208.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="212.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">26</text>
+<path d="M395 180.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="184.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">27</text>
+<path d="M395 152.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="156.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">28</text>
+<path d="M395 124.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="128.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">29</text>
+<path d="M395 96.00 H685" stroke="#e5edef" stroke-width="1"/>
+<text x="384" y="100.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">30</text>
+<polyline points="433.55,219.12 445.53,216.91 457.30,214.45 468.86,211.75 480.21,208.79 491.35,205.58 502.28,202.12 513.01,198.41" fill="none" stroke="#526875" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="513.01,198.41 523.52,194.45 533.82,190.24 543.92,185.78 553.80,181.06 563.48,176.10 572.95,170.89 582.21,165.42 591.26,159.71 600.10,153.74 608.73,147.52 617.15,141.05 625.36,134.34" fill="none" stroke="#117f73" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="513.01,198.41 523.73,194.70 534.45,190.99 545.17,187.28 555.90,183.57 566.62,179.86 577.34,176.15 588.06,172.44 598.79,168.73 609.51,165.02 620.23,161.31 630.95,157.60 641.68,153.89" fill="none" stroke="#d9861d" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<circle cx="513.01" cy="198.41" r="5" fill="#b45665" stroke="white" stroke-width="2"/>
+<text x="540" y="360" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#536c76">x position (yards) · equal x/y scale</text>
+<text x="748" y="32" font-family="sans-serif" font-size="17" fill="#183a45">Player 3</text>
+<path d="M760.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="760.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">44</text>
+<path d="M816.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="816.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">46</text>
+<path d="M872.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="872.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">48</text>
+<path d="M928.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="928.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">50</text>
+<path d="M984.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="984.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">52</text>
+<path d="M1040.00 58 V310" stroke="#dce6e9" stroke-width="1"/>
+<text x="1040.00" y="332" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#536c76">54</text>
+<path d="M755 250.00 H1045" stroke="#e5edef" stroke-width="1"/>
+<text x="744" y="254.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">29</text>
+<path d="M755 222.00 H1045" stroke="#e5edef" stroke-width="1"/>
+<text x="744" y="226.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">30</text>
+<path d="M755 194.00 H1045" stroke="#e5edef" stroke-width="1"/>
+<text x="744" y="198.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">31</text>
+<path d="M755 166.00 H1045" stroke="#e5edef" stroke-width="1"/>
+<text x="744" y="170.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">32</text>
+<path d="M755 138.00 H1045" stroke="#e5edef" stroke-width="1"/>
+<text x="744" y="142.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">33</text>
+<path d="M755 110.00 H1045" stroke="#e5edef" stroke-width="1"/>
+<text x="744" y="114.00" text-anchor="end" font-family="sans-serif" font-size="11" fill="#536c76">34</text>
+<polyline points="796.07,146.51 806.75,149.32 817.31,152.23 827.75,155.26 838.07,158.40 848.27,161.66 858.34,165.03 868.30,168.51" fill="none" stroke="#526875" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="868.30,168.51 878.14,172.10 887.86,175.81 897.46,179.64 906.94,183.57 916.29,187.62 925.53,191.79 934.65,196.06 943.65,200.45 952.52,204.96 961.28,209.58 969.92,214.31 978.43,219.15" fill="none" stroke="#117f73" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="868.30,168.51 878.26,171.99 888.22,175.47 898.18,178.96 908.14,182.44 918.10,185.92 928.06,189.40 938.01,192.89 947.97,196.37 957.93,199.85 967.89,203.33 977.85,206.82 987.81,210.30" fill="none" stroke="#d9861d" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 5"/>
+<circle cx="868.30" cy="168.51" r="5" fill="#b45665" stroke="white" stroke-width="2"/>
+<text x="900" y="360" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#536c76">x position (yards) · equal x/y scale</text>
+</svg>

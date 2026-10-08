@@ -1,0 +1,31 @@
+name: Portfolio Release
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  public-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Test the public contracts without installing dependencies
+        run: python3 -S -m unittest discover -s tests -p 'test_portfolio*.py' -v
+      - name: Run the deterministic synthetic demonstration
+        run: python3 -S scripts/run_portfolio_demo.py --output artifacts/portfolio
+      - name: Check evidence, links, publication boundary and demo manifests
+        run: python3 -S scripts/validate_portfolio_release.py --demo-output artifacts/portfolio
+      - name: Retain the inspectable synthetic demonstration
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: public-synthetic-demo
+          path: artifacts/portfolio/
+          retention-days: 30
+          if-no-files-found: error

@@ -8,7 +8,7 @@
 - [NFL Big Data Bowl background](https://operations.nfl.com/programs-initiatives/innovation/big-data-bowl)
 - [Kaggle CLI](https://github.com/Kaggle/kaggle-cli)
 
-The private competition snapshot supplies the actual organizer gateway, inference server, protobuf/relay implementation, and unlabelled sample inputs. Validation records their hashes and executes the unchanged interface against private artifacts. Competition data and fitted weights are not redistributed.
+The private competition snapshot supplies the actual organizer gateway, inference server, protobuf/relay implementation, and unlabelled sample inputs. Validation records their hashes and executes the unchanged interface against private artifacts. Competition data and private neural champion weights are withheld. A small fitted public baseline is documented separately.
 
 ## Reproduced neural baseline
 
@@ -28,28 +28,13 @@ These sources are used to identify mechanisms to recreate independently. The pro
 
 Each adapted technique receives its own project-owned implementation, leakage checks, validation, uncertainty analysis, and promotion/retirement decision.
 
-## Current reproduction boundary
+## Research coverage and attribution
 
-Substantially tested/covered:
+The research program evaluated temporal/player interactions, grouped-game folds, moving-average inference, augmentation, alternative supervision, interaction representations and ensemble diversity. An investigated technique is not automatically an accepted contribution: the dated evidence records its validation scope and promotion or retirement decision.
 
-- first-place temporal/player interaction base
-- grouped game folds and EMA
-- strong augmentation and multiple split families
-- dual-path temporal/spatial interaction and auxiliary supervision
-- target-specific interaction and landing context
-- single-target supervision
-- multiple TTA recipes
-- delta/future-frame decoding ideas
-- Muon and robust-objective-related axes
-- competition-only pseudo-supervision adaptations
+The completed system and its measured results are documented in [Results](RESULTS.md). This source catalog preserves the references that informed the work; it is not an active expansion roadmap or a claim to reproduce another team's entire solution.
 
-Largest remaining competition-data-only gap:
-
-**independently trained feature-configuration breadth combined with repeated grouped-CV split diversity at substantially larger ensemble scale.**
-
-Historical-data pretraining remains blocked by the active competition-data-only project boundary.
-
-No detailed second-place mechanism is claimed because no sufficiently detailed trustworthy technical writeup has been established in this project.
+No detailed second-place mechanism is claimed without a sufficiently detailed technical source. The project-owned additions emphasized data integration, controlled validation, efficient inference, recoverable execution and evidence publication.
 
 ## Earlier feature-engineering methodology
 

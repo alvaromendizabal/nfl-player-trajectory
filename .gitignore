@@ -32,3 +32,6 @@ research/**/review_release.json
 research/**/.venv/
 research/**/artifacts/
 research/**/outputs/
+
+# Regenerable, explicitly synthetic portfolio demonstration.
+demo_output/

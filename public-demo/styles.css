@@ -225,6 +225,9 @@ h1 em {
   gap: 6px;
   align-items: center;
 }
+.path-legend span[hidden] {
+  display: none;
+}
 .path-legend i,
 .timeline-legend i {
   display: inline-block;

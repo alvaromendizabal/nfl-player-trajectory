@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="620" viewBox="0 0 1320 620" role="img" aria-labelledby="title desc">
+  <title id="title">Route Lab — observed motion and inspectable forecasts</title>
+  <desc id="desc">Concept illustration of three synthetic player paths on a stylized football field. Observed paths lead to an explicit forecast boundary, then diverge into transparent forecast alternatives. This is an illustration, not measured NFL data or a performance chart.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#112d38"/><stop offset="1" stop-color="#081e2c"/></linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#193f45"/><stop offset="1" stop-color="#103039"/></linearGradient>
+    <clipPath id="clip"><rect x="708" y="108" width="548" height="384" rx="18"/></clipPath>
+  </defs>
+  <rect width="1320" height="620" rx="26" fill="url(#bg)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="62" y="65" width="30" height="5" rx="2.5" fill="#bbdf87"/>
+    <text x="107" y="74" fill="#c7dcd9" font-size="17" letter-spacing="2">ALVARO MENDIZABAL / NFL</text>
+    <text x="62" y="143" fill="#bbdf87" font-size="16" letter-spacing="2.5">TRAJECTORY FORECASTING</text>
+    <text x="57" y="230" fill="#f3f6f1" font-size="66" font-weight="700" letter-spacing="-2">Track the play.</text>
+    <text x="57" y="311" fill="#bde0b5" font-size="66" font-weight="700" letter-spacing="-2">Test the forecast.</text>
+    <text x="62" y="363" fill="#c6d7d9" font-size="23">Observed motion. Transparent rules.</text>
+    <text x="62" y="398" fill="#c6d7d9" font-size="23">Every error open to inspection.</text>
+    <g fill="#153b45" stroke="#396068">
+      <rect x="62" y="452" width="166" height="43" rx="21.5"/>
+      <rect x="241" y="452" width="175" height="43" rx="21.5"/>
+      <rect x="429" y="452" width="166" height="43" rx="21.5"/>
+    </g>
+    <g fill="#d4e2df" font-size="15" text-anchor="middle"><text x="145" y="479">Past-only inputs</text><text x="328" y="479">Whole-game splits</text><text x="512" y="479">Measured errors</text></g>
+    <text x="62" y="558" fill="#91afb6" font-size="14" letter-spacing=".9">CONCEPT ILLUSTRATION · Authored trajectories, not NFL tracking</text>
+  </g>
+  <rect x="708" y="108" width="548" height="384" rx="18" fill="url(#field)" stroke="#42636b"/>
+  <g clip-path="url(#clip)">
+    <g stroke="#45676a" fill="none" opacity=".65">
+      <path d="M741 108V492 M812 108V492 M883 108V492 M954 108V492 M1025 108V492 M1096 108V492 M1167 108V492 M1238 108V492"/>
+      <path d="M708 174H1256 M708 426H1256" stroke-width="2"/>
+    </g>
+    <g stroke="#60827f" stroke-width="2" opacity=".6"><path d="M736 249h10 M807 249h10 M878 249h10 M949 249h10 M1020 249h10 M1091 249h10 M1162 249h10 M1233 249h10 M736 350h10 M807 350h10 M878 350h10 M949 350h10 M1020 350h10 M1091 350h10 M1162 350h10 M1233 350h10"/></g>
+    <rect x="987" y="109" width="268" height="382" fill="#14383d" opacity=".3"/>
+    <path d="M987 161V446" stroke="#b9d58d" stroke-width="1.5" stroke-dasharray="5 7" opacity=".8"/>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M749 396C799 388 827 372 858 355S926 316 987 298" stroke="#b2cbd3" stroke-width="5"/>
+      <path d="M752 281C799 282 837 276 881 251S940 220 987 218" stroke="#709fb1" stroke-width="4"/>
+      <path d="M752 207C803 214 835 227 867 261S936 385 987 397" stroke="#8ca9ac" stroke-width="4"/>
+      <path d="M987 298L1207 224" stroke="#e8c282" stroke-width="4" stroke-dasharray="9 10"/>
+      <path d="M987 298C1047 279 1094 272 1138 268" stroke="#b9df89" stroke-width="4"/>
+      <path d="M987 218C1055 218 1085 197 1130 167" stroke="#709fb1" stroke-width="3" stroke-dasharray="5 8" opacity=".7"/>
+      <path d="M987 397C1066 411 1121 420 1197 413" stroke="#8ca9ac" stroke-width="3" stroke-dasharray="5 8" opacity=".7"/>
+    </g>
+    <g fill="#b2cbd3" stroke="#15383e" stroke-width="3"><circle cx="749" cy="396" r="6"/><circle cx="801" cy="382" r="6"/><circle cx="852" cy="358" r="6"/><circle cx="907" cy="328" r="6"/><circle cx="954" cy="309" r="6"/></g>
+    <g fill="#e9f3dc" stroke="#24454b" stroke-width="4"><circle cx="987" cy="298" r="11"/><circle cx="987" cy="218" r="8"/><circle cx="987" cy="397" r="8"/></g>
+    <circle cx="987" cy="298" r="26" fill="none" stroke="#d3c0b4" stroke-width="2" opacity=".8"/>
+    <circle cx="1138" cy="268" r="7" fill="#b9df89" stroke="#173b40" stroke-width="3"/>
+    <circle cx="1207" cy="224" r="7" fill="#e8c282" stroke="#173b40" stroke-width="3"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14" letter-spacing="1.4"><text x="735" y="141" fill="#a6c0c6">OBSERVED</text><text x="1010" y="141" fill="#b9df89">FORECAST</text></g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#b7cdd0"><path d="M730 525h24" stroke="#b2cbd3" stroke-width="3"/><text x="764" y="530">History</text><path d="M854 525h24" stroke="#e8c282" stroke-width="3" stroke-dasharray="5 4"/><text x="888" y="530">Velocity</text><path d="M987 525h24" stroke="#b9df89" stroke-width="3"/><text x="1021" y="530">Damped</text><circle cx="1140" cy="525" r="6" fill="none" stroke="#d3c0b4" stroke-width="2"/><text x="1156" y="530">Hold</text></g>
+</svg>

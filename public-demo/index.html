@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="A browser-local trajectory lab. Inspect synthetic observed motion, compare transparent forecasts and examine their exact errors."
+    />
+    <title>Route Lab · Interactive trajectory forecasting</title>
+    <link
+      rel="canonical"
+      href="https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site/"
+    />
+    <meta
+      property="og:title"
+      content="Route Lab · Interactive trajectory forecasting"
+    />
+    <meta
+      property="og:description"
+      content="Read the motion. Test the forecast. An interactive synthetic trajectory demonstration by Alvaro Mendizabal."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site/"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="data.js"></script>
+    <script defer src="engine.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <noscript
+      ><p class="noscript">
+        Enable JavaScript to compute and inspect the synthetic forecasts on this
+        device.
+      </p></noscript
+    >
+    <div class="shell">
+      <header class="masthead">
+        <a
+          class="brand"
+          href="https://github.com/alvaromendizabal/nfl-player-trajectory"
+          ><span class="route-mark" aria-hidden="true">↗</span
+          ><span
+            >ROUTE LAB<small>ALVARO MENDIZABAL / ML ENGINEERING</small></span
+          ></a
+        >
+        <a
+          class="source-link"
+          href="https://github.com/alvaromendizabal/nfl-player-trajectory/tree/main/public-demo"
+          target="_blank"
+          rel="noreferrer"
+          >Explore the source <span aria-hidden="true">↗</span></a
+        >
+      </header>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">TRAJECTORY FORECASTING / INTERACTIVE STUDY</p>
+          <h1>Read the motion.<br /><em>Test the forecast.</em></h1>
+        </div>
+        <div class="intro-note">
+          <p>
+            Eight observed frames.<br />Twelve future positions to get right.
+          </p>
+          <span class="scope-tag"
+            ><i></i> SYNTHETIC DATA · LOCAL COMPUTATION</span
+          >
+          <p class="scope-copy">
+            Invented plays, transparent motion rules, inspectable errors. This
+            demonstration runs on your device and uses no trained neural model.
+          </p>
+        </div>
+      </section>
+      <main>
+        <div class="lab">
+          <section class="field-panel" aria-labelledby="field-title">
+            <div class="field-heading">
+              <div>
+                <span class="field-kicker"
+                  >THE OBSERVATION WINDOW ENDS AT t = 0</span
+                >
+                <h2 id="field-title">Synthetic game 105 · Play 01</h2>
+              </div>
+              <span id="field-clock" class="field-clock">t + 1.2 s</span>
+            </div>
+            <div class="field-toolbar">
+              <div class="path-legend">
+                <span><i class="observed-key"></i> Observed</span
+                ><span><i class="forecast-key"></i> Forecast</span
+                ><span id="truth-legend"
+                  ><i class="truth-key"></i> Future truth</span
+                >
+              </div>
+              <label for="view" class="view-label"
+                >View<select id="view">
+                  <option value="routes">Routes</option>
+                  <option value="field">Entire field</option>
+                </select></label
+              >
+            </div>
+            <svg
+              id="field"
+              viewBox="0 0 760 460"
+              role="img"
+              aria-label="Synthetic observed and forecast trajectories; coordinates in yards"
+            ></svg>
+            <div class="playback">
+              <button
+                id="play"
+                class="play-button"
+                aria-label="Play forecast animation"
+              >
+                Play <span aria-hidden="true">▶</span></button
+              ><button
+                id="previous"
+                class="frame-button"
+                aria-label="Previous frame"
+              >
+                −</button
+              ><label class="scrubber"
+                ><span class="sr-only"
+                  >Visible future frame; arrow keys change one frame</span
+                ><input
+                  id="frame"
+                  type="range"
+                  min="0"
+                  max="12"
+                  step="1"
+                  value="12" /></label
+              ><button id="next" class="frame-button" aria-label="Next frame">
+                +</button
+              ><output id="frame-value" for="frame">12 / 12</output>
+            </div>
+            <p id="motion-note" class="motion-note">
+              Scrub to inspect any frame. Playback advances at the data’s 10 Hz
+              rate.
+            </p>
+            <div class="field-bottom">
+              <span id="field-summary"
+                >3 anonymous tracks · coordinates in yards</span
+              ><span>Solid history → dashed forecast</span>
+            </div>
+          </section>
+          <aside class="controls" aria-labelledby="controls-title">
+            <div class="section-heading">
+              <span class="step">01</span>
+              <h2 id="controls-title">Set the experiment</h2>
+            </div>
+            <label for="play-select" class="field-label"
+              >Held-out synthetic play</label
+            ><select id="play-select"></select>
+            <label for="player-select" class="field-label"
+              >Track to inspect</label
+            ><select id="player-select">
+              <option value="all">All three tracks</option>
+              <option value="1">Track A</option>
+              <option value="2">Track B</option>
+              <option value="3">Track C</option>
+            </select>
+            <label for="method" class="field-label">Forecast rule</label
+            ><select id="method">
+              <option value="damped_velocity">Damped velocity</option>
+              <option value="constant_velocity">Constant velocity</option>
+              <option value="hold_last_position">Hold last position</option>
+            </select>
+            <p id="method-description" class="control-help"></p>
+            <div class="range-heading">
+              <label for="horizon" class="field-label">Forecast horizon</label
+              ><output id="horizon-value" for="horizon"
+                >1.2 s / 12 frames</output
+              >
+            </div>
+            <input
+              id="horizon"
+              type="range"
+              min="1"
+              max="12"
+              step="1"
+              value="12"
+            />
+            <div class="range-heading">
+              <label for="damping" class="field-label"
+                >Velocity retained per step</label
+              ><output id="damping-value" for="damping">0.90</output>
+            </div>
+            <input
+              id="damping"
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="0.9"
+            />
+            <p id="damping-help" class="control-help">
+              1.00 matches constant velocity. 0.00 holds the last position.
+            </p>
+            <label class="truth-control"
+              ><input id="truth" type="checkbox" /><span
+                >Reveal future truth<small
+                  >Used for scoring, never for forecasting.</small
+                ></span
+              ></label
+            >
+            <div class="control-actions">
+              <button id="reset" class="reset-button">Reset view</button
+              ><button id="export" class="export-button">
+                Export JSON <span aria-hidden="true">↓</span>
+              </button>
+            </div>
+            <p id="status" class="status" role="status"></p>
+            <p id="error" class="error" role="alert" hidden></p>
+            <div class="data-boundary">
+              <strong>A clean input boundary</strong>
+              <p>
+                The predictor receives observed x/y and future row IDs only.
+                Future coordinates enter afterward, for evaluation and optional
+                display.
+              </p>
+            </div>
+          </aside>
+        </div>
+        <section class="evaluation" aria-labelledby="evaluation-title">
+          <div class="evaluation-heading">
+            <div class="section-heading">
+              <span class="step">02</span>
+              <h2 id="evaluation-title">Measure the miss</h2>
+            </div>
+            <span class="lower-note"
+              >LOWER IS BETTER · SYNTHETIC DATA ONLY</span
+            >
+          </div>
+          <div class="metrics">
+            <div class="main-metric">
+              <span>Selected scope / coordinate RMSE</span
+              ><strong id="rmse">—</strong><small id="metric-scope"></small>
+            </div>
+            <div>
+              <span>Constant-velocity reference</span
+              ><strong id="cv-rmse">—</strong><small id="delta"></small>
+            </div>
+            <div>
+              <span>Hold-position reference</span
+              ><strong id="hold-rmse">—</strong
+              ><small>Same tracks and requested frames</small>
+            </div>
+            <div>
+              <span>All four held-out plays</span
+              ><strong id="all-rmse">—</strong><small id="all-scope"></small>
+            </div>
+          </div>
+          <div class="evaluation-grid">
+            <section class="timeline-panel" aria-labelledby="timeline-title">
+              <div class="chart-heading">
+                <h3 id="timeline-title">Error across future time</h3>
+                <span>Coordinate RMSE / yards</span>
+              </div>
+              <svg
+                id="timeline"
+                viewBox="0 0 620 230"
+                role="img"
+                aria-label="Per-frame coordinate error for selected, constant-velocity and hold-position forecasts"
+              ></svg>
+              <div class="timeline-legend">
+                <span><i class="selected-key"></i> Selected rule</span
+                ><span><i class="cv-key"></i> Constant velocity</span
+                ><span><i class="hold-key"></i> Hold position</span>
+              </div>
+              <p class="help">
+                The headline score uses every frame up to the horizon. Scrubbing
+                changes the visible moment, not the evaluation sample.
+              </p>
+            </section>
+            <section class="track-panel" aria-labelledby="track-title">
+              <div class="chart-heading">
+                <h3 id="track-title">Track-by-track comparison</h3>
+                <span>This play · yards</span>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Track</th>
+                    <th scope="col">Selected</th>
+                    <th scope="col">Velocity</th>
+                    <th scope="col">Hold</th>
+                  </tr>
+                </thead>
+                <tbody id="track-table"></tbody>
+              </table>
+              <div class="distance-notes">
+                <div>
+                  <span>Average displacement</span><strong id="ade">—</strong>
+                </div>
+                <div>
+                  <span>Final displacement</span><strong id="fde">—</strong>
+                </div>
+              </div>
+              <p class="help">
+                Displacement is Euclidean distance. Coordinate RMSE averages
+                squared x and y errors separately before taking the square root.
+              </p>
+            </section>
+          </div>
+        </section>
+        <details class="method-notes">
+          <summary>Inspect the method and the limits</summary>
+          <div class="method-grid">
+            <div>
+              <h3>Three deliberately small references</h3>
+              <p>
+                Constant velocity extends the last observed frame-to-frame
+                displacement. Hold position repeats the last coordinates. Damped
+                velocity multiplies displacement by the damping factor at each
+                future step. No parameters are fitted.
+              </p>
+            </div>
+            <div>
+              <h3>Known synthetic provenance</h3>
+              <p>
+                Six invented games contain two plays and three tracks each,
+                sampled at 10 Hz. The 8-frame observed window is separate from
+                12 future frames. This interface evaluates the four plays in the
+                two preassigned held-out games.
+              </p>
+            </div>
+            <div>
+              <h3>A demonstration, not a benchmark</h3>
+              <p>
+                These are not real player trajectories. Changing controls
+                repeatedly explores one small fixture; it does not establish
+                generalization or evaluate the project’s private neural
+                ensemble. No field clipping or player interaction model is
+                applied.
+              </p>
+            </div>
+          </div>
+        </details>
+      </main>
+      <footer>
+        <span
+          >Built by Alvaro Mendizabal · Temporal ML &amp; evaluation
+          engineering</span
+        ><span>SYNTHETIC_ONLY · No uploads, accounts or cloud calls</span>
+      </footer>
+    </div>
+  </body>
+</html>

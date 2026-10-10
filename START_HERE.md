@@ -4,9 +4,11 @@
 
 This guide is the shortest route through the completed NFL player-trajectory project. The [README](README.md) gives the headline result; the documents below explain the evidence and provide a runnable public demonstration.
 
-## A two-minute review
+## A three-minute review
 
-Read the [engineering case study](docs/EMPLOYER_CASE_STUDY.md).
+1. Read the [README](README.md) for my ownership and the measured result.
+2. Try [Route Lab](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site): change the forecast horizon, inspect one player's motion and compare forecast errors. [Local launch](docs/REPRODUCIBILITY.md)
+3. Read the [engineering case study](docs/EMPLOYER_CASE_STUDY.md) for the modeling, coverage and runtime decisions.
 
 It connects the forecasting problem to the main deliverables: a 20-model ensemble, evaluation across 272 games, GPU performance work, reliable inference delivery, and a recorded private RMSE of **0.46468**. That score comes from late evaluation and is not an official competition placement.
 
@@ -19,9 +21,14 @@ It connects the forecasting problem to the main deliverables: a 20-model ensembl
 
 The two OOF populations are intentionally separate: **0.4629258204** on 561,607 supported forecast rows and **0.5242026277** on all 562,936 forecast rows. Both differ from the private evaluation. The larger population includes rare cases with much longer horizons.
 
-## Run the demo
+## Run the demonstrations
 
-Use Python 3.11 or newer from the repository root:
+For the interactive browser demo, serve the checkout with `python -m http.server 8000`,
+then open `http://localhost:8000/public-demo/`. Run its checks with
+`node tools/test_public_demo.mjs`. The fixed motion rules use observations only;
+future positions remain separate evaluation inputs. No model weights or backend are needed.
+
+The existing report generator remains available. Use Python 3.11 from the repository root:
 
 ```bash
 python scripts/run_portfolio_demo.py --output demo_output
@@ -41,7 +48,7 @@ This demonstration makes the public workflow inspectable. Its synthetic metrics 
 | [Results](docs/results/) | Aggregate evidence with explicit evaluation scope |
 | [Sources](docs/SOURCES.md) | Original references and attribution |
 
-The research neural baseline reproduces chack3's public temporal/player-interaction model. The project adds controlled experiments, data integration, ensemble evaluation, runtime engineering, and deployment verification. Attribution does not imply reproduction of another team's complete system.
+I integrated temporal/player-interaction modeling with controlled experiments, historical-data pipelines, ensemble evaluation, runtime optimization and verified delivery. The [source record](docs/SOURCES.md) credits the published architecture and methods used in that work.
 
 ## Historical research is preserved
 
@@ -55,4 +62,4 @@ python research/publication/validate.py
 
 This verifies registered public artifact hashes. It does not retrain models, retrieve restricted inputs, or reproduce private scores. The maintained quality checks and their environments are described in [Reproducibility](docs/REPRODUCIBILITY.md).
 
-Private neural champion weights, row-level private predictions, the latest production recipe, and nonpublic execution bundles are withheld. A small fitted baseline and selected historical implementation are public. This boundary distinguishes runnable public software, recorded research evidence, and private ensemble reproduction.
+Private neural ensemble weights, row-level private predictions, the private ensemble configuration, and nonpublic execution bundles are withheld. A small fitted baseline and selected historical implementation are public. This boundary distinguishes runnable public software, recorded research evidence, and private ensemble reproduction.

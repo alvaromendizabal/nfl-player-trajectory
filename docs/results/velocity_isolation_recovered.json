@@ -1,0 +1,49 @@
+{
+  "status": "saved_scientific_summary_recovered",
+  "review_date": "2026-09-11",
+  "job": "nfl-motion-scientific-20260911-055510-d265d9d",
+  "aws_reported_job_status": "Completed",
+  "source_commit": "d265d9decb4ca5cd829781ceb78bd043480b5c35",
+  "study_signature": "3e1bc775a80b6a38432ea88cfa8b2cbb27a46a42398187e29fa07b5bc4c188b0",
+  "summary_s3_key": "experiments/velocity_isolation/inner_1/3e1bc775a80b6a38432ea88cfa8b2cbb27a46a42398187e29fa07b5bc4c188b0/summaries/2ddec016e02b7bf10b75712d7baa2eb7ed5661453b3fa1249ceefe368d91987d.json",
+  "reported_results": {
+    "coordinate_rmse": 0.861603856086731,
+    "velocity_rmse": 0.7203815579414368,
+    "relative_rmse_gain": 0.16390629771169274,
+    "paired_game_delta_ci95": [-0.1554135397037707, -0.1269560761641106],
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 2026,
+    "minimum_relative_gain": 0.01,
+    "continuation_gate_passed": true,
+    "validation_rows": 83938,
+    "validation_games": 41,
+    "training_plays": 4951,
+    "epochs_per_arm": 16,
+    "optimizer_steps_per_arm": 1248,
+    "scientific_runner_elapsed_seconds": 614.516,
+    "original_job_final_checkpoint_remote_readback": true
+  },
+  "horizon_slices_reported": [
+    {"second": 1, "rows": 63125, "coordinate_rmse": 0.4090465009212494, "velocity_rmse": 0.33668264746665955},
+    {"second": 2, "rows": 17758, "coordinate_rmse": 1.347080945968628, "velocity_rmse": 1.1255942583084106},
+    {"second": 3, "rows": 2991, "coordinate_rmse": 2.514777183532715, "velocity_rmse": 2.127445697784424},
+    {"second": 4, "rows": 64, "coordinate_rmse": 3.089205265045166, "velocity_rmse": 2.397876024246216}
+  ],
+  "review_scope": {
+    "live_describe_processing_job": true,
+    "saved_s3_status_and_summary_read": true,
+    "error_csv_header_read": true,
+    "full_error_csv_recomputation_completed": false,
+    "model_weights_replayed": false,
+    "new_scientific_fits": 0,
+    "new_aws_jobs": 0,
+    "new_kaggle_submission": false,
+    "live_studio_filesystem_verified": false,
+    "bulk_error_retrieval_limitation": "The connector returned an asynchronous task whose result could not be retrieved. No independent row-level score is claimed."
+  },
+  "interpretation": "The preserved report passes its frozen one-fold screening gate. It is a compact new reconstruction, not recovery of the historical 0.62708 three-fold blend, not a new Kaggle score, and not independent confirmation across folds or seeds. Its bootstrap interval does not account for preceding exploratory searches on this reused development fold.",
+  "next_gate": "Independently verify both error CSV hashes and recompute all requested rows; separately restore and forward-replay final weights. Run the observed-only training relationship support/age audit before a capacity-matched temporal-versus-terminal representation experiment. Do not launch a duplicate of the completed job.",
+  "feature_engineering_status": "open",
+  "historical_winning_target": 0.46340,
+  "historical_winning_target_achieved": false
+}

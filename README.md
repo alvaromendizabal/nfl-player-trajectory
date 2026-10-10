@@ -1,6 +1,8 @@
-# NFL · Player Trajectory Forecasting
+# NFL Big Data Bowl 2026 - Prediction
 
 **Alvaro Mendizabal · Temporal ML · Evaluation design · GPU performance engineering**
+
+Player trajectory forecasting for the [NFL Big Data Bowl 2026 prediction task](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).
 
 [![Quality](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml)
 [![Public Research Evidence](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/publication.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/publication.yml)

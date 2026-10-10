@@ -34,6 +34,10 @@ Local OOF uses game-heldout predictions. Development results have been inspected
 
 On **96 plays / 3,723 rows**, shared preparation accelerated the fixed ensemble **4.784×**, from **0.541114 to 0.113100 seconds per play**, with **zero maximum coordinate difference** on that sample. This is a measured implementation improvement under the recorded setup, not an across-hardware production latency guarantee. The original [aggregate measurements](results/frontier_submission.json) remain public.
 
+## Public demonstration evidence
+
+[Route Lab](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site) computes fixed motion forecasts over authored synthetic trajectories. Its coordinate RMSE, average displacement error and final displacement error describe the selected demonstration scope only. Changing horizon or damping changes the actual forecast; it does not tune or evaluate the historical neural ensemble. The Python report remains a separate deterministic two-reference example.
+
 ## Evidence beyond a score
 
 - Audited **4,880,579 observed player-frames**, **562,936 forecast player-frames**, and **272 games**, with explicit prediction-time contracts.

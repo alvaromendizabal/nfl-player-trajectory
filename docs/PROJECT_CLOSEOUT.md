@@ -4,6 +4,10 @@
 
 This release closes the active research narrative and preserves completed evidence. It launches no additional training or competition submission. Historical experiments remain available as dated research records; their prospective plans are not active project commitments.
 
+## Interactive public release
+
+[Route Lab](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site) makes observation-only forecasting, horizon sensitivity and trajectory errors directly inspectable. It adds real browser computation, animated playback and result export over authored synthetic tracks. The existing Python report and its source-bound evidence remain unchanged. This public release adds no historical model result.
+
 ## Delivered capabilities
 
 | Capability | Reviewable evidence |
@@ -12,7 +16,7 @@ This release closes the active research narrative and preserves completed eviden
 | Measured model delivery | [Results](RESULTS.md): private submissions and separate local populations |
 | Experimental judgment | [Case study](EMPLOYER_CASE_STUDY.md): controls, uncertainty and negative results |
 | Runtime and recovery engineering | [Research system](RESEARCH_SYSTEM.md): telemetry, checkpoints and artifact lineage |
-| Accessible reproducibility | [Reproduction guide](REPRODUCIBILITY.md): deterministic synthetic demo |
+| Accessible reproducibility | [Reproduction guide](REPRODUCIBILITY.md): interactive Route Lab and deterministic Python report |
 | Attribution | [Sources](SOURCES.md): public references and project-specific contributions |
 
 ## Final research dispositions
@@ -31,7 +35,7 @@ The portfolio's archived “confirmation pending” wording describes its histor
 
 This repository intentionally includes selected implementation, a small public fitted baseline, aggregate evidence and historical research source archives. These existing artifacts remain public. The closeout adds a reproducible synthetic demonstration and updated aggregate results.
 
-The final private neural weights, unpublished production recipe, raw competition tracking, nonpublic execution bundles, private row-level predictions, credentials and cloud object locations are not added by this release. Keeping these private limits public reproduction of the final score. The demo's invented inputs, reference predictions, metric calculation, manifests and tests remain fully inspectable.
+The final private neural weights, unpublished inference recipe, raw competition tracking, nonpublic execution bundles, private row-level predictions, credentials and cloud object locations are not added by this release. Keeping these private limits public reproduction of the final score. The demo's invented inputs, reference predictions, metric calculation, manifests and tests remain fully inspectable.
 
 No history rewrite is performed. Release checks apply to the reviewed publication surface and new files; they do not claim an independent audit of every past Git object.
 

@@ -31,6 +31,7 @@ PUBLIC_FILES = (
     "docs/results/project_closeout.json",
     "docs/assets/project-overview.svg",
     "docs/assets/demo-preview.svg",
+    "docs/assets/route-lab-hero.svg",
     "src/nfl_trajectory/portfolio_demo.py",
     "scripts/run_portfolio_demo.py",
     "scripts/validate_portfolio_release.py",

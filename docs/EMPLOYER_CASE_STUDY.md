@@ -2,7 +2,7 @@
 
 **From multi-agent motion prediction to a validated, reproducible ML delivery system.**
 
-The completed project combines temporal deep learning, grouped validation, cloud GPU execution, and inference verification. Across the project’s recorded submissions, private coordinate RMSE fell **33.7%, from 0.70090 to 0.46468**. The latest result comes from a 20-model ensemble in Kaggle late evaluation. This measures progress across successive systems; controlled experiment effects are reported separately, and no official competition placement is claimed.
+I built a forecasting system that combines temporal deep learning, grouped validation, cloud GPU execution, and inference verification. Across the project’s recorded submissions, private coordinate RMSE fell **33.7%, from 0.70090 to 0.46468**. The latest result comes from a 20-model ensemble in Kaggle late evaluation. This measures progress across successive systems; controlled experiment effects are reported separately, and no official competition placement is claimed.
 
 ## The problem
 
@@ -14,14 +14,14 @@ Compute was another design constraint. The research workflow ran on a single NVI
 
 | Workstream | Delivered capability |
 |---|---|
-| Modeling | Reproduced temporal/player-interaction baseline, controlled model extensions, and a 20-model ensemble across four grouped split families |
+| Modeling | Temporal/player-interaction model integration, controlled extensions, and a 20-model ensemble across four grouped split families |
 | Validation | Game-held-out predictions, exact coordinate RMSE, fixed ensemble comparisons, paired whole-game uncertainty estimates, and slice/coverage accounting |
 | Data engineering | Direct NFL/ESPN acquisition, provenance records, player/game identity resolution, and historical features restricted to eligible earlier observations |
 | Runtime | Shared inference preparation, measured GPU-workload settings, resumable training state, and resource/throughput telemetry |
 | Delivery | Integrity-checked model artifacts, packaged inference, organizer-gateway validation, and an exact recorded private submission |
-| Public review | Selected source, tests, sanitized aggregate evidence, a dependency-free synthetic demo, and a documented reproducibility boundary |
+| Public review | Selected source, tests, aggregate evidence, an interactive trajectory lab, a deterministic Python report, and documented reproduction scope |
 
-The source neural architecture and training reference are credited to [chack3](https://www.kaggle.com/code/chack3/nfl2026-1st-place-train). My contribution is the project system around that reproduced baseline and its independently evaluated extensions. [Sources](SOURCES.md) documents the broader research lineage.
+I owned the modeling and evaluation workflow, data integration, system extensions, runtime engineering and delivery controls. Published architecture and training methods remain attributed in [Sources](SOURCES.md).
 
 ## Three decisions with measurable consequences
 
@@ -53,7 +53,7 @@ Long-running training also saved more than weights: checkpoints retained optimiz
 | Recorded private RMSE reduction | **33.7%** | 0.70090 → 0.46468 across successive project systems |
 | Supported-population OOF | **0.4629258204** | 561,607 forecast rows |
 | Full-population OOF | **0.5242026277** | 562,936 forecast rows across 272 games |
-| Deployed ensemble | **20 models** | Four grouped split families |
+| Scored ensemble | **20 models** | Four grouped split families |
 
 These are separate evaluation scopes. OOF uses held-out models for each game; deployment uses the full ensemble. OOF results were inspected during research and should not be interpreted as a fresh untouched test set. [Results](RESULTS.md) and the [sanitized snapshot](results/project_closeout.json) contain the exact values and provenance.
 
@@ -65,10 +65,16 @@ Coverage, data access, model integration, and predictive benefit remained separa
 
 Operational failures also became reproducible checks: source schemas, prediction keys, numerical precision, artifact hashes, and external-service response handling were tested before reuse. Submission identity and recorded score were tracked separately from dataset or notebook creation, preventing an uploaded artifact from being mistaken for a completed evaluation.
 
+## Make trajectory errors inspectable
+
+I built [Route Lab](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site) to expose the relationship between observed motion, a forecast rule and the resulting error. A reviewer can select a synthetic play and player, change the forecast horizon or damping, animate the trajectory and compare coordinate RMSE with displacement diagnostics. Forecasts are computed from observations; labels enter only after prediction.
+
+The existing Python generator produces deterministic fixtures and a standalone report. The browser adds interactive forecasts and JSON export. This is a public engineering demonstration with authored data, not the private temporal ensemble or a new competition measurement. [Run and verify](REPRODUCIBILITY.md)
+
 ## Public reproduction and limitations
 
 The public repository contains selected source and tests, aggregate evidence, and a standard-library demo on deterministic synthetic trajectories. It runs without credentials or restricted data. The reported private model scores require private fitted artifacts and cannot be regenerated by the public demo.
 
-Private neural champion weights, row-level private predictions, the latest production recipe, and nonpublic execution bundles are withheld. A small fitted baseline and historical source archives remain public. Evidence from one labeled season limits claims about other seasons; repeated validation inspection limits claims of unbiased generalization. The system is a completed research and engineering artifact, not a certified player-evaluation product.
+Private neural ensemble weights, row-level private predictions, the private ensemble configuration, and nonpublic execution bundles are withheld. A small fitted baseline and historical source archives remain public. Evidence from one labeled season limits claims about other seasons; repeated validation inspection limits claims of unbiased generalization. The system is a completed research and engineering artifact, not a certified player-evaluation product.
 
 [Run and verify the public project](REPRODUCIBILITY.md) · [Read the final project state](PROJECT_CLOSEOUT.md) · [Return to the review guide](../START_HERE.md)

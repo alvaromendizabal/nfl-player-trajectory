@@ -1,0 +1,62 @@
+{
+  "as_of_utc_date": "2026-09-11",
+  "method": "Read-only connected AWS inventory; independent float64 recomputation from both complete saved error CSVs",
+  "source_commit": "d265d9decb4ca5cd829781ceb78bd043480b5c35",
+  "job": "nfl-motion-scientific-20260911-055510-d265d9d",
+  "job_status": "Completed",
+  "new_scientific_fits_this_inventory": 0,
+  "new_compute_launched_this_inventory": false,
+  "rows_per_arm": 83938,
+  "games_per_arm": 41,
+  "evaluation_keys_unique_and_equal": true,
+  "error_values_finite": true,
+  "coordinate_rmse_recomputed": 0.8616038787456273,
+  "velocity_rmse_recomputed": 0.7203815956554687,
+  "metric": "sqrt(sum(dx**2+dy**2)/(2*N))",
+  "coordinate_sse": 124624.63617583779,
+  "velocity_sse": 87119.19032855549,
+  "reported_paired_game_delta_ci95": [-0.1554135397037707, -0.1269560761641106],
+  "reported_bootstrap_resamples": 10000,
+  "reported_frozen_continuation_gate_passed": true,
+  "epochs_per_arm": 16,
+  "optimizer_steps_per_arm": 1248,
+  "scientific_elapsed_seconds_reported": 614.516,
+  "checkpoint_object_sizes_verified": {"coordinate": 4591025, "velocity": 4593637},
+  "checkpoint_weights_loaded_this_inventory": false,
+  "error_csv_sha256_verified_this_inventory": false,
+  "horizons": [
+    {"forecast_second": 1, "rows": 63125, "coordinate_sse": 21124.028009815807, "velocity_sse": 14311.093449078167},
+    {"forecast_second": 2, "rows": 17758, "coordinate_sse": 64448.29387934243, "velocity_sse": 44997.43819156482},
+    {"forecast_second": 3, "rows": 2991, "coordinate_sse": 37830.78608887138, "velocity_sse": 27074.683138236516},
+    {"forecast_second": 4, "rows": 64, "coordinate_sse": 1221.5281978078297, "velocity_sse": 735.9755496761222}
+  ],
+  "workspace": {
+    "space_name": "nfl-trajectory-dev",
+    "region": "us-west-2",
+    "app_status_at_inventory": "Deleted",
+    "remote_access": "DISABLED",
+    "last_verified_checkout": "d265d9decb4ca5cd829781ceb78bd043480b5c35",
+    "last_verified_checkout_utc": "2026-09-11T05:55:09.699645+00:00",
+    "github_main_at_inventory": "ed8ce417bb8fec29f0a3daa3d4120013d2e6bb5b",
+    "current_live_filesystem_sync_verified": false,
+    "workspace_modified_this_inventory": false
+  },
+  "data_inventory": {
+    "snapshot": "d7992e30f488b53dcd0027883dd2e5bf0404d166de3c2f86f64c31be1ac3a4a9",
+    "raw_object_heads_checked": 31,
+    "raw_object_sizes_matched": 31,
+    "raw_2023_input_csvs_in_snapshot": 18,
+    "raw_output_csvs_in_snapshot": 0,
+    "limitation": "Snapshot-scoped, not an account-wide absence claim. Cached research samples contain labels."
+  },
+  "comparability": {
+    "historical_target_rmse": 0.46340,
+    "historical_internal_blend_rmse": 0.62708,
+    "historical_blend_checkpoints_recovered": false,
+    "recorded_project_kaggle_private_rmse": 0.70090,
+    "live_authenticated_kaggle_history_checked": false,
+    "new_best_claimed": false,
+    "warning": "Different evaluation datasets and protocols. The recovered matched comparison does not demonstrate a new project best or quantify the share of the leaderboard gap due to features."
+  },
+  "next_gate": "Observed-only support audit of synchronized relationships and ball-relative arrival histories, then capacity-matched chronological family ablations. No duplicate velocity fit. No acceleration treatment before tail audit. Feature research remains open."
+}

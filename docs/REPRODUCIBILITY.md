@@ -156,3 +156,25 @@ competition data access, exact private artifacts, and the recorded evaluation/su
 environment. Licensed competition data is not bundled here. A successful demo establishes
 that its public data contract, forecast references, metric calculation, and artifact replay
 work as documented; historical private model performance remains a separate evidence claim.
+
+
+## Independently audit the exported forecasts
+
+The CSV audit recomputes pooled coordinate RMSE directly from the exported labels
+and predictions, using all four identifiers. It does not call the forecast engine.
+It checks exact model and population coverage, rejects duplicate/nonfinite rows,
+and reports error separately for forecast frames 1–4, 5–8 and 9–12 and each held-out game.
+Every slice reports its row count and two-coordinate squared-error total.
+
+```bash
+python3 -S tools/audit_public_forecasts.py --demo-output demo_output --output /tmp/forecast-audit.json
+```
+
+The exported coordinates have six decimal places, while the original report uses
+full precision. The audit therefore requires agreement within 0.0000015 yards,
+consistent with the maximum coordinate-rounding difference. All horizon slices
+must cover the complete holdout. There are only two invented held-out games;
+these diagnostics do not establish generalization or a confidence interval.
+An identical rerun verifies the same output; a conflicting output is preserved.
+The employer review command runs this audit automatically and binds its JSON
+report, input hashes and source implementation in the review receipt.

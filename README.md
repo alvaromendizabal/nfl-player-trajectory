@@ -1,6 +1,7 @@
 # NFL Big Data Bowl 2026 - Prediction
 
 > **Inspect the engineering:** [Source-linked review brief](review/README.md) · [Run the verified public checks](review/README.md#one-command-an-inspectable-result) · [Review-kit CI](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/employer-review.yml)
+> **Reproducibility assurance:** one command produces a review receipt that binds the public source inventory, runtime, executed checks and generated artifacts; exact reuse rejects changed imported code or fixtures.
 
 **Alvaro Mendizabal · Temporal ML · Evaluation design · GPU performance engineering**
 

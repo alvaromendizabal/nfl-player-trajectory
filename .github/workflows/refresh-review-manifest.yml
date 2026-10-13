@@ -1,0 +1,44 @@
+name: Refresh reviewed README receipt
+on:
+  push:
+    branches: [portfolio/employer-review-20261012]
+    paths: [.github/workflows/refresh-review-manifest.yml]
+permissions:
+  contents: write
+jobs:
+  receipt:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 2
+          ref: portfolio/employer-review-20261012
+      - name: Refresh exactly one checksum and run the unchanged publication validator
+        run: |
+          python3 -B -S - <<'PY'
+          from pathlib import Path
+          import hashlib, json, subprocess
+          def git(*args):
+              return subprocess.check_output(['git', *args], text=True).strip()
+          if git('rev-parse', 'HEAD^') != '75544cd94d739d141a8fca72db4d86b9785c4b7c':
+              raise RuntimeError('Unexpected review parent')
+          old = '7ff7c254bf6b2af9ead1b70f0c6d4e21b73b6cc2ce945950593928de7f8c0120'
+          new = 'f214342eddd961fd465b5cf99dde1a4e0afe148e3cb098cdd7fa760fc1e8e5d3'
+          path = Path('research/publication/files.json')
+          text = path.read_text()
+          if json.loads(text)['README.md'] != old or text.count(old) != 1:
+              raise RuntimeError('Unexpected original publication receipt')
+          if hashlib.sha256(Path('README.md').read_bytes()).hexdigest() != new:
+              raise RuntimeError('README no longer matches the reviewed public file')
+          path.write_text(text.replace(old, new))
+          subprocess.run(['git', 'add', '--', str(path)], check=True)
+          if git('diff', '--cached', '--name-only') != str(path):
+              raise RuntimeError('Unexpected staged change')
+          subprocess.run(['python3', '-B', '-S', 'research/publication/validate.py'], check=True)
+          subprocess.run(['git', 'config', 'user.name', 'github-actions[bot]'], check=True)
+          subprocess.run(['git', 'config', 'user.email', '41898282+github-actions[bot]@users.noreply.github.com'], check=True)
+          subprocess.run(['git', 'commit', '-m', 'docs: refresh README publication checksum without changing research artifacts'], check=True)
+          subprocess.run(['git', 'push', 'origin', 'HEAD:refs/heads/portfolio/employer-review-20261012'], check=True)
+          print('README_PUBLICATION_RECEIPT_REFRESHED')
+          PY

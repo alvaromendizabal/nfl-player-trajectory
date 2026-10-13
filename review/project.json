@@ -12,7 +12,7 @@
       "label": "Forecast rows in full-population evaluation"
     },
     {
-      "value": "4.784×",
+      "value": "4.784\u00d7",
       "label": "Recorded inference speedup with prediction parity"
     }
   ],
@@ -76,6 +76,17 @@
       ]
     },
     {
+      "id": "independent-csv-audit",
+      "runtime": "python",
+      "entry": "tools/audit_public_forecasts.py",
+      "args": [
+        "--demo-output",
+        "{output}/demo",
+        "--output",
+        "{output}/forecast-audit.json"
+      ]
+    },
+    {
       "id": "browser-motion-engine",
       "runtime": "node",
       "entry": "tools/test_public_demo_engine.mjs",
@@ -104,5 +115,64 @@
   ],
   "schema_version": 1,
   "repository": "alvaromendizabal/nfl-player-trajectory",
-  "reviewed_base_commit": "4f66219a068809fcb9ef819db7d724c1d09c3461"
+  "reviewed_base_commit": "4f66219a068809fcb9ef819db7d724c1d09c3461",
+  "source_scopes": [
+    {
+      "directory": "src/nfl_trajectory",
+      "suffixes": [
+        ".py"
+      ]
+    },
+    {
+      "directory": "scripts",
+      "suffixes": [
+        ".py"
+      ]
+    },
+    {
+      "directory": "tests",
+      "suffixes": [
+        ".py"
+      ]
+    },
+    {
+      "directory": "tools",
+      "suffixes": [
+        ".py",
+        ".mjs"
+      ]
+    },
+    {
+      "directory": "public-demo",
+      "suffixes": [
+        ".html",
+        ".css",
+        ".js"
+      ]
+    },
+    {
+      "directory": "docs/results",
+      "suffixes": [
+        ".json"
+      ]
+    },
+    {
+      "directory": "docs/assets",
+      "suffixes": [
+        ".svg"
+      ]
+    }
+  ],
+  "source_files": [
+    "pyproject.toml",
+    "uv.lock",
+    "README.md",
+    "review/README.md",
+    "docs/RESULTS.md",
+    "docs/PROJECT_CLOSEOUT.md",
+    "docs/MODEL_CARD.md",
+    "docs/DATA_CARD.md",
+    "docs/CURRENT_RESEARCH_STATUS.md",
+    "docs/SOURCES.md"
+  ]
 }

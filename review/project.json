@@ -1,0 +1,108 @@
+{
+  "title": "Forecast motion. Account for every trajectory.",
+  "discipline": "Temporal modeling / sports analytics / inference engineering",
+  "summary": "A trajectory-forecasting project connecting player-motion representations, game-aware validation, complete-population evaluation, and measured inference acceleration.",
+  "signals": [
+    {
+      "value": "272 games",
+      "label": "Full-population recorded OOF evaluation"
+    },
+    {
+      "value": "562,936",
+      "label": "Forecast rows in full-population evaluation"
+    },
+    {
+      "value": "4.784×",
+      "label": "Recorded inference speedup with prediction parity"
+    }
+  ],
+  "scope": "The Python review executes a deterministic synthetic motion demo and its release validator. Optional browser checks test the actual route engine and controls. Recorded OOF and late-evaluation measurements remain separate from the synthetic demonstration.",
+  "private_boundary": "Raw tracking data, private target rows, fitted ensembles, exact blend recipes, competition outputs, and full private serving state remain outside this review.",
+  "cards": [
+    {
+      "audience": "ML engineering",
+      "title": "Optimize inference without changing predictions.",
+      "decision": "Measure latency against a fixed ensemble and retain parity checks rather than crediting a speedup from a changed task.",
+      "boundary": "The acceleration is a component benchmark, not an end-to-end production SLA.",
+      "implementation": "src/nfl_trajectory/tree_inference.py",
+      "tests": "tests/test_tree_inference.py",
+      "evidence": "docs/EMPLOYER_CASE_STUDY.md"
+    },
+    {
+      "audience": "Data science",
+      "title": "Report the complete evaluation population.",
+      "decision": "Keep supported-population and full-population error distinct so unsupported rows do not disappear from the claim.",
+      "boundary": "OOF and late-evaluation populations are not interchangeable.",
+      "implementation": "src/nfl_trajectory/final_evaluation.py",
+      "tests": "tests/test_final_evaluation.py",
+      "evidence": "docs/REPRODUCIBILITY.md"
+    },
+    {
+      "audience": "Applied AI",
+      "title": "Represent time before adding model complexity.",
+      "decision": "Use temporal data and motion contracts to connect historical observations with future-coordinate targets.",
+      "boundary": "The public motion fixture is deliberately much smaller than the research system.",
+      "implementation": "src/nfl_trajectory/temporal_data.py",
+      "tests": "tests/test_temporal_data.py",
+      "evidence": "START_HERE.md"
+    },
+    {
+      "audience": "ML engineering",
+      "title": "Make the demonstration independently inspectable.",
+      "decision": "Generate synthetic trajectories, reports, and manifests from a dependency-free public implementation.",
+      "boundary": "A successful synthetic replay does not regenerate the withheld ensemble.",
+      "implementation": "src/nfl_trajectory/portfolio_demo.py",
+      "tests": "tests/test_portfolio_demo.py",
+      "evidence": "scripts/validate_portfolio_release.py"
+    }
+  ],
+  "commands": [
+    {
+      "id": "motion-fixture",
+      "runtime": "python",
+      "entry": "scripts/run_portfolio_demo.py",
+      "args": [
+        "--output",
+        "{output}/demo"
+      ]
+    },
+    {
+      "id": "release-evidence",
+      "runtime": "python",
+      "entry": "scripts/validate_portfolio_release.py",
+      "args": [
+        "--demo-output",
+        "{output}/demo"
+      ]
+    },
+    {
+      "id": "browser-motion-engine",
+      "runtime": "node",
+      "entry": "tools/test_public_demo_engine.mjs",
+      "args": []
+    },
+    {
+      "id": "browser-controls",
+      "runtime": "node",
+      "entry": "tools/test_public_demo.mjs",
+      "args": []
+    }
+  ],
+  "read_more": [
+    {
+      "path": "docs/EMPLOYER_CASE_STUDY.md",
+      "label": "Case study"
+    },
+    {
+      "path": "docs/REPRODUCIBILITY.md",
+      "label": "Reproducibility"
+    },
+    {
+      "path": "START_HERE.md",
+      "label": "Technical review"
+    }
+  ],
+  "schema_version": 1,
+  "repository": "alvaromendizabal/nfl-player-trajectory",
+  "reviewed_base_commit": "4f66219a068809fcb9ef819db7d724c1d09c3461"
+}

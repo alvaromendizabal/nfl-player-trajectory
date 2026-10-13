@@ -1,5 +1,7 @@
 # NFL Big Data Bowl 2026 - Prediction
 
+> **Inspect the engineering:** [Source-linked review brief](review/README.md) · [Run the verified public checks](review/README.md#one-command-an-inspectable-result) · [Review-kit CI](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/employer-review.yml)
+
 **Alvaro Mendizabal · Temporal ML · Evaluation design · GPU performance engineering**
 
 Player trajectory forecasting for the [NFL Big Data Bowl 2026 prediction task](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).

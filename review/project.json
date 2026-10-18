@@ -83,7 +83,9 @@
         "--demo-output",
         "{output}/demo",
         "--output",
-        "{output}/forecast-audit.json"
+        "{output}/forecast-audit.json",
+        "--html",
+        "{output}/forecast-diagnostics.html"
       ]
     },
     {
@@ -115,7 +117,7 @@
   ],
   "schema_version": 1,
   "repository": "alvaromendizabal/nfl-player-trajectory",
-  "reviewed_base_commit": "4f66219a068809fcb9ef819db7d724c1d09c3461",
+  "reviewed_base_commit": "6d7d47f8f226919474f1edeee92d8b5ef78cb533",
   "source_scopes": [
     {
       "directory": "src/nfl_trajectory",
@@ -174,5 +176,15 @@
     "docs/DATA_CARD.md",
     "docs/CURRENT_RESEARCH_STATUS.md",
     "docs/SOURCES.md"
+  ],
+  "reports": [
+    {
+      "path": "forecast-diagnostics.html",
+      "label": "Forecast diagnostics"
+    },
+    {
+      "path": "demo/dashboard.html",
+      "label": "Trajectory walkthrough"
+    }
   ]
 }

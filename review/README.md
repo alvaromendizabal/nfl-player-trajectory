@@ -27,6 +27,11 @@ python3 -S review/run.py --output /tmp/ml-review
 
 Open `/tmp/ml-review/index.html`. The directory contains an accessible HTML brief, `receipt.json`, `manifest.json`, and logs for each executed command. No Python package installation, model download, cloud credentials, or external dataset is required. On Windows, substitute a writable directory outside the checkout for `/tmp/ml-review`.
 
+The generated brief links **Forecast diagnostics** and **Trajectory walkthrough**.
+`forecast-diagnostics.html` presents independent CSV metrics, every held-out player/play,
+and paired game-removal sensitivity. `forecast-audit.json` retains the complete counts,
+full-precision values, and source hashes behind that presentation.
+
 To execute the browser engine checks as well, install Node.js and use a separate output directory:
 
 ```bash

@@ -1,8 +1,5 @@
 # NFL Big Data Bowl 2026 - Prediction
 
-> **Inspect the engineering:** [Source-linked review brief](review/README.md) · [Run the verified public checks](review/README.md#one-command-an-inspectable-result) · [Review-kit CI](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/employer-review.yml)
-> **Reproducibility assurance:** one command produces a review receipt that binds the public source inventory, runtime, executed checks and generated artifacts; exact reuse rejects changed imported code or fixtures.
-
 **Alvaro Mendizabal · Temporal ML · Evaluation design · GPU performance engineering**
 
 Player trajectory forecasting for the [NFL Big Data Bowl 2026 prediction task](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).
@@ -19,6 +16,18 @@ I built a trajectory-forecasting research and delivery system: a **20-model temp
 **Recorded private coordinate RMSE improved from 0.70090 to 0.46468, a 33.7% reduction.** This summarizes successive project systems, not a single-component effect. The result is a late evaluation, not an official competition placement.
 
 **Start here:** [Route Lab demo](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site) · [Case study](docs/EMPLOYER_CASE_STUDY.md) · [Three-minute review](START_HERE.md) · [Run locally](docs/REPRODUCIBILITY.md)
+
+## Inspect the result behind the metric
+
+The public review builds the motion walkthrough and an **independent forecast diagnostic report** from the exported CSVs. It accounts for every held-out row, compares the same trajectories across models, and shows how each game affects the pooled comparison.
+
+```bash
+python3 -B -S review/run.py --output ../nfl-review
+```
+
+Open `../nfl-review/index.html`, then **Forecast diagnostics**. Review the horizon slices, game-removal sensitivity, and every held-out player's RMSE, average displacement error, and final displacement error. The report explains the different denominators directly beside the results. Python 3.11+ is sufficient; the data are invented and the command needs no account or package installation.
+
+The review binds the implementation, input CSVs, checks, and generated reports to SHA-256 identities. A repeated invocation verifies the completed result. [Exact checks and optional browser validation](review/README.md) · [Independent auditor](tools/audit_public_forecasts.py)
 
 ## Try Route Lab
 

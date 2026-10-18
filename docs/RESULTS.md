@@ -46,3 +46,7 @@ On **96 plays / 3,723 rows**, shared preparation accelerated the fixed ensemble 
 - Delivered recovery, artifact identities, resource checks, cost telemetry and source-to-submission lineage on AWS.
 
 The [public demo](REPRODUCIBILITY.md) reproduces engineering and evaluation contracts on invented data. It does not reproduce private-model scores. The [model card](MODEL_CARD.md) records intended use and limits.
+
+## Historical development records
+
+The [September velocity comparison](HISTORICAL_DEVELOPMENT_EVIDENCE.md) consolidates the earlier matched experiment, its uncertainty and the distinct verification inventories. It preserves development provenance without changing the final model selection.

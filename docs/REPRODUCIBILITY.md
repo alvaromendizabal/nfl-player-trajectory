@@ -167,7 +167,7 @@ and reports error separately for forecast frames 1–4, 5–8 and 9–12 and eac
 Every slice reports its row count and two-coordinate squared-error total.
 
 ```bash
-python3 -S tools/audit_public_forecasts.py --demo-output demo_output --output /tmp/forecast-audit.json
+python3 -S tools/audit_public_forecasts.py --demo-output demo_output --output /tmp/forecast-audit.json --html /tmp/forecast-diagnostics.html
 ```
 
 The exported coordinates have six decimal places, while the original report uses
@@ -178,3 +178,12 @@ these diagnostics do not establish generalization or a confidence interval.
 An identical rerun verifies the same output; a conflicting output is preserved.
 The employer review command runs this audit automatically and binds its JSON
 report, input hashes and source implementation in the review receipt.
+
+The standalone HTML report also lists every held-out player/play trajectory with
+coordinate RMSE, average displacement error (ADE), and final displacement error
+(FDE). The paired comparison retains exact keys, pools squared errors before taking
+the square root, and recalculates the delta after removing each game. This avoids
+giving a small game the same weight as a large game by averaging their RMSE values.
+The sign is always candidate minus reference, so a negative delta favors the candidate.
+These are descriptive checks of two invented games, not significance tests or model
+selection evidence. `review/run.py` creates and links both reports automatically.

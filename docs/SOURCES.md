@@ -14,7 +14,7 @@ The private competition snapshot supplies the actual organizer gateway, inferenc
 
 - [chack3 public first-place training reference](https://www.kaggle.com/code/chack3/nfl2026-1st-place-train)
 
-The integrated baseline preserves the temporal/cross-player architecture, fixed normalization convention, optimizer behavior, EMA inference and grouped game folds needed for controlled comparisons. Credit for that architecture and training reference remains with its author; project-specific extensions are evaluated separately.
+The privately evaluated neural system integrated the temporal/cross-player architecture, fixed normalization convention, optimizer behavior, EMA inference and grouped game folds needed for controlled comparisons. Credit for that architecture and training reference remains with its author; project-specific extensions are evaluated separately.
 
 ## Published modeling methods
 
@@ -26,7 +26,7 @@ The integrated baseline preserves the temporal/cross-player architecture, fixed 
 
 These sources informed concrete modeling hypotheses and implementation choices. The project does not copy trained weights, hidden predictions, private datasets, or a competitor's complete feature implementation.
 
-Each adapted technique receives its own project-owned implementation, leakage checks, validation, uncertainty analysis, and promotion/retirement decision.
+Adapted techniques were evaluated with project-specific leakage checks, uncertainty analysis and selection controls. The public numerical reference is not that neural system.
 
 ## Research coverage and attribution
 
@@ -35,14 +35,3 @@ The research program evaluated temporal/player interactions, grouped-game folds,
 The completed system and its measured results are documented in [Results](RESULTS.md). This source catalog preserves the references that informed the work; it preserves attribution and the scope of each evaluated contribution.
 
 No detailed second-place mechanism is claimed without a sufficiently detailed technical source. The project-owned additions emphasized data integration, controlled validation, efficient inference, recoverable execution and evidence publication.
-
-## Earlier feature-engineering methodology
-
-- [Histogram boosting, scikit-learn 1.8](https://scikit-learn.org/1.8/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html)
-- [Permutation importance, scikit-learn 1.8](https://scikit-learn.org/1.8/modules/permutation_importance.html)
-- [SageMaker Processing API](https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateProcessingJob.html)
-- [Yuanzhiyi public NFL trajectory repository](https://github.com/YZY0108/nfl-player-trajectory-prediction)
-- [Deep Sets (Zaheer et al., NeurIPS 2017)](https://arxiv.org/abs/1703.06114)
-- [Trajectron++ (Salzmann et al., ECCV 2020)](https://arxiv.org/abs/2001.03093)
-
-Earlier feature hypotheses and tree-model evidence remain preserved in RESEARCH_REVIEW.ipynb and the model card. They are not pooled numerically with the later neural-fold studies or private evaluation scores.

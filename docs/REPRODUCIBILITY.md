@@ -139,16 +139,16 @@ uv sync --frozen --group dev
 uv run --frozen python scripts/quality.py
 ```
 
-This broader gate includes synthetic integration and public notebook execution. It is
+This broader gate includes synthetic integration and fitted reference execution. It is
 separate from the dependency-free browser and report paths above; it does not regenerate
-the private ensemble score. Additional research self-tests and their optional dependencies
-are recorded in the existing quality workflow.
+the private ensemble score. All retained native reference and scoring tests run in the quality workflow.
 
 ## Public reproducibility boundary
 
-The repository also publishes research code, experiment records, historical runners, and a
-small fitted baseline at `docs/results/model.json`. Those assets have their own scope and
-dependencies; they should not be confused with this synthetic demonstration.
+The package retains a small fitted motion reference at `docs/results/model.json`,
+its numerical training and inference implementation, organizer-data contracts,
+keyed scoring and atomic stage recovery. Native tests fit reference controls on
+invented data; they do not fit or restore the private ensemble.
 
 The private neural ensemble's fitted weights and unpublished inference recipe are not part
 of this public demo. Reproducing that score would additionally require the appropriate

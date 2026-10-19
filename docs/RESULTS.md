@@ -41,12 +41,7 @@ On **96 plays / 3,723 rows**, shared preparation accelerated the fixed ensemble 
 ## Evidence beyond a score
 
 - Audited **4,880,579 observed player-frames**, **562,936 forecast player-frames**, and **272 games**, with explicit prediction-time contracts.
-- Built direct-source historical context with point-in-time restrictions and player/game identity reconciliation. Coverage is recorded in the [dated research snapshot](results/current_research_snapshot.json).
 - Used whole-game uncertainty, matched controls and negative-result retirement to distinguish promising ideas from accepted improvements.
 - Delivered recovery, artifact identities, resource checks, cost telemetry and source-to-submission lineage on AWS.
 
 The [public demo](REPRODUCIBILITY.md) reproduces engineering and evaluation contracts on invented data. It does not reproduce private-model scores. The [model card](MODEL_CARD.md) records intended use and limits.
-
-## Historical development records
-
-The [September velocity comparison](HISTORICAL_DEVELOPMENT_EVIDENCE.md) consolidates the earlier matched experiment, its uncertainty and the distinct verification inventories. It preserves development provenance without changing the final model selection.

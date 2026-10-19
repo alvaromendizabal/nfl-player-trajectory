@@ -1,84 +1,62 @@
-# NFL Big Data Bowl 2026 - Prediction
+# NFL player trajectory forecasting
 
-**Alvaro Mendizabal · Temporal ML · Evaluation design · GPU performance engineering**
+**Temporal modeling · game-aware evaluation · inference engineering**
 
-Player trajectory forecasting for the [NFL Big Data Bowl 2026 prediction task](https://www.kaggle.com/competitions/nfl-big-data-bowl-2026-prediction).
+![NFL trajectory project](docs/assets/route-lab-hero.svg)
 
-[![Quality](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/ci.yml)
-[![Public Research Evidence](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/publication.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/publication.yml)
-[![Portfolio demo](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/portfolio.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/portfolio.yml)
-[![Public demo](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/public-demo.yml/badge.svg)](https://github.com/alvaromendizabal/nfl-player-trajectory/actions/workflows/public-demo.yml)
+A completed trajectory-forecasting system with a **20-model neural ensemble**,
+audited game-held-out evaluation, and prediction-preserving inference acceleration.
+The public repository exposes the data, evaluation and recovery contracts, a small
+trainable reference control, and a local-first interactive demonstration.
 
-![Route Lab: observed motion, transparent forecasts and inspectable errors](docs/assets/route-lab-hero.svg)
+| Recorded result | Scope |
+|---|---|
+| **0.46468 private coordinate RMSE** | Final late submission 56928100; no official placement claimed |
+| **0.4629258204 supported OOF** | 561,607 rows across 272 games |
+| **0.5242026277 complete OOF** | All 562,936 rows, including difficult unsupported cases |
+| **4.784× inference acceleration** | Fixed 20-model workload, 96 plays, 3,723 rows; exact prediction parity |
 
-I built a trajectory-forecasting research and delivery system: a **20-model temporal ensemble**, evaluation across **272 games**, recoverable training on one NVIDIA L4, and inference verified through the organizer gateway. My work covers modeling, historical-data integration, validation, performance optimization and evidence-based model selection.
+[Case study](docs/EMPLOYER_CASE_STUDY.md) · [Results](docs/RESULTS.md) ·
+[Model card](docs/MODEL_CARD.md) · [Run and verify](docs/REPRODUCIBILITY.md) ·
+[Route Lab](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site)
 
-**Recorded private coordinate RMSE improved from 0.70090 to 0.46468, a 33.7% reduction.** This summarizes successive project systems, not a single-component effect. The result is a late evaluation, not an official competition placement.
+## Inspect the work
 
-**Start here:** [Route Lab demo](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site) · [Case study](docs/EMPLOYER_CASE_STUDY.md) · [Three-minute review](START_HERE.md) · [Run locally](docs/REPRODUCIBILITY.md)
-
-## Inspect the result behind the metric
-
-The public review builds the motion walkthrough and an **independent forecast diagnostic report** from the exported CSVs. It accounts for every held-out row, compares the same trajectories across models, and shows how each game affects the pooled comparison.
-
-```bash
-python3 -B -S review/run.py --output ../nfl-review
-```
-
-Open `../nfl-review/index.html`, then **Forecast diagnostics**. Review the horizon slices, game-removal sensitivity, and every held-out player's RMSE, average displacement error, and final displacement error. The report explains the different denominators directly beside the results. Python 3.11+ is sufficient; the data are invented and the command needs no account or package installation.
-
-The review binds the implementation, input CSVs, checks, and generated reports to SHA-256 identities. A repeated invocation verifies the completed result. [Exact checks and optional browser validation](review/README.md) · [Independent auditor](tools/audit_public_forecasts.py)
-
-## Try Route Lab
-
-[Open the public demo](https://alvaro-nfl-route-lab.tartmacaw2.chatgpt.site) without installation. To run the same source locally, serve the checkout:
+The evaluation distinguishes missing-population error from model quality, aligns
+all four forecast identifiers, and pools squared errors before taking a square root.
+The native reference tests exercise fitted numerical controls, geometric invariance,
+missing-role fallback, invalid input rejection, and recoverable artifact writes.
+The browser and Python reports expose every synthetic trajectory and export their
+inputs and results for independent recomputation.
 
 ```bash
-python -m http.server 8000
+python3 -S review/run.py --output artifacts/review --with-node
+python3 -S review/run.py --output artifacts/review --with-node --check
 ```
 
-Open `http://localhost:8000/public-demo/`. Select a synthetic play and player, change the forecast horizon, and compare constant velocity, hold-last-position and damped-velocity forecasts. Scrub or animate the paths, inspect coordinate error and export the result. The browser computes each forecast from observed motion; future positions are used only for evaluation and display.
+Python 3.11+ and Node.js are sufficient for this public review. Open the generated
+`index.html` for the implementation map and `forecast-diagnostics.html` for keyed
+trajectory and whole-game comparisons. No account, GPU, cloud space or raw NFL data
+is needed. The [full package checks](docs/REPRODUCIBILITY.md) additionally exercise
+the fitted reference and organizer-data contracts in the committed environment.
 
-The trajectories are authored synthetic data. These transparent motion rules perform no neural-model inference, fitting or private-ensemble scoring. [Demo methods and verification](docs/REPRODUCIBILITY.md)
+## Repository map
 
-```bash
-node tools/test_public_demo.mjs
-```
+| Path | What it contributes |
+|---|---|
+| `src/nfl_trajectory/models.py` | Small fitted motion reference and observation-only prediction |
+| `src/nfl_trajectory/final_evaluation.py` | Exact keyed scoring and whole-game resampling |
+| `src/nfl_trajectory/data.py` | Organizer input audit, safe download and schema checks |
+| `src/nfl_trajectory/runtime.py` | Atomic artifacts, source signatures and verified stage reuse |
+| `public-demo/` | Interactive observed-motion forecasts on authored examples |
+| `review/` and `tools/` | Source-bound walkthrough, independent CSV audit and browser tests |
+| `docs/results/` | Final-system aggregates and the explicitly separate public reference |
 
-## Results and decisions
+## Publication boundary
 
-| Measurement | Result | Scope |
-|---|---:|---|
-| Recorded private RMSE | **0.46468** | Late evaluation; submission **56928100** |
-| Supported-population OOF RMSE | **0.4629258204** | 561,607 forecast rows |
-| Full-population OOF RMSE | **0.5242026277** | All 562,936 forecast rows across 272 games |
-| Inference acceleration | **4.784×** | Fixed-ensemble benchmark with exact prediction parity |
-
-Lower coordinate RMSE is better. Out-of-fold (OOF) results use game-held-out models and are separate from private evaluation. The full population includes additional rare and long-horizon cases; its score is not directly comparable with the supported-only score. [Exact results and provenance](docs/RESULTS.md)
-
-## Engineering decisions worth reviewing
-
-- **Measure ensemble value.** Expanding two grouped split families to four improved an earlier matched OOF comparison by **0.00217835**; the direction remained positive after every single-game removal.
-- **Include difficult cases.** Coverage checks retained long horizons and missing context, with keys and row counts verified through packaged inference.
-- **Reuse expensive work.** Shared preparation accelerated inference; training checkpoints preserved optimizer, moving-average, scaler and random state.
-- **Separate acquisition from predictive value.** NFL/ESPN identity bridges and earlier-week-only context were evaluated independently of model promotion.
-- **Keep negative evidence.** Unconfirmed feature branches and stopped acquisition work remain documented rather than presented as delivered gains.
-
-[Case study](docs/EMPLOYER_CASE_STUDY.md) · [Results](docs/RESULTS.md) · [Research archive](research/README.md)
-
-## Run the public Python demonstration
-
-With Python 3.11, no package installation, account, GPU or network access is needed:
-
-```bash
-python scripts/run_portfolio_demo.py --output demo_output
-python -S scripts/validate_portfolio_release.py --demo-output demo_output
-```
-
-Open `demo_output/dashboard.html`. The unchanged Python example generates deterministic trajectories, compares two fixed forecasts, and writes a report, CSVs and hash-bound manifests. The browser adds interactive inspection and a damped-motion comparison. Synthetic metrics are separate from all historical scores. [Full setup and checks](docs/REPRODUCIBILITY.md)
-
-## Completed scope
-
-The project is complete as a research and engineering portfolio. Evidence from one labeled season and repeated validation inspection limits generalization claims. Historical notebooks and experiment pages retain their original context.
-
-The public release contains selected implementation, tests, aggregate results, provenance and a small fitted baseline. Private neural weights, row-level private predictions, the latest private inference recipe and nonpublic execution bundles remain excluded. Published architectures and methods retain their [source credits](docs/SOURCES.md). [Closeout](docs/PROJECT_CLOSEOUT.md)
+The public control is **not the final neural ensemble**. The final neural weights,
+exact ensemble recipe, private forecast arrays and competition data are not
+distributed. Synthetic reference scores do not estimate the private score. Original
+measurements retain their population and late-evaluation qualifications.
+[Source attribution](docs/SOURCES.md) distinguishes adapted architecture references
+from this project's integration, evaluation, optimization and delivery work.

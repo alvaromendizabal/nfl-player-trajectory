@@ -21,11 +21,11 @@
   "cards": [
     {
       "audience": "ML engineering",
-      "title": "Optimize inference without changing predictions.",
-      "decision": "Measure latency against a fixed ensemble and retain parity checks rather than crediting a speedup from a changed task.",
-      "boundary": "The acceleration is a component benchmark, not an end-to-end production SLA.",
-      "implementation": "src/nfl_trajectory/tree_inference.py",
-      "tests": "tests/test_tree_inference.py",
+      "title": "Recover stages without accepting stale artifacts.",
+      "decision": "Bind reusable outputs to their input/source identity, and retain atomic file writes.",
+      "boundary": "These are public artifact-integrity contracts, not a production availability claim.",
+      "implementation": "src/nfl_trajectory/runtime.py",
+      "tests": "tests/test_runtime.py",
       "evidence": "docs/EMPLOYER_CASE_STUDY.md"
     },
     {
@@ -39,11 +39,11 @@
     },
     {
       "audience": "Applied AI",
-      "title": "Represent time before adding model complexity.",
-      "decision": "Use temporal data and motion contracts to connect historical observations with future-coordinate targets.",
-      "boundary": "The public motion fixture is deliberately much smaller than the research system.",
-      "implementation": "src/nfl_trajectory/temporal_data.py",
-      "tests": "tests/test_temporal_data.py",
+      "title": "Keep fitted reference predictions observation-only.",
+      "decision": "Check keyed forecasting, geometric invariance and global fallback with a small native fitted control.",
+      "boundary": "The reference control is not the private 20-model ensemble.",
+      "implementation": "src/nfl_trajectory/models.py",
+      "tests": "tests/test_models.py",
       "evidence": "START_HERE.md"
     },
     {
@@ -175,8 +175,7 @@
     "docs/MODEL_CARD.md",
     "docs/DATA_CARD.md",
     "docs/CURRENT_RESEARCH_STATUS.md",
-    "docs/SOURCES.md",
-    "docs/HISTORICAL_DEVELOPMENT_EVIDENCE.md"
+    "docs/SOURCES.md"
   ],
   "reports": [
     {

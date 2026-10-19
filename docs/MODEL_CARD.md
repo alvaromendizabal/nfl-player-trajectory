@@ -42,4 +42,4 @@ The canonical research environment used AWS SageMaker and an NVIDIA L4, with mix
 
 The [synthetic demo](REPRODUCIBILITY.md) verifies observation-only reference inference, game partitioning, keyed evaluation, coordinate RMSE and deterministic artifacts on invented data. It is independent of the private neural model.
 
-Selected historical implementation and a small fitted baseline are already public. This closeout does not publish private champion weights, raw tracking, private prediction arrays, nonpublic execution bundles or the unpublished production recipe. The [data card](DATA_CARD.md) and [closeout](PROJECT_CLOSEOUT.md) explain the boundaries.
+The public implementation contains a small fitted reference, data contracts, keyed scoring and atomic recovery. This closeout does not publish private champion weights, raw tracking, private prediction arrays, nonpublic execution bundles or the unpublished production recipe. The [data card](DATA_CARD.md) and [closeout](PROJECT_CLOSEOUT.md) explain the boundaries.

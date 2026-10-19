@@ -2,4 +2,3 @@
 *.png binary
 *.zip binary
 docs/results/** linguist-generated=true
-notebooks/*.ipynb linguist-detectable=true

@@ -25,6 +25,13 @@ jobs:
         run: |
           python3 .cleanup/curate.py
           git rm -rf .cleanup
+          python3 - <<'PY'
+          from pathlib import Path
+          for p in Path('docs').glob('*.md'):
+              p.write_text(p.read_text().rstrip() + '\n')
+          p=Path('docs/REPRODUCIBILITY.md')
+          p.write_text(p.read_text().replace('public notebook execution', 'fitted reference execution'))
+          PY
           uv lock
           uv sync --frozen --group dev
           uv run --frozen ruff format src scripts tests

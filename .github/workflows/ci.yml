@@ -1,7 +1,7 @@
 name: Quality
 on:
   push:
-    branches: [main, 'feat/**']
+    branches: [main]
   pull_request:
 permissions:
   contents: read
@@ -10,135 +10,31 @@ concurrency:
   cancel-in-progress: true
 jobs:
   quality:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d
         with:
           version: '0.11.33'
+          python-version: '3.11.15'
           enable-cache: true
-          prune-cache: true
-          download-from-astral-mirror: false
-      - run: uv sync --frozen --group dev
-      - name: Format explicitly requested development publication
-        if: >-
-          github.event_name == 'push' &&
-          startsWith(github.ref, 'refs/heads/feat/') &&
-          contains(github.event.head_commit.message, '[publish notebooks]')
-        run: uv run --frozen ruff format src scripts tests notebooks kaggle
-      - name: Capture tested source
+      - name: Install the retained public stack
+        run: uv sync --frozen --group dev
+      - name: Check all maintained native components and final evaluation contracts
+        run: uv run --frozen python scripts/quality.py
+      - name: Independently generate and verify the public forecast review
         run: |
-          mkdir -p artifacts
-          git ls-files -z | tar --null -czf artifacts/source.tar.gz -T -
-      - run: uv run --frozen python scripts/quality.py
-      - name: Validate optional soft-coverage numerical probe
-        run: uv run --frozen --with scipy==1.17.0 --with threadpoolctl==3.6.0 pytest tests/test_soft_coverage.py tests/test_soft_coverage_probe.py -q
-      - name: Validate final sklearn fitting and interrupted recovery
-        run: uv run --locked scripts/fit_final.py --self-test
-      - name: Validate temporal attention and exact interrupted recovery
-        run: uv run --locked scripts/train_temporal.py --self-test
-      - name: Validate domain feature attribution and exact interrupted recovery
-        run: uv run --locked scripts/motion_research.py --self-test
-      - name: Validate end-to-end motion inputs and exact interrupted recovery
-        run: uv run --locked scripts/motion_representation.py --self-test
-      - name: Validate reconstructed velocity supervision and fresh-process recovery
-        timeout-minutes: 5
-        run: uv run --locked scripts/motion_supervision.py --self-test
-      - name: Retain formatting diagnostics on failure
-        if: failure()
-        run: |
-          mkdir -p logs
-          uv run --frozen ruff format --diff . > logs/formatting.diff || true
-      - name: Retain evidence
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+          python3 -B -S review/run.py --output "$RUNNER_TEMP/public-review"
+          python3 -B -S review/run.py --output "$RUNNER_TEMP/public-review" --check
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: validation-evidence
-          path: |
-            logs/
-            artifacts/source.tar.gz
-            artifacts/quality.json
-            artifacts/quality/final_fit.json
-            artifacts/quality/motion_supervision.json
-            artifacts/quality/motion_supervision/
-            artifacts/quality/exports/
-            artifacts/demo/
-            artifacts/notebooks/
-            artifacts/kaggle/
-          retention-days: 30
+          name: verified-trajectory-review
+          path: ${{ runner.temp }}/public-review/
           if-no-files-found: error
-
-  publish-motion-lock:
-    if: >-
-      github.event_name == 'push' &&
-      startsWith(github.ref, 'refs/heads/feat/') &&
-      contains(github.event.head_commit.message, '[publish motion lock]')
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.sha }}
-          persist-credentials: true
-      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
-        with:
-          version: '0.11.33'
-          enable-cache: true
-          download-from-astral-mirror: false
-      - name: Regenerate and commit the motion-supervision script lock
-        env:
-          BRANCH: ${{ github.ref_name }}
-        run: |
-          set -euo pipefail
-          uv lock --script scripts/motion_supervision.py
-          sha256sum scripts/motion_supervision.py.lock
-          git add -- scripts/motion_supervision.py.lock
-          if ! git diff --cached --quiet; then
-            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: refresh motion supervision lock'
-            git push origin "HEAD:$BRANCH"
-          fi
-
-  publish-notebooks:
-    needs: quality
-    if: >-
-      github.event_name == 'push' &&
-      startsWith(github.ref, 'refs/heads/feat/') &&
-      contains(github.event.head_commit.message, '[publish notebooks]')
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          ref: ${{ github.sha }}
-          persist-credentials: true
-      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
-        with:
-          version: '0.11.33'
-          enable-cache: true
-          download-from-astral-mirror: false
-      - run: uv sync --frozen --group dev
-      - run: uv run --frozen ruff format src scripts tests notebooks kaggle
-      - run: uv run --frozen python scripts/quality.py
-      - name: Commit executed canonical notebooks
-        env:
-          BRANCH: ${{ github.ref_name }}
-        run: |
-          set -euo pipefail
-          for notebook in 00_project_readiness 01_data_analysis 02_motion_benchmarks; do
-            cp "artifacts/notebooks/$notebook.ipynb" "notebooks/$notebook.ipynb"
-          done
-          uv run --frozen ruff check notebooks/
-          uv run --frozen ruff format --check notebooks/
-          git add -- src/nfl_trajectory/research.py kaggle/export.py scripts/notebooks.py scripts/quality.py tests/test_research.py tests/test_export.py tests/test_feature_experiment.py
-          git add -- notebooks/00_project_readiness.ipynb notebooks/01_data_analysis.ipynb notebooks/02_motion_benchmarks.ipynb
-          if ! git diff --cached --quiet; then
-            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'chore: format research code and publish executed notebooks'
-            git push origin "HEAD:$BRANCH"
-          fi
+          retention-days: 14

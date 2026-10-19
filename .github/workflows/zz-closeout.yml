@@ -1,0 +1,59 @@
+name: Apply final trajectory scope
+on:
+  push:
+    branches: [cleanup/public-surface-20261018]
+    paths: [.github/workflows/zz-closeout.yml]
+permissions:
+  contents: write
+jobs:
+  curate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d
+        with:
+          version: '0.11.33'
+          python-version: '3.11.15'
+          enable-cache: false
+      - name: Apply the inspected final component and evidence inventory
+        run: |
+          python3 .cleanup/curate.py
+          git rm -rf .cleanup
+          uv lock
+          uv sync --frozen --group dev
+          uv run --frozen ruff format src scripts tests
+          uv run --frozen ruff check --fix src scripts tests
+          uv run --frozen ruff format src scripts tests
+          python3 -B -S review/run.py --render
+      - name: Enforce retained package, data, evaluation and public-replay tests
+        run: |
+          uv run --frozen python scripts/quality.py
+          python3 -B -S review/run.py --output "$RUNNER_TEMP/public-review"
+          python3 -B -S review/run.py --output "$RUNNER_TEMP/public-review" --check
+      - name: Publish source-only curation to the review branch
+        run: |
+          git add -A
+          git diff --cached --check
+          if git diff --cached --name-only | grep '^.github/workflows/'; then exit 1; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -qm 'Retire superseded trajectory experiments; preserve final evidence and tested public contracts'
+          git push origin HEAD:cleanup/public-surface-20261018
+          git archive --format=zip --output="$RUNNER_TEMP/public-source.zip" HEAD
+          git rev-parse HEAD > "$RUNNER_TEMP/public-source-commit.txt"
+          git diff --shortstat 06f9888568de2b0681690462593b85842a4bc324 HEAD
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: final-trajectory-source
+          path: |
+            ${{ runner.temp }}/public-source.zip
+            ${{ runner.temp }}/public-source-commit.txt
+          if-no-files-found: warn
+          retention-days: 3
